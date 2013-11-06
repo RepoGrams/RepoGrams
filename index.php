@@ -35,14 +35,15 @@
 		<br><br><br>
     	<div class="hero-unit">
     		<form class="form-inline" role="form" action="php/action.php" method="POST">
-    		<legend>Enter the link for your project</legend>
-    			<div class="form-group">
-  					<input class="form-control" id="projectlink" name="projectlink" type="text" size="143">
-  				</div>
-  				<div class="form-group">	
-  					<button type="submit" class="btn btn-default">Visualize</button>
-  				</div>
-  				<br>
+    			<legend>Enter the link for your project</legend>
+    			<div class="input-group">
+    				<input class="form-control" id="projectlink" name="projectlink" type="text" size="143">
+     				<span class="input-group-btn">
+        				<button class="btn btn-default" type="submit">
+        					<span class="glyphicon glyphicon-indent-left"></span>Visualize!
+        				</button>
+      				</span>
+    			</div>
   				<div class="form-group">
   					<input class="checkbox-horizontal" type="checkbox" id="history" name="history" value="true" checked="true">Check for history</input>
 				</div>
