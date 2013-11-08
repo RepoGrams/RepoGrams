@@ -1,0 +1,51 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{color}	
+\newcommand{\todo}[1]{\textbf{\textsc{\textcolor{red}{(TODO: #1)}}}}
+\renewcommand{\baselinestretch}{1.0}\normalsize
+\parindent 0pt		
+\author{Maike Maas, Valerie Poser, Sebastian Becking,\\
+Marc Jose, Fabian Kosmale, Heiko Becker}
+\title{Visualizing commit comments with chromograms - Use Case: Visualize a public git repository}
+\begin{document}
+\maketitle
+
+
+Use-case: Visualize a public git repository \\
+Primary actor: User of a desktop browser \\
+Goal in context: visualize the repo in a over all block view with standart parameters \\
+Preconditions: Browser with internet conection and a URL to insert \\
+Trigger: User want to get a visualization of his git repository \\
+
+Scenario:
+\begin{enumerate}
+\item User calls webpage
+\item User clicks on \glqq Render\grqq and webpage loads the input mask
+\item User enters URL
+\item Users clicks on \grqq Go\grqq
+\item Webpage shows progress bar with some information
+\item Webpage shows visulalized repository 
+\item To save the picture, the user can take a screenshot
+\end{enumerate}
+
+Exceptions:
+\begin{enumerate}
+\item Illegal URL $\rightarrow$ error message: \glqq You need to enter a legal link to git repository\grqq
+\item URL doesn't contains a git repository
+\item Repository is password protected $\rightarrow$ May-have implements this, aport from that error message 
+\item Repository protected with private ssh key $\rightarrow$ Error message, we don't handle this
+\item Empty repository $\rightarrow$ error message
+\item Repostitory doesn't respond $\rightarrow$ error message after timeout
+\item Repository is to hugh $\rightarrow$  try to reduce repostiory and visualize this or error message if it is still to hugh
+\end{enumerate}
+
+Priority: high \\
+When available: first prototype\\
+Frequency of use: Very often - this is main functionallity of the system\\
+
+
+\end{document}
