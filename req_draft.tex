@@ -15,11 +15,13 @@ Marc Jose, Fabian Kosmale, Heiko Becker}
 \maketitle
 \section{Must-Haves:}
 \begin{enumerate}
-\item The product's front end is a website working with recent and well known browsers (e.g. Firefox, Google Chrome, latest release of Firefox, Opera, Safari, mobile Versions of them). The top bar contains links to the main site, a documentation or help site and one to the site, where the repositories are visualized. The main site contains a short explanation what the sites purpose is and shows some example pictures. The rendering site uses AJAX to display a progress bar while the backend renders the pictures. With AJAX again it displays them when rendering is finished.
-\item It supports visualization of the commit comments of git repositories from a given URL.
+\item The product's front end is a website working with recent and well known browsers (e.g. Firefox, Google Chrome, latest release of Firefox, Opera, Safari, mobile Versions of them). It contains a top bar with links to the main site, a documentation or help site and one to the site, where the repositories are visualized. The main site contains a short explanation what the sites purpose is and shows some example pictures. The rendering site uses AJAX to display a progress bar while the backend renders the pictures. With AJAX again it displays them when rendering is finished.
+\item It supports visualization of the commit comments of git repositories from a given URL. 
 \item The visualization is displayed in an overall timeline in separated pictures.
 \item The visualization parameters will be the commit message and the kind of change of the repositry files. Kind of change means if there was an addition to a file, a delete or a change of a line.
 \item The product is released open source and usable with the version of apache which is supported at release time.
+\item For every rendered image exists a legend which maps the colors to the corresponding strings.
+\item The applications language is english.
 \end{enumerate}
 \section{May-Haves:}
 \begin{enumerate}
@@ -28,11 +30,13 @@ Marc Jose, Fabian Kosmale, Heiko Becker}
 \item The end-user is able to customize the color-mapping for the parameters with  a dropdown menu on the rendering page.
 \item The product website is responsive (e.g. by using Bootstrap) and works also with mobile clients. In this context responsive means, the layout is optimized for the current browser being used by the enduser.
 \item The user may upload a folder of a git repository instead of an URL.
-\item The visualization is downloadable (e.g. PDF) on a seperate page or on the rendering page.
+\item The visualization is downloadable (e.g. PDF) on a separate page or on the rendering page.
 \item The visualizations can be posted on google+, facebook, twitter and instagram.
 \item The application can run with a basic LAMP environment when downloaded by any new end user and has a well documented installation manual.
-\item The website can display chromograms for repositories, which are protected by a password or an ssh key. Therefore an additional field to enter the password is displayed on the rendering page.
-\item 
+\item The website can display chromograms for repositories, which are protected by a password. Therefore an additional field to enter the password is displayed on the rendering page.
+\item A block of the rendered image can be clicked and then displays its information from the rendering.
+\item The application is available in multiple languages.
+\item The rendered image is scalable.
 \end{enumerate}
 \section{Must-not-haves:}
 \begin{enumerate}
@@ -42,6 +46,7 @@ Marc Jose, Fabian Kosmale, Heiko Becker}
 \item The website provides a user login interface where users can manage their pictures or their git repositories.
 \item The website provides acces to the git repositories.
 \item The website provides a visualization of the structure of the repository.
+\item The website provides acces to public key protected repositories.
 \end{enumerate}
 \section{Parameters:}
 \begin{enumerate}
