@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{color}	
 \newcommand{\todo}[1]{\textbf{\textsc{\textcolor{red}{(TODO: #1)}}}}
+\renewcommand{\baselinestretch}{1.50}\normalsize
 \parindent 0pt		
 \author{Maike Maas, Valerie Poser, Sebastian Becking,\\
 Marc Jose, Fabian Kosmale, Heiko Becker}
@@ -14,28 +15,31 @@ Marc Jose, Fabian Kosmale, Heiko Becker}
 \maketitle
 \section{Must-Haves:}
 \begin{enumerate}
-\item The product's front end is a website working with recent and well known browsers (e.g. Firefox, Google Chrome, latest release of Firefox, Opera, Safari, mobile Versions of them). It uses
+\item The product's front end is a website working with recent and well known browsers (e.g. Firefox, Google Chrome, latest release of Firefox, Opera, Safari, mobile Versions of them). The top bar contains links to the main site, a documentation or help site and one to the site, where the repositories are visualized. The main site contains a short explanation what the sites purpose is and shows some example pictures. The rendering site uses AJAX to display a progress bar while the backend renders the pictures. With AJAX again it displays them when rendering is finished.
 \item It supports visualization of the commit comments of git repositories from a given URL.
-\item The visualization is displayed in a block and a timeline in separated pictures.
-\todo{Waere es nicht besser, sich auf eine Darstellung festzulegen fuer die Must-Haves?}
-\item The visualization parameters will be a nonempty subset of the parameters listed below. \todo{Besser eine explizite Angabe der Parameter fuer unser Basisprogramm}
+\item The visualization is displayed in an overall timeline in separated pictures.
+\item The visualization parameters will be the commit message and the kind of change of the repositry files. Kind of change means if there was an addition to a file, a delete or a real change of a line.
 \item The product is released open source and usable with the version of apache which is supported at release time.
 \end{enumerate}
 \section{May-Haves:}
 \begin{enumerate}
-\item The product supports visualizing mercurial and subversion repositories for a nonempty subset of the parameters, which is the same set as used in the Must-Haves.
-\item The end-user is able to select which parameters he wants to influence the visualization on the website.
-\item The end-user is able to customize the color-mapping for the parameters.
-\item The product website is responsive (e.g. by using Bootstrap) and works also with mobile clients.\todo{ Is this context responsive means Bla}
+\item The product supports visualizing mercurial and subversion repositories for commit message and kind of change as explained above.
+\item The end-user is able to select which parameters he wants to influence the visualization on the website by using a dropdown menu on the rendering page. In addition to the ones mentioned before we allow paramters from the list below.
+\item The end-user is able to customize the color-mapping for the parameters with  a dropdown menu on the rendering page.
+\item The product website is responsive (e.g. by using Bootstrap) and works also with mobile clients. In this context responsive means, the layout is optimized for the current browser being used by the enduser.
 \item The user may upload a folder of a git repository instead of an URL.
-\item The visualization is downloadable (e.g. PDF).
-\item Share the visualization on instagram.
-\item Can run with a basic LAMP environment.
+\item The visualization is downloadable (e.g. PDF) on a seperate page or on the rendering page.
+\item The visualizations can be posted on google+, facebook, twitter and instagram.
+\item The application can run with a basic LAMP environment when downloaded by any new end user and has a well documented installation manual.
+\item The website can handle protected repositories.
+\item 
 \end{enumerate}
 \section{Must-not-haves:}
 \begin{enumerate}
-\item The product has a desktop client.
+\item The product has a desktop client and can be used without a web browser.
 \item The client supports version control systems other than mercurial, subversion and git.
+\item The software has a native app for any mobile operating system.
+\item The website provides a user login interface where users can manage their pictures or their git repositories.
 \end{enumerate}
 \section{Parameters:}
 \begin{enumerate}
