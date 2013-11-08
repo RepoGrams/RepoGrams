@@ -17,7 +17,7 @@ Marc Jose, Fabian Kosmale, Heiko Becker}
 \begin{enumerate}
 \item The product's front end is a website working with recent and well known browsers (e.g. Firefox, Google Chrome, latest release of Firefox, Opera, Safari, mobile Versions of them). It contains a top bar with links to the main site, a documentation or help site and one to the site, where the repositories are visualized. The main site contains a short explanation what the sites purpose is and shows some example pictures. The rendering site uses AJAX to display a progress bar while the backend renders the pictures. With AJAX again it displays them when rendering is finished.
 \item It supports visualization of the commit comments of git repositories from a given URL. 
-\item The visualization is displayed in an overall timeline in separated pictures.
+\item The visualization is displayed in an overall block view in one picture.
 \item The visualization parameter is the commit message.
 \item The product is released open source and usable with the version of apache which is supported at release time.
 \item For every rendered image exists a legend which maps the colors to the corresponding strings.
@@ -55,6 +55,7 @@ Marc Jose, Fabian Kosmale, Heiko Becker}
 (the commit message of the user)
 \end{enumerate}
 \item The parameters may influence a blocks color, size, alignment and order.
+\item The application can cache repositories that we're already displayed by any user.
 \end{enumerate}
 \newpage
 \section{Won't-have:}
