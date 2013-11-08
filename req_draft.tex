@@ -1,4 +1,4 @@
-\documentclass[10pt]{scrartcl}
+\documentclass[12pt]{scrartcl}
 \usepackage[utf8]{inputenc}
 \usepackage[german]{babel}
 \usepackage{amsmath}
@@ -18,7 +18,7 @@ Marc Jose, Fabian Kosmale, Heiko Becker}
 \item The product's front end is a website working with recent and well known browsers (e.g. Firefox, Google Chrome, latest release of Firefox, Opera, Safari, mobile Versions of them). It contains a top bar with links to the main site, a documentation or help site and one to the site, where the repositories are visualized. The main site contains a short explanation what the sites purpose is and shows some example pictures. The rendering site uses AJAX to display a progress bar while the backend renders the pictures. With AJAX again it displays them when rendering is finished.
 \item It supports visualization of the commit comments of git repositories from a given URL. 
 \item The visualization is displayed in an overall timeline in separated pictures.
-\item The visualization parameters will be the commit message and the kind of change of the repositry files. Kind of change means if there was an addition to a file, a delete or a change of a line.
+\item The visualization parameter is the commit message.
 \item The product is released open source and usable with the version of apache which is supported at release time.
 \item For every rendered image exists a legend which maps the colors to the corresponding strings.
 \item The applications language is english.
@@ -37,25 +37,35 @@ Marc Jose, Fabian Kosmale, Heiko Becker}
 \item A block of the rendered image can be clicked and then displays its information from the rendering.
 \item The application is available in multiple languages.
 \item The rendered image is scalable.
+\item The application supports thes parameters:
+\begin{enumerate}
+\item user: 
+(the person that made the commit to the repository)
+\item kind of change:  
+(the numbers of lines that were added, modified or deleted with the commit we're working with)
+\item only added sth.:
+(taking only the commits into account that added lines)
+\item only deleted sth.:
+(taking only the commits into account that removed lines)
+\item time of day of commit:
+(the time of day at which the commit we're currently working with was made)
+\item date of commit:
+(the date at which the commit we're currently working with was made)
+\item commit message:
+(the commit message of the user)
 \end{enumerate}
-\section{Must-not-haves:}
+\item The parameters may influence a blocks color, size, alignment and order.
+\end{enumerate}
+\newpage
+\section{Won't-have:}
 \begin{enumerate}
 \item The product has a desktop client and can be used without a web browser.
 \item The client supports version control systems other than mercurial, subversion and git.
 \item The software has a native app for any mobile operating system.
-\item The website provides a user login interface where users can manage their pictures or their git repositories.
-\item The website provides acces to the git repositories.
-\item The website provides a visualization of the structure of the repository.
-\item The website provides acces to public key protected repositories.
-\end{enumerate}
-\section{Parameters:}
-\begin{enumerate}
-\item user
-\item size of changes
-\item only added sth.
-\item only deleted sth.
-\item time of day of commit
-\item date of commit
-\item commit message
+\item The application provides a user login interface where users can manage their pictures or their git repositories.
+\item The application provides acces to the git repositories.
+\item The application provides a visualization of the structure of the repository.
+\item The application provides acces to ssh key protected repositories.
+\item The application can create movies.
 \end{enumerate}
 \end{document}
