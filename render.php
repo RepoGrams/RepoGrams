@@ -16,9 +16,10 @@
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
 	
 	<!-- JS sources -->
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-	
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/custom.js"></script>
+		
 	<!-- Browser fixes -->
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -29,6 +30,7 @@
 </head>
 
 <body>
+	
 	<!-- Menu -->
 	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
   		<!-- Brand and toggle get grouped for better mobile display -->
