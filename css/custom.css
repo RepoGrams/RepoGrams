@@ -7,7 +7,7 @@ html, body {
 
 /* Wrapper for page content to push down footer */
 #wrap {
-  	min-height: 100%;
+  	min-height: 90%;
   	height:     auto !important;
   	height:     100%;
   	width:      75%;
