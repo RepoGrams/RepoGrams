@@ -92,11 +92,5 @@
 	<div class="credit">
 			<p>&copy;<?php echo date("Y")?> Fabian Kosmale, Heiko Becker, Maike Maas, Marc Jose, Sebastian Becking, Valerie Poser</p>		
 	</div>
-	
-	<script type="text/javascript">
-	$(".alert").alert();
-
-	
-	</script>
 </body>
 </html>
