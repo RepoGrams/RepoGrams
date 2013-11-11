@@ -16,9 +16,9 @@
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
 	
 	<!-- JS sources -->
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-	
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+		
 	<!-- Browser fixes -->
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,7 +34,8 @@
   		<!-- Brand and toggle get grouped for better mobile display -->
   		<div class="navbar-header">
     		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-     			<span class="sr-only">Toggle navigation</span>
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
       			<span class="icon-bar"></span>
       			<span class="icon-bar"></span>
       			<span class="icon-bar"></span>
@@ -43,7 +44,8 @@
 
  		<!-- Collect the nav links, forms, and other content for toggling -->
   		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    		<ul class="nav navbar-nav">
+		<ul class="nav navbar-nav">
+			<li><a href="index.php">VCC</a></li>
       			<li><a href="index.php">Home</a></li>
       			<li class="active"><a href="render.php">Render</a></li>
       			<li><a href="documentation.php">Documentation</a></li>
@@ -78,7 +80,7 @@
     			</div>
     			<div class="alert alert-danger alert-dismissable fade in">
   					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  					<strong>Error!</strong> Invalid repository url.
+  					<strong>Error!</strong>" Invalid repository url."
 				</div>
   				<div class="form-group">
   					<input class="checkbox-horizontal" type="checkbox" id="history" name="history" value="true" checked="true">Check for history</input>
