@@ -1,5 +1,4 @@
 <html !DOCTYPE HTML>
-
 <head>
 	<!-- Meta tags -->
 	<meta name="description" content="Visualizing commit comments with chromograms">
@@ -50,7 +49,7 @@
       			<li><a href="documentation.php">Documentation</a></li>
     		</ul>
     
-    		<form class="navbar-form navbar-right" role="search">
+    		<form class="navbar-form navbar-right" role="search" action="php/action.php" method="POST">
       			<div class="form-group">
         			<input type="text" class="form-control" placeholder="Enter repository url" size="100">
       			</div>
@@ -67,7 +66,7 @@
 		<img class="title" src="img/title.png"></a>
 		<br><br><br>
     	<div class="hero-unit">
-    		<form class="form-inline" role="form" action="php/action.php" method="POST">
+    		<form role="form" action="php/action.php" method="POST">
     			<legend>Enter the link for your project</legend>
     			<div class="input-group">
     				<input class="form-control" id="projectlink" name="projectlink" type="text" size="143">
@@ -77,10 +76,14 @@
         				</button>
       				</span>
     			</div>
+    			<div class="alert alert-danger alert-dismissable fade in">
+  					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  					<strong>Error!</strong> Invalid repository url.
+				</div>
   				<div class="form-group">
   					<input class="checkbox-horizontal" type="checkbox" id="history" name="history" value="true" checked="true">Check for history</input>
 				</div>
-			</form>
+			</form>		  
     	</div>
 	</div>
 	
@@ -89,6 +92,11 @@
 	<div class="credit">
 			<p>&copy;<?php echo date("Y")?> Fabian Kosmale, Heiko Becker, Maike Maas, Marc Jose, Sebastian Becking, Valerie Poser</p>		
 	</div>
-</body>
+	
+	<script type="text/javascript">
+	$(".alert").alert();
 
+	
+	</script>
+</body>
 </html>

@@ -6,7 +6,7 @@
 	if(isset($_POST['projectlink']) && str_replace(' ','',$_POST['projectlink']) != '') {
 		$url = $_POST['projectlink'];
 	} else {
-		echo 'Please enter a valid project url';
+		throw new Exception('Invalid repository url');
 	}
 	
 	if(isset($_POST['history']) && $_POST['history'] == 'true') {
