@@ -17,13 +17,9 @@
 	
 	<!-- JS sources -->
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-<<<<<<< HEAD
-	<script type="text/javascript" src="js/bootstrap.js"></script>
-=======
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/custom.js"></script>
->>>>>>> 547bcc39061d4ded1c49557f5602f0485cf10a67
-		
+
 	<!-- Browser fixes -->
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -83,14 +79,22 @@
         					<span class="glyphicon glyphicon-indent-left"></span>Visualize!
         				</button>
       				</span>
-    			</div>
-    			<div class="alert alert-danger alert-dismissable fade in">
+			</div>
+<?php
+$error='';
+if (isset($error)){
+	$error=false;
+?>   			<div class="alert alert-danger alert-dismissable fade in">
   					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  					<strong>Error!</strong>" Invalid repository url."
+  					<strong>Error!</strong> Invalid repository url.
 				</div>
+
+<?php
+}
+?>
   				<div class="form-group">
   					<input class="checkbox-horizontal" type="checkbox" id="history" name="history" value="true" checked="true">Check for history</input>
-				</div>
+					</div>
 			</form>		  
     	</div>
 	</div>

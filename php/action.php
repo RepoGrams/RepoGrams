@@ -6,7 +6,8 @@
 	if(isset($_POST['projectlink']) && str_replace(' ','',$_POST['projectlink']) != '') {
 		$url = $_POST['projectlink'];
 	} else {
-		throw new Exception('Invalid repository url');
+		$error=true;
+		header('Location: ../render.php?error=true');
 	}
 	
 	if(isset($_POST['history']) && $_POST['history'] == 'true') {
