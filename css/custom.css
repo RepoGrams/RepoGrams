@@ -1,6 +1,10 @@
 html, body {
   	height:                100%;
+<<<<<<< HEAD
 //  	background-image:      url('../img/bg.jpg');
+=======
+ 	background-image:      url('../img/bg.jpg');
+>>>>>>> ead3b95df6bab43eef88216aa91f216244dd53a9
 	background-attachment: scroll;
 	background-repeat:     repeat;
 }
