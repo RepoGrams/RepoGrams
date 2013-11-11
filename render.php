@@ -17,8 +17,8 @@
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
 	
 	<!-- JS sources -->
-	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	
 	<!-- Browser fixes -->
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -45,8 +45,8 @@
  		<!-- Collect the nav links, forms, and other content for toggling -->
   		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     		<ul class="nav navbar-nav">
-      			<li class="active"><a href="index.php">Home</a></li>
-      			<li><a href="render.php">Render</a></li>
+      			<li><a href="index.php">Home</a></li>
+      			<li class="active"><a href="render.php">Render</a></li>
       			<li><a href="documentation.php">Documentation</a></li>
     		</ul>
     
@@ -64,7 +64,24 @@
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<strong><br>HOME</strong>
+		<img class="title" src="img/title.png"></a>
+		<br><br><br>
+    	<div class="hero-unit">
+    		<form class="form-inline" role="form" action="php/action.php" method="POST">
+    			<legend>Enter the link for your project</legend>
+    			<div class="input-group">
+    				<input class="form-control" id="projectlink" name="projectlink" type="text" size="143">
+     				<span class="input-group-btn">
+        				<button class="btn btn-default" type="submit">
+        					<span class="glyphicon glyphicon-indent-left"></span>Visualize!
+        				</button>
+      				</span>
+    			</div>
+  				<div class="form-group">
+  					<input class="checkbox-horizontal" type="checkbox" id="history" name="history" value="true" checked="true">Check for history</input>
+				</div>
+			</form>
+    	</div>
 	</div>
 	
 	

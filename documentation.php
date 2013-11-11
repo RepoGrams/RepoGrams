@@ -17,8 +17,8 @@
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
 	
 	<!-- JS sources -->
-	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	
 	<!-- Browser fixes -->
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -45,9 +45,9 @@
  		<!-- Collect the nav links, forms, and other content for toggling -->
   		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     		<ul class="nav navbar-nav">
-      			<li class="active"><a href="index.php">Home</a></li>
+      			<li><a href="index.php">Home</a></li>
       			<li><a href="render.php">Render</a></li>
-      			<li><a href="documentation.php">Documentation</a></li>
+      			<li class="active"><a href="documentation.php">Documentation</a></li>
     		</ul>
     
     		<form class="navbar-form navbar-right" role="search">
@@ -64,7 +64,7 @@
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<strong><br>HOME</strong>
+		<strong><br>DOCUMENTATION</strong>
 	</div>
 	
 	
