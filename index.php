@@ -30,12 +30,13 @@
 </head>
 
 <body>
-	<!-- Menu -->
-	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+	<!-- Menu -->	
+ 	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
   		<!-- Brand and toggle get grouped for better mobile display -->
   		<div class="navbar-header">
     		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-     			<span class="sr-only">Toggle navigation</span>
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
       			<span class="icon-bar"></span>
       			<span class="icon-bar"></span>
       			<span class="icon-bar"></span>
@@ -44,7 +45,8 @@
 
  		<!-- Collect the nav links, forms, and other content for toggling -->
   		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    		<ul class="nav navbar-nav">
+		<ul class="nav navbar-nav">
+			<li><a href="index.php">VCC</a></li>
       			<li class="active"><a href="index.php">Home</a></li>
       			<li><a href="render.php">Render</a></li>
       			<li><a href="documentation.php">Documentation</a></li>
@@ -61,10 +63,18 @@
   		</div>
 	</nav>
 
-	
+
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<strong><br>HOME</strong>
+		<h1>Visualizing Commit Messages with Chromograms</h1>
+		Welcome to our project of the Software Engineering Course.
+		This website is just a first prototype.
+		<br><br>
+		Blabla what are chromograms.
+		<br><br>
+		Blabla include example pictures
+		<br><br>
+		Blabla goto Website.
 	</div>
 	
 	
