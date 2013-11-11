@@ -19,4 +19,9 @@ interface Repo_Interface
 	 */
 	public function GetFirstCommit();
 
+	/**
+	 * @return an array containing all git objects
+	 */
+	public function GetAllCommits();
+
 }
