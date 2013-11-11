@@ -81,9 +81,7 @@
       				</span>
 			</div>
 <?php
-$error='';
-if (isset($error)){
-	$error=false;
+if (isset($_GET["error"])){
 ?>   			<div class="alert alert-danger alert-dismissable fade in">
   					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
   					<strong>Error!</strong> Invalid repository url.
