@@ -55,7 +55,7 @@
     
     		<form class="navbar-form navbar-right" role="search" action="php/action.php" method="POST">
       			<div class="form-group">
-        			<input type="text" class="form-control" placeholder="Enter repository url" size="100">
+        			<input type="text" id="projectlink" name="projectlink" class="form-control" placeholder="Enter repository url" size="100" required="required">
       			</div>
       			<button class="btn btn-default" type="submit">
         			<span class="glyphicon glyphicon-indent-left"></span>Visualize!
@@ -70,30 +70,37 @@
 		<img class="title" src="img/title.png"></a>
 		<br><br><br>
     	<div class="hero-unit">
-    		<form role="form" action="php/action.php" method="POST">
-    			<legend>Enter the link for your project</legend>
-    			<div class="input-group">
-    				<input class="form-control" id="projectlink" name="projectlink" type="text" size="143">
-     				<span class="input-group-btn">
-        				<button class="btn btn-default" type="submit">
-        					<span class="glyphicon glyphicon-indent-left"></span>Visualize!
-        				</button>
-      				</span>
-			</div>
-<?php
-if (isset($_GET["error"])){
-?>   			<div class="alert alert-danger alert-dismissable fade in">
-  					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  					<strong>Error!</strong> Invalid repository url.
-				</div>
-
-<?php
-}
-?>
-  				<div class="form-group">
-  					<input class="checkbox-horizontal" type="checkbox" id="history" name="history" value="true" checked="true">Check for history</input>
-					</div>
-			</form>		  
+    		<?php
+				if ($_GET["loading"]) {
+ 					echo '<br><br>
+						  <div class="progress progress-striped active">
+  						  	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:'.$_GET["current_progress"].'%;"></div>
+						  </div>
+						  <p>'.$_GET["loading_info"].'</p>';
+				} else if (false) {
+				} else {
+					echo '<form role="form" action="php/action.php" method="POST">
+    					  	<legend>Enter the link for your project</legend>
+    						<div class="input-group">
+    							<input class="form-control" id="projectlink" name="projectlink" type="text" size="143" required="required" placeholder="Enter repository url">
+     							<span class="input-group-btn">
+        							<button class="btn btn-default" type="submit">
+        								<span class="glyphicon glyphicon-indent-left"></span>Visualize!
+        							</button>
+      							</span>
+							</div>';
+					if (isset($_GET["error"])) {
+						echo '<div class="alert alert-danger alert-dismissable">
+  						  	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  							<strong>Error!</strong> '.$_GET["error_message"].'
+						  </div>';
+					}
+					echo '	<div class="form-group">
+  						  		<input class="checkbox-horizontal" type="checkbox" id="history" name="history" value="true" checked="true">Check for history</input>
+						 	</div>
+			              </form>';
+				}
+			?>	  
     	</div>
 	</div>
 	
