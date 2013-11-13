@@ -10,7 +10,7 @@
 \parindent 0pt		
 \author{Maike Maas, Valerie Poser, Sebastian Becking,\\
 Marc Jose, Fabian Kosmale, Heiko Becker}
-\title{Visualizing commit comments with chromograms - Use Case: Visualize a public git repository}
+\title{Visualizing commit comments with chromograms}
 \begin{document}
 \maketitle
 
@@ -18,33 +18,32 @@ Marc Jose, Fabian Kosmale, Heiko Becker}
 Use-case: Visualizing a public git repository \\
 Primary actor: User of a desktop browser \\
 Goal in context: Visualizing the repository in an overall block view with standard parameters \\
-Preconditions: Browser with internet connection and an URL to insert \\
+Preconditions: Browser with internet connection and an URL for a git repository to insert \\
 Trigger: User want to get a visualization of his git repository \\
 
 Scenario:
 \begin{enumerate}
-\item User calls webpage
-\item User clicks on \grqq Render\grqq ~and webpage loads the input mask
-\item User enters URL
-\item Users clicks on \grqq Go\grqq
-\item Webpage shows progress bar with some information
-\item Webpage shows visualized repository 
-\item To save the picture the user can take a screenshot
+\item User calls the webpage.
+\item User clicks on \grqq Render\grqq ~and it loads the page where you can enter the URL for the git repository. 
+\item User enters URL for the git repository. 
+\item Users clicks on \grqq Go\grqq. (See Exception 1, 2, 3, 4, 5)
+\item Webpage shows progress bar with some information. (See Exception 6, 7)
+\item Webpage shows visualized repository.
+\item To save the picture the user takes a screenshot.
 \end{enumerate}
 
 Exceptions:
 \begin{enumerate}
-\item Illegal URL $\rightarrow$ error message: \glqq You need to enter a legal link to a git repository\grqq
-\item URL doesn't contain a git repository
-\item Repository is password protected $\rightarrow$ May-have implements this, apart from that error message 
-\item Repository protected with private ssh key $\rightarrow$ Error message, we don't handle this
-\item Empty repository $\rightarrow$ error message
-\item Repository doesn't respond $\rightarrow$ error message after timeout
-\item Repository is to huge $\rightarrow$  try to reduce repository and visualize this or error message if it is still to huge
+\item Illegal URL $\rightarrow$ The website shows an error message: \glqq You need to enter a legal link to a git repository\grqq and goes back to the \glqq Render\grqq-Page.
+\item The URL doesn't contain a git repository. $\rightarrow$  The website shows an error message: \glqq You need to enter a legal link to a git repository\grqq and goes back to the \glqq Render\grqq-Page.
+\item The Repository is password protected $\rightarrow$ May-have implements this, apart from that the website shows an error message: \glqq The git repository has to be without password protection\grqq and goes back to the \glqq Render\grqq-Page.
+\item The Repository is protected with private ssh key $\rightarrow$ The website shows an error message: \glqq The git repository has to be without ssh key protection.\grqq and goes back to the \glqq Render\grqq-Page, we don't handle this.
+\item Empty repository $\rightarrow$ The website shows an error message: \glqq The repository is empty\grqq and goes back to the \glqq Render\grqq-Page.
+\item Repository doesn't respond $\rightarrow$ The website shows an error message after timeout: \glqq The git repository doesn't answer. Please try it later.\grqq and goes back to the \glqq Render\grqq-Page. 
+\item Repository is too big $\rightarrow$  try to reduce repository and visualize this or error message if it is still too big: \glqq The repository is to bug. Please try another one.\grqq
 \end{enumerate}
 
 Priority: high \\
-When available: first prototype\\
 Frequency of use: Very often - this is main functionality of the system\\
 
 
