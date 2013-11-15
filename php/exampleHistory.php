@@ -23,7 +23,8 @@ $m18 = array ("idf", 12);
 $m19 = array ("inj", 168);
 
 $input = array($m00, $m01, $m02, $m03, $m04, $m05, $m06, $m07, $m08, $m09, $m11, $m12, $m13, $m14, $m15, $m16, $m17, $m18, $m19);
+$algo->render($input,0);
 echo "<htlm><head></head><body>";
-echo "<img src=\"".$algo->render($input,0)."\" />";
+echo "<img src=\"name.png\" />";
 echo "</body></html>";
 ?>
