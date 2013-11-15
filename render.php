@@ -74,7 +74,7 @@
 		<br><br><br>
     	<div class="hero-unit">
     		<?php
-				if (isset($_SESSION['loading']) && $_SESSION['loading'] === true) {
+				if (isset($_SESSION['loading']) && $_SESSION['loading']) {
  					echo '<br><br>
 						  <div class="progress progress-striped active">
   						  	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:'.$_SESSION['current_progress'].'%;"></div>
@@ -93,7 +93,6 @@
         							</button>
       							</span>
 							</div>';
-					echo 'Errormessage: "'.$_SESSION['error_message'].'"';
 					if (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '') {
 						echo '<div class="alert alert-danger alert-dismissable">
   						  	  	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
