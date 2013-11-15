@@ -33,7 +33,6 @@
 </head>
 
 <body>
-	
 	<!-- Menu -->
 	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
   		<!-- Brand and toggle get grouped for better mobile display -->
@@ -84,7 +83,6 @@
 		            	?>
   						</ul>
 					</div>
-				</div>
 			</div>
 			<div class="panel panel-default" style="overflow: hidden; height: 555px; width: 514px; margin: auto auto 0;">
   				<div class="panel-heading"><?php echo $_GET["title"] ?></div>
@@ -105,9 +103,8 @@
 					</ul>
 				</div>
 			</div>
-	</div>  
-    	</div>
-    	<div id="push"></div>
+    		<div id="push"></div>
+		</div>
 	</div>
 	
 	
