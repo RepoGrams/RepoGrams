@@ -9,7 +9,7 @@ interface Repo_Interface
 	 * @throws An exception e; e->getMessage() contains a description of 
 	 * what have failed
 	 */
-	public function ListBraches();
+	public function ListBranches();
 
 	/**
 	 * Changes the current branch to $branch

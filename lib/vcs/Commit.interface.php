@@ -29,6 +29,7 @@ interface  Commit_Interface {
 	
 	/**
 	 * @return the diff to the parent
+	 * @throws if there is no such diff
 	 */
 	function DiffToParent();
 
