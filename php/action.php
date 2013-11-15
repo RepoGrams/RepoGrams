@@ -22,9 +22,12 @@
 
 	$loading = true;
 	header('Location: ../render.php?loading='.$loading.'&current_progress='.$current_progress.'&loading_info='.$loading_info);
-	
+
+	include("../lib/vcs/git/git.php");	
+	include("../php/algorithm.php");
 	/*
-	 * TODO: Connect to git/..., ask for password/username if required etc.
+		* TODO: Call connect to establish connection
+		* Then call algorithm to render and refresh the page
 	 */
 	
 ?>
