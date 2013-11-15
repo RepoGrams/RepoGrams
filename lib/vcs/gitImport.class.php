@@ -18,41 +18,38 @@ class gitImport {
 		$output = shell_exec($command);
 		//echo $output;
 		$json = self::unescape($output,chr(26));
-		echo $json;
 		$json = substr($json,0,strlen($json)-2);
 		$json = '{'.$json.'}';
 		
 		$json = utf8_encode($json);
 		$output_array = json_decode($json);
 		print_r($output_array);
+		$this->RepoObject = $output_array;
+		self::removeDir($tmp);
 	}
 
 
-
+	public function getRawRepoInfo(){
+		if (exists($this->RepoObject) && !is_null($this->RepoObject))
+			return $this->RepoObject;
+		else
+			throw new Exception("Fetching GitObject was not sucessfull");
+	}
+	
 	private function unescape($escapedString, $escapeCharacter) {
         	// Replace " with the escape sequence for JSON
 	        $intermediate = preg_replace('/"/', '\"', $escapedString);
         	// Replace escapeCharacter with "
 	        return preg_replace('/'.$escapeCharacter.'/', '"', $intermediate);
-	}	
-
+	}
+	
+	private function removeDir($path){
+		$files = array_diff(scandir($path), array('.','..'));
+		foreach ($files as $file) {
+		 (is_dir("$path/$file")) ? self::removeDir("$path/$file") : unlink("$path/$file");
+		}
+		return rmdir($path);
+	}
 }
-/*
-// echo "Executing: '".$command."'\n";
-$output = shell_exec($command);
-//$output = str_replace("\n",'',$output);
-
-
-$test = array();
-$test['hans'] = array();
-$test['hans']['peter']="Klemmelemmeling";
-$test['werner'] = "olm";
-$test['hans']['werner']="auch 'Olm'";
-//print_r($test);
-$test2 = json_encode($test);
-
-echo "\n\n".$test2."\n\n";
-//print_r(json_decode($test2));
-?>*/
 ?>
 
