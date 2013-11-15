@@ -1,5 +1,6 @@
-<html !DOCTYPE HTML>
+<?php if (session_status() == PHP_SESSION_NONE) {session_start();}?>
 
+<html !DOCTYPE HTML>
 <head>
 	<!-- Meta tags -->
 	<meta name="description" content="Visualizing commit comments with chromograms">
@@ -67,6 +68,7 @@
 
 	<!-- Content -->
 	<div class="container" id="wrap">
+	<?php if (session_status() == PHP_SESSION_NONE) {echo 'Session started';} else {echo 'Session not started';}?>
 		<h1>Visualizing Commit Messages with Chromograms</h1>
 		Welcome to our project of the Software Engineering Course.
 		This website is just a first prototype.

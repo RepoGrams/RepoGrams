@@ -1,3 +1,5 @@
+<?php if (session_status() == PHP_SESSION_NONE) {session_start();}?>
+
 <html !DOCTYPE HTML>
 <head>
 	<!-- added for Fabian -->

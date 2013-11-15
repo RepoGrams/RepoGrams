@@ -1,5 +1,6 @@
-<html !DOCTYPE HTML>
+<?php if (session_status() == PHP_SESSION_NONE) {session_start();}?>
 
+<html !DOCTYPE HTML>
 <head>
 	<!-- Meta tags -->
 	<meta name="description" content="Visualizing commit comments with chromograms">
