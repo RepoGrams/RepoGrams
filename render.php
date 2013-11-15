@@ -1,4 +1,4 @@
-<?php if (session_status() == PHP_SESSION_NONE) {session_start();}?>
+<?php session_start();?>
 
 <html !DOCTYPE HTML>
 <head>
@@ -74,13 +74,14 @@
 		<br><br><br>
     	<div class="hero-unit">
     		<?php
-				if ($_GET["loading"]) {
+				if (isset($_SESSION['loading']) && $_SESSION['loading'] === true) {
  					echo '<br><br>
 						  <div class="progress progress-striped active">
-  						  	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:'.$_GET["current_progress"].'%;"></div>
+  						  	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:'.$_SESSION['current_progress'].'%;"></div>
 						  </div>
-						  <p>'.$_GET["loading_info"].'</p>';
+						  <p>'.$_SESSION['loading_info'].'</p>';
 				} else if (false) {
+					//if finished show final image on image.php
 				} else {
 					echo '<form role="form" action="php/action.php" method="POST">
     					  	<legend>Enter the link for your project</legend>
@@ -92,11 +93,12 @@
         							</button>
       							</span>
 							</div>';
-					if (isset($_GET["error"])) {
+					echo 'Errormessage: "'.$_SESSION['error_message'].'"';
+					if (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '') {
 						echo '<div class="alert alert-danger alert-dismissable">
-  						  	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  							<strong>Error!</strong> '.$_GET["error_message"].'
-						  </div>';
+  						  	  	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  								<strong>Error!</strong> '.$_SESSION['error_message'].'
+						      </div>';
 					}
 					echo '	<div class="form-group">
   						  		<input class="checkbox-horizontal" type="checkbox" id="history" name="history" value="true" checked="true">Check for history</input>
