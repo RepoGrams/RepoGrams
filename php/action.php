@@ -1,8 +1,10 @@
 <?php
+	session_start();
 
-	$current_progress = 0;           //Value to determine the current progress (1-100), will be displayed in the progressbar along with some additional loading infos
-	$loading_info = 'Loading...';    //Loading infos (ex. 'Requesting repository access), will be displayed
-	$loading = false;                //if true then the progressbar will be displayed             
+	$_SESSION['current_progress'] = 0;           //Value to determine the current progress (1-100), will be displayed in the progressbar along with some additional loading infos
+	$_SESSION['loading_info'] = 'Loading...';    //Loading infos (ex. 'Requesting repository access), will be displayed
+	$_SESSION['loading'] = false;                //if true then the progressbar will be displayed 
+	$_SESSION['error_message'] = '';            
 
 	/*
 	 * Check formular input
@@ -10,9 +12,8 @@
 	if(isset($_POST['projectlink']) && str_replace(' ','',$_POST['projectlink']) != '') {
 		$url = $_POST['projectlink'];
 	} else {
-		$error = true;
-		$error_message = "Invalid repository url.";
-		header('Location: ../render.php?error='.$error.'&error_message='.$error_message);
+		$_SESSION['error_message'] = 'Invalid repository url.';
+		header('Location: ../render.php');
 		exit(1);
 	}
 	
@@ -20,8 +21,8 @@
 		$history = $_POST['history'];
 	}
 
-	$loading = true;
-	header('Location: ../render.php?loading='.$loading.'&current_progress='.$current_progress.'&loading_info='.$loading_info);
+	$_SESSION['loading'] = true;
+	header('Location: ../render.php');
 
 	include("../lib/vcs/git/git.php");	
 	include("../php/algorithm.php");
