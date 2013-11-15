@@ -53,7 +53,7 @@
 				}
 			}
 
-			imagepng($img, "name.png");
+			imagepng($img, "visualization.png");
 			return $img;
 		}
 
@@ -82,9 +82,9 @@
 		    			$h = 0;
 		    		}
 		    		$convArray = $conv->ColorHSLToRGB($h,$s,$l);
-		    		$r = $convArray[r];
-		    		$g = $convArray[g];
-		    		$b = $convArray[b];
+		    		$r = $convArray['r'];
+		    		$g = $convArray['g'];
+		    		$b = $convArray['b'];
 		    		$color = ImageColorAllocate($img, $r, $g, $b);
 		    		return $color;
 				case 1:
@@ -108,12 +108,12 @@
 
 
 			if (is_numeric($letter)){
-		    	$value = 22 * array_search($letter, $numberArray);
+		    	$value = array_search($letter, $numberArray);
 			}
 			else{
-		    	$value = 8 * array_search($letter, $letterArray);
+		    	$value = array_search($letter, $letterArray);
 		    }
-		    return $value;
+		    return $value /26;
 		}
 
 	}
