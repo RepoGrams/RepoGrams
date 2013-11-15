@@ -19,7 +19,7 @@
 	
 	<!-- JS sources -->
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-	<script type="text/javascript" src="js/jquery.elevateZoom-3.0.8.min.js"></script>
+	<!-- <script type="text/javascript" src="js/jquery.elevateZoom-3.0.8.min.js"></script> -->
 	<script type="text/javascript" src="js/custom.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 
@@ -71,27 +71,241 @@
 	<!-- Content -->
 	<div class="container" id="wrap">
     	<div class="hero-unit">
-    		<?php
-				echo '<div class="color-legend">
-						<div class="legend-title">Legend</div>
-						<div class="legend-scale">
-  							<ul class="legend-labels">
-   			 					<li><span style="background:#8DD3C7;"></span>One</li>
-    							<li><span style="background:#FFFFB3;"></span>Two</li>
-    							<li><span style="background:#BEBADA;"></span>Three</li>
-    							<li><span style="background:#FB8072;"></span>Four</li>
-    							<li><span style="background:#80B1D3;"></span>etc</li>
-  							</ul>
-						</div>
-					  </div>
-					  <div class="panel panel-default" style="height: 75%; min-height: 532px; width: 70%; min-width: 512px; margin: auto auto 0;">
-  						  <div class="panel-heading">'.$_GET["title"].'</div>			  	
-						  <div class="panel-body" style="height: 75%; min-height: 532px; width: 70%; min-width: 512px; margin: auto auto 0;">
-    						<img id="zoom_01" data-zoom-image="'.$_GET["image_large"].'" src="'.$_GET["image_small"].'" style="width: 100%; height: 92%;">
-  							<script type="text/javascript">$("#zoom_01").elevateZoom();</script> 
-						  </div>
-					  </div>';
-			?>	  
+    		<script type="text/javascript" src="js/jquery.overscroll.min.js"></script>
+    		<div class="color-legend">
+				<div class="legend-title">Legend</div>
+					<div class="legend-scale">
+  						<ul class="legend-labels">
+  						<?php 
+							if (isset($_GET['legend'])) {
+								echo '<li><span style="background:rgb('.$_GET['legend']['color'].');"></span>'.$_GET['legend']['title'].'</li>';
+		               		}
+		            	?>
+  						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default" style="overflow: hidden; height: 555px; width: 514px; margin: auto auto 0;">
+  				<div class="panel-heading"><?php echo $_GET["title"] ?></div>
+				<div id="overscroll"> 
+					<ul>
+					<!-- DEMO -->
+					<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li><a id="link" href="javascript:void(0)">Click Me!</a></li><li class="no-drag">Can't drag me!</li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li></li><li class="alt"></li><li></li><li class="alt"></li><li></li><li class="alt"></li>
+			<li class="last"></li>
+			<!-- DEMO_END -->
+					<?php 
+						if (isset($_GET['image'])) {
+							echo '<li></li>
+								  <li class="alt"></li>
+			                      <li></li>
+			                      <li class="alt"></li>
+	     						  <li></li>
+                                  <li class="alt"></li>';
+		                }
+		            ?>
+					</ul>
+				</div>
+			</div>
+	</div>  
     	</div>
     	<div id="push"></div>
 	</div>
@@ -102,5 +316,28 @@
 			<br>
 			<p class="muted credit">&copy;<?php echo date("Y")?> Fabian Kosmale, Heiko Becker, Maike Maas, Marc Jose, Sebastian Becking, Valerie Poser</p>		
 	</div>
+	
+	<script>
+		$(function(o){
+			o = $("#overscroll").overscroll({
+				cancelOn: '.no-drag',
+//				captureWheel: false,
+//				hoverThumbs: true,
+//				persistThumbs: true,
+//				showThumbs: false,
+				scrollLeft: 200,
+				scrollTop: 100
+			}).on('overscroll:dragstart overscroll:dragend overscroll:driftstart overscroll:driftend', function(event){
+				console.log(event.type);
+			});
+			$("#link").click(function(){
+				if(!o.data("dragging")) {
+					console.log("clicked!");
+				} else {
+					return false;
+				}
+			});
+		});
+	</script>
 </body>
 </html>
