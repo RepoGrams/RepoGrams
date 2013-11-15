@@ -33,6 +33,7 @@
 			$factor = ($pixel/$hohe) / $all_diff;
 
 			for ($i = 0; $i < $count; $i++){
+				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str, $img);
  		 		#$color = ImageColorAllocate($img, 100, 100, 100);
