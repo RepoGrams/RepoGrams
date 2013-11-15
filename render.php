@@ -1,5 +1,6 @@
 <html !DOCTYPE HTML>
 <head>
+	<!-- added for Fabian -->
 	<!-- Meta tags -->
 	<meta name="description" content="Visualizing commit comments with chromograms">
 	<meta name="keywords" content="chromogram, git, commit, comments, project">
