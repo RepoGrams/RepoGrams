@@ -1,5 +1,5 @@
 <?php
-	
+	include("convert.php");
 	class algorithm {
 
 		public function render($commitArray, $modus = 0){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
@@ -58,6 +58,7 @@
 		}
 
 		private function commitToColor($modus, $msg, $img){
+			$conv = new convert();
 			if ($msg == null or strlen($msg) == 0)
 		      			return ImageColorAllocate($img, 211, 211, 211);
 		    $msg = preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
@@ -65,21 +66,25 @@
 		    switch ($modus) {
 				case 0:
 		    		$first = substr($msg, 0, 1);
-		    		$r = $this->letterValue($first, 0);
+		    		$h = $this->letterValue($first, 0);
 		    		if (strlen($msg) > 1){
 		    			$second = substr($msg, 1, 1);
-		    			$g = 0.3 + 0.6 * $this->letterValue ($second, 1);
+		    			$s = 0.3 + 0.6 * $this->letterValue ($second, 1);
 		    			if (strlen($msg) > 2) {
 		    				$third = substr($msg, 2, 1);
-		    				$b = 0.4 + 0.5 * $this->letterValue ($third, 2);
+		    				$l = 0.4 + 0.5 * $this->letterValue ($third, 2);
 		    			}
 		    			else {
-		    				$b = 0;
+		    				$l = 0;
 		    			}
 		    		}
 		    		else{
-		    			$g = 0;
+		    			$h = 0;
 		    		}
+		    		$convArray = convert->ColorHSLToRGB($h,$s,$l);
+		    		$r = $convArray[0];
+		    		$g = $convArray[1];
+		    		$b = $convArray[2];
 		    		$color = ImageColorAllocate($img, $r, $g, $b);
 		    		return $color;
 				case 1:
