@@ -1,11 +1,4 @@
-<?php session_start();
-if (!isset($_SESSION['zaehler'])) {
-  $_SESSION['zaehler'] = 0;
-} else {
-  $_SESSION['zaehler']++;
-}
-echo $_SESSION['zaehler'];
-echo "Test";?>
+<?php session_start();?>
 
 <html !DOCTYPE HTML>
 <head>
@@ -75,7 +68,6 @@ echo "Test";?>
 
 	<!-- Content -->
 	<div class="container" id="wrap">
-	<?php if (session_status() == PHP_SESSION_NONE) {echo 'Session started';} else {echo 'Session not started';}?>
 		<h1>Visualizing Commit Messages with Chromograms</h1>
 		Welcome to our project of the Software Engineering Course.
 		This website is just a first prototype.
