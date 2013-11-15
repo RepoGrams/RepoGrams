@@ -32,4 +32,9 @@ interface Repo_Interface
 	 */
 	public function GetAllCommits();
 
+	/**
+	 * @return the amount of commits in the repo
+	 */
+	public function getTotalCommitCount();
+
 }
