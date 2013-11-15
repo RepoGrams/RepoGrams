@@ -83,7 +83,7 @@
 					echo '<form role="form" action="php/action.php" method="POST">
     					  	<legend>Enter the link for your project</legend>
     						<div class="input-group">
-    							<input class="form-control" id="projectlink" name="projectlink" type="text" size="143" placeholder="Enter repository url">
+    							<input class="form-control" id="projectlink" name="projectlink" type="text" required="required" size="143" placeholder="Enter repository url">
      							<span class="input-group-btn">
         							<button class="btn btn-default" type="submit">
         								<span class="glyphicon glyphicon-indent-left"></span>Visualize!
