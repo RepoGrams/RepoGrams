@@ -68,12 +68,13 @@
 	<!-- Content -->
 	<div class="container" id="wrap">
 		<strong><br>DOCUMENTATION</strong>
+    	<div id="push"></div>
 	</div>
 	
 	
 	<!-- Footer -->
-	<div class="credit">
-			<p>&copy;<?php echo date("Y")?> Fabian Kosmale, Heiko Becker, Maike Maas, Marc Jose, Sebastian Becking, Valerie Poser</p>		
+	<div class="credit" id="footer">
+			<p class="muted credit">&copy;<?php echo date("Y")?> Fabian Kosmale, Heiko Becker, Maike Maas, Marc Jose, Sebastian Becking, Valerie Poser</p>		
 	</div>
 </body>
 

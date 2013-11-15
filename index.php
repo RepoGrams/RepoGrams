@@ -71,17 +71,14 @@
 		Welcome to our project of the Software Engineering Course.
 		This website is just a first prototype.
 		<br><br>
-		Blabla what are chromograms.
-		<br><br>
-		Blabla include example pictures
-		<br><br>
-		Blabla goto Website.
+		<a href="image.php?image_small=img/example/small.jpg&image_large=img/example/large.jpg&title=Example">Example link</a>
+    	<div id="push"></div>
 	</div>
 	
 	
 	<!-- Footer -->
-	<div class="credit">
-			<p>&copy;<?php echo date("Y")?> Fabian Kosmale, Heiko Becker, Maike Maas, Marc Jose, Sebastian Becking, Valerie Poser</p>		
+	<div class="credit" id="footer">
+			<p class="muted credit">&copy;<?php echo date("Y")?> Fabian Kosmale, Heiko Becker, Maike Maas, Marc Jose, Sebastian Becking, Valerie Poser</p>		
 	</div>
 </body>
 

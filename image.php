@@ -17,6 +17,7 @@
 	
 	<!-- JS sources -->
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery.elevateZoom-3.0.8.min.js"></script>
 	<script type="text/javascript" src="js/custom.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 
@@ -49,7 +50,7 @@
 		<ul class="nav navbar-nav">
 			<li><a href="index.php">VCC</a></li>
       			<li><a href="index.php">Home</a></li>
-      			<li class="active"><a href="render.php">Render</a></li>
+      			<li><a href="render.php">Render</a></li>
       			<li><a href="documentation.php">Documentation</a></li>
     		</ul>
     
@@ -67,39 +68,27 @@
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<img class="title" src="img/title.png"></a>
-		<br><br><br>
     	<div class="hero-unit">
     		<?php
-				if ($_GET["loading"]) {
- 					echo '<br><br>
-						  <div class="progress progress-striped active">
-  						  	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:'.$_GET["current_progress"].'%;"></div>
+				echo '<div class="color-legend">
+						<div class="legend-title">Legend</div>
+						<div class="legend-scale">
+  							<ul class="legend-labels">
+   			 					<li><span style="background:#8DD3C7;"></span>One</li>
+    							<li><span style="background:#FFFFB3;"></span>Two</li>
+    							<li><span style="background:#BEBADA;"></span>Three</li>
+    							<li><span style="background:#FB8072;"></span>Four</li>
+    							<li><span style="background:#80B1D3;"></span>etc</li>
+  							</ul>
+						</div>
+					  </div>
+					  <div class="panel panel-default" style="height: 75%; min-height: 532px; width: 70%; min-width: 512px; margin: auto auto 0;">
+  						  <div class="panel-heading">'.$_GET["title"].'</div>			  	
+						  <div class="panel-body" style="height: 75%; min-height: 532px; width: 70%; min-width: 512px; margin: auto auto 0;">
+    						<img id="zoom_01" data-zoom-image="'.$_GET["image_large"].'" src="'.$_GET["image_small"].'" style="width: 100%; height: 92%;">
+  							<script type="text/javascript">$("#zoom_01").elevateZoom();</script> 
 						  </div>
-						  <p>'.$_GET["loading_info"].'</p>';
-				} else if (false) {
-				} else {
-					echo '<form role="form" action="php/action.php" method="POST">
-    					  	<legend>Enter the link for your project</legend>
-    						<div class="input-group">
-    							<input class="form-control" id="projectlink" name="projectlink" type="text" size="143" required="required" placeholder="Enter repository url">
-     							<span class="input-group-btn">
-        							<button class="btn btn-default" type="submit">
-        								<span class="glyphicon glyphicon-indent-left"></span>Visualize!
-        							</button>
-      							</span>
-							</div>';
-					if (isset($_GET["error"])) {
-						echo '<div class="alert alert-danger alert-dismissable">
-  						  	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  							<strong>Error!</strong> '.$_GET["error_message"].'
-						  </div>';
-					}
-					echo '	<div class="form-group">
-  						  		<input class="checkbox-horizontal" type="checkbox" id="history" name="history" value="true" checked="true">Check for history</input>
-						 	</div>
-			              </form>';
-				}
+					  </div>';
 			?>	  
     	</div>
     	<div id="push"></div>
