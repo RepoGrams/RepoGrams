@@ -81,7 +81,7 @@
 		    		else{
 		    			$h = 0;
 		    		}
-		    		$convArray = convert->ColorHSLToRGB($h,$s,$l);
+		    		$convArray = $conv->ColorHSLToRGB($h,$s,$l);
 		    		$r = $convArray[0];
 		    		$g = $convArray[1];
 		    		$b = $convArray[2];
