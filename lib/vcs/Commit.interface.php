@@ -33,5 +33,21 @@ interface  Commit_Interface {
 	 */
 	function DiffToParent();
 
+	/**
+	 * @return the number of changed lines
+	 */
+	function NumChangedLines();
+
+
+	/**
+	 * @return the number of changed lines
+	 */
+	function NumAddedLines();
+
+	/**
+	 * @return the number of changed lines
+	 */
+	function NumRemovedLines();
+
 	// everything else we need
 }
