@@ -82,9 +82,9 @@
 		    			$h = 0;
 		    		}
 		    		$convArray = $conv->ColorHSLToRGB($h,$s,$l);
-		    		$r = $convArray[0];
-		    		$g = $convArray[1];
-		    		$b = $convArray[2];
+		    		$r = $convArray[r];
+		    		$g = $convArray[g];
+		    		$b = $convArray[b];
 		    		$color = ImageColorAllocate($img, $r, $g, $b);
 		    		return $color;
 				case 1:
