@@ -1,4 +1,11 @@
-<?php if (session_status() == PHP_SESSION_NONE) {session_start();}?>
+<?php session_start();
+if (!isset($_SESSION['zaehler'])) {
+  $_SESSION['zaehler'] = 0;
+} else {
+  $_SESSION['zaehler']++;
+}
+echo $_SESSION['zaehler'];
+echo "Test";?>
 
 <html !DOCTYPE HTML>
 <head>
