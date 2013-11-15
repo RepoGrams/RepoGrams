@@ -1,6 +1,6 @@
 <?php
 	
-	class algorthim {
+	class Algorthim {
 
 		$keys1 = array("add", "new");
 		$section1 = array_fill_keys($keys1, "Section1");
@@ -115,5 +115,6 @@
 
 	}
 
+	$algo = new Algorithm();
 
 ?>
