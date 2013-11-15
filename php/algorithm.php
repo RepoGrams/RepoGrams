@@ -3,8 +3,8 @@
 	class algorithm {
 
 	
-		public function render($commitArray, $modus = 0){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
-
+		public function render($commitObjectArray, $modus = 0){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
+			$commitArray = $this->preprocess($commitObjectArray);
 			$count = count($commitArray);
 
 			$all_diff = 0;
@@ -145,6 +145,15 @@
 					echo "Hier läuft was schief.";
 					break;
 			}
+		}
+
+
+		private function preprocess($obj){
+			include("../lib/vs/Commit.interface.php");
+			for ($i = 0; $i < count($obj); $i++){
+				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->DiffToParent()) ;
+			}
+			return $array;
 		}
 
 
