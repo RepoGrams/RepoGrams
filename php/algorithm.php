@@ -2,6 +2,7 @@
 	include("convert.php");
 	class algorithm {
 
+	
 		public function render($commitArray, $modus = 0){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
 
 			$count = count($commitArray);
@@ -88,10 +89,57 @@
 		    		$color = ImageColorAllocate($img, $r, $g, $b);
 		    		return $color;
 				case 1:
-					// /* hier muss der String noch zerteilt werden */
-					// for ($i=0; $i < $anzahl; $i++) { 
-					// 	#array_search($stringRep[i], $keyword_Array)
-					// }
+					$keys1 = array("add", "new", "create");
+					$section1 = array_fill_keys($keys1, "Section1");
+					
+					$keys2 = array("delete", "remove");
+					$section2 = array_fill_keys($keys2, "Section2");
+					
+					$keys3 = array("fix", "bug");
+					$section3 = array_fill_keys($keys3, "Section3");
+
+					$keyword_Array = array_merge($section1, $section2, $section3);
+
+					/* hier muss der String noch zerteilt werden */
+					$stringRep = explode(" ", $msg);
+					
+					$Sec1 = 0;
+					$Sec2 = 0;
+					$Sec3 = 0;
+					
+					$anzahl = count($stringRep);
+					
+					for ($i=0; $i < $anzahl; $i++) { 
+						$sec = array_search($stringRep[i], $keyword_Array);
+						switch($sec){
+							case "Section1":
+								$Sec1++;
+							case "Section2":
+								$Sec2++;
+							case "Section3":
+								$Sec3++;
+						}
+					}
+					
+					if($Sec1 > $Sec2){
+						if($Sec1 > $Sec3){
+							$Sec1 = 255;
+							$Sec2 = $Sec2*100 /255;
+							$Sec3 = $Sec3*100 /255;
+						}
+					}
+					else if($Sec2 > $Sec3){
+						$Sec1 = $Sec1*100 /255;
+						$Sec2 = 255;
+						$Sec3 = $Sec3*100 /255;
+					}
+					else{
+						$Sec1 = $Sec1*100 /255;
+						$Sec2 = $Sec2*100 /255;
+						$Sec3 = 255;
+					}
+					$color = ImageColorAllocate($img, $Sec1, $Sec2, $Sec3);
+		    		return $color;
 					break;
 				default:
 					echo "Hier läuft was schief.";
