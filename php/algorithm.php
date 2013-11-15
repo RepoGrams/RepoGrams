@@ -1,18 +1,11 @@
 <?php
-	
-	class Algorthim {
-
-		$keys1 = array("add", "new");
-		$section1 = array_fill_keys($keys1, "Section1");
-		
-		$keys2 = array("delete", "remove");
-		$section2 = array_fill_keys($keys2, "Section2");
-
-		$keyword_Array = array_merge($section1, $section2);
 
 		$letter_Array = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
 
 		$number_Array = array("y", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+
+	
+	class Algorthim {
 
 		function algorithm($commitArray, $modus = 0){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
 
@@ -93,7 +86,7 @@
 				case 1:
 					/* hier muss der String noch zerteilt werden */
 					for ($i=0; $i < $anzahl; $i++) { 
-						array_search($stringRep[i], $keyword_Array)
+						#array_search($stringRep[i], $keyword_Array)
 					}
 					break;
 				default:
