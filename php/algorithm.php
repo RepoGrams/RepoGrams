@@ -1,6 +1,6 @@
 <?php
 	
-	class algrothim {
+	class algorthim {
 
 		$keys1 = array('add', 'new');
 		$section1 = array_fill_keys($keys1, 'Section1');
@@ -14,10 +14,61 @@
 
 		$number_Array = array('y', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
 
-		function algorthim($modus = 0, $msg, $diff, $img){
-			if (s == null or strlen($msg) == 0)
+		function algorithm($commitArray, $modus = 0){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
+
+			$count = count($commitArray);
+
+			$huge = ((string) $count)[0];
+
+			$all_diff = 0;
+
+			for ($j = 0; $j < $count; $j++){
+
+				$all_diff += $commitArray[j][1]; 
+
+				################################
+				### negativen diff behandeln ###
+				################################
+
+			}
+
+			################################################## 
+			$width = 300; # Später die Breite des Rechtecks 
+			$height = 300; # Später die Höhe des Rechtecks 
+			$img = ImageCreate($width, $height); # Hier wird das Bild einer Variable zu gewiesen 
+			################################################## 
+			
+			$x = 0; 	#links oben -> links
+			$y = 0; 	#links oben -> oben
+			$hohe = 15; 	#rechts unten -> links BREITE
+			$z = $hohe;	#rechts unten -> oben HÖHE
+
+			$pixel = $width * $height; #all pixels on picture
+			$factor = ($pixel/$hohe) / $diff2;
+
+			for ($i = 0; $i < $count; $i++){
+				$color = commitToColor($modus, commitArray[$i][0], commitArray[$i][1], $img);
+ 		 		$w = ($x+($diff*$factor));
+				ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
+				if ($w > $width){
+					$overlap = $w-$width;
+					$x = 0;
+					$y += $hohe;
+					$w = $overlap;
+					$z += $hohe;
+					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
+					$x += $w;
+				}
+				else{
+					$x += $diff*$factor;
+				}
+			}
+		}
+
+		function commitToColor($modus, $msg, $img){
+			if (§msg == null or strlen($msg) == 0)
 		      			return ImageColorAllocate($img, 211, 211, 211);
-		    $msg=preg_replace("/[^a-zA-Z0-9_äöüÄÖÜ ]/" , "" , $msg);
+		    $msg=preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
 		    $msg = strtolower($msg);
 		    switch ($modus) {
 				case 0:
