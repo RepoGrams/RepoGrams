@@ -80,8 +80,9 @@
   						  	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:'.$_SESSION['current_progress'].'%;"></div>
 						  </div>
 						  <p>'.$_SESSION['loading_info'].'</p>';
-				} else if (false) {
-					//if finished show final image on image.php
+				} else if (isset($_SESSION['current_progress']) && $_SESSION['current_progress'] == 100) {
+					$_SESSION['current_progress'] = 0;
+					header('Location: image.php');
 				} else {
 					echo '<form role="form" action="php/action.php" method="POST">
     					  	<legend>Enter the link for your project</legend>
@@ -112,6 +113,7 @@
 	
 	<!-- Footer -->
 	<div class="credit" id="footer">
+			<br>
 			<p class="muted credit">&copy;<?php echo date("Y")?> Fabian Kosmale, Heiko Becker, Maike Maas, Marc Jose, Sebastian Becking, Valerie Poser</p>		
 	</div>
 </body>
