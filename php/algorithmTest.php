@@ -4,7 +4,7 @@
 
 	
 		public function render($commitObjectArray, $modus = 0){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
-			$commitArray = $this->preprocess($commitObjectArray);
+			$commitArray = $commitObjectArray; //$commitArray = $this->preprocess($commitObjectArray);
 			$count = count($commitArray);
 
 			$all_diff = 0;

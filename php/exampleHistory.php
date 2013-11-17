@@ -1,6 +1,6 @@
 <?php
 
-include("algorithm.php");
+include("algorithmTest.php");
 $algo = new algorithm();
 $m00 = array ("add", 12);
 $m01 = array ("rev", 11);
