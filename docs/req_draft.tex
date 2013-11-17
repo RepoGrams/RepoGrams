@@ -15,66 +15,71 @@
 \maketitle
 \section{Must-Haves:}
 \begin{enumerate}
-\item The product's front end is a website working with recent and well known browsers (e.g. Google Chrome, latest release of Firefox, Opera, Safari). 
-\item The website contains a top bar with links to the main site, a documentation or help site and one to the site, where the repositories are visualized. 
-\item The main site contains a short explanation what the sites purpose is and shows some example pictures. 
-\item The rendering site display a progress bar while the back-end renders the pictures. After rendering is finished it shows the picture of the visualization.
-\item It supports visualization of the commit comments as blocks with different colors of git repositories from a given URL. 
-\item The visualization is displayed in an overall block view in one picture. A overall block view means no distinction for different days or files.
-\item The main visualization parameter is the commit message.
-\item The product is released open source 
-\item The product is usable with the Apache/2.2.24(Unix).
-\item For every rendered image exists a legend which maps the used colors to the corresponding words.
-\item The applications language is English.
-\item The application detects if the repository hosting server doesn't answer and exits with an error message.
-\item The application detectes if it has no acces to the remote repository and exits with an error message.
-\item The supported encoding of the repository comments is ANSI-ASCII.
+\item The product's front end is a website that will work with recent and well known browsers (Firefox, Internet Explorer, Google Chrome, Safari and Opera). 
+\item The website will contain a top bar with links to the main page, a documentation page and one to the page where the repositories are visualized. 
+\item The home page will contain a short explanation about the site's purpose
+\item The home page will also show some example renderings.
+\item The system will support visualization of the commit comments of a provided git repository by representing every commit comment as a coloured block.
+\item A repository will be provided by the user by entering a URL which refers to the repository that should be visualized.
+\item The rendering page will display a progress bar while the system is rendering the picture.
+\item The rendering page will show the visualization after the rendering process is finished.
+\item The visualization will be displayed in a single picture.
+\item The visualization will provide an overall block view of all commit comments.
+\todo{Definition, overall block view?}
+\item The main visualization parameter will be the commit message.
+\item The product will be released open source 
+\item The product will be usable with Apache/2.2.24(Unix).
+\item The application language will be English.
+\item The application will detect if the repository's hosting server doesn't answer and will inform the user about that fact by printing an error message.
+\item The application will detect if it has no access to the remote repository and will inform the user about that fact by printing an error message.
+\item The system will support repositories whose commit comments are encoded in ANSI-ASCII. \todo{Why not Unicode?}
 \end{enumerate}
 \section{May-Haves:}
 \begin{enumerate}
-\item The product supports visualizing mercurial and subversion repositories as described above.
-\item The end-user is able to select which parameters he wants to influence the visualization on the website. In addition to the ones mentioned before we allow parameters from the list below (see 14).
-\item The end-user is able to customize the color-mapping for the parameters.
-\item The product website is responsive by using Bootstrap and works also with mobile clients. In this context responsive means, the layout is optimized for the current browser being used by the end user.
-\item The user may upload a folder of a git repository instead of an URL.
-\item The visualization is downloadable as PDF or JPEG.
-\item The visualizations can be posted on google+, facebook, twitter and instagr4m.
-\item The application can run with a basic Linux environment with an up-to-date Apache, postgresql database and php5.3 (or higher) when installed and has a well documented installation manual.
-\item The website can display chromograms for repositories, which are protected by a password. Therefore an additional field to enter the password is displayed on the rendering page.
-\item A block of the rendered image can be clicked and then displays its information about commit coments.
-\item The application is available in multiple languages.
-\item The rendered image is scalable.
-\item If the application has no acces tries to recover from this error by promting the user for ssh credentials. 
-\item The application supports these parameters for influence the visualization:
+\item The product may support visualizing commit comments of mercurial and subversion repositories \todo{more specific?}
+\item There may be an extra customize page where the user may be able to customize the visualization.
+\item The user may be able to customize the color-mapping for the parameters on the customize page.
+\item The user may be able to select which parameters he wants to influence the visualization on the customize page. In addition to the visualization parameters mentioned before the system may support parameters from the list below (see May-Have 5).
+\item The application may support these parameters for the visualization:
 \begin{enumerate}
 \item user\\
 (the person that made the commit to the repository)
 \item kind of change\\  
 (the numbers of lines that were added, modified or deleted with the commit we're working with)
 \item only added something \\
-(taking only the commits into account that added lines)
+(taking only the commits into account that added lines or files)
 \item only deleted something\\
-(taking only the commits into account that removed lines)
+(taking only the commits into account that removed lines or files)
 \item time of day of commit\\
 (the time of day at which the commit we're currently working with was made)
 \item date of commit\\
 (the date at which the commit we're currently working with was made)
-\item commit message\\
-(the commit message of the user)
 \end{enumerate}
 \item The parameters may influence a block's color, size, alignment and order.
-\item The application can cache repositories that are already displayed by any user.
+\item \todo{describe how the user may customize the visualization (e.g drop-down menus}
+\item The visualization may be supported by a legend mapping used colors to the corresponding words.
+\item The product website may be responsive and may also work with mobile clients. In this context responsive means, the layout will be optimized for the current browser used by the user.
+\item The user may be able to upload a folder of a git repository instead of an URL.
+\item The visualization may be downloadable as a PDF or JPEG.
+\item The visualizations may be shared on Google+, Facebook, Twitter and Instagram.
+\item \todo{ The application may run with a basic Linux environment with an up-to-date Apache, postgresql database and php5.3 (or higher) when installed and has a well documented installation manual.\\ What is this supposed to mean?}
+\item The website may visualize repositories which are protected by a password. Therefore an additional field to enter the password may be displayed on the rendering page.
+\item The user may click on a single block within the visualization to see further information about the specific commit comment represented by that block.
+\item The application may be available in multiple languages.
+\item The visualization of the repository created on the rendering page may be scalable.
+\item \todo{ If the application has no acces tries to recover from this error by promting the user for ssh credentials. What??}
+\item The application may cache repositories that have already been displayed by the user.
 \end{enumerate}
 \section{Won't-have:}
 \begin{enumerate}
-\item The product will not have a desktop client and can be used without a web browser.
-\item The client will not support version control systems other than mercurial, subversion and git.
+\item The product will not have a desktop client and cannot be used without a web browser.
+\item The client will not support version control systems other than Mercurial, Subversion and Git.
 \item The software will not have a native app for any mobile operating system.
-\item The application will not provide a user login interface where users can manage their pictures or their git repositories.
-\item The application will not provide access to the git repositories.
-\item The application will not provide a visualization of the structure of the repository.
+\item The application will not provide a user login interface where users can manage their pictures or their repositories.
+\item The application will not provide access to the repositories.
+\item The application will not provide a visualization of the structure of the repository, meaning branches, merges, and so on.
 \item The application will not provide access to ssh key protected repositories.
-\item The application will not create movies of the rendering.
-\item The application will not encode more than ANSI-ASCII for the repository comments.
+\item The application will not create animated renderings.
+\item \todo{ The application will not encode more than ANSI-ASCII for the repository comments.}
 \end{enumerate}
 \end{document}
