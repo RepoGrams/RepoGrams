@@ -1,50 +1,70 @@
 \documentclass[11pt]{scrartcl}
 \usepackage[utf8]{inputenc}
-\usepackage[german]{babel}
+\usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{csquotes}
 \usepackage{color}	
 \newcommand{\todo}[1]{\textbf{\textsc{\textcolor{red}{(TODO: #1)}}}}
 \renewcommand{\baselinestretch}{1.0}\normalsize
-\parindent 0pt		
+\parindent 0pt
 \author{Maike Maas, Valerie Poser, Sebastian Becking,\\
 Marc Jose, Fabian Kosmale, Heiko Becker}
 \title{Visualizing commit comments with chromograms}
 \begin{document}
 \maketitle
 
-
-Use-case: Visualizing a public git repository \\
+Use-case: Visualizing a public Git repository \\
 Primary actor: User of a desktop browser \\
 Goal in context: Visualizing the repository in an overall block view with standard parameters \\
-Preconditions: Browser with internet connection and an URL for a git repository to insert \\
-Trigger: User want to get a visualization of his git repository \\
+Preconditions: Browser with Internet connection and an URL to a Git repository\\
+Trigger: The user wants to get a visualization of his Git repository \\
 
 Scenario:
 \begin{enumerate}
-\item User calls the webpage.
-\item User clicks on \grqq Render\grqq ~and it loads the page where you can enter the URL for the git repository. 
-\item User enters URL for the git repository. 
-\item Users clicks on \grqq Go\grqq. (See Exception 1, 2, 3, 4, 5)
-\item Webpage shows progress bar with some information. (See Exception 6, 7)
-\item Webpage shows visualized repository.
-\item To save the picture the user takes a screenshot.
+\item The user opens the webpage and arrives at the start page.
+\item The user clicks on \enquote{Render} and the browser loads the page where
+	she can enter the URL to the Git repository. 
+\item The user enters the URL for the Git repository. 
+\item The user clicks on \enquote{Go}. (See exception 1, 2, 3, 4, 5)
+\item The server clones the repository.
+\item The webpage shows a progress bar with an information text displayed beneath
+	it. (See Exception 6, 7)
+\item The webpage shows the repository's visualization.
+\item The users takes a screenshot to save the picture. 
 \end{enumerate}
 
 Exceptions:
 \begin{enumerate}
-\item Illegal URL $\rightarrow$ The website shows an error message: \glqq You need to enter a legal link to a git repository\grqq and goes back to the \glqq Render\grqq-Page.
-\item The URL doesn't contain a git repository. $\rightarrow$  The website shows an error message: \glqq You need to enter a legal link to a git repository\grqq and goes back to the \glqq Render\grqq-Page.
-\item The Repository is password protected $\rightarrow$ May-have implements this, apart from that the website shows an error message: \glqq The git repository has to be without password protection\grqq and goes back to the \glqq Render\grqq-Page.
-\item The Repository is protected with private ssh key $\rightarrow$ The website shows an error message: \glqq The git repository has to be without ssh key protection.\grqq and goes back to the \glqq Render\grqq-Page, we don't handle this.
-\item Empty repository $\rightarrow$ The website shows an error message: \glqq The repository is empty\grqq and goes back to the \glqq Render\grqq-Page.
-\item Repository doesn't respond $\rightarrow$ The website shows an error message after timeout: \glqq The git repository doesn't answer. Please try it later.\grqq and goes back to the \glqq Render\grqq-Page. 
-\item Repository is too big $\rightarrow$  try to reduce repository and visualize this or error message if it is still too big: \glqq The repository is to bug. Please try another one.\grqq
+\item The URL is illegal $\rightarrow$ The website shows an error message:
+	\enquote{You need to enter a legal link to a Git repository} and goes
+	back to the \enquote{Render}--Page.
+\item The URL doesn't point to a Git repository. $\rightarrow$  The website
+	shows an error message: \enquote{You need to enter a legal link to a git
+	repository} and goes back to the \enquote{Render}--Page.
+\item The Repository is password protected $\rightarrow$ The website shows an
+	error message: \enquote{The Git repository has to be without password
+	protection} and goes back to the \enquote{Render}--Page.
+\item The repository is protected with a private SSH key $\rightarrow$ The
+	website shows an error message: \enquote{The Git repository has to be
+	without SSH key protection.} and goes back to the
+	\enquote{Render}--Page.
+\item The repository is empty$\rightarrow$ The website displays an error
+	message: \enquote{The repository is empty} and goes back to the
+	\enquote{Render}--Page.
+\item The server hosting the repository doesn't respond $\rightarrow$ The
+	website shows an error message after timeout: \enquote{The Git
+	repository is currently unavailable. Please try again later.} and goes
+	back to the \enquote{Render}--Page. 
+\item The repository is too big $\rightarrow$  The server attempts to obtain a
+	smaller copy of the repository by doing a shallow clone, containing only
+	the 50 most recent commits. If the repository is still too big, the
+	follwoing error message is shown: \enquote{The repository is to bug. Please try another one.}
 \end{enumerate}
 
 Priority: high \\
-Frequency of use: Very often - this is main functionality of the system\\
+Frequency of use: Very often --- this is the main functionality of the system\\
 
 
 \end{document}
