@@ -1,4 +1,5 @@
 \documentclass[11pt]{scrartcl}
+\usepackage{microtype}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
@@ -17,56 +18,57 @@ Marc Jose, Fabian Kosmale, Heiko Becker}
 \begin{document}
 \maketitle
 
-\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Goal in context:}]
-	\item[ Use-case: ] Visualizing a public Git repository 
-	\item[ Primary actor: ] User of a desktop browser 
-	\item[ Goal in context: ] Visualizing the repository in an overall block view with standard parameters 
-	\item[ Preconditions: ] Browser with Internet connection and an URL to a Git repository
-	\item[ Trigger: ] The user wants to get a visualization of his Git repository 
+\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Frequency of use:}]
+	\item[Use-case:] Visualizing a public Git repository 
+	\item[Primary actor:] User of a desktop browser 
+	\item[Goal in context:] Visualizing the repository in an overall block view with standard parameters 
+	\item[Preconditions:] Browser with a working Internet connection and an URL to a Git repository
+	\item[Trigger:] The user wants to get a visualization of her Git repository 
 
-\item[Scenario:]
-\begin{enumerate}
-\item The user opens the webpage and arrives at the start page.
-\item The user clicks on \enquote{Render} and the browser loads the page where
-	she can enter the URL to the Git repository. 
-\item The user enters the URL for the Git repository. 
-\item The user clicks on \enquote{Go}. (See exception 1, 2, 3, 4, 5)
-\item The webpage shows a progress bar with an information text displayed beneath
-	it. (See Exception 6, 7)
-\item The webpage shows the repository's visualization.
-\item The user takes a screenshot to save the picture. 
-\end{enumerate}
+	\item[Scenario:]
+		\begin{enumerate}[leftmargin=1.5em]
+			\item The user opens the webpage and arrives at the start page.
+			\item The user clicks on \enquote{Render} and the browser loads the page where
+				she can enter the URL to the Git repository. 
+			\item The user enters the URL for the Git repository. 
+			\item The user clicks on \enquote{Go}. (See exception 1, 2, 3, 4, 5)
+			\item The webpage shows a progress bar with an
+				informatory text displayed beneath
+				it. (See Exception 6, 7)
+			\item The webpage shows the repository's visualization.
+			\item The user takes a screenshot to save the picture. 
+		\end{enumerate}
 
-\item[Exceptions:]
-\begin{enumerate}
-\item The URL is illegal $\rightarrow$ The website shows an error message:
-	\enquote{You need to enter a legal link to a Git repository} and goes
-	back to the \enquote{Render}--Page.
-\item The URL doesn't point to a Git repository. $\rightarrow$  The website
-	shows an error message: \enquote{You need to enter a legal link to a git
-	repository} and goes back to the \enquote{Render}--Page.
-\item The Repository is password protected $\rightarrow$ The website shows an
-	error message: \enquote{The Git repository has to be without password
-	protection} and goes back to the \enquote{Render}--Page.
-\item The repository is protected with a private SSH key $\rightarrow$ The
-	website shows an error message: \enquote{The Git repository has to be
-	without SSH key protection.} and goes back to the
-	\enquote{Render}--Page.
-\item The repository is empty$\rightarrow$ The website displays an error
-	message: \enquote{The repository is empty} and goes back to the
-	\enquote{Render}--Page.
-\item The server hosting the repository doesn't respond $\rightarrow$ The
-	website shows an error message after timeout: \enquote{The Git
-	repository is currently unavailable. Please try again later.} and goes
-	back to the \enquote{Render}--Page. 
-\item The repository is too big $\rightarrow$  The server attempts to obtain a
-	smaller copy of the repository by doing a shallow clone, containing only
-	the 50 most recent commits. If the repository is still too big, the
-	follwoing error message is shown: \enquote{The repository is to bug. Please try another one.}
-\end{enumerate}
+	\item[Exceptions:]
+		\begin{enumerate}[leftmargin=1.5em]
+			\item The URL is illegal $\rightarrow$ The website shows an error message:
+				\enquote{You need to enter a legal link to a Git repository} and goes
+				back to the \enquote{Render}--Page.
+			\item The URL doesn't point to a Git repository. $\rightarrow$  The website
+				shows an error message: \enquote{You need to enter a legal link to a git
+				repository} and goes back to the \enquote{Render}--Page.
+			\item The Repository is password protected $\rightarrow$ The website shows an
+				error message: \enquote{The Git repository has to be without password
+				protection} and goes back to the \enquote{Render}--Page.
+			\item The repository is protected by a private SSH key $\rightarrow$ The
+				website shows an error message: \enquote{The Git repository has to be
+				without SSH key protection.} and goes back to the
+				\enquote{Render}--Page.
+			\item The repository is empty$\rightarrow$ The website displays an error
+				message: \enquote{The repository is empty} and goes back to the
+				\enquote{Render}--Page.
+			\item The server hosting the repository doesn't respond $\rightarrow$ The
+				website shows an error message after timeout: \enquote{The Git
+				repository is currently unavailable. Please try again later.} and goes
+				back to the \enquote{Render}--Page. 
+			\item The repository is too big $\rightarrow$  The server attempts to obtain a
+				smaller copy of the repository by doing a shallow clone, containing only
+				the 50 most recent commits. If the repository is still too big, the
+				following error message is shown: \enquote{The repository is to big. Please try another one.}
+		\end{enumerate}
 
-\item[Priority:] high
-\item[Frequency of use:] Very often --- this is the main functionality of the system
+	\item[Priority:] high
+	\item[Frequency of use:] Very often --- this is the main functionality of the system
 
 \end{description}
 
