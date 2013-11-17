@@ -6,6 +6,8 @@
 \usepackage{amssymb}
 \usepackage{csquotes}
 \usepackage{color}	
+\usepackage{calc}
+\usepackage{enumitem}
 \newcommand{\todo}[1]{\textbf{\textsc{\textcolor{red}{(TODO: #1)}}}}
 \renewcommand{\baselinestretch}{1.0}\normalsize
 \parindent 0pt
@@ -15,27 +17,27 @@ Marc Jose, Fabian Kosmale, Heiko Becker}
 \begin{document}
 \maketitle
 
-Use-case: Visualizing a public Git repository \\
-Primary actor: User of a desktop browser \\
-Goal in context: Visualizing the repository in an overall block view with standard parameters \\
-Preconditions: Browser with Internet connection and an URL to a Git repository\\
-Trigger: The user wants to get a visualization of his Git repository \\
+\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Goal in context:}]
+	\item[ Use-case: ] Visualizing a public Git repository 
+	\item[ Primary actor: ] User of a desktop browser 
+	\item[ Goal in context: ] Visualizing the repository in an overall block view with standard parameters 
+	\item[ Preconditions: ] Browser with Internet connection and an URL to a Git repository
+	\item[ Trigger: ] The user wants to get a visualization of his Git repository 
 
-Scenario:
+\item[Scenario:]
 \begin{enumerate}
 \item The user opens the webpage and arrives at the start page.
 \item The user clicks on \enquote{Render} and the browser loads the page where
 	she can enter the URL to the Git repository. 
 \item The user enters the URL for the Git repository. 
 \item The user clicks on \enquote{Go}. (See exception 1, 2, 3, 4, 5)
-\item The server clones the repository.
 \item The webpage shows a progress bar with an information text displayed beneath
 	it. (See Exception 6, 7)
 \item The webpage shows the repository's visualization.
-\item The users takes a screenshot to save the picture. 
+\item The user takes a screenshot to save the picture. 
 \end{enumerate}
 
-Exceptions:
+\item[Exceptions:]
 \begin{enumerate}
 \item The URL is illegal $\rightarrow$ The website shows an error message:
 	\enquote{You need to enter a legal link to a Git repository} and goes
@@ -63,8 +65,9 @@ Exceptions:
 	follwoing error message is shown: \enquote{The repository is to bug. Please try another one.}
 \end{enumerate}
 
-Priority: high \\
-Frequency of use: Very often --- this is the main functionality of the system\\
+\item[Priority:] high
+\item[Frequency of use:] Very often --- this is the main functionality of the system
 
+\end{description}
 
 \end{document}
