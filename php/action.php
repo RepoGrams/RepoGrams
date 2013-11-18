@@ -4,8 +4,15 @@
 	$_SESSION['current_progress'] = 0;           //Value to determine the current progress (1-100), will be displayed in the progressbar along with some additional loading infos
 	$_SESSION['loading_info'] = 'Loading...';    //Loading infos (ex. 'Requesting repository access), will be displayed
 	$_SESSION['loading'] = false;                //if true then the progressbar will be displayed 
-	$_SESSION['error_message'] = '';            
+	$_SESSION['error_message'] = '';   
+	$width = $height = 512;         
 
+	
+	function callback($msg = null) {
+		$_SESSION['current_progress'] = $_SESSION['current_progress']+20;
+		$_SESSION['loading_info'] = $msg;
+	}
+	
 	/*
 	 * Check formular input
 	 */
@@ -22,13 +29,13 @@
 	}
 
 	$_SESSION['loading'] = true;
-	header('Location: ../render.php');
-
-	include("../lib/vcs/git/git.php");	
-	include("../php/algorithm.php");
-	/*
-		* TODO: Call connect to establish connection
-		* Then call algorithm to render and refresh the page
-	 */
 	
+	include("../lib/vcs/RepoFactory.php");
+	include("../php/algorithm.php");
+	
+// 	$repo = RepoFactory.createRepo($url);
+// 	render($repo.getAllCommits(), 0, $width, $height, callback());
+	
+	unset($_SESSION['loading']);
+	header('Location: ../render.php');
 ?>
