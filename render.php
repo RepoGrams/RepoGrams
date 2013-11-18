@@ -107,6 +107,39 @@
 				}
 			?>	  
     	</div>
+    	
+    	<!-- DEMO PASSWORD -->
+    	<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  			Launch demo password input
+		</button>
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  				<div class="modal-dialog">
+    				<div class="modal-content">
+      					<div class="modal-header">
+        					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        					<h4 class="modal-title" id="myModalLabel">Repository Access</h4>
+      					</div>
+      					<div class="modal-body">
+        					<form action="">
+        						<div class="input-group">
+  									<span class="input-group-addon" style="width:100px;">Username</span>
+  										<input class="form-control" id="projectlink" name="projectlink" type="text" required="required" size="143" placeholder="Username">
+      							</div>
+      							<br>
+								<div class="input-group">
+  									<span class="input-group-addon" style="width:100px;">Password</span>
+  									<input class="form-control" id="projectlink" name="projectlink" type="password" required="required" size="143" placeholder="Password">
+								</div>
+        					</form>
+      					</div>
+      					<div class="modal-footer">
+        					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        					<button type="button" class="btn btn-primary">Visualize!</button>
+      					</div>
+    				</div>
+  				</div>
+			</div>
+    	
     	<div id="push"></div>
 	</div>
 	
