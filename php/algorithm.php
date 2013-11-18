@@ -1,10 +1,10 @@
 <?php
 	include("convert.php");
-	include("../action.php");
+	include("action.php");
 	class algorithm {
 
 	
-		public function render($commitObjectArray, $modus = 0, $callback){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
+		public function render($commitObjectArray, $modus = 0, $width, $height, $callback){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
 			$commitArray = $this->preprocess($commitObjectArray);
 			$count = count($commitArray);
 
@@ -25,9 +25,8 @@
 			}
 
 			################################################## 
-			$width = 300; # Später die Breite des Rechtecks 
-			$height = 300; # Später die Höhe des Rechtecks 
-			$img = ImageCreate($width, $height); # Hier wird das Bild einer Variable zu gewiesen 
+			$width = 600; # Später die Breite des Rechtecks 
+			$height = 600; # Später die Höhe des Rechtecks 
 			################################################## 
 			
 			$x = 0; 	#links oben -> links
@@ -40,13 +39,34 @@
 
 			$act->$callback("Initialize image...");
 
+			$returnArray = array();
+
 			for ($i = 0; $i < $count; $i++){
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str, $img);
- 		 		#$color = ImageColorAllocate($img, 100, 100, 100);
  		 		$w = ($x+($diff*$factor));
-				ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
+
+ 		 		if ($w > $width){
+
+ 		 			$returnArray[] = array($w, $z, $color);
+
+					$overlap = $w-$width;
+					$x = 0;
+					$y += $hohe;
+					$w = $overlap;
+					$z += $hohe;
+					#ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
+					$returnArray[] = array($w, $z, $color);
+					$x += $w;
+
+				}
+				else{
+					$returnArray[] = array($w, $z, $color);
+					$x += $diff*$factor;
+				}
+
+				/*ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
 				if ($w > $width){
 					$overlap = $w-$width;
 					$x = 0;
@@ -58,13 +78,14 @@
 				}
 				else{
 					$x += $diff*$factor;
-				}
+				}*/
 			}
 
 			$act->$callback("Provide image ...");
 
-			imagepng($img, "visualization.png");
-			return $img;
+			#imagepng($img, "visualization.png");
+			#return $img;
+			return returnArray;
 		}
 
 		private function commitToColor($modus, $msg, $img){
@@ -97,7 +118,8 @@
 		    		$r = $convArray['r'];
 		    		$g = $convArray['g'];
 		    		$b = $convArray['b'];
-		    		$color = ImageColorAllocate($img, $r, $g, $b);
+		    		$color = $r.",".$g.",".$b;
+		    		#$color = ImageColorAllocate($img, $r, $g, $b);
 		    		return $color;
 				case 1:
 					$keys1 = array("add", "new", "create");
@@ -151,7 +173,8 @@
 					$sec2 = $p * $sec2;
 					$sec3 = $p * $sec3;
 					
-					$color = ImageColorAllocate($img, $sec1, $sec2, $sec3);
+					#$color = ImageColorAllocate($img, $sec1, $sec2, $sec3);
+		    		$color = $sec1.",".$sec2.",".$sec3;
 		    		return $color;
 					break;
 				default:

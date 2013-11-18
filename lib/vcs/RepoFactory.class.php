@@ -2,7 +2,7 @@
 require_once "git/GitRepo.class.php";
 
 class RepoFactory {
-	function createRepo($url) {
+	static function createRepo($url, $callback) {
 		return new GitRepo($url);
 	}
 }
