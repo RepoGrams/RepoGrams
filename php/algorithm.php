@@ -1,6 +1,6 @@
 <?php
 	include("convert.php");
-	include("../action.php");
+	include("action.php");
 	class algorithm {
 
 	
@@ -49,7 +49,7 @@
 
  		 		if ($w > $width){
 
- 		 			array = array($w, $z, $color);
+ 		 			$returnArray[] = array($w, $z, $color);
 
 					$overlap = $w-$width;
 					$x = 0;
@@ -57,12 +57,12 @@
 					$w = $overlap;
 					$z += $hohe;
 					#ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-					array = array($w, $z, $color);
+					$returnArray[] = array($w, $z, $color);
 					$x += $w;
 
 				}
 				else{
-					array = array($w, $z, $color);
+					$returnArray[] = array($w, $z, $color);
 					$x += $diff*$factor;
 				}
 
