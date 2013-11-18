@@ -1,6 +1,8 @@
 <?php
-require_once "GitCommit.class.php";
-require_once "GitImport.class.php";
+require_once './../Repo.interface.php';
+require_once 'GitCommit.class.php';
+require_once 'GitImport.class.php';
+require_once 'GitChanges.class.php';
 
 class GitRepo implements Repo_Interface {
 	
@@ -12,19 +14,19 @@ class GitRepo implements Repo_Interface {
 	 */
 	private function rawCommit2Commit($rawCommit, $index) {
 		return new GitCommit(
-			index,
+			$index,
 			NULL,
 			NULL,
 			$rawCommit["message"],
 			$rawCommit["date"],
-			NULL
+			new GitChanges($rawCommit["changes"])
 		);
 	}
 
 	function __construct($url) {
 		$gitImporter = new gitImport($url);
-		foreach (GitImporter::getRawRepoInfo() as $hash => $value) {
-			$commits[] = rawCommit2Commit($value, $hash);
+		foreach ($gitImporter->getRawRepoInfo() as $hash => $value) {
+			$this->commits[] = $this->rawCommit2Commit($value, $hash);
 		}
 	}
 
@@ -39,11 +41,15 @@ class GitRepo implements Repo_Interface {
 	public function GetFirstCommit() {
 		// git log uses reverse order
 		// therefore the first commit is at the end of the array
-		return $this->rawCommit2Commit(end($rawData));
+		return end($this->commits);
 	}
 
 	public function GetAllCommits() {
 		return $this->commits;
+	}
+
+	public function GetTotalCommitCount(){
+		return count($this->commits);
 	}
 
 }

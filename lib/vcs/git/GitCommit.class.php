@@ -1,4 +1,5 @@
 <?php
+include './../Commit.interface.php';
 
 class GitCommit implements Commit_Interface {
 
@@ -18,25 +19,25 @@ class GitCommit implements Commit_Interface {
 	}
 
 	public function Predecessor() {
-		if ($pred === NULL) {
+		if (isset($this->pred) && !is_null($this->pred)) {
 			throw Exception("No Predecessor");
 		}
-		return $pred;
+		return $this->pred;
 	}
 
 	public function Successor() {
-		if ($succ === NULL) {
+		if (isset($this->succ) && !is_null($this->succ)) {
 			throw Exception("No Successor");
 		}
-		return $succ;
+		return $this->succ;
 	}
 
 	public function CommitMessage() {
-		return $msg;
+		return $this->msg;
 	}
 
 	public function CommitTime() {
-		return $unix_time;
+		return $this->unix_time;
 	}
 
 	public function DiffToParent() {
@@ -44,15 +45,15 @@ class GitCommit implements Commit_Interface {
 	}
 
 	public function NumChangedLines() {
-		return 42; // TODO: implement this
+		return ($this->diffToParent->getLinesAdded() + $this->diffToParent->getLinesDeleted());
 	}
 
 	public function NumAddedLines() {
-		return 24; //TODO: implement this
+		return $this->diffToParent->getLinesAdded();
 	}
 
-	public function NumDeletedLines() {
-		return 2; //TODO: implement this
+	public function NumRemovedLines() {
+		return $this->diffToParent->getLinesDeleted();
 	}
 }
 
