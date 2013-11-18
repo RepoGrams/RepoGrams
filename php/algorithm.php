@@ -60,10 +60,12 @@
 
 		private function commitToColor($modus, $msg, $img){
 			$conv = new convert();
-			if ($msg == null or strlen($msg) == 0)
+			if ($msg == null)
 		      			return ImageColorAllocate($img, 211, 211, 211);
 		    $msg = preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
 		    $msg = strtolower($msg);
+		    if (strlen($msg) == 0)
+		      			return ImageColorAllocate($img, 211, 211, 211);
 		    switch ($modus) {
 				case 0:
 		    		$first = substr($msg, 0, 1);
