@@ -35,11 +35,14 @@
 \item The application language will be English.
 \item The application will detect if the repository's hosting server doesn't answer and will inform the user about that fact by printing an error message.
 \item The application will detect if it has no access to the remote repository and will inform the user about that fact by printing an error message.
-\item The system will support repositories whose commit comments are encoded in ANSI-ASCII. \todo{Why not Unicode?}
+\item The system will support repositories whose commit comments are encoded in
+	ANSI-ASCII. It will skip over Unicode glyphs.
 \end{enumerate}
 \section{May-Haves:}
 \begin{enumerate}
-\item The product may support visualizing commit comments of mercurial and subversion repositories \todo{more specific?}
+\item The product may support visualizing commit comments of mercurial and
+	subversion repositories analogously to how git repositories are
+	visualized.
 \item There may be an extra customize page where the user may be able to customize the visualization.
 \item The user may be able to customize the color-mapping for the parameters on the customize page.
 \item The user may be able to select which parameters he wants to influence the visualization on the customize page. In addition to the visualization parameters mentioned before the system may support parameters from the list below (see May-Have 5).
