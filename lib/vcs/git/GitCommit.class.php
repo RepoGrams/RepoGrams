@@ -43,6 +43,17 @@ class GitCommit implements Commit_Interface {
 		throw Exception("NOT IMPLEMENTED");
 	}
 
+	public function NumChangedLines() {
+		return 42; // TODO: implement this
+	}
+
+	public function NumAddedLines() {
+		return 24; //TODO: implement this
+	}
+
+	public function NumDeletedLines() {
+		return 2; //TODO: implement this
+	}
 }
 
 ?>
