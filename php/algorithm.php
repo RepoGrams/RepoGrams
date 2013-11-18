@@ -1,11 +1,16 @@
 <?php
 	include("convert.php");
+	include("../action.php");
 	class algorithm {
 
 	
-		public function render($commitObjectArray, $modus = 0){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
+		public function render($commitObjectArray, $modus = 0, $callback){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
 			$commitArray = $this->preprocess($commitObjectArray);
 			$count = count($commitArray);
+
+
+			$act = new action();
+			$act->$callback("Start rendering...");
 
 			$all_diff = 0;
 
@@ -33,6 +38,8 @@
 			$pixel = $width * $height; #all pixels on picture
 			$factor = ($pixel/$hohe) / $all_diff;
 
+			$act->$callback("Initialize image...");
+
 			for ($i = 0; $i < $count; $i++){
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
@@ -53,6 +60,8 @@
 					$x += $diff*$factor;
 				}
 			}
+
+			$act->$callback("Provide image ...");
 
 			imagepng($img, "visualization.png");
 			return $img;
