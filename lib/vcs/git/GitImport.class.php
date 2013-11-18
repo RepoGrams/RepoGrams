@@ -22,6 +22,7 @@ class gitImport {
 		$json = '{'.$json.'}';
 		
 		$json = utf8_encode($json);
+		echo $json;
 		$output_array = json_decode($json);
 		print_r($output_array);
 		$this->RepoObject = $output_array;
