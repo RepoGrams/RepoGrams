@@ -30,6 +30,7 @@
 	that the image is a rectangle consisting of muliple rectangles
 	representing each commit message.
 \item The main visualization parameter will be the commit message.
+\item The user will be able to select the number of commit messages to visualize. 
 \item The product will be released open source.
 \item The application language will be English.
 \item The application will detect if the repository's hosting server doesn't answer and will inform the user about that fact by printing an error message.
@@ -60,18 +61,18 @@
 (the time of day at which the commit we're currently working with was made)
 \item date of commit\\
 (the date at which the commit we're currently working with was made)
+\item structure if the repository\\
+(branches, merges)
 \end{enumerate}
 \item The parameters may influence a block's color, size, alignment and order.
 \item The visualization may be supported by a legend mapping used colors to the corresponding words.
 \item The product website may be responsive and may also work with mobile clients. In this context responsive means, the layout will be optimized for the current browser used by the user.
 \item The user may be able to upload a folder of a git repository instead of an URL.
 \item The visualization may be downloadable as a PDF or JPEG.
-\item The visualizations may be shared on Google+, Facebook, Twitter and Instagram.
-\item The website may visualize repositories which are protected by a password. Therefore an additional field to enter the password may be displayed on the rendering page.
+\item The website may show the URL from a random repository of Github as example. 
 \item The user may click on a single block within the visualization to see further information about the specific commit comment represented by that block.
 \item The application may be available in multiple languages.
 \item The visualization of the repository created on the rendering page may be scalable.
-\item If the git repository cannot be accessed without SSH credentials, the user will be prompted for them. If they are correct, the algorithm will proceed.
 \item The application may cache repositories that have already been displayed by the user.
 \end{enumerate}
 \section{Won't-have:}
@@ -80,9 +81,9 @@
 \item The client will not support version control systems other than Mercurial, Subversion and Git.
 \item The software will not have a native app for any mobile operating system.
 \item The application will not provide a user login interface where users can manage their pictures or their repositories.
+\item The visualizations will not be be shared on Google+, Facebook, Twitter and Instagram.
 \item The application will not provide access to the repositories.
-\item The application will not provide a visualization of the structure of the repository, meaning branches, merges, and so on.
-\item The application will not provide access to ssh key protected repositories.
+\item The application will not provide access to protected repositories.
 \item The application will not create animated renderings.
 \end{enumerate}
 \end{document}
