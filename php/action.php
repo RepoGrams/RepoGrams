@@ -11,6 +11,7 @@
 	function callback($msg = null) {
 		$_SESSION['current_progress'] = $_SESSION['current_progress']+20;
 		$_SESSION['loading_info'] = $msg;
+		header('Location: ../render.php');
 	}
 	
 	/*
@@ -31,10 +32,14 @@
 	$_SESSION['loading'] = true;
 	
 	include("../lib/vcs/RepoFactory.php");
-	include("../php/algorithm.php");
+	include("algorithm.php");
 	
-// 	$repo = RepoFactory.createRepo($url);
-// 	render($repo.getAllCommits(), 0, $width, $height, callback());
+	try {
+		$repo = RepoFactory.createRepo($url);
+	} catch (Exception $e) {
+		//if protected => show dialog
+	}
+	render($repo.getAllCommits(), 0, $width, $height, callback());
 	
 	unset($_SESSION['loading']);
 	header('Location: ../render.php');
