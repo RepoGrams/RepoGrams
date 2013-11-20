@@ -37,7 +37,12 @@
 	try {
 		$repo = RepoFactory.createRepo($url);
 	} catch (Exception $e) {
-		//if protected => show dialog
+		$_SESSION['error_message'] = $e;
+		unset($_SESSION['current_progress']);
+		unset($_SESSION['loading']);
+		unset($_SESSION['loading_info']);
+		header('Location: ../render.php');
+		exit(2);
 	}
 	render($repo.getAllCommits(), 0, $width, $height, callback());
 	

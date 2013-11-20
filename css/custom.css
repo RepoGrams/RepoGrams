@@ -81,3 +81,8 @@ html, body {
 #overscroll li.alt { background-color: #C00; }
 #overscroll li.no-drag { background-color: #000; color: #FFF; }
 #overscroll li.last { clear: both; visibility: hidden; height: 0; padding: 0; }
+
+div[class="tooltip-inner"] {
+    text-align: left;
+    width: 200px;
+}

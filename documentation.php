@@ -67,7 +67,7 @@
 
 	
 	<!-- Content -->
-	<div class="container" id="wrap">
+	<div class="container" id="wrap">		
 		<div class="h1">Documentation</div>
 		<br>
 		<p class="lead">
