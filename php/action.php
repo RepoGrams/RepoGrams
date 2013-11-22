@@ -4,7 +4,8 @@
 	$_SESSION['current_progress'] = 0;           //Value to determine the current progress (1-100), will be displayed in the progressbar along with some additional loading infos
 	$_SESSION['loading_info'] = 'Loading...';    //Loading infos (ex. 'Requesting repository access), will be displayed
 	$_SESSION['loading'] = false;                //if true then the progressbar will be displayed 
-	$_SESSION['error_message'] = '';   
+	$_SESSION['error_message'] = ''; 
+	$_SESSION['title'] = '';  
 	$width = 768; $height = 512;
 
 
@@ -37,7 +38,9 @@ class action{
 		$repo = RepoFactory::createRepo($url, $_SESSION['action']->callback());
 		$alg = new Algorithm();
 		$arr = $alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
-		$_SESSION['image'] =$arr;
+		$_SESSION['image'] = $arr;
+		$start = strrpos($url, '/');
+		$_SESSION['title'] = substr($url, $start, strrpos($url, '.')-$start);
 		unsetAll();
 		header('Location: ../image.php');
 		exit(0);
