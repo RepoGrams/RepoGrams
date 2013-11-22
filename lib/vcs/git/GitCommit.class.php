@@ -20,14 +20,14 @@ class GitCommit implements Commit_Interface {
 
 	public function Predecessor() {
 		if (isset($this->pred) && !is_null($this->pred)) {
-			throw Exception("No Predecessor");
+			throw new Exception("No Predecessor");
 		}
 		return $this->pred;
 	}
 
 	public function Successor() {
 		if (isset($this->succ) && !is_null($this->succ)) {
-			throw Exception("No Successor");
+			throw new Exception("No Successor");
 		}
 		return $this->succ;
 	}
@@ -41,7 +41,7 @@ class GitCommit implements Commit_Interface {
 	}
 
 	public function DiffToParent() {
-		throw Exception("NOT IMPLEMENTED");
+		throw new Exception("NOT IMPLEMENTED");
 	}
 
 	public function NumChangedLines() {
