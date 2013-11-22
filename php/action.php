@@ -42,16 +42,18 @@ class action{
 		$alg = new Algorithm();
 		$arr = $alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
 		$_SESSION['image'] =$arr;
-		unset($_SESSION['loading']);
 		header('Location: '.__DIR__.'/../image.php');
+		unsetAll();
 	} catch (Exception $e) {
+		unsetAll();
 		$_SESSION['error_message'] = $e->getMessage();
 		header('Location: '.__DIR__.'/../render.php');
-	} finally {
+	}
+	
+	function unsetAll() {
 		unset($_SESSION['current_progress']);
 		unset($_SESSION['loading']);
 		unset($_SESSION['loading_info']);
-		exit(0);
 	}
 	
 ?>
