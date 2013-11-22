@@ -75,9 +75,9 @@ html, body {
     color: #777;
 }
 
-#overscroll { width: 512px; height: 512px; overflow: hidden; position: relative; }
-#overscroll ul { width: 2500px; margin:0; padding: 0; }
-#overscroll li { display: block; float: left; width: 100px; height: 100px; background-color: #FFF; }
+#overscroll { width: 75%; height: 512px; overflow: hidden; position: relative; }
+#overscroll ul { margin:0; padding: 0; }
+#overscroll li { display: block; float: left; background-color: #FFF; }
 #overscroll li.alt { background-color: #C00; }
 #overscroll li.no-drag { background-color: #000; color: #FFF; }
 #overscroll li.last { clear: both; visibility: hidden; height: 0; padding: 0; }
