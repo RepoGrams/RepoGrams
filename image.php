@@ -30,7 +30,7 @@
 			<div class="panel panel-default" style="overflow: hidden; height: 555px; width: 514px; margin: auto auto 0;">
   				<div class="panel-heading"></div>
 				<div id="overscroll"> 
-					<img src="img/visualizationimage.png">
+					<img src="php/visualizationimage.png">
 <!-- 					<ul> -->
 					<!-- width,height,tile.width,tile.height,tile.color -->
 						<?php 
