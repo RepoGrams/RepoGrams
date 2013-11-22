@@ -36,7 +36,7 @@
 							if (isset($_SESSION['image'])) {
 								foreach ($_SESSION['image'] as $row) {
 									foreach ($row as $tile) {
-										echo '<li style="background-color:'.$tile['c'].';width:'.$tile['x'].';height:'.$tile['y'].'"></li>';
+										echo '<li style="background-color:'.$tile['3'].';width:'.$tile['0'].';height:'.$tile['1'].'"></li>';
 									}
 								}
 		                	}
