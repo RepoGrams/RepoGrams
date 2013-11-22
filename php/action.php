@@ -17,7 +17,7 @@ class action{
 		header('Location: ../render.php');
 	}
 }
-	$_SESSION['action'] = new Action();	
+	$_SESSION['action'] = new action();	
 	/*
 	 * Check formular input
 	 */
@@ -43,7 +43,7 @@ class action{
 	echo "Include successfull";	
 	try {
 		echo "Accessing repo";
-		$repo = RepoFactory.createRepo($url, callback());
+		$repo = RepoFactory::createRepo($url, $_SESSION['action']->callback());
 		echo "Acces !";
 	} catch (Exception $e) {
 		$_SESSION['error_message'] = $e;
