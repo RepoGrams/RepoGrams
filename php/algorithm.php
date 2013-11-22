@@ -55,8 +55,7 @@
  		 		if ($w > $width)
  		 		while ($w > $width){
 					$overlap = $w-$width;
- 		 			error_log("Breite: " . $x . " " . $y . " " . $w . " " . $z . "\n");
-					$x = 0;
+ 		 			$x = 0;
 					$y += $hohe;
 					$w = $overlap;
 					$z += $hohe;
@@ -105,8 +104,7 @@
 				case 0:
 					$msg = preg_replace("/[^a-zA-Z0-9]/" , "" , $msg);
 		    		$first = substr($msg, 0, 1);
-					error_log("Commit Message kurz: " . $msg . "\n");
-		    		$h = $this->letterValue($first, 0);
+					$h = $this->letterValue($first, 0);
 		    		if (strlen($msg) > 1){
 		    			$second = substr($msg, 1, 1);
 		    			$s = 0.3 + 0.6 * $this->letterValue ($second, 1);
