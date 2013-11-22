@@ -54,21 +54,23 @@
  		 		while ($w > $width){
 					$overlap = $w-$width;
  		 			$w2 -= $overlap; 
- 		 			$returnArray[] = array($w2, $hohe, $color);
+ 		 			#$returnArray[] = array($w2, $hohe, $color);
 
+					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
 					$overlap = $w-$width;
 					$x = 0;
 					$y += $hohe;
 					$w = $overlap;
 					$z += $hohe;
 					if ($w <=  $width) $w2 = $w;
-					#ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-					$returnArray[] = array($w2, $hohe, $color);
+					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
+					#$returnArray[] = array($w2, $hohe, $color);
 					$x += $w;
 
 				}
 				else{
-					$returnArray[] = array($w2, $hohe, $color);
+					#$returnArray[] = array($w2, $hohe, $color);
+					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
 					$x += $diff*$factor;
 				}
 
@@ -90,21 +92,21 @@
 			#$act->$callback("Provide image ...");
 			$_SESSION['action']->callback("Provide image ...");
 
-			#imagepng($img, "visualization.png");
-			#return $img;
-			return $returnArray;
+			imagepng($img, "visualization.png");
+			return $img;
+			#return $returnArray;
 		}
 
 		private function commitToColor($modus, $msg){
 			$conv = new convert();
 			if ($msg == null)
-		      			#return ImageColorAllocate($img, 211, 211, 211);
-				return "211,211,211";
+		      	return ImageColorAllocate($img, 211, 211, 211);
+				#return "211,211,211";
 		    $msg = preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
 		    $msg = strtolower($msg);
 		    if (strlen($msg) == 0)
-		      			#return ImageColorAllocate($img, 211, 211, 211);
-				return "211,211,211";
+		      	return ImageColorAllocate($img, 211, 211, 211);
+				#return "211,211,211";
 		    switch ($modus) {
 				case 0:
 		    		$first = substr($msg, 0, 1);
@@ -129,8 +131,8 @@
 		    		$g = $convArray['g'];
 		    		$b = $convArray['b'];
 		    		$color = $r.",".$g.",".$b;
-		    		#$color = ImageColorAllocate($img, $r, $g, $b);
-		    		return $color;
+		    		$color = ImageColorAllocate($img, $r, $g, $b);
+		    		#return $color;
 				case 1:
 					$keys1 = array("add", "new", "create");
 					$section1 = array_fill_keys($keys1, "section1");
@@ -183,8 +185,8 @@
 					$sec2 = $p * $sec2;
 					$sec3 = $p * $sec3;
 					
-					#$color = ImageColorAllocate($img, $sec1, $sec2, $sec3);
-		    		$color = $sec1.",".$sec2.",".$sec3;
+					$color = ImageColorAllocate($img, $sec1, $sec2, $sec3);
+		    		#$color = $sec1.",".$sec2.",".$sec3;
 		    		return $color;
 					break;
 				default:
