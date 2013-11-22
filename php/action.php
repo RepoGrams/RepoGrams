@@ -53,7 +53,8 @@ class action{
 		header('Location: ../render.php');
 		exit(2);
 	}
-	render($repo.getAllCommits(), 0, $width, $height, callback());
+	$alg = new Algorithm();
+	$alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
 	
 	unset($_SESSION['loading']);
 //	header('Location: ../render.php');
