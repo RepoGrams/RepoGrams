@@ -46,7 +46,7 @@
 			#$returnArray = array();
 
 			for ($i = 0; $i < $count; $i++){
-				error_log("Commit Message: " . $commitArray[$i][0] . "\n");
+				error_log("Commit Message: " . $commitArray[$i][0] . " Laenge: " . $commitArray[$i][1] . "\n");
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str, $img);
