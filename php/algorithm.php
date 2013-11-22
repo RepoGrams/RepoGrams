@@ -9,8 +9,10 @@
 			$count = count($commitArray);
 
 
-			$act = new action();
-			$act->$callback("Start rendering...");
+			#$act = new action();
+			#$act->$callback("Start rendering...");
+
+			$_SESSON['action']->callback("Start rendering...");
 
 			$all_diff = 0;
 
@@ -37,7 +39,8 @@
 			$pixel = $width * $height; #all pixels on picture
 			$factor = ($pixel/$hohe) / $all_diff;
 
-			$act->$callback("Initialize image...");
+			#$act->$callback("Initialize image...");
+			$_SESSON['action']->callback("Initialize image...");
 
 			$returnArray = array();
 
@@ -81,7 +84,8 @@
 				}*/
 			}
 
-			$act->$callback("Provide image ...");
+			#$act->$callback("Provide image ...");
+			$_SESSON['action']->callback("Provide image ...");
 
 			#imagepng($img, "visualization.png");
 			#return $img;
@@ -186,7 +190,7 @@
 
 
 		private function preprocess($obj){
-			include("../lib/vs/Commit.interface.php");
+			require_once("../lib/vs/Commit.interface.php");
 			for ($i = 0; $i < count($obj); $i++){
 				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->DiffToParent()) ;
 			}
