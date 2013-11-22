@@ -13,7 +13,7 @@ class action{
 	public function callback($msg = null) {
 		$_SESSION['current_progress'] = $_SESSION['current_progress']+20;
 		$_SESSION['loading_info'] = $msg;
-		header('Location: '.__DIR__.'/../render.php');
+		header('Location: /render.php');
 	}
 }
 	$_SESSION['action'] = new action();	
@@ -24,7 +24,7 @@ class action{
 		$url = $_POST['projectlink'];
 	} else {
 		$_SESSION['error_message'] = 'Invalid repository url.';
-		header('Location: '.__DIR__.'/../render.php');
+		header('Location: /render.php');
 		exit(1);
 	}
 	
@@ -34,20 +34,20 @@ class action{
 
 	$_SESSION['loading'] = true;
 
-	include(__DIR__."/../lib/vcs/RepoFactory.class.php");
-	include("algorithm.php");
+	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
+	require_once("algorithm.php");
 
 	try {	
 		$repo = RepoFactory::createRepo($url, $_SESSION['action']->callback());
 		$alg = new Algorithm();
 		$arr = $alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
 		$_SESSION['image'] =$arr;
-		header('Location: '.__DIR__.'/../image.php');
+		header('Location: /image.php');
 		unsetAll();
 	} catch (Exception $e) {
 		unsetAll();
 		$_SESSION['error_message'] = $e->getMessage();
-		header('Location: '.__DIR__.'/../render.php');
+		header('Location: /render.php');
 	}
 	
 	function unsetAll() {
