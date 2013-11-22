@@ -89,7 +89,7 @@
 
 			#imagepng($img, "visualization.png");
 			#return $img;
-			return returnArray;
+			return $returnArray;
 		}
 
 		private function commitToColor($modus, $msg){
