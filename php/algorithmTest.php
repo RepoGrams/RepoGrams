@@ -171,7 +171,7 @@
 
 			if (is_numeric($letter)){
 		    	$value = array_search($letter, $numberArray);
-		    	$value = $value * (10/26);
+		    	$value = ($value * (26/10))-1;
 			}
 			else{
 		    	$value = array_search($letter, $letterArray);
