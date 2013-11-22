@@ -29,6 +29,7 @@
 			################################################## 
 			#$width = 600; # Später die Breite des Rechtecks 
 			#$height = 600; # Später die Höhe des Rechtecks 
+			$img = ImageCreate($width, $height);
 			################################################## 
 			
 			$x = 0; 	#links oben -> links
@@ -47,7 +48,7 @@
 			for ($i = 0; $i < $count; $i++){
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
-				$color = $this->commitToColor($modus, $str);
+				$color = $this->commitToColor($modus, $str, $img);
  		 		$w = ($x+($diff*$factor));
  		 		$w2 = ($diff*$factor);
  		 		if ($w > $width)
@@ -97,7 +98,7 @@
 			#return $returnArray;
 		}
 
-		private function commitToColor($modus, $msg){
+		private function commitToColor($modus, $msg, $img){
 			$conv = new convert();
 			if ($msg == null)
 		      	return ImageColorAllocate($img, 211, 211, 211);
