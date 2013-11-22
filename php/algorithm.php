@@ -27,8 +27,8 @@
 			}
 
 			################################################## 
-			$width = 600; # Später die Breite des Rechtecks 
-			$height = 600; # Später die Höhe des Rechtecks 
+			#$width = 600; # Später die Breite des Rechtecks 
+			#$height = 600; # Später die Höhe des Rechtecks 
 			################################################## 
 			
 			$x = 0; 	#links oben -> links
@@ -190,7 +190,7 @@
 
 
 		private function preprocess($obj){
-			require_once("../lib/vs/Commit.interface.php");
+			require_once(__DIR__."/../lib/vs/Commit.interface.php");
 			for ($i = 0; $i < count($obj); $i++){
 				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->DiffToParent()) ;
 			}
