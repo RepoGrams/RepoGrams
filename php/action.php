@@ -54,7 +54,8 @@ class action{
 		exit(2);
 	}
 	$alg = new Algorithm();
-	$alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
+	 $arr = $alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
+	$_SESSION['image'] =$arr;
 	
 	unset($_SESSION['loading']);
 //	header('Location: ../render.php');
