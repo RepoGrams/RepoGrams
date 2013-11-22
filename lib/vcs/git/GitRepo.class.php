@@ -1,5 +1,5 @@
 <?php
-require_once './../Repo.interface.php';
+require_once __DIR__.'/../Repo.interface.php';
 require_once 'GitCommit.class.php';
 require_once 'GitImport.class.php';
 require_once 'GitChanges.class.php';

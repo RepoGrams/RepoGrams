@@ -1,5 +1,5 @@
 <?php
-include './../Commit.interface.php';
+include __DIR__.'/../Commit.interface.php';
 
 class GitCommit implements Commit_Interface {
 
