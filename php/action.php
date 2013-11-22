@@ -40,7 +40,7 @@ class action{
 		$arr = $alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
 		$_SESSION['image'] = $arr;
 		$start = strrpos($url, '/');
-		$_SESSION['title'] = substr($url, $start+1, strrpos($url, '.')-$start);
+		$_SESSION['title'] = substr($url, $start+1, strrpos($url, '.')-$start-1);
 		unsetAll();
 		header('Location: ../image.php');
 		exit(0);

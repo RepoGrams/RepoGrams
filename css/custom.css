@@ -32,9 +32,10 @@ html, body {
 }
 
 /* Title */
-.title {
+#title, img.title{
 	margin-top: 10px;
-	mergin: auto auto 0;
+	margin: auto auto 0;
+	display: block;
 }
 
 /* Color legend */
