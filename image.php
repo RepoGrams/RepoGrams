@@ -31,6 +31,7 @@
   				<div class="panel-heading"><?php echo $_GET["title"] ?></div>
 				<div id="overscroll"> 
 					<ul>
+					<!-- width,height,tile.width,tile.height,tile.color -->
 						<?php 
 							if (isset($_SESSION['image'])) {
 								foreach ($_SESSION['image'] as $row) {

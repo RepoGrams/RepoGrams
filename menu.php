@@ -25,8 +25,8 @@
  				<!-- Collect the nav links, forms, and other content for toggling -->
   				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="index.php">Repograms</a></li>
-      					<li '.$active['index'].'><a href="index.php">Home</a></li>
+						<li><a href="index.php">LOGO</a></li>
+      					<li '.$active['index'].'><a href="index.php">Repograms</a></li>
       					<li '.$active['render'].'><a href="render.php">Render</a></li>
       					<li '.$active['documentation'].'><a href="documentation.php">Documentation</a></li>
     				</ul>

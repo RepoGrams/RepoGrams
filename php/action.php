@@ -44,7 +44,7 @@ class action{
 	try {
 		echo "Accessing repo";
 		$repo = RepoFactory::createRepo($url, $_SESSION['action']->callback());
-		echo "Acces !";
+		echo "Access !";
 	} catch (Exception $e) {
 		$_SESSION['error_message'] = $e;
 		unset($_SESSION['current_progress']);
