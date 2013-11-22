@@ -13,7 +13,7 @@ class action{
 	public function callback($msg = null) {
 		$_SESSION['current_progress'] = $_SESSION['current_progress']+20;
 		$_SESSION['loading_info'] = $msg;
-		header('Location: /render.php');
+		header('Location: ./render.php');
 	}
 }
 	$_SESSION['action'] = new action();	
@@ -24,7 +24,7 @@ class action{
 		$url = $_POST['projectlink'];
 	} else {
 		$_SESSION['error_message'] = 'Invalid repository url.';
-		header('Location: /render.php');
+		header('Location: ./render.php');
 		exit(1);
 	}
 	
@@ -43,12 +43,12 @@ class action{
 		$arr = $alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
 		$_SESSION['image'] =$arr;
 		unsetAll();
-		header('Location: /image.php');
+		header('Location: ./image.php');
 		exit(0);
 	} catch (Exception $e) {
 		unsetAll();
 		$_SESSION['error_message'] = $e->getMessage();
-		header('Location: /render.php');
+		header('Location: ./render.php');
 		exit(1);
 	}
 	
