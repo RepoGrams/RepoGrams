@@ -40,7 +40,8 @@
  		 		#$color = ImageColorAllocate($img, 100, 100, 100);
  		 		$w = ($x+($diff*$factor));
 				ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-				if ($w > $width){
+				if ($w > $width)
+				while ($w > $width){
 					$overlap = $w-$width;
 					$x = 0;
 					$y += $hohe;

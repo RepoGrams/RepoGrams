@@ -85,7 +85,7 @@ $m24 = array ("x", 19);
 $m25 = array ("y", 39);
 $m26 = array ("z", 86);*/
 
-$m00 = array ("a", 12);
+/*$m00 = array ("a", 12);
 $m01 = array ("bb", 11);
 $m02 = array ("c", 100);
 $m03 = array ("dd", 120);
@@ -110,10 +110,21 @@ $m22 = array ("vv", 100);
 $m23 = array ("w", 120);
 $m24 = array ("xx", 19);
 $m25 = array ("y", 39);
-$m26 = array ("zz", 86);
+$m26 = array ("zz", 86);*/
 
-$commitArray = array($m00, $m01, $m02, $m03, $m04, $m05, $m06, $m07, $m08, $m09, $m11, $m12, $m13, $m14, $m15, $m16, $m17, $m18, $m19, $m20, $m21, $m22, $m23, $m24, $m25, $m26);
+$m00 = array ("0", 80);
+$m01 = array ("1", 20);
+$m02 = array ("2", 20);
+$m03 = array ("3", 20);
+$m04 = array ("4", 20);
+$m05 = array ("5", 20);
+$m06 = array ("6", 20);
+$m07 = array ("7", 20);
+$m08 = array ("8", 20);
+$m09 = array ("9", 20);
 
+#$commitArray = array($m00, $m01, $m02, $m03, $m04, $m05, $m06, $m07, $m08, $m09, $m11, $m12, $m13, $m14, $m15, $m16, $m17, $m18, $m19, $m20, $m21, $m22, $m23, $m24, $m25, $m26);
+$commitArray = array($m00, $m01, $m02, $m03, $m04, $m05, $m06, $m07, $m08, $m09);
 ############################################
 ############################################
 ############################################
@@ -153,7 +164,8 @@ $count = count($commitArray);
  		 		#$color = ImageColorAllocate($img, 100, 100, 100);
  		 		$w = ($x+($diff*$factor));
 				ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-				if ($w > $width){
+				if ($w > $width)
+				while ($w > $width){
 					$overlap = $w-$width;
 					$x = 0;
 					$y += $hohe;

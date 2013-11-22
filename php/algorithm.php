@@ -46,8 +46,8 @@
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str, $img);
  		 		$w = ($x+($diff*$factor));
-
- 		 		if ($w > $width){
+ 		 		if ($w > $width)
+ 		 		while ($w > $width){
 
  		 			$returnArray[] = array($w, $z, $color);
 
