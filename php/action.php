@@ -1,19 +1,23 @@
 <?php
 	session_start();
-
+//unset($_SESSION['loading']);
 	$_SESSION['current_progress'] = 0;           //Value to determine the current progress (1-100), will be displayed in the progressbar along with some additional loading infos
 	$_SESSION['loading_info'] = 'Loading...';    //Loading infos (ex. 'Requesting repository access), will be displayed
 	$_SESSION['loading'] = false;                //if true then the progressbar will be displayed 
 	$_SESSION['error_message'] = '';   
-	$width = $height = 512;         
+	$width = $height = 512; 
+
+
+class action{        
 
 	
-	function callback($msg = null) {
+	public function callback($msg = null) {
 		$_SESSION['current_progress'] = $_SESSION['current_progress']+20;
 		$_SESSION['loading_info'] = $msg;
 		header('Location: ../render.php');
 	}
-	
+}
+	$_SESSION['action'] = new action();	
 	/*
 	 * Check formular input
 	 */
@@ -30,12 +34,17 @@
 	}
 
 	$_SESSION['loading'] = true;
-	
-	include("../lib/vcs/RepoFactory.php");
+
+	echo "Blablablub";
+
+	include("../lib/vcs/RepoFactory.class.php");
 	include("algorithm.php");
-	
+
+	echo "Include successfull";	
 	try {
-		$repo = RepoFactory.createRepo($url);
+		echo "Accessing repo";
+		$repo = RepoFactory::createRepo($url, $_SESSION['action']->callback());
+		echo "Acces !";
 	} catch (Exception $e) {
 		$_SESSION['error_message'] = $e;
 		unset($_SESSION['current_progress']);
@@ -47,5 +56,5 @@
 	render($repo.getAllCommits(), 0, $width, $height, callback());
 	
 	unset($_SESSION['loading']);
-	header('Location: ../render.php');
+//	header('Location: ../render.php');
 ?>
