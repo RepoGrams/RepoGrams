@@ -11,8 +11,8 @@
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<div class="title"><a href="index.php"><img class="title" src="img/title.png"></a></div>
-		<br><br><br>
+		<div class="title"><a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a></div>
+		<br>
     	<div class="hero-unit">
     		<?php
 				if (isset($_SESSION['loading']) && $_SESSION['loading']) {
@@ -31,7 +31,7 @@
     						<div class="input-group urlinput">
     							<input class="form-control" id="projectlink" name="projectlink" type="text" required="required"  placeholder="Enter repository url">
      							<span class="input-group-btn">
-        							<button class="btn btn-default" type="submit">
+        							<button class="btn btn-default" type="submit" title="Visualize the provided repository">
         								<span class="glyphicon glyphicon-indent-left"></span>Visualize!
         							</button>
       							</span>
@@ -59,7 +59,6 @@
 				</div>
 			</div>
 			<div class="clear"></div>
-			<br><br> 
     	</div>    	
     	<div id="push"></div>
 	</div>
