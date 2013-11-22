@@ -28,7 +28,7 @@
 					unset($_SESSION['loading_info']);
 					header('Location: image.php');
 				} else {
-					echo '<form role="form" action="php/action.php" method="POST">
+					echo '<form role="form" action="./php/action.php" method="POST">
     					  	<legend>Enter the link for your project</legend>
     						<div class="input-group">
     							<input class="form-control" id="projectlink" name="projectlink" type="text" required="required" size="143" placeholder="Enter repository url">
