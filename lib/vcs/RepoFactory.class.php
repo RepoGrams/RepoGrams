@@ -5,7 +5,7 @@ require_once __DIR__."/../../php/action.php";
 class RepoFactory {
 	static function createRepo($url, $callback) {
 		$act = new action();
-		$act->$callback("test");
+		call_user_func('callback', "test")
 		return new GitRepo($url);
 	}
 }
