@@ -1,5 +1,5 @@
 <?php
-require_once('./../Changes.interface.php');
+require_once(__DIR__.'/../Changes.interface.php');
 
 class Change{
 	private $added, $removed, $filename;
