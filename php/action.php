@@ -13,7 +13,7 @@ class action{
 	public function callback($msg = null) {
 		$_SESSION['current_progress'] = $_SESSION['current_progress']+20;
 		$_SESSION['loading_info'] = $msg;
-		header('Location: ../render.php');
+		header('Location: '.__DIR__.'/../render.php');
 	}
 }
 	$_SESSION['action'] = new action();	
@@ -24,7 +24,7 @@ class action{
 		$url = $_POST['projectlink'];
 	} else {
 		$_SESSION['error_message'] = 'Invalid repository url.';
-		header('Location: ../render.php');
+		header('Location: '.__DIR__.'/../render.php');
 		exit(1);
 	}
 	
@@ -34,7 +34,7 @@ class action{
 
 	$_SESSION['loading'] = true;
 
-	include("../lib/vcs/RepoFactory.class.php");
+	include(__DIR__."/../lib/vcs/RepoFactory.class.php");
 	include("algorithm.php");
 
 	try {	
@@ -43,10 +43,10 @@ class action{
 		$arr = $alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
 		$_SESSION['image'] =$arr;
 		unset($_SESSION['loading']);
-		header('Location: ../image.php');
+		header('Location: '.__DIR__.'/../image.php');
 	} catch (Exception $e) {
 		$_SESSION['error_message'] = $e->getMessage();
-		header('Location: ../render.php');
+		header('Location: '.__DIR__.'/../render.php');
 	} finally {
 		unset($_SESSION['current_progress']);
 		unset($_SESSION['loading']);
