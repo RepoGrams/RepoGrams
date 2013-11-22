@@ -9,7 +9,6 @@
 
 
 class action{        
-
 	
 	public function callback($msg = null) {
 		$_SESSION['current_progress'] = $_SESSION['current_progress']+20;
@@ -38,26 +37,21 @@ class action{
 	include("../lib/vcs/RepoFactory.class.php");
 	include("algorithm.php");
 
-	try {
-		echo "Accessing repo";
+	try {	
 		$repo = RepoFactory::createRepo($url, $_SESSION['action']->callback());
-		echo "Creating algorithm!";
 		$alg = new Algorithm();
-		echo "Rendering image";
 		$arr = $alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
-		echo "Setting session variable";
 		$_SESSION['image'] =$arr;
 		unset($_SESSION['loading']);
-		echo "Loading image page";
-		header('Location: ../render.php');
+		header('Location: ../image.php');
 	} catch (Exception $e) {
 		$_SESSION['error_message'] = $e->getMessage();
+		header('Location: ../render.php');
+	} finally {
 		unset($_SESSION['current_progress']);
 		unset($_SESSION['loading']);
 		unset($_SESSION['loading_info']);
-		header('Location: ../render.php');
-		exit(2);
+		exit(0);
 	}
-	
 	
 ?>
