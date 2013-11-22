@@ -5,13 +5,16 @@ class gitImport {
 	private $RepoObject;
 
 	public function __construct($repo,$user=null,$password=null){
+		if ($this->validateURL($repo) === false){
+		die("<h1>Possible injection detected</h1>");
+		}	
 		$tmp = tempnam(sys_get_temp_dir(),"");
 		unlink($tmp);
 		mkdir($tmp);
 		$tmp;			
 		if (!file_exists($tmp)) throw new Exception("Temporary folder could not be created!");
 		$command = 	'cd '.$tmp;
-		$command.=	' && git clone '.$repo;
+		$command.=	' && git clone "'.$repo.'"';
 		$command."\n";
 		shell_exec($command);
 		// if (!file_exists($tmp.'/.git')) throw new Exception ('No .git Folder found');
@@ -29,6 +32,15 @@ class gitImport {
 		self::removeDir($tmp);
 	}
 
+	private function validateURL($URL) {
+		$pattern_1 = "/^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+.(com|de|org|net|edu|dk|at|us|tv|info|uk|co.uk|biz|se)$)(:(\d+))?\/?/i";
+      		$pattern_2 = "/^(www)((\.[A-Z0-9][A-Z0-9_-]*)+.(com|org|net|dk|at|us|tv|info|uk|co.uk|biz|se|edu|de)$)(:(\d+))?\/?/i";       
+      		if(preg_match($pattern_1, $URL) || preg_match($pattern_2, $URL)){
+		        return true;
+	      	} else {
+	        	return false;
+      		}
+    	}
 
 	public function getRawRepoInfo(){
 		if (isset($this->RepoObject) && !is_null($this->RepoObject))
