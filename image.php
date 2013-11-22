@@ -32,11 +32,16 @@
 				<div id="overscroll"> 
 					<ul>
 					<!-- width,height,tile.width,tile.height,tile.color -->
+					<li style="background-color:rgb(255,125,12);width:100px;height:25px;"> </li>
+					<li style="background-color:rgb(125,125,12);width:150px;height:25px;"> </li>
+					<li style="background-color:rgb(255,255,12);width:100px;height:25px;"> </li>
+					<li style="background-color:rgb(0,100,200);width:400px;height:25px;"> </li>
+					<li style="background-color:rgb(100,100,200);width:400px;height:25px;"> </li>
 						<?php 
 							if (isset($_SESSION['image'])) {
 								foreach ($_SESSION['image'] as $row) {
 									foreach ($row as $tile) {
-										echo '<li style="background-color:'.$tile['3'].';width:'.$tile['0'].';height:'.$tile['1'].'"></li>';
+										echo '<li style="background-color: rgb('.$tile['3'].');width:'.$tile['0'].';height:'.$tile['1'].'"></li>';
 									}
 								}
 		                	}

@@ -31,7 +31,7 @@
       					<li '.$active['documentation'].'><a href="documentation.php">Documentation</a></li>
     				</ul>
     
-  		  			<form class="navbar-form navbar-right" role="search" action="php/action.php" method="POST">
+  		  			<form class="navbar-form navbar-right" role="search" action="./php/action.php" method="POST">
       					<div class="form-group">
         					<input type="text" id="projectlink" name="projectlink" class="form-control" placeholder="Enter repository url" size="100">
       					</div>
