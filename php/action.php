@@ -5,7 +5,7 @@
 	$_SESSION['loading_info'] = 'Loading...';    //Loading infos (ex. 'Requesting repository access), will be displayed
 	$_SESSION['loading'] = false;                //if true then the progressbar will be displayed 
 	$_SESSION['error_message'] = '';   
-	$width = $height = 512; 
+	$width = 768; $height = 512;
 
 
 class action{        

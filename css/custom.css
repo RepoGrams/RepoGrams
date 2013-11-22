@@ -75,7 +75,7 @@ html, body {
     color: #777;
 }
 
-#overscroll { width: 75%; height: 512px; overflow: hidden; position: relative; }
+#overscroll { width: 768px; height: 512px; overflow: hidden; position: relative; }
 #overscroll ul { margin:0; padding: 0; }
 #overscroll li { display: block; float: left; background-color: #FFF; }
 #overscroll li.alt { background-color: #C00; }
