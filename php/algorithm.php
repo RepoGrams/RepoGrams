@@ -34,7 +34,7 @@
 			
 			$x = 0; 	#links oben -> links
 			$y = 0; 	#links oben -> oben
-			$hohe = 15; 	#rechts unten -> links BREITE
+			$hohe = 16; 	#rechts unten -> links BREITE
 			$z = $hohe;	#rechts unten -> oben HÖHE
 
 			$pixel = $width * $height; #all pixels on picture
