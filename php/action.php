@@ -35,20 +35,20 @@ class action{
 
 	$_SESSION['loading'] = true;
 
-	echo "Blablablub";
-
 	include("../lib/vcs/RepoFactory.class.php");
 	include("algorithm.php");
 
-	echo "Include successfull";	
 	try {
 		echo "Accessing repo";
 		$repo = RepoFactory::createRepo($url, $_SESSION['action']->callback());
-		echo "Access !";
+		echo "Creating algorithm!";
 		$alg = new Algorithm();
+		echo "Rendering image";
 		$arr = $alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
+		echo "Setting session variable";
 		$_SESSION['image'] =$arr;
 		unset($_SESSION['loading']);
+		echo "Loading image page";
 		header('Location: ../render.php');
 	} catch (Exception $e) {
 		$_SESSION['error_message'] = $e->getMessage();
