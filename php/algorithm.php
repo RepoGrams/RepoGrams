@@ -103,7 +103,9 @@
 				#return "211,211,211";
 		    switch ($modus) {
 				case 0:
+					$msg = preg_replace("/[^a-zA-Z0-9]/" , "" , $msg);
 		    		$first = substr($msg, 0, 1);
+					error_log("Commit Message kurz: " . $msg . "\n");
 		    		$h = $this->letterValue($first, 0);
 		    		if (strlen($msg) > 1){
 		    			$second = substr($msg, 1, 1);
