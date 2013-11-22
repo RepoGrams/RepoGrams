@@ -135,6 +135,9 @@
 		    		$g = $convArray['g'];
 		    		$b = $convArray['b'];
 		    		#$color = $r.",".$g.",".$b;
+		    		$r = round($r);
+		    		$g = round($g);
+		    		$b = round($b);
 		    		error_log("Farbe: " . $r . " " . $g . " " . $b . "\n");
 		    		$color = ImageColorAllocate($img, $r, $g, $b);
 		    		#return $color;
