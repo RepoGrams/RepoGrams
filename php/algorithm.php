@@ -192,7 +192,7 @@
 		private function preprocess($obj){
 			require_once(__DIR__."/../lib/vcs/Commit.interface.php");
 			for ($i = 0; $i < count($obj); $i++){
-				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->DiffToParent()) ;
+				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->NumChangedLines()) ;
 			}
 			return $array;
 		}
