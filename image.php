@@ -27,8 +27,8 @@
   						</ul>
 					</div>
 			</div>
-			<div class="panel panel-default" style="overflow: hidden; height: 555px; width: 514px; margin: auto auto 0;">
-  				<div class="panel-heading"></div>
+			<div class="panel panel-default" style="overflow: hidden; height: 555px; width: 768px; margin: auto auto 0;">
+  				<div class="panel-heading"><?php //if (isset($_GET['title'])) echo $_GET['title'];?></div>
 				<div id="overscroll"> 
 					<ul><li><img src="php/visualization.png"></li></ul>
 <!-- 					<ul> -->
