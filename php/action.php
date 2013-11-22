@@ -27,10 +27,6 @@ class action{
 		header('Location: ../render.php');
 		exit(1);
 	}
-	
-	if(isset($_POST['history']) && $_POST['history'] == 'true') {
-		$history = $_POST['history'];
-	}
 
 	$_SESSION['loading'] = true;
 

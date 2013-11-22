@@ -45,10 +45,7 @@
 						      </div>';
 						unset($_SESSION['error_message']);
 					}
-					echo '	<div class="form-group">
-  						  		<input class="checkbox-horizontal" type="checkbox" id="history" name="history" value="true" checked="true">Check for history</input>
-						 	</div>
-			              </form>';
+					echo '</form>';
 				}
 			?>	  
     	</div>    	
