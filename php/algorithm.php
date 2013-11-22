@@ -108,11 +108,12 @@
 		    				$l = 0.4 + 0.5 * $this->letterValue ($third, 2);
 		    			}
 		    			else {
-		    				$l = 0;
+		    				$l = 0.6;
 		    			}
 		    		}
 		    		else{
-		    			$h = 0;
+		    			$s = 0.5;
+		    			$l = 0.6;
 		    		}
 		    		$convArray = $conv->ColorHSLToRGB($h,$s,$l);
 		    		$r = $convArray['r'];
@@ -202,6 +203,7 @@
 
 			if (is_numeric($letter)){
 		    	$value = array_search($letter, $numberArray);
+		    	$value = $value * (10/26);
 			}
 			else{
 		    	$value = array_search($letter, $letterArray);

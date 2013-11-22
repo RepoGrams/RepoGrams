@@ -58,7 +58,7 @@
 			return $img;
 		}
 
-		private function commitToColor($modus, $msg, $img){
+		public function commitToColor($modus, $msg, $img){
 			$conv = new convert();
 			if ($msg == null or strlen($msg) == 0)
 		      			return ImageColorAllocate($img, 211, 211, 211);
@@ -66,6 +66,7 @@
 		    $msg = strtolower($msg);
 		    switch ($modus) {
 				case 0:
+					$msg = preg_replace("/[^a-zA-Z0-9]/" , "" , $msg);
 		    		$first = substr($msg, 0, 1);
 		    		$h = $this->letterValue($first, 0);
 		    		if (strlen($msg) > 1){
@@ -76,11 +77,12 @@
 		    				$l = 0.4 + 0.5 * $this->letterValue ($third, 2);
 		    			}
 		    			else {
-		    				$l = 0;
+		    				$l = 0.6;
 		    			}
 		    		}
 		    		else{
-		    			$h = 0;
+		    			$l = 0.6;
+		    			$s = 0.5;
 		    		}
 		    		$convArray = $conv->ColorHSLToRGB($h,$s,$l);
 		    		$r = $convArray['r'];
@@ -168,6 +170,7 @@
 
 			if (is_numeric($letter)){
 		    	$value = array_search($letter, $numberArray);
+		    	$value = $value * (10/26);
 			}
 			else{
 		    	$value = array_search($letter, $letterArray);
