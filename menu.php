@@ -24,7 +24,7 @@
   				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li><a href="index.php"><img src="img/logo.png"></a></li>
-      					<li '.$active['index'].'><a href="index.php">Repograms</a></li>
+      					<li '.$active['index'].'><a href="index.php">Home</a></li>
       					<li '.$active['documentation'].'><a href="documentation.php">Documentation</a></li>
     				</ul>
   				</div>
