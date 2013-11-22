@@ -7,10 +7,11 @@
 
 <body>
 	<!-- Menu -->	
-	<?php include('menu.php'); makemenu(2);?>
+	<?php include('menu.php'); ?>
 	
 	<!-- Content -->
-	<div class="container" id="wrap">		
+	<div class="container" id="wrap">
+		<div class="title"><a href="index.php"><img class="title" src="img/title.png"></a></div>		
 		<div class="h1">Documentation</div>
 		<br>
 		<p class="lead">

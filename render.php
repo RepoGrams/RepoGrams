@@ -12,7 +12,7 @@
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<div class="title"><a href="index.php"><img class="title" src="img/title.png"></a></div>
+		<img class="title" src="img/title.png"></a>
 		<br><br><br>
     	<div class="hero-unit">
     		<?php
@@ -47,8 +47,7 @@
 					}
 					echo '</form>';
 				}
-			?>	
-		<br><br>  
+			?>	  
     	</div>    	
     	<div id="push"></div>
 	</div>

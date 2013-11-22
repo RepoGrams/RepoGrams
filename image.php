@@ -7,7 +7,7 @@
 
 <body>
 	<!-- Menu -->	
-	<?php include('menu.php'); makemenu(null);?>
+	<?php include('menu.php'); ?>
 	
 	<!-- Content -->
 	<div class="container" id="wrap">

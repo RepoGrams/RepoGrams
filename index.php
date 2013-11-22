@@ -59,7 +59,7 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 </p>
 	
 	<!-- Menu -->
-	<?php include('menu.php'); makemenu(0);?>
+	<?php include('menu.php'); ?>
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
@@ -80,9 +80,8 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 					header('Location: image.php');
 				} else {
 					echo '<form role="form" action="./php/action.php" method="POST">
-    					  	<legend>Enter the link for your project</legend>
-    						<div class="input-group">
-    							<input class="form-control" id="projectlink" name="projectlink" type="text" required="required" size="143" placeholder="Enter repository url">
+    						<div class="input-group urlinput">
+    							<input class="form-control" id="projectlink" name="projectlink" type="text" required="required"  placeholder="Enter repository url">
      							<span class="input-group-btn">
         							<button class="btn btn-default" type="submit">
         								<span class="glyphicon glyphicon-indent-left"></span>Visualize!
@@ -99,7 +98,20 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 					echo '</form>';
 				}
 			?>	
-		<br><br>  
+			<br><br> 
+			<div style="margin: auto auto 0;">
+				<div class="well" style="float:left;">
+					1. Repository - Beispiel
+				</div> 
+				<div class="well" style="float:left;">
+					2. Repository - Beispiel
+				</div> 
+				<div class="well" style="float:left;">
+					3. Repository - Beispiel
+				</div>
+			</div>
+			<div class="clear"></div>
+			<br><br> 
     	</div>    	
     	<div id="push"></div>
 	</div>
