@@ -46,6 +46,7 @@
 			$returnArray = array();
 
 			for ($i = 0; $i < $count; $i++){
+				error_log("Commit Message: " . $commitArray[$i][0] . "\n");
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str, $img);
@@ -56,7 +57,9 @@
 					$overlap = $w-$width;
  		 			$w2 -= $overlap; 
  		 			#$returnArray[] = array($w2, $hohe, $color);
-
+ 		 	
+ 		 			error_log("Breite: " . $x . " " . $y . " " . $w . " " . $z . "\n");
+			
 					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
 					$overlap = $w-$width;
 					$x = 0;
@@ -132,6 +135,7 @@
 		    		$g = $convArray['g'];
 		    		$b = $convArray['b'];
 		    		#$color = $r.",".$g.",".$b;
+		    		error_log("Farbe: " . $r . " " . $g . " " . $b . "\n");
 		    		$color = ImageColorAllocate($img, $r, $g, $b);
 		    		#return $color;
 				case 1:
