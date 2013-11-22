@@ -45,18 +45,19 @@ class action{
 		echo "Accessing repo";
 		$repo = RepoFactory::createRepo($url, $_SESSION['action']->callback());
 		echo "Access !";
+		$alg = new Algorithm();
+		$arr = $alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
+		$_SESSION['image'] =$arr;
+		unset($_SESSION['loading']);
+		header('Location: ../render.php');
 	} catch (Exception $e) {
-		$_SESSION['error_message'] = $e;
+		$_SESSION['error_message'] = $e->getMessage();
 		unset($_SESSION['current_progress']);
 		unset($_SESSION['loading']);
 		unset($_SESSION['loading_info']);
 		header('Location: ../render.php');
 		exit(2);
 	}
-	$alg = new Algorithm();
-	 $arr = $alg->render($repo->getAllCommits(), 0, $width, $height, 'callback');
-	$_SESSION['image'] =$arr;
 	
-	unset($_SESSION['loading']);
-//	header('Location: ../render.php');
+	
 ?>
