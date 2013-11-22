@@ -43,7 +43,7 @@
 			#$act->$callback("Initialize image...");
 			$_SESSION['action']->callback("Initialize image...");
 
-			$returnArray = array();
+			#$returnArray = array();
 
 			for ($i = 0; $i < $count; $i++){
 				error_log("Commit Message: " . $commitArray[$i][0] . "\n");
@@ -51,30 +51,20 @@
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str, $img);
  		 		$w = ($x+($diff*$factor));
- 		 		$w2 = ($diff*$factor);
+				ImageFilledRectangle($img, $x, $y, $w, $z, $color);
  		 		if ($w > $width)
  		 		while ($w > $width){
 					$overlap = $w-$width;
- 		 			$w2 -= $overlap; 
- 		 			#$returnArray[] = array($w2, $hohe, $color);
- 		 	
  		 			error_log("Breite: " . $x . " " . $y . " " . $w . " " . $z . "\n");
-			
-					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-					$overlap = $w-$width;
 					$x = 0;
 					$y += $hohe;
 					$w = $overlap;
 					$z += $hohe;
-					if ($w <=  $width) $w2 = $w;
 					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-					#$returnArray[] = array($w2, $hohe, $color);
 					$x += $w;
 
 				}
 				else{
-					#$returnArray[] = array($w2, $hohe, $color);
-					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
 					$x += $diff*$factor;
 				}
 
