@@ -47,7 +47,7 @@
 			for ($i = 0; $i < $count; $i++){
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
-				$color = $this->commitToColor($modus, $str, $img);
+				$color = $this->commitToColor($modus, $str);
  		 		$w = ($x+($diff*$factor));
  		 		if ($w > $width)
  		 		while ($w > $width){
@@ -92,14 +92,16 @@
 			return returnArray;
 		}
 
-		private function commitToColor($modus, $msg, $img){
+		private function commitToColor($modus, $msg){
 			$conv = new convert();
 			if ($msg == null)
-		      			return ImageColorAllocate($img, 211, 211, 211);
+		      			#return ImageColorAllocate($img, 211, 211, 211);
+				return "211,211,211";
 		    $msg = preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
 		    $msg = strtolower($msg);
 		    if (strlen($msg) == 0)
-		      			return ImageColorAllocate($img, 211, 211, 211);
+		      			#return ImageColorAllocate($img, 211, 211, 211);
+				return "211,211,211";
 		    switch ($modus) {
 				case 0:
 		    		$first = substr($msg, 0, 1);
