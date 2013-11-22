@@ -34,6 +34,7 @@ html, body {
 /* Title */
 .title {
 	margin-top: 10px;
+	mergin: auto auto 0;
 }
 
 /* Color legend */
