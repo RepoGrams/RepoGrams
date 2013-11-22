@@ -124,10 +124,16 @@ $m08 = array ("8", 20);
 $m09 = array ("9", 20);
 
 #$commitArray = array($m00, $m01, $m02, $m03, $m04, $m05, $m06, $m07, $m08, $m09, $m11, $m12, $m13, $m14, $m15, $m16, $m17, $m18, $m19, $m20, $m21, $m22, $m23, $m24, $m25, $m26);
-$commitArray = array($m00, $m01, $m02, $m03, $m04, $m05, $m06, $m07, $m08, $m09);
+#$commitArray = array($m00, $m01, $m02, $m03, $m04, $m05, $m06, $m07, $m08, $m09);
 ############################################
 ############################################
 ############################################
+
+$commitArray = array();
+for ($z = 0; $z < 250; $z++){
+	$commitArray[] = array(substr(md5(microtime()), mt_rand(0, 24), 8), mt_rand(1, 200));
+}
+
 
 $count = count($commitArray);
 
@@ -144,8 +150,8 @@ $count = count($commitArray);
 			}
 
 			################################################## 
-			$width = 300; # Später die Breite des Rechtecks 
-			$height = 300; # Später die Höhe des Rechtecks 
+			$width = 600; # Später die Breite des Rechtecks 
+			$height = 600; # Später die Höhe des Rechtecks 
 			$img = ImageCreate($width, $height); # Hier wird das Bild einer Variable zu gewiesen 
 			################################################## 
 			
@@ -164,15 +170,16 @@ $count = count($commitArray);
  		 		#$color = ImageColorAllocate($img, 100, 100, 100);
  		 		$w = ($x+($diff*$factor));
 				ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-				if ($w > $width)
-				while ($w > $width){
-					$overlap = $w-$width;
-					$x = 0;
-					$y += $hohe;
-					$w = $overlap;
-					$z += $hohe;
-					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-					$x += $w;
+				if ($w > $width){
+					while ($w > $width){
+						$overlap = $w-$width;
+						$x = 0;
+						$y += $hohe;
+						$w = $overlap;
+						$z += $hohe;
+						ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
+						$x += $w;
+					}
 				}
 				else{
 					$x += $diff*$factor;
