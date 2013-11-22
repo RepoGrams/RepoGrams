@@ -28,7 +28,7 @@
 					</div>
 			</div>
 			<div class="panel panel-default" style="overflow: hidden; height: 555px; width: 514px; margin: auto auto 0;">
-  				<div class="panel-heading"><?php echo $_GET["title"] ?></div>
+  				<div class="panel-heading"></div>
 				<div id="overscroll"> 
 					<ul>
 					<!-- width,height,tile.width,tile.height,tile.color -->
