@@ -49,23 +49,26 @@
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str);
  		 		$w = ($x+($diff*$factor));
+ 		 		$w2 = ($diff*$factor);
  		 		if ($w > $width)
  		 		while ($w > $width){
-
- 		 			$returnArray[] = array($w, $z, $color);
+					$overlap = $w-$width;
+ 		 			$w2 -= $overlap; 
+ 		 			$returnArray[] = array($w2, $hohe, $color);
 
 					$overlap = $w-$width;
 					$x = 0;
 					$y += $hohe;
 					$w = $overlap;
 					$z += $hohe;
+					if ($w <=  $width) $w2 = $w;
 					#ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-					$returnArray[] = array($w, $z, $color);
+					$returnArray[] = array($w2, $hohe, $color);
 					$x += $w;
 
 				}
 				else{
-					$returnArray[] = array($w, $z, $color);
+					$returnArray[] = array($w2, $hohe, $color);
 					$x += $diff*$factor;
 				}
 
