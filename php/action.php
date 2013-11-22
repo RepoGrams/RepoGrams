@@ -53,6 +53,7 @@ class action{
 	}
 	
 	function unsetAll() {
+		unset($_SESSION['error_message']);
 		unset($_SESSION['current_progress']);
 		unset($_SESSION['loading']);
 		unset($_SESSION['loading_info']);
