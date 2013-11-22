@@ -1,6 +1,6 @@
 <?php
-	include("convert.php");
-	include("action.php");
+	require_once("convert.php");
+	require_once("action.php");
 	class algorithm {
 
 	
