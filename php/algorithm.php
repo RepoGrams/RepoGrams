@@ -132,7 +132,7 @@
 		    		$b = round($b);
 		    		error_log("Farbe: " . $r . " " . $g . " " . $b . "\n");
 		    		$color = ImageColorAllocate($img, $r, $g, $b);
-		    		#return $color;
+		    		return $color;
 				case 1:
 					$keys1 = array("add", "new", "create");
 					$section1 = array_fill_keys($keys1, "section1");
