@@ -12,7 +12,7 @@
 			#$act = new action();
 			#$act->$callback("Start rendering...");
 
-			$_SESSON['action']->callback("Start rendering...");
+			$_SESSION['action']->callback("Start rendering...");
 
 			$all_diff = 0;
 
@@ -40,7 +40,7 @@
 			$factor = ($pixel/$hohe) / $all_diff;
 
 			#$act->$callback("Initialize image...");
-			$_SESSON['action']->callback("Initialize image...");
+			$_SESSION['action']->callback("Initialize image...");
 
 			$returnArray = array();
 
@@ -85,7 +85,7 @@
 			}
 
 			#$act->$callback("Provide image ...");
-			$_SESSON['action']->callback("Provide image ...");
+			$_SESSION['action']->callback("Provide image ...");
 
 			#imagepng($img, "visualization.png");
 			#return $img;
