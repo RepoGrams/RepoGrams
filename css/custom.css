@@ -23,8 +23,8 @@ html, body {
 .example {
 	float: left;
 	text-align:center;
-	height: 300px;
-	width: 300px;
+	height: 200px;
+	width: 200px;
 	margin-right: 50px;
 }
 

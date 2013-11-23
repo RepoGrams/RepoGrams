@@ -49,13 +49,19 @@
 			<br><br> 
 			<div class="examples">
 				<div class="well example">
-					1. Repository - Example
+					<img title="JQuery" src="img/examples/jquery.png">
+					<!-- https://github.com/jquery/jquery.git -->
+					<p class="lead">JQuery</p>
 				</div> 
 				<div class="well example">
-					2. Repository - Example
+					<img title="Twitter Bootstrap" src="img/examples/bootstrap.png">
+					<!-- https://github.com/twbs/bootstrap.git -->
+					<p class="lead">Twitter Bootstrap</p>
 				</div> 
 				<div class="well example">
-					3. Repository - Example
+					<img title="Git" src="img/examples/git.png">
+					<!-- https://github.com/git/git.git -->
+					<p class="lead">Git</p>
 				</div>
 			</div>
 			<div class="clear"></div>
