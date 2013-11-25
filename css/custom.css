@@ -18,6 +18,7 @@ html, body {
 .examples {
 	margin: auto auto 0; 
 	display: block;
+	width: 700px;
 }
 
 .example {
@@ -26,6 +27,13 @@ html, body {
 	height: 200px;
 	width: 200px;
 	margin-right: 50px;
+}
+
+.examplelast {
+	float: left;
+	text-align:center;
+	height: 200px;
+	width: 200px;
 }
 
 .clear {
