@@ -11,7 +11,7 @@
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<div class="title"><a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a></div>
+		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>
 		<br>
     	<?php
     		$error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '');

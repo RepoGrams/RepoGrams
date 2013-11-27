@@ -11,7 +11,7 @@
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<div class="title"><a href="index.php"><img class="title" src="img/title.png"></a></div>		
+		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>	
 		<div class="h1">Documentation</div>
 		<br>
 		<p class="lead">
