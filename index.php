@@ -14,6 +14,7 @@
 		<div class="title"><a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a></div>
 		<br>
     	<?php
+    		$error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '');
 			if (isset($_SESSION['loading']) && $_SESSION['loading']) {
  				echo '<br><br>
 					  <div class="progress progress-striped active">
@@ -27,7 +28,9 @@
 				header('Location: image.php');
 			} else {
 				echo '<form role="form" action="./php/action.php" method="POST">
-   						<div class="input-group urlinput">
+   						<div class="input-group urlinput ';
+				if ($error) echo 'has-error';
+   				echo '">
    							<input class="form-control" id="projectlink" name="projectlink" type="text" required="required"  placeholder="Enter repository url">
     						<span class="input-group-btn">
        							<button class="btn btn-default" type="submit" title="Visualize the provided repository">
@@ -35,8 +38,8 @@
        							</button>
      						</span>
 						</div>';
-				if (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '') {
-					echo '<div class="alert alert-danger alert-dismissable">
+				if ($error) {
+					echo '<div class="alert alert-danger alert-dismissable errormessage">
        						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
  							<strong>Error!</strong> '.$_SESSION['error_message'].'
 						  </div>';
@@ -47,21 +50,18 @@
 		?>	
 		<br><br>
 		<div class="examples">
-			<div class="well example lead">
+			<div class="well example lead" onclick="example('https://github.com/jquery/jquery.git');">
 				<img title="JQuery" src="img/examples/jquery.png">
-				<!-- https://github.com/jquery/jquery.git -->
 				<br>
 				JQuery
 			</div> 
-			<div class="well example lead">
+			<div class="well example lead"  onclick="example('https://github.com/twbs/bootstrap.git');">
 				<img title="Twitter Bootstrap" src="img/examples/bootstrap.png">
-				<!-- https://github.com/twbs/bootstrap.git -->
 				<br>
 				Twitter Bootstrap
 			</div> 
-			<div class="well examplelast lead">
+			<div class="well examplelast lead"  onclick="example('https://github.com/git/git.git');">
 				<img title="Git" src="img/examples/git.png">
-				<!-- https://github.com/git/git.git -->
 				<br>
 				Git
 			</div>

@@ -15,6 +15,12 @@ html, body {
   margin: auto auto 0;
 }
 
+.errormessage {
+  width: 50%;
+  margin: auto auto 0;
+}
+
+
 .examples {
 	margin: auto auto 0; 
 	display: block;
