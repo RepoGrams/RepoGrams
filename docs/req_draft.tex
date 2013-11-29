@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[german]{babel}
 \usepackage{amsmath}
+\usepackage{csquotes}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{color}	
@@ -16,9 +17,13 @@
 \section{Must-Haves:}
 \begin{enumerate}
 \item The product's front end will be a website that will work with recent and well known browsers (Firefox 25.0, Internet Explorer 11, Google Chrome 31.0, Safari 7.0 and Opera 17.0). 
-\item The website will contain a top bar with links to the main page, a documentation page and one to the page where the repositories are visualized. 
-\item The home page will contain a short explanation about the site's purpose.
-\item The home page will also show some example renderings.
+\item The website will contain a home page, with an input field, a visualize button, a help button and a documentation button.
+\item The input field is used to enter a URL to a repository.
+\item The visualize button starts visualizing the provided repository and opens the rendering page.
+\item The help button displays an overlaying help box.
+\item The documentation button opens the documentation page.
+\item The home page will also have three buttons to automatically insert an example URL into the input field [example repositories are \enquote{JQuery}, \enquote{Twitter Bootstrap} and \enquote{Git}.
+\item The documentation page will provide an detailed description of the project and a button that directs the user back to the home page.
 \item The system will support visualization of the commit comments of a provided git repository by representing every commit comment as a colored block.
 \item A repository will be provided by the user by entering a URL which refers to the repository that should be visualized.
 \item The rendering page will display a progress bar while the system is rendering the picture.
