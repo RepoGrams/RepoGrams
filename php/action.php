@@ -3,16 +3,21 @@
 	
 	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
 	require_once("algorithm.php");
-	
-class action{        
-	
-	public function callback($msg = null) {
-		$_SESSION['current_progress'] = $_SESSION['current_progress']+20;
-		$_SESSION['loading_info'] = $msg;
-		header('Location: ../index.php');
+
+	class Callback {
+		
+		/**
+		 * Callback function to update progress
+		 * @param string $msg
+		 */
+		static function call($msg = null){
+			$_SESSION['current_progress'] = $_SESSION['current_progress']+20;
+			$_SESSION['loading_info'] = $msg;
+			header('Location: ../index.php');
+		}
+
 	}
-	
-}
+
 	/**
 	 * Check the formular input and start rendering
 	 */
@@ -30,7 +35,7 @@ class action{
 		$_SESSION['loading']          = false;     
 		$_SESSION['error_message']    = '';     
 		$_SESSION['title']            = ''; 
-		$_SESSION['action']           = new action();
+		$_SESSION['callback']         = new Callback();
 		
 		$_SESSION['width']  = 768;                                   
 		$_SESSION['height'] = 512;                                 
@@ -51,14 +56,14 @@ class action{
 	
 	/**
 	 * Renders the repository with the provided $repourl and displays the image on image.php
-	 * Session-Variables: image, title, error_message, action
+	 * Session-Variables: image, title, error_message, 
 	 */
 	function renderRepo($repourl = null) {
 		try {
 			$_SESSION['loading'] = true;
-			$repo = RepoFactory::createRepo($repourl, $_SESSION['action']);
+			$repo = RepoFactory::createRepo($repourl, $_SESSION['callback']);
 			$alg = new Algorithm();
-			$arr = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height'], $_SESSION['action']);
+			$arr = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height'], $_SESSION['callback']);
 			$_SESSION['image'] = $arr;
 			$start = strrpos($repourl, '/');
 			$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
