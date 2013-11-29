@@ -17,7 +17,6 @@ class gitImport {
 		$command = 	'cd '.$tmp;
 		$command.=	' && git clone "'.$repo.'"';
 		$command."\n";
-		//error_log($command);
 		shell_exec($command);
 		// if (!file_exists($tmp.'/.git')) throw new Exception ('No .git Folder found');
 		$command = 'cd '.$tmp."/*/ && git log --numstat --pretty='%x1A},%x1A%H%x1A:{%x1Aauthor%x1A:%x1A%an%x1A,%x1Aauthor_mail%x1A:%x1A%ae%x1A,%x1Adate%x1A:%x1A%at%x1A,%x1Amessage%x1A:%x1A%s%x1A,%x1Achanges%x1A : %x1A'";
@@ -28,6 +27,9 @@ class gitImport {
 		
 		$json = utf8_encode($json);
 		$output_array = json_decode($json,true);
+		if (is_null($output_array)) {
+			error_log("stop");
+		}
 		$this->RepoObject = $output_array;
 		self::removeDir($tmp);
 	}
@@ -84,8 +86,8 @@ function str_starts_with($string, $niddle) {
 	
 	private function unescape($escapedString, $escapeCharacter) {
         	// Replace bad characters with the corresponding escape sequence for JSON
-		$badCharacters = array('/"/','/\//' ,'/\\\/','/\f/','/\n/','/\r/','/\t/'); // Not supported: backspace, utf8-characters
-		$correspondingGoodCharacters = array('\"','\/' ,'\\','\f','\n','\r','\t');
+		$badCharacters = array('!\\\\!','!"!', '!/!' ,'!\\f!','!\\n!','!\\r!','!\\t!'); // Not supported: backspace, utf8-characters
+		$correspondingGoodCharacters = array('\\\\\\\\','\\\\"','\\\\/' ,'\\\\f','\\\\n','\\\\r','\\\\t');
 	        $intermediate = preg_replace($badCharacters, $correspondingGoodCharacters, $escapedString);
 	       	// Replace escapeCharacter with "
 	        return preg_replace('/'.$escapeCharacter.'/', '"', $intermediate);
