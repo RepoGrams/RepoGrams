@@ -54,17 +54,17 @@
 		?>	
 		<br><br>
 		<div class="examples">
-			<div class="well example lead" onclick="example('https://github.com/jquery/jquery.git');">
+			<div class="well example lead btn btn-lg" onclick="example('https://github.com/jquery/jquery.git');">
 				<img title="JQuery" src="img/examples/jquery.png">
 				<br>
 				JQuery
 			</div> 
-			<div class="well example lead"  onclick="example('https://github.com/twbs/bootstrap.git');">
+			<div class="well example lead btn btn-lg"  onclick="example('https://github.com/twbs/bootstrap.git');">
 				<img title="Twitter Bootstrap" src="img/examples/bootstrap.png">
 				<br>
 				Twitter Bootstrap
 			</div> 
-			<div class="well examplelast lead"  onclick="example('https://github.com/git/git.git');">
+			<div class="well examplelast lead btn btn-lg"  onclick="example('https://github.com/git/git.git');">
 				<img title="Git" src="img/examples/git.png">
 				<br>
 				Git
