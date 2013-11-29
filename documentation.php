@@ -7,7 +7,11 @@
 
 <body>
 	<!-- Menu -->	
-	<?php //include('menu.php'); ?>
+	<div style="float:right; margin-right: 20px; margin-top:20px;">
+		<a class="btn btn-default btn-lg" href="<?php echo $_SERVER['HTTP_REFERER']; ?>" title="Go back">
+			<span class="glyphicon glyphicon-arrow-left"></span>	
+		</a>
+	</div>
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
