@@ -28,8 +28,6 @@
 	\item[Scenario:]
 		\begin{enumerate}[leftmargin=1.5em]
 			\item The user opens the website and arrives at the home page.
-			\item The user clicks on \enquote{Render} and the browser loads the page where
-				he can enter the URL to his Git repository. 
 			\item The user enters the URL to his Git repository. 
 			\item The user clicks on \enquote{Visualize}. (See exception 1, 2, 3, 4, 5)
 			\item The webpage shows a progress bar with an
@@ -41,31 +39,27 @@
 
 	\item[Exceptions:]
 		\begin{enumerate}[leftmargin=1.5em]
-			\item The URL is illegal $\rightarrow$ The website shows an error message:
-				\enquote{You need to enter a legal link to a Git repository} and goes
-				back to the \enquote{Render}--Page.
+			\item The URL is illegal $\rightarrow$ The website shows an error message below the 						input field: \enquote{You need to enter a legal link to a Git repository}. (See use-case 				2)
 			\item The URL does not point to a Git repository. $\rightarrow$  The website
-				shows an error message: \enquote{You need to enter a legal link to a git
-				repository} and goes back to the \enquote{Render}--Page.
+				shows an error message below the input field: \enquote{You need to enter a legal 		
+				link to a git repository}. (See use-case 3)
 			\item The Repository is password protected $\rightarrow$ The website shows an
-				error message: \enquote{The Git repository has to be without password
-				protection} and goes back to the \enquote{Render}--Page.
+				error message below the input field: \enquote{The Git repository has to be without 
+				password protection}. (See use-case 4)
 			\item The repository is protected by a private SSH key $\rightarrow$ The
-				website shows an error message: \enquote{The Git repository has to be
-				without SSH key protection.} and goes back to the
-				\enquote{Render}--Page.
+				website shows an error message below the input field: \enquote{The Git repository 
+				has to be without SSH key protection}. (See use-case 5)
 			\item The repository is empty$\rightarrow$ The website displays an error
-				message: \enquote{The repository is empty} and goes back to the
-				\enquote{Render}--Page.
+				message below the input field: \enquote{The repository is empty}. (See use-case 6)
 			\item The server hosting the repository does not respond $\rightarrow$ The
-				website shows an error message after timeout: \enquote{The Git
-				repository is currently unavailable. Please try again later.} and goes
-				back to the \enquote{Render}--Page. 
+				website shows the homepage with an error message after timeout below the input 	
+				field: 	\enquote{The Git repository is currently unavailable. Please try again later}.  
+				(See use-case 7)
 			\item The repository is too big $\rightarrow$  The server attempts to obtain a
 				smaller copy of the repository by doing a shallow clone, containing only
 				the 50 most recent commits. If the repository is still too big, the
-				following error message is shown: \enquote{The
-				repository is too big. Please try another one.}
+				website shows the homepage with an error message after timeout below the input 	
+				field: \enquote{The repository is too big. Please try another one}. (See use-case 8)
 		\end{enumerate}
 
 	\item[Priority:] high
