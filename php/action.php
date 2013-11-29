@@ -11,9 +11,8 @@
 		 * @param string $msg
 		 */
 		static function call($msg = null){
-			$_SESSION['current_progress'] = $_SESSION['current_progress']+20;
 			$_SESSION['loading_info'] = $msg;
-			header('Location: ../index.php');  return null;
+			header('Location: ../loading.php');  return null;
 		}
 
 	}
@@ -30,9 +29,7 @@
 	 * Initialize session variables
 	 */
 	function initVariables() {
-		$_SESSION['current_progress'] = 0;
-		$_SESSION['loading_info']     = 'Loading...';
-		$_SESSION['loading']          = false;     
+		$_SESSION['loading_info']     = 'Loading...';   
 		$_SESSION['error_message']    = '';     
 		$_SESSION['title']            = ''; 
 		$_SESSION['callback']         = new Callback();
@@ -60,7 +57,7 @@
 	 */
 	function renderRepo($repourl = null) {
 		try {
-			$_SESSION['loading'] = true;
+			header('Location: ../loading.php');
 			$repo = RepoFactory::createRepo($repourl);
 			$alg = new Algorithm();
 			$arr = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
@@ -81,8 +78,6 @@
 	 */
 	function unsetAll() {
 		unset($_SESSION['error_message']);
-		unset($_SESSION['current_progress']);
-		unset($_SESSION['loading']);
 		unset($_SESSION['loading_info']);
 	}
 	

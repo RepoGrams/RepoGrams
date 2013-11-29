@@ -16,17 +16,7 @@
     	<?php
     		$error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '');
 			if (isset($_SESSION['loading']) && $_SESSION['loading']) {
- 				echo '<br><br>
-					  <div class="progress progress-striped active">
-  					  	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:'.$_SESSION['current_progress'].'%;"></div>
-					  </div>
-					  <p>'.$_SESSION['loading_info'].'</p>';
-			} else if (isset($_SESSION['current_progress']) && $_SESSION['current_progress'] == 100) {
-				unset($_SESSION['current_progress']);
-				unset($_SESSION['loading']);
-				unset($_SESSION['loading_info']);
-				unset($_SESSION['error_message']);
-				header('Location: image.php');
+ 				//header('loaction: loading.php');
 			} else {
 				echo '<form role="form" action="./php/action.php" method="POST">
    						<div class="input-group urlinput ';
