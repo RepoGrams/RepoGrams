@@ -29,7 +29,10 @@
 			################################################## 
 			#$width = 600; # Später die Breite des Rechtecks 
 			#$height = 600; # Später die Höhe des Rechtecks 
-			$img = ImageCreate($width, $height);
+			$img = imagecreatetruecolor($width, $height);
+			if ($img === false) {
+				die();
+			}
 			################################################## 
 			
 			$x = 0; 	#links oben -> links

@@ -1,0 +1,42 @@
+\documentclass[11pt]{scrartcl}
+\usepackage{microtype}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{csquotes}
+\usepackage{color}	
+\usepackage{calc}
+\usepackage{enumitem}
+\newcommand{\todo}[1]{\textbf{\textsc{\textcolor{red}{(TODO: #1)}}}}
+\renewcommand{\baselinestretch}{1.0}\normalsize
+\parindent 0pt
+\author{Maike Maas \and Valerie Poser \and Sebastian Becking \and
+        Marc Jose \and Fabian Kosmale \and Heiko Becker}
+\title{Visualizing commit comments with chromograms}
+\begin{document}
+\maketitle
+
+\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Frequency of use:}]
+	\item[Use-case:] Trying to visualize an inaccessible Git repository
+	\item[Primary actor:] User of a desktop browser 
+	\item[Goal in context:] Visualizing the repository in an overall block view with standard parameters 
+	\item[Preconditions:] Browser with a working Internet connection and an URL to a Git repository
+	\item[Trigger:] The user wants to get a visualization of his Git repository 
+
+	\item[Scenario:]
+		\begin{enumerate}[leftmargin=1.5em]
+			\item The user opens the website and arrives at the home page.
+			\item The user enters an illegal URL.
+			\item The user clicks on \enquote{Visualize}.
+			\item The website shows an error message below the input field:
+				\enquote{You need to enter a legal link to a Git repository}.
+		\end{enumerate}
+		
+	\item[Priority:] high
+	\item[Frequency of use:] Very often --- this is the main functionality of the system
+
+\end{description}
+
+\end{document}
