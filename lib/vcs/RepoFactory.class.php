@@ -4,7 +4,7 @@ require_once __DIR__."/../../php/action.php";
 
 class RepoFactory {
 	static function createRepo($url) {
-		call_user_func(array('callback', 'call','aCCESSING REPO....'));
+		callback('Accessing repository....');
 		return new GitRepo($url);
 	}
 }

@@ -13,8 +13,8 @@
 	<div class="container" id="wrap">
 		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>
 		<br>
-    	<img src="img/progress.gif">
-    	<p><?php if (isset($_SESSION['loading_info'])) echo $_SESSION['loading_info'];?></p>
+    	<img class="center" src="img/progress.gif">
+    	<p class="center"><?php if (isset($_SESSION['loading_info'])) echo $_SESSION['loading_info']; else echo 'Loading...'?></p>
 		<div id="push"></div>
 	</div>
 	

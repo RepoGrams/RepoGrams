@@ -8,12 +8,7 @@
 			$commitArray = $this->preprocess($commitObjectArray);
 			$count = count($commitArray);
 
-
-			#$act = new action();
-			#$act->$callback("Start rendering...");
-
-			#$_SESSION['action']->callback("Start rendering...");
-			call_user_func(array($_SESSION['callback'], array('call', 'Start rendering...')));
+			callback('Start rendering...');
 
 			$all_diff = 0;
 
@@ -44,8 +39,7 @@
 			$pixel = $width * $height; #all pixels on picture
 			$factor = ($pixel/$hohe) / $all_diff;
 
-			#$act->$callback("Initialize image...");
-			call_user_func(array($_SESSION['callback'], array('call', 'Initialize image...')));
+			callback('Initialize image...');
 
 			#$returnArray = array();
 
@@ -85,9 +79,7 @@
 				}*/
 			}
 
-			#$act->$callback("Provide image ...");
-			call_user_func(array($_SESSION['callback'], array('call', 'Initialize image...')));
-			#$_SESSION['action']->callback("Provide image ...");
+			callback('Initialize image...');
 
 			imagepng($img, "visualization.png");
 			return $img;

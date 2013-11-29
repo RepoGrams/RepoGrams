@@ -4,19 +4,6 @@
 	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
 	require_once("algorithm.php");
 
-	class Callback {
-		
-		/**
-		 * Callback function to update progress
-		 * @param string $msg
-		 */
-		static function call($msg = null){
-			$_SESSION['loading_info'] = $msg;
-			header('Location: ../loading.php');  return null;
-		}
-
-	}
-
 	/**
 	 * Check the formular input and start rendering
 	 */
@@ -24,6 +11,16 @@
 	$url = $_POST['projectlink'];
 	if (checkInput($url)) renderRepo($url);
 	
+	/**
+	 * Callback function to update progress info
+	 * @param string $msg
+	 * @return NULL
+	 */
+	function callback($msg = null) {
+		$_SESSION['loading_info'] = $msg;
+		header('Location: ../loading.php');  
+		return null;
+	}
 	
 	/**
 	 * Initialize session variables
@@ -32,7 +29,6 @@
 		$_SESSION['loading_info']     = 'Loading...';   
 		$_SESSION['error_message']    = '';     
 		$_SESSION['title']            = ''; 
-		$_SESSION['callback']         = new Callback();
 		
 		$_SESSION['width']  = 768;                                   
 		$_SESSION['height'] = 512;                                 
