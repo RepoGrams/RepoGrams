@@ -22,14 +22,12 @@ class gitImport {
 		// if (!file_exists($tmp.'/.git')) throw new Exception ('No .git Folder found');
 		$command = 'cd '.$tmp."/*/ && git log --numstat --pretty='%x1A},%x1A%H%x1A:{%x1Aauthor%x1A:%x1A%an%x1A,%x1Aauthor_mail%x1A:%x1A%ae%x1A,%x1Adate%x1A:%x1A%at%x1A,%x1Amessage%x1A:%x1A%s%x1A,%x1Achanges%x1A : %x1A'";
 		$output = shell_exec($command);
-		//echo $output;
 		$json = self::unescape($output,chr(26));
 		$json = substr($json,3,strlen($json));
 		$json = '{'.$json.'"}}';
 		
 		$json = utf8_encode($json);
 		$output_array = json_decode($json,true);
-		//	print_r($output_array);
 		$this->RepoObject = $output_array;
 		self::removeDir($tmp);
 	}
