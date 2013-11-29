@@ -19,38 +19,26 @@
 \maketitle
 
 \begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Frequency of use:}]
-	\item[Use-case:] Visualizing a public Git repository 
+	\item[Use-case:] Visualizing an example repository 
 	\item[Primary actor:] User of a desktop browser 
 	\item[Goal in context:] Visualizing the repository in an overall block view with standard parameters 
-	\item[Preconditions:] Browser with a working Internet connection and an URL to a Git repository
-	\item[Trigger:] The user wants to get a visualization of his Git repository 
+	\item[Preconditions:] Browser with a working Internet connection
+	\item[Trigger:] The user wants to get a visualization of an example repository
 
 	\item[Scenario:]
 		\begin{enumerate}[leftmargin=1.5em]
 			\item The user opens the website and arrives at the home page.
-			\item The user enters the URL to his Git repository. 
-			\item The user clicks on \enquote{Visualize}. (See exception 1, 2, 3, 4, 5)
-			\item The website shows a progress bar with an
-				informative text displayed beneath
-				it. (See exception 6, 7)
+			\item The user clicks on \enquote{JQuery}.
+			\item The website enters the URL to the repository into the input field.
+			\item The user clicks on \enquote{Visualize}.
+			\item The website shows a progress bar with an informative text displayed beneath
+				it. (See exception 1, 2)
 			\item The website shows the repository's visualization.
 			\item The user takes a screenshot to save the picture. 
 		\end{enumerate}
 
 	\item[Exceptions:]
 		\begin{enumerate}[leftmargin=1.5em]
-			\item The URL is illegal $\rightarrow$ The website shows an error message below the 						input field: \enquote{You need to enter a legal link to a Git repository}. (See use-case 				2)
-			\item The URL does not point to a Git repository. $\rightarrow$  The website
-				shows an error message below the input field: \enquote{You need to enter a legal 		
-				link to a git repository}. (See use-case 3)
-			\item The Repository is password protected $\rightarrow$ The website shows an
-				error message below the input field: \enquote{The Git repository has to be without 
-				password protection}. (See use-case 4)
-			\item The repository is protected by a private SSH key $\rightarrow$ The
-				website shows an error message below the input field: \enquote{The Git repository 
-				has to be without SSH key protection}. (See use-case 5)
-			\item The repository is empty$\rightarrow$ The website displays an error
-				message below the input field: \enquote{The repository is empty}. (See use-case 6)
 			\item The server hosting the repository does not respond $\rightarrow$ The
 				website shows the homepage with an error message after timeout below the input 	
 				field: 	\enquote{The Git repository is currently unavailable. Please try again later}.  
@@ -63,7 +51,7 @@
 		\end{enumerate}
 
 	\item[Priority:] high
-	\item[Frequency of use:] Very often --- this is the main functionality of the system
+	\item[Frequency of use:] Very often
 
 \end{description}
 
