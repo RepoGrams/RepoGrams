@@ -13,7 +13,7 @@
 		static function call($msg = null){
 			$_SESSION['current_progress'] = $_SESSION['current_progress']+20;
 			$_SESSION['loading_info'] = $msg;
-			header('Location: ../index.php');
+			header('Location: ../index.php');  return null;
 		}
 
 	}
@@ -68,11 +68,11 @@
 			$start = strrpos($repourl, '/');
 			$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
 			unsetAll();
-			header('Location: ../image.php');
+			header('Location: ../image.php'); return null;
 		} catch (Exception $e) {
 			unsetAll();
 			$_SESSION['error_message'] = $e->getMessage();
-			header('Location: ../index.php');
+			header('Location: ../index.php');  die();
 		}
 	}
 
