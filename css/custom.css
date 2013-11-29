@@ -10,6 +10,15 @@ html, body {
   margin: 0 auto -60px;
 }
 
+.alert-dismissable .close {
+	color: #800000;
+	margin-left: 10px;
+}
+
+.close {
+	opacity: 0.8;
+}
+
 .urlinput {
   width: 50%;
   margin: auto auto 0;

@@ -37,16 +37,16 @@
        							<button class="btn btn-default" type="submit" title="Visualize the provided repository">
        								<span class="glyphicon glyphicon-indent-left"></span>Visualize!
 								</button>
-
-<button class="btn btn-default btn-default" data-toggle="modal" data-target="#help" title="Quick Help" type="submit">
-		<span class="glyphicon glyphicon-hand-left "></span> Help</button>
+								<button class="btn btn-default btn-default" data-toggle="modal" data-target="#help" title="Quick Help" type="submit">
+									<span class="glyphicon glyphicon-hand-left "></span>Help
+								</button>
      						</span>
 						</div>';
 				if ($error) {
-					echo '<div class="alert alert-danger alert-dismissable errormessage">
-       						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
- 							<strong>Error!</strong> '.$_SESSION['error_message'].'
-						  </div>';
+					echo '<div class="alert-dismissable errormessage">
+       							<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true">     							</button>
+       								<span class="help-block"><strong>&nbsp;&nbsp;Error!</strong> '.$_SESSION['error_message'].'</span>
+       					  </div>';
 					unset($_SESSION['error_message']);
 				}
 				echo '</form>';
