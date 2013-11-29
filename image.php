@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); if ($_SESSION['image'] == null) header('location: index.php')?>
 
 <html !DOCTYPE HTML>
 <head>
@@ -11,6 +11,8 @@
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
+		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>
+		<br>
     	<div class="hero-unit">
     		<script type="text/javascript" src="js/jquery.overscroll.min.js"></script>
     		<div class="color-legend">

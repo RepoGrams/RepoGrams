@@ -4,17 +4,6 @@
 	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
 	require_once("algorithm.php");
 	
-	$_SESSION['current_progress'] = 0;               //Value to determine the current progress (1-100), will be displayed in the progressbar along with some additional loading infos
-	$_SESSION['loading_info']     = 'Loading...';    //Loading infos (ex. 'Requesting repository access), will be displayed
-	$_SESSION['loading']          = false;           //if true then the progressbar will be displayed 
-	$_SESSION['error_message']    = '';              //Error message will be set if an error occurs and displayed on the page
-	$_SESSION['title']            = '';              //Repository title, will be displayed on the final image page
-	$_SESSION['action']           = new action();    //Callback function, used to display progress
-	
-	$width  = 768;                                   //Image width
-	$height = 512;                                   //Image height
-
-
 class action{        
 	
 	public function callback($msg = null) {
@@ -27,9 +16,25 @@ class action{
 	/**
 	 * Check the formular input and start rendering
 	 */
+	initVariables();
 	$url = $_POST['projectlink'];
-	checkInput($url);
-	renderRepo($url);
+	if (checkInput($url)) renderRepo($url);
+	
+	
+	/**
+	 * Initialize session variables
+	 */
+	function initVariables() {
+		$_SESSION['current_progress'] = 0;
+		$_SESSION['loading_info']     = 'Loading...';
+		$_SESSION['loading']          = false;     
+		$_SESSION['error_message']    = '';     
+		$_SESSION['title']            = ''; 
+		$_SESSION['action']           = new action();
+		
+		$width  = 768;                                   
+		$height = 512;                                 
+	}
 	
 	/**
 	 * Check formular input if url is empty
@@ -38,7 +43,9 @@ class action{
 		if(!str_replace(' ','',$repourl) != '') {
 			$_SESSION['error_message'] = 'Invalid repository url.';
 			header('Location: ../index.php');
-			exit(1);
+			return false;
+		} else {
+			return true;
 		}
 	}
 	
@@ -57,12 +64,10 @@ class action{
 			$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
 			unsetAll();
 			header('Location: ../image.php');
-			exit(0);
 		} catch (Exception $e) {
 			unsetAll();
 			$_SESSION['error_message'] = $e->getMessage();
 			header('Location: ../index.php');
-			exit(1);
 		}
 	}
 
