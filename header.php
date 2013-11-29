@@ -8,6 +8,9 @@
 <!-- Page title -->
 <title>Repograms</title>
 
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="img/logo.png">
+      
 <!-- CSS sources -->
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">

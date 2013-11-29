@@ -25,6 +25,7 @@
 				unset($_SESSION['current_progress']);
 				unset($_SESSION['loading']);
 				unset($_SESSION['loading_info']);
+				unset($_SESSION['error_message']);
 				header('Location: image.php');
 			} else {
 				echo '<form role="form" action="./php/action.php" method="POST">
