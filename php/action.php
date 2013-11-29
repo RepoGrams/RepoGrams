@@ -56,9 +56,9 @@ class action{
 	function renderRepo($repourl = null) {
 		try {
 			$_SESSION['loading'] = true;
-			$repo = RepoFactory::createRepo($repourl, $_SESSION['action']->callback());
+			$repo = RepoFactory::createRepo($repourl, $_SESSION['action']);
 			$alg = new Algorithm();
-			$arr = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height'], 'callback');
+			$arr = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height'], $_SESSION['action']);
 			$_SESSION['image'] = $arr;
 			$start = strrpos($repourl, '/');
 			$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
