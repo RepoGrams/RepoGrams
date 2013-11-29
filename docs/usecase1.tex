@@ -38,20 +38,20 @@
 		\end{enumerate}
 		
 		
-	\item[Alternate Flow]
+	\item[Alternate Flow:]
 		\begin{enumerate}
 			\item[2.1.a.] The user clicks on the button \enquote{Help}.
 			\item[2.2.a.] The website overlays a help box with explaining texts and a link to the documentation.
 			\item[2.3.a.] The user reads the helpful information and found a way to interact with the website.
 			\item[2.4.a.] The user closes the help box.
 			\item[] Return to Step 2 of the main scenario.
-		
-			\item[2.1.b.] The user clicks on the button in the upper right corner labeled with a question mark.
+			\\
+			\item[2.1.b.] The user clicks on the button in the upper right corner labeled with a book.
 			\item[2.2.b.] The website opens the documentation page.
 			\item[2.3.b.] The user reads the documentation and is informed.
 			\item[2.4.b.] The user clicks on \enquote{return}.
 			\item[] Return to Step 2 of the main scenario.
-						
+			\\
 			\item[2.1.c.] The user clicks on \enquote{JQuery}.
 			\item[2.2.c.] The website enters the URL into the input field.
 			\item[2.3.c.] The user clicks on \enquote{Visualize}.
@@ -60,29 +60,63 @@
 		
 		\end{enumerate}
 
-	\item[Exceptions:]
+	\item[Exception Flow:]
 		\begin{enumerate}[leftmargin=1.5em]
-			\item The URL is illegal $\rightarrow$ The website shows an error message below the 						input field: \enquote{You need to enter a legal link to a Git repository}. (See use-case 				2)
-			\item The URL does not point to a Git repository. $\rightarrow$  The website
+			\item[E 1.] The URL is illegal
+			\begin{enumerate}
+				\item The website shows an error message below the input field: \enquote{You need to enter a legal link to a Git 						repository}.
+				\item[] Return to Step 2 of the main scenario.
+			\end{enumerate}
+			
+			\item[E 2.] The URL does not point to a Git repository. $\rightarrow$  The website
 				shows an error message below the input field: \enquote{You need to enter a legal 		
-				link to a git repository}. (See use-case 3)
-			\item The Repository is password protected $\rightarrow$ The website shows an
-				error message below the input field: \enquote{The Git repository has to be without 
-				password protection}. (See use-case 4)
-			\item The repository is protected by a private SSH key $\rightarrow$ The
-				website shows an error message below the input field: \enquote{The Git repository 
-				has to be without SSH key protection}. (See use-case 5)
-			\item The repository is empty$\rightarrow$ The website displays an error
-				message below the input field: \enquote{The repository is empty}. (See use-case 6)
-			\item The server hosting the repository does not respond $\rightarrow$ The
-				website shows the homepage with an error message after timeout below the input 	
-				field: 	\enquote{The Git repository is currently unavailable. Please try again later}.  
-				(See use-case 7)
-			\item The repository is too big $\rightarrow$  The server attempts to obtain a
-				smaller copy of the repository by doing a shallow clone, containing only
-				the 50 most recent commits. If the repository is still too big, the
-				website shows the homepage with an error message after timeout below the input 	
-				field: \enquote{The repository is too big. Please try another one}. (See use-case 8)
+				link to a git repository}.
+				\begin{enumerate}
+					\item The website shows an error message below the input field: \enquote{You need to enter a legal 		
+						link to a git repository}.
+					\item[] Return to Step 2 of the main scenario.
+				\end{enumerate}
+				
+			\item[E 3.] The Repository is password protected
+				\begin{enumerate}
+					\item The website shows an
+						error message below the input field: \enquote{The Git repository has to be without 
+						password protection}.
+					\item[] Return to Step 2 of the main scenario.
+				\end{enumerate}
+				
+			\item[E 4.] The repository is protected by a private SSH key.
+				\begin{enumerate}
+					\item The website shows an error message below the input field: \enquote{The Git repository 
+							has to be without SSH key protection}.
+					\item[] Return to Step 2 of the main scenario.
+				\end{enumerate}
+				
+			\item[E 5.] The repository is empty
+				\begin{enumerate}
+					\item  The website displays an error message below the input field: \enquote{The repository is empty}.
+					\item[] Return to Step 2 of the main scenario.
+				\end{enumerate}	
+										
+			\item[E 6.] The server hosting the repository does not respond.
+				\begin{enumerate}
+					\item Return to the home page.
+					\item The website shows the homepage with an error message after timeout below the input 	
+						field: 	\enquote{The Git repository is currently unavailable. Please try again later}.
+					\item[] Return to Step 2 of the main scenario.
+					
+				\end{enumerate}
+				
+			\item[E 7.] The repository is too big.
+				\begin{enumerate}
+					\item Return to the home page.
+					\item The server attempts to obtain a 
+						smaller copy of the repository by doing a shallow clone, containing only
+						the 50 most recent commits. If the repository is still too big, the
+						website shows the homepage with an error message after timeout below the input 	
+						field: \enquote{The repository is too big. Please try another one}.
+					\item[] Return to Step 2 of the main scenario.
+				\end{enumerate}
 		\end{enumerate}
 
 	\item[Priority:] high
