@@ -4,7 +4,7 @@
 	class algorithm {
 
 	
-		public function render($commitObjectArray, $modus = 0, $width, $height, $callback){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
+		public function render($commitObjectArray, $modus = 0, $width, $height){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
 			$commitArray = $this->preprocess($commitObjectArray);
 			$count = count($commitArray);
 
@@ -13,7 +13,7 @@
 			#$act->$callback("Start rendering...");
 
 			#$_SESSION['action']->callback("Start rendering...");
-			call_user_func($_SESSION['callback'], array('call', 'Start rendering...'));
+			call_user_func(array($_SESSION['callback'], array('call', 'Start rendering...')));
 
 			$all_diff = 0;
 
@@ -45,7 +45,7 @@
 			$factor = ($pixel/$hohe) / $all_diff;
 
 			#$act->$callback("Initialize image...");
-			call_user_func($_SESSION['callback'], array('call', 'Initialize image...'));
+			call_user_func(array($_SESSION['callback'], array('call', 'Initialize image...')));
 
 			#$returnArray = array();
 
@@ -86,7 +86,7 @@
 			}
 
 			#$act->$callback("Provide image ...");
-			call_user_func($_SESSION['callback'], array('call', 'Initialize image...'));
+			call_user_func(array($_SESSION['callback'], array('call', 'Initialize image...')));
 			#$_SESSION['action']->callback("Provide image ...");
 
 			imagepng($img, "visualization.png");
