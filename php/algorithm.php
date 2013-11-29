@@ -1,4 +1,4 @@
-<?php
+	<?php
 	require_once("convert.php");
 	require_once("action.php");
 	class algorithm {
@@ -49,7 +49,6 @@
 			#$returnArray = array();
 
 			for ($i = 0; $i < $count; $i++){
-				error_log("Commit Message: " . $commitArray[$i][0] . " Laenge: " . $commitArray[$i][1] . "\n");
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str, $img);
@@ -131,7 +130,6 @@
 		    		$r = round($r);
 		    		$g = round($g);
 		    		$b = round($b);
-		    		error_log("Farbe: " . $r . " " . $g . " " . $b . "\n");
 		    		$color = ImageColorAllocate($img, $r, $g, $b);
 		    		return $color;
 				case 1:
