@@ -1,4 +1,4 @@
-<?php session_start(); if ($_SESSION['image'] == null) header('location: index.php')?>
+<?php session_start(); if (!isset($_SESSION['image']) ) header('location: index.php')?>
 
 <html !DOCTYPE HTML>
 <head>
