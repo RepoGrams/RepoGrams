@@ -8,8 +8,10 @@
 	 * Check the formular input and start rendering
 	 */
 	initVariables();
-	$url = $_POST['projectlink'];
-	if (checkInput($url)) renderRepo($url);
+	$_SESSION['repourl'] = $_POST['projectlink'];
+	if (checkInput($_SESSION['repourl'])) {
+		renderRepo($_SESSION['repourl']);
+	}
 	
 	/**
 	 * Callback function to update progress info
@@ -29,6 +31,8 @@
 		$_SESSION['loading_info']     = 'Loading...';   
 		$_SESSION['error_message']    = '';     
 		$_SESSION['title']            = ''; 
+		$_SESSION['repourl']          = '';
+		$_SESSION['finish']           = false;
 		
 		$_SESSION['width']  = 768;                                   
 		$_SESSION['height'] = 512;                                 
@@ -53,7 +57,6 @@
 	 */
 	function renderRepo($repourl = null) {
 		try {
-			header('Location: ../loading.php');
 			$repo = RepoFactory::createRepo($repourl);
 			$alg = new Algorithm();
 			$arr = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
@@ -61,11 +64,13 @@
 			$start = strrpos($repourl, '/');
 			$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
 			unsetAll();
-			header('Location: ../image.php'); return null;
+			$_SESSION['finish'] = true;
+			return null;
 		} catch (Exception $e) {
 			unsetAll();
 			$_SESSION['error_message'] = $e->getMessage();
-			header('Location: ../index.php');  die();
+			header('Location: ../index.php');  
+			$_SESSION['finish'] = false;
 		}
 	}
 

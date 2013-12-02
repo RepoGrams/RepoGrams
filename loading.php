@@ -1,4 +1,9 @@
-<?php session_start();?>
+<?php 
+	session_start();
+	if (isset($_SESSION['finish']) && $_SESSION['finish']) {
+		header('Location: image.php');
+	}
+?>
 
 <html !DOCTYPE HTML>
 <head>
@@ -22,3 +27,7 @@
 	<?php include('footer.php')?>
 </body>
 </html>
+
+<?php 
+	
+?>

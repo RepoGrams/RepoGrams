@@ -13,31 +13,28 @@
 	<div class="container" id="wrap">
 		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>
 		<br>
-    	<?php
-    		$error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '');
-			echo '<form role="form" action="./php/action.php" method="POST">
-   					<div class="input-group urlinput ';
-						if ($error) echo 'has-error';
-   			 echo '">
-   						<input class="form-control" id="projectlink" name="projectlink" type="text" required="required"  placeholder="Enter repository url">
-    					<span class="input-group-btn">
-       						<button class="btn btn-default" type="submit" title="Visualize the provided repository">
-       							<span class="glyphicon glyphicon-indent-left"></span>Visualize!
-							</button>
-							<button class="btn btn-default btn-default" data-toggle="modal" data-target="#help" title="Quick Help" type="submit">
-								<span class="glyphicon glyphicon-hand-left "></span>Help
-							</button>
-     					</span>
-					</div>';
-			if ($error) {
+    	<?php $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== ''); ?>
+		<form role="form" action="./php/action.php" method="POST">
+   			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">			
+   				<input class="form-control" id="projectlink" name="projectlink" type="text" required="required"  placeholder="Enter repository url">
+    			<span class="input-group-btn">
+       				<button class="btn btn-default" type="submit" title="Visualize the provided repository">
+       					<span class="glyphicon glyphicon-indent-left"></span>Visualize!
+					</button>
+					<button class="btn btn-default btn-default" data-toggle="modal" data-target="#help" title="Quick Help" type="submit">
+						<span class="glyphicon glyphicon-hand-left "></span>Help
+					</button>
+     			</span>
+			</div>';
+			<?php if ($error) {
 				echo '<div class="alert-dismissable errormessage">
-       						<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true">     							</button>
-       							<span class="help-block"><strong>&nbsp;&nbsp;Error!</strong> '.$_SESSION['error_message'].'</span>
-      					  </div>';
+       				  	<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true">     							</button>
+       						<span class="help-block"><strong>&nbsp;&nbsp;Error!</strong> '.$_SESSION['error_message'].'</span>
+      				  </div>';
 				unset($_SESSION['error_message']);
 			}
-			echo '</form>';
-		?>	
+			?>
+		</form>
 		<br><br>
 		<div class="examples">
 			<div class="well example lead btn btn-lg" onclick="example('https://github.com/jquery/jquery.git');">
