@@ -11,6 +11,7 @@
 	$_SESSION['repourl'] = $_POST['projectlink'];
 	if (checkInput($_SESSION['repourl'])) {
 		renderRepo($_SESSION['repourl']);
+		header('Location: loading.php');
 	}
 	
 	/**
