@@ -10,6 +10,12 @@ html, body {
   margin: 0 auto -60px;
 }
 
+.center {
+	display: block; 
+	margin: auto auto 0;
+	text-align: center;
+}
+
 .alert-dismissable .close {
 	color: #800000;
 	margin-left: 10px;
