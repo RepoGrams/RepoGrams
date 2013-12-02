@@ -25,7 +25,7 @@
 						<span class="glyphicon glyphicon-hand-left "></span>Help
 					</button>
      			</span>
-			</div>';
+			</div>
 			<?php if ($error) {
 				echo '<div class="alert-dismissable errormessage">
        				  	<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true">     							</button>
