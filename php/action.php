@@ -11,7 +11,7 @@
 	$_SESSION['repourl'] = $_POST['projectlink'];
 	if (checkInput($_SESSION['repourl'])) {
 		renderRepo($_SESSION['repourl']);
-		header('Location: loading.php');
+		header('Location: ../loading.php');
 	}
 	
 	/**
@@ -60,8 +60,7 @@
 		try {
 			$repo = RepoFactory::createRepo($repourl);
 			$alg = new Algorithm();
-			$arr = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
-			$_SESSION['image'] = $arr;
+			$_SESSION['image'] = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
 			$start = strrpos($repourl, '/');
 			$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
 			unsetAll();
