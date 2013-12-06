@@ -7,13 +7,14 @@
 	 * Check the formular input and start rendering
 	 */
 	if( is_null($_SESSION['ajax_called'])){
-	$_SESSION['ajax_called'] = 1;
-	initVariables();
-	if (checkInput($_SESSION['repourl'])) {
-		error_log("Rendering");
-		renderRepo($_SESSION['repourl']);
+		$_SESSION['ajax_called'] = 1;
+		initVariables();
+		if (checkInput($_SESSION['repourl'])) {
+			error_log("Rendering");
+			renderRepo($_SESSION['repourl']);
+		}
 	}
-	}
+	
 	/**
 	 * Callback function to update progress info
 	 * @param string $msg
@@ -30,14 +31,12 @@
 	 * Initialize session variables
 	 */
 	function initVariables() {
-		$_SESSION['loading_info']     = 'Loading...';  
+		$_SESSION['loading_info']     = '';  
 		$_SESSION['progress'] 	      = 0;
 		$_SESSION['error_message']    = '';     
 		$_SESSION['title']            = ''; 
-		$_SESSION['repourl']          = 'https://github.com/twbs/bootstrap.git';
-
+		$_SESSION['repourl']          = '';
 		$_SESSION['finish']           = false;
-		
 		$_SESSION['width']  = 768;                                   
 		$_SESSION['height'] = 512;                                 
 	}
@@ -48,7 +47,7 @@
 	function checkInput($repourl = null) {
 		if(!str_replace(' ','',$repourl) != '') {
 			$_SESSION['error_message'] = 'Invalid repository url.';
-						return false;
+			return false;
 		} else {
 			return true;
 		}
