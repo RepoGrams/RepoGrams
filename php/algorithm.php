@@ -41,26 +41,35 @@
 
 			callback('Initialize image...');
 
-			#$returnArray = array();
+			$returnArray = array();
 
 			for ($i = 0; $i < $count; $i++){
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str, $img);
+				$colour = ImageColorAllocate($img, $color[0], $color[0], $color[0]);
  		 		$w = ($x+($diff*$factor));
-				ImageFilledRectangle($img, $x, $y, $w, $z, $color);
+				ImageFilledRectangle($img, $x, $y, $w, $z, $colour);
  		 		if ($w > $width)
  		 		while ($w > $width){
+ 		 			$block = array(($width-$x), $hohe, $color);
 					$overlap = $w-$width;
  		 			$x = 0;
 					$y += $hohe;
 					$w = $overlap;
 					$z += $hohe;
-					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
+					if ($w > $width){
+						$block = array($width, $hohe, $color);
+					}
+					else{
+						$block = array($overlap, $hohe, $color);
+					}
+					ImageFilledRectangle($img, $x, $y, $w, $z, $colour); 
 					$x += $w;
 
 				}
 				else{
+					$block = array(($diff*$factor), $hohe, $color);
 					$x += $diff*$factor;
 				}
 
@@ -77,25 +86,26 @@
 				else{
 					$x += $diff*$factor;
 				}*/
+
+				$returnArray[] = $block;
 			}
 
 			callback('Initialize image...');
 
 			imagepng($img, "visualization.png");
-			return $img;
-			#return $returnArray;
+			return $returnArray;
 		}
 
 		private function commitToColor($modus, $msg, $img){
 			$conv = new convert();
 			if ($msg == null)
-		      	return ImageColorAllocate($img, 211, 211, 211);
-				#return "211,211,211";
+		      	#return ImageColorAllocate($img, 211, 211, 211);
+				return "211,211,211";
 		    $msg = preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
 		    $msg = strtolower($msg);
 		    if (strlen($msg) == 0)
-		      	return ImageColorAllocate($img, 211, 211, 211);
-				#return "211,211,211";
+		      	#return ImageColorAllocate($img, 211, 211, 211);
+				return "211,211,211";
 		    switch ($modus) {
 				case 0:
 					$msg = preg_replace("/[^a-zA-Z0-9]/" , "" , $msg);
@@ -120,11 +130,11 @@
 		    		$r = $convArray['r'];
 		    		$g = $convArray['g'];
 		    		$b = $convArray['b'];
-		    		#$color = $r.",".$g.",".$b;
-		    		$r = round($r);
+		    		$color = array($r,$g,$b);
+		    		/*$r = round($r);
 		    		$g = round($g);
 		    		$b = round($b);
-		    		$color = ImageColorAllocate($img, $r, $g, $b);
+		    		$color = ImageColorAllocate($img, $r, $g, $b);*/
 		    		return $color;
 				case 1:
 					$keys1 = array("add", "new", "create");
@@ -138,7 +148,6 @@
 
 					$keyword_Array = array_merge($section1, $section2, $section3);
 					
-					/* hier muss der String noch zerteilt werden */
 					$stringRep = explode(" ", $msg);
 										
 					$sec1 = 0;
@@ -178,8 +187,8 @@
 					$sec2 = $p * $sec2;
 					$sec3 = $p * $sec3;
 					
-					$color = ImageColorAllocate($img, $sec1, $sec2, $sec3);
-		    		#$color = $sec1.",".$sec2.",".$sec3;
+					#$color = ImageColorAllocate($img, $sec1, $sec2, $sec3);
+		    		$color = $sec1.",".$sec2.",".$sec3;
 		    		return $color;
 					break;
 				default:

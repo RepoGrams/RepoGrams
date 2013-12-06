@@ -12,15 +12,21 @@ class gitImport {
 		$tmp = tempnam(sys_get_temp_dir(),"");
 		unlink($tmp);
 		mkdir($tmp);
-		$tmp;			
 		if (!file_exists($tmp)) throw new Exception("Temporary folder could not be created!");
-		$command = 	'cd '.$tmp;
-		$command.=	' && git clone "'.$repo.'"';
+                $cwd = getcwd();
+                chdir($tmp);
+		$command = 'git clone --bare "'.$repo.'"';
 		$command."\n";
 		shell_exec($command);
+                $split = explode("/", $repo); //http://stackoverflow.com/questions/2967597/only-variables-can-be-passed-by-reference
+                $gitdir = end($split); // the last part of the git URL is the folder name
+                $joint = getcwd()."/".$gitdir."/";
+                error_log("joint: ".$joint);
+                chdir($joint);
 		// if (!file_exists($tmp.'/.git')) throw new Exception ('No .git Folder found');
-		$command = 'cd '.$tmp."/*/ && git log --numstat --pretty='%x1A},%x1A%H%x1A:{%x1Aauthor%x1A:%x1A%an%x1A,%x1Aauthor_mail%x1A:%x1A%ae%x1A,%x1Adate%x1A:%x1A%at%x1A,%x1Amessage%x1A:%x1A%s%x1A,%x1Achanges%x1A : %x1A'";
+		$command = "git log --numstat --pretty='%x1A},%x1A%H%x1A:{%x1Aauthor%x1A:%x1A%an%x1A,%x1Aauthor_mail%x1A:%x1A%ae%x1A,%x1Adate%x1A:%x1A%at%x1A,%x1Amessage%x1A:%x1A%s%x1A,%x1Achanges%x1A : %x1A'";
 		$output = shell_exec($command);
+                chdir($cwd);
 		$json = self::unescape($output,chr(26));
 		$json = substr($json,3,strlen($json));
 		$json = '{'.$json.'"}}';
