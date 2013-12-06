@@ -88,12 +88,12 @@
 			$conv = new convert();
 			if ($msg == null)
 		      	#return ImageColorAllocate($img, 211, 211, 211);
-				return "211,211,211";
+				return array(211,211,211);
 		    $msg = preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
 		    $msg = strtolower($msg);
 		    if (strlen($msg) == 0)
 		      	#return ImageColorAllocate($img, 211, 211, 211);
-				return "211,211,211";
+				return array(211,211,211);
 		    switch ($modus) {
 				case 0:
 					$msg = preg_replace("/[^a-zA-Z0-9]/" , "" , $msg);
