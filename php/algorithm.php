@@ -47,7 +47,7 @@
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str, $img);
-				$colour = ImageColorAllocate($img, $color[0], $color[0], $color[0]);
+				$colour = ImageColorAllocate($img, $color[0], $color[1], $color[2]);
  		 		$w = ($x+($diff*$factor));
 				ImageFilledRectangle($img, $x, $y, $w, $z, $colour);
  		 		if ($w > $width)
