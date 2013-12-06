@@ -35,7 +35,10 @@
 			
 			$x = 0; 	#links oben -> links
 			$y = 0; 	#links oben -> oben
-			$hohe = 16; 	#rechts unten -> links BREITE
+			$hohe = 16;
+			while($width%$hohe != 0)
+			$hohe--; 	#rechts unten -> links BREITE
+
 			$z = $hohe;	#rechts unten -> oben HÖHE
 
 			$pixel = $width * $height; #all pixels on picture
@@ -48,12 +51,12 @@
 			for ($i = 0; $i < $count; $i++){
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
-				$color = $this->commitToColor($modus, $str, $img);
+				$color = $this->commitToColor($modus, $str);
 				$w = ($x+($diff*$factor));
  		 		if ($w > $width)
  		 		while ($w > $width){
  		 			$block = array(($width-$x), $hohe, $color);
- 		 			writeBlock($datei, $color, $x, $y, ($width-$x), $hohe);
+ 		 			$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe);
 					$overlap = $w-$width;
  		 			$x = 0;
 					$y += $hohe;
@@ -61,11 +64,11 @@
 					$z += $hohe;
 					if ($w > $width){
 						$block = array($width, $hohe, $color);
-						writeBlock($datei, $color, $x, $y, $width, $hohe);
+						$this->writeBlock($datei, $color, $x, $y, $width, $hohe);
 					}
 					else{
 						$block = array($overlap, $hohe, $color);
-						writeBlock($datei, $color, $x, $y, $overlap, $hohe);
+						$this->writeBlock($datei, $color, $x, $y, $overlap, $hohe);
 					}
 					$x += $w;
 
@@ -84,7 +87,7 @@
 			return $returnArray;
 		}
 
-		private function commitToColor($modus, $msg, $img){
+		private function commitToColor($modus, $msg){
 			$conv = new convert();
 			if ($msg == null)
 		      	#return ImageColorAllocate($img, 211, 211, 211);
