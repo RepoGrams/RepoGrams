@@ -15,7 +15,7 @@
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>	
+		<img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
 		<div class="h1">Documentation</div>
 		<br>
 		<p class="lead">
