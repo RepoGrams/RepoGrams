@@ -1,5 +1,7 @@
-<?php session_start();?>
-
+<?php session_start();
+require_once("php/functions.php");
+initSession(true);
+?>
 <html !DOCTYPE HTML>
 <head>
 	<?php include('header.php')?>
@@ -11,7 +13,7 @@
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>
+		<img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
 		<br>
     	<?php $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== ''); ?>
 		<form role="form" action="./loading.php" method="POST">

@@ -2,13 +2,14 @@
 	session_start();
 	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
 	require_once("algorithm.php");
+	require_once("functions.php");
+	dump();
 
 	/**
 	 * Check the formular input and start rendering
 	 */
-	if (is_null($_SESSION['ajax_called'])){
+	if( !($_SESSION['ajax_called'])){
 		$_SESSION['ajax_called'] = 1;
-		initVariables();
 		if (checkInput($_SESSION['repourl'])) {
 			error_log("Rendering");
 			renderRepo($_SESSION['repourl']);
@@ -21,7 +22,7 @@
 	 * @return NULL
 	 */
 	function callback($msg = null) {
-		error_log("Callback called".$_SESSION['progress']);
+		error_log("Callback called ".$_SESSION['progress']);
 		$_SESSION['loading_info'] = $msg;
 		$_SESSION['progress'] = $_SESSION['progress']+25;
 		return null;
@@ -30,16 +31,16 @@
 	/**
 	 * Initialize session variables
 	 */
-	function initVariables() {
-		$_SESSION['loading_info']     = '';  
-		$_SESSION['progress'] 	      = 0;
-		$_SESSION['error_message']    = '';     
-		$_SESSION['title']            = ''; 
-		$_SESSION['repourl']          = '';
-		$_SESSION['finish']           = false;
-		$_SESSION['width']  = 768;                                   
-		$_SESSION['height'] = 512;                                 
-	}
+//	function initVariables() {
+//		$_SESSION['loading_info']     = '';  
+//		$_SESSION['progress'] 	      = 0;
+//		$_SESSION['error_message']    = '';     
+//		$_SESSION['title']            = ''; 
+//		$_SESSION['repourl']          = '';
+//		$_SESSION['finish']           = false;
+//		$_SESSION['width']  = 768;                                  
+//		$_SESSION['height'] = 512;
+//	}
 	
 	/**
 	 * Check formular input if url is empty

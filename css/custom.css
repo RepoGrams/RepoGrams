@@ -10,6 +10,10 @@ html, body {
   margin: 0 auto -60px;
 }
 
+.inforepo {
+	margin-bottom: 0px;
+}
+
 .center {
 	display: block; 
 	margin: auto auto 0;
@@ -96,9 +100,12 @@ html, body {
 
 /* Title */
 #title, img.title{
-	margin: auto auto 0;
-	margin-top: 150px;
+	margin: 150px auto 0;
 	display: block;
+}
+#title:hover, img.title:hover{
+	cursor: hand;
+	cursor: pointer;
 }
 
 /* Color legend */
