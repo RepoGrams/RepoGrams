@@ -1,10 +1,10 @@
-<?php
-	include("convert.php");
+	<?php
+	require_once("convert.php");
 	class algorithm {
 
 	
-		public function render($commitObjectArray, $modus = 0){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
-			$commitArray = $commitObjectArray; //$commitArray = $this->preprocess($commitObjectArray);
+		public function render($commitObjectArray, $modus = 0, $width, $height){ //array looks like this [[$msg, $diff],[$msg, $diff],[$msg, $diff]]
+			$commitArray = $this->preprocess($commitObjectArray);
 			$count = count($commitArray);
 
 			$all_diff = 0;
@@ -20,56 +20,79 @@
 			}
 
 			################################################## 
-			$width = 300; # Später die Breite des Rechtecks 
-			$height = 300; # Später die Höhe des Rechtecks 
-			$img = ImageCreate($width, $height); # Hier wird das Bild einer Variable zu gewiesen 
+			#$width = 600; # Später die Breite des Rechtecks 
+			#$height = 600; # Später die Höhe des Rechtecks 
+			$datei = fopen("visualization-".session_id().".svg",  "w+");
+			$s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
+					<svg
+					width=\"".$width."px\" height=\"".$height."px\" version=\"1.1\" id=\"test\"
+					xmlns:svg=\"http://www.w3.org/2000/svg\"> ";
+			fwrite($datei, $s);
 			################################################## 
 			
 			$x = 0; 	#links oben -> links
 			$y = 0; 	#links oben -> oben
-			$hohe = 15; 	#rechts unten -> links BREITE
+			$hohe = 16; 	#rechts unten -> links BREITE
 			$z = $hohe;	#rechts unten -> oben HÖHE
 
 			$pixel = $width * $height; #all pixels on picture
 			$factor = ($pixel/$hohe) / $all_diff;
 
+			$returnArray = array();
+
 			for ($i = 0; $i < $count; $i++){
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str, $img);
- 		 		#$color = ImageColorAllocate($img, 100, 100, 100);
- 		 		$w = ($x+($diff*$factor));
-				ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-				if ($w > $width)
-				while ($w > $width){
+				$w = ($x+($diff*$factor));
+ 		 		if ($w > $width)
+ 		 		while ($w > $width){
+ 		 			$block = array(($width-$x), $hohe, $color);
+ 		 			writeBlock($datei, $color, $x, $y, ($width-$x), $hohe);
 					$overlap = $w-$width;
-					$x = 0;
+ 		 			$x = 0;
 					$y += $hohe;
 					$w = $overlap;
 					$z += $hohe;
-					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
+					if ($w > $width){
+						$block = array($width, $hohe, $color);
+						writeBlock($datei, $color, $x, $y, $width, $hohe);
+					}
+					else{
+						$block = array($overlap, $hohe, $color);
+						writeBlock($datei, $color, $x, $y, $overlap, $hohe);
+					}
 					$x += $w;
+
 				}
 				else{
+					$block = array(($diff*$factor), $hohe, $color);
+					writeBlock($datei, $color, $x, $y, ($diff*$factor), $hohe);
 					$x += $diff*$factor;
 				}
+				$returnArray[] = $block;
 			}
 
-			imagepng($img, "visualization.png");
-			return $img;
+			fwrite($datei, "</svg>");
+			fclose($datei);
+			return $returnArray;
 		}
 
-		public function commitToColor($modus, $msg, $img){
+		private function commitToColor($modus, $msg, $img){
 			$conv = new convert();
-			if ($msg == null or strlen($msg) == 0)
-		      			return ImageColorAllocate($img, 211, 211, 211);
+			if ($msg == null)
+		      	#return ImageColorAllocate($img, 211, 211, 211);
+				return array(211,211,211);
 		    $msg = preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
 		    $msg = strtolower($msg);
+		    if (strlen($msg) == 0)
+		      	#return ImageColorAllocate($img, 211, 211, 211);
+				return array(211,211,211);
 		    switch ($modus) {
 				case 0:
 					$msg = preg_replace("/[^a-zA-Z0-9]/" , "" , $msg);
 		    		$first = substr($msg, 0, 1);
-		    		$h = $this->letterValue($first, 0);
+					$h = $this->letterValue($first, 0);
 		    		if (strlen($msg) > 1){
 		    			$second = substr($msg, 1, 1);
 		    			$s = 0.3 + 0.6 * $this->letterValue ($second, 1);
@@ -82,14 +105,18 @@
 		    			}
 		    		}
 		    		else{
-		    			$l = 0.6;
 		    			$s = 0.5;
+		    			$l = 0.6;
 		    		}
 		    		$convArray = $conv->ColorHSLToRGB($h,$s,$l);
 		    		$r = $convArray['r'];
 		    		$g = $convArray['g'];
 		    		$b = $convArray['b'];
-		    		$color = ImageColorAllocate($img, $r, $g, $b);
+		    		$color = array($r,$g,$b);
+		    		/*$r = round($r);
+		    		$g = round($g);
+		    		$b = round($b);
+		    		$color = ImageColorAllocate($img, $r, $g, $b);*/
 		    		return $color;
 				case 1:
 					$keys1 = array("add", "new", "create");
@@ -103,7 +130,6 @@
 
 					$keyword_Array = array_merge($section1, $section2, $section3);
 					
-					/* hier muss der String noch zerteilt werden */
 					$stringRep = explode(" ", $msg);
 										
 					$sec1 = 0;
@@ -143,7 +169,8 @@
 					$sec2 = $p * $sec2;
 					$sec3 = $p * $sec3;
 					
-					$color = ImageColorAllocate($img, $sec1, $sec2, $sec3);
+					#$color = ImageColorAllocate($img, $sec1, $sec2, $sec3);
+		    		$color = $sec1.",".$sec2.",".$sec3;
 		    		return $color;
 					break;
 				default:
@@ -154,9 +181,9 @@
 
 
 		private function preprocess($obj){
-			include("../lib/vs/Commit.interface.php");
+			require_once(__DIR__."/../lib/vcs/Commit.interface.php");
 			for ($i = 0; $i < count($obj); $i++){
-				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->DiffToParent()) ;
+				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->NumChangedLines()) ;
 			}
 			return $array;
 		}
@@ -179,7 +206,13 @@
 		    return $value /26;
 		}
 
+		private function writeBlock($datei, $color, $x, $y, $w, $h){
+			$s = " <rect 	x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\"
+					rx=\"0\" ry=\"0\" fill=\"rgb(".$color[0].",".$color[1].",".$color[2].")\"
+					stroke=\"none\"
+					stroke-width=\"0\"
+					id =\"rect\"/> 			";
+			fwrite($datei, $s);
+		}
 	}
-
-
 ?>

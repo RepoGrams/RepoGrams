@@ -25,10 +25,12 @@
 			################################################## 
 			#$width = 600; # Später die Breite des Rechtecks 
 			#$height = 600; # Später die Höhe des Rechtecks 
-			$img = imagecreatetruecolor($width, $height);
-			if ($img === false) {
-				die();
-			}
+			$datei = fopen("visualization-".session_id().".svg",  "w+");
+			$s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
+					<svg
+					width=\"".$width."px\" height=\"".$height."px\" version=\"1.1\" id=\"test\"
+					xmlns:svg=\"http://www.w3.org/2000/svg\"> ";
+			fwrite($datei, $s);
 			################################################## 
 			
 			$x = 0; 	#links oben -> links
@@ -47,12 +49,11 @@
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
 				$color = $this->commitToColor($modus, $str, $img);
-				$colour = ImageColorAllocate($img, $color[0], $color[0], $color[0]);
- 		 		$w = ($x+($diff*$factor));
-				ImageFilledRectangle($img, $x, $y, $w, $z, $colour);
+				$w = ($x+($diff*$factor));
  		 		if ($w > $width)
  		 		while ($w > $width){
  		 			$block = array(($width-$x), $hohe, $color);
+ 		 			writeBlock($datei, $color, $x, $y, ($width-$x), $hohe);
 					$overlap = $w-$width;
  		 			$x = 0;
 					$y += $hohe;
@@ -60,39 +61,26 @@
 					$z += $hohe;
 					if ($w > $width){
 						$block = array($width, $hohe, $color);
+						writeBlock($datei, $color, $x, $y, $width, $hohe);
 					}
 					else{
 						$block = array($overlap, $hohe, $color);
+						writeBlock($datei, $color, $x, $y, $overlap, $hohe);
 					}
-					ImageFilledRectangle($img, $x, $y, $w, $z, $colour); 
 					$x += $w;
 
 				}
 				else{
 					$block = array(($diff*$factor), $hohe, $color);
+					writeBlock($datei, $color, $x, $y, ($diff*$factor), $hohe);
 					$x += $diff*$factor;
 				}
-
-				/*ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-				if ($w > $width){
-					$overlap = $w-$width;
-					$x = 0;
-					$y += $hohe;
-					$w = $overlap;
-					$z += $hohe;
-					ImageFilledRectangle($img, $x, $y, $w, $z, $color); 
-					$x += $w;
-				}
-				else{
-					$x += $diff*$factor;
-				}*/
-
 				$returnArray[] = $block;
 			}
 
 			callback('Initialize image...');
-
-			imagepng($img, "visualization.png");
+			fwrite($datei, "</svg>");
+			fclose($datei);
 			return $returnArray;
 		}
 
@@ -100,12 +88,12 @@
 			$conv = new convert();
 			if ($msg == null)
 		      	#return ImageColorAllocate($img, 211, 211, 211);
-				return "211,211,211";
+				return array(211,211,211);
 		    $msg = preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
 		    $msg = strtolower($msg);
 		    if (strlen($msg) == 0)
 		      	#return ImageColorAllocate($img, 211, 211, 211);
-				return "211,211,211";
+				return array(211,211,211);
 		    switch ($modus) {
 				case 0:
 					$msg = preg_replace("/[^a-zA-Z0-9]/" , "" , $msg);
@@ -224,7 +212,13 @@
 		    return $value /26;
 		}
 
+		private function writeBlock($datei, $color, $x, $y, $w, $h){
+			$s = " <rect 	x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\"
+					rx=\"0\" ry=\"0\" fill=\"rgb(".$color[0].",".$color[1].",".$color[2].")\"
+					stroke=\"none\"
+					stroke-width=\"0\"
+					id =\"rect\"/> 			";
+			fwrite($datei, $s);
+		}
 	}
-
-
 ?>
