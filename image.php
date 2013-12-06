@@ -32,7 +32,7 @@
 			<div class="panel panel-default" style="overflow: hidden; height: 555px; width: 768px; margin: auto auto 0;">
   				<div class="panel-heading"><?php if (isset($_SESSION['title'])) echo $_SESSION['title'];?></div>
 				<div id="overscroll"> 
-					<ul><li><img src="php/visualization-<?php echo session_id(); ?>.svg"></li></ul>
+					<ul><li><svg>php/visualization-<?php echo session_id(); ?>.svg</svg></li></ul>
 <!-- 					<ul> -->
 					<!-- width,height,tile.width,tile.height,tile.color -->
 						<?php 
