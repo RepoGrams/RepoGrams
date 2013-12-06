@@ -56,8 +56,6 @@
 			</div>
 		</div>
 		<div class="clear push"></div>
-		<div id="push"></div>
-
 	</div>
 
 	<!-- Help dialog -->

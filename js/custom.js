@@ -1,3 +1,3 @@
 function example(url) {
-	(document.getElementById('projectlink')).value = url;
+	(document.getElementById('repourl')).value = url;
 }
