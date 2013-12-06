@@ -6,7 +6,7 @@
 	/**
 	 * Check the formular input and start rendering
 	 */
-	if( is_null($_SESSION['ajax_called'])){
+	if (is_null($_SESSION['ajax_called'])){
 		$_SESSION['ajax_called'] = 1;
 		initVariables();
 		if (checkInput($_SESSION['repourl'])) {
