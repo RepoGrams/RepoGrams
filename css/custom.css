@@ -10,6 +10,10 @@ html, body {
   margin: 0 auto -60px;
 }
 
+.inforepo {
+	margin-bottom: 0px;
+}
+
 .center {
 	display: block; 
 	margin: auto auto 0;
