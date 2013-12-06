@@ -1,5 +1,7 @@
-<?php session_start();?>
-
+<?php session_start();
+require_once("php/functions.php");
+initSession(true);
+?>
 <html !DOCTYPE HTML>
 <head>
 	<?php include('header.php')?>

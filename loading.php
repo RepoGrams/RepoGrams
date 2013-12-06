@@ -1,6 +1,9 @@
 <?php 
-	session_start();
+session_start();
+require_once("php/functions.php");
+dump();
 	if (isset($_POST['repourl'])) $_SESSION['repourl'] = $_POST['repourl'];
+	if ($_SESSION['finish']) header('location:image.php');
 ?>
 
 <html !DOCTYPE HTML>
@@ -45,9 +48,7 @@
 			
 	<!--include the action.php functions -->
 	<script type="text/javascript">
-		console.log("calling ajax");
 		jQuery.ajax("php/action.php");
-		console.log("ajax called");
 	</script>
 </body>
 </html>
