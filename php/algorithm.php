@@ -75,7 +75,7 @@
 				}
 				else{
 					$block = array(($diff*$factor), $hohe, $color);
-					writeBlock($datei, $color, $x, $y, ($diff*$factor), $hohe);
+					$this->writeBlock($datei, $color, $x, $y, ($diff*$factor), $hohe);
 					$x += $diff*$factor;
 				}
 				$returnArray[] = $block;
