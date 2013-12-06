@@ -16,7 +16,7 @@
     	<?php $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== ''); ?>
 		<form role="form" action="./loading.php" method="POST">
    			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">			
-   				<input class="form-control" id="projectlink" name="projectlink" type="text" required="required"  placeholder="Enter repository url">
+   				<input class="form-control" id="repourl" name="repourl" type="text" required="required"  placeholder="Enter repository url">
     			<span class="input-group-btn">
        				<button class="btn btn-default" type="submit" title="Visualize the provided repository">
        					<span class="glyphicon glyphicon-indent-left"></span>Visualize!
