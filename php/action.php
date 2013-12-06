@@ -1,27 +1,28 @@
 <?php
 	session_start();
-	
 	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
 	require_once("algorithm.php");
 
 	/**
 	 * Check the formular input and start rendering
 	 */
+	if( is_null($_SESSION['ajax_called'])){
+	$_SESSION['ajax_called'] = 1;
 	initVariables();
-	$_SESSION['repourl'] = $_POST['projectlink'];
 	if (checkInput($_SESSION['repourl'])) {
+		error_log("Rendering");
 		renderRepo($_SESSION['repourl']);
-		header('Location: ../loading.php');
 	}
-	
+	}
 	/**
 	 * Callback function to update progress info
 	 * @param string $msg
 	 * @return NULL
 	 */
 	function callback($msg = null) {
+		error_log("Callback called".$_SESSION['progress']);
 		$_SESSION['loading_info'] = $msg;
-		header('Location: ../loading.php');  
+		$_SESSION['progress'] = $_SESSION['progress']+25;
 		return null;
 	}
 	
@@ -29,10 +30,12 @@
 	 * Initialize session variables
 	 */
 	function initVariables() {
-		$_SESSION['loading_info']     = 'Loading...';   
+		$_SESSION['loading_info']     = 'Loading...';  
+		$_SESSION['progress'] 	      = 0;
 		$_SESSION['error_message']    = '';     
 		$_SESSION['title']            = ''; 
-		$_SESSION['repourl']          = '';
+		$_SESSION['repourl']          = 'https://github.com/twbs/bootstrap.git';
+
 		$_SESSION['finish']           = false;
 		
 		$_SESSION['width']  = 768;                                   
@@ -45,8 +48,7 @@
 	function checkInput($repourl = null) {
 		if(!str_replace(' ','',$repourl) != '') {
 			$_SESSION['error_message'] = 'Invalid repository url.';
-			header('Location: ../index.php');
-			return false;
+						return false;
 		} else {
 			return true;
 		}
@@ -59,8 +61,11 @@
 	function renderRepo($repourl = null) {
 		try {
 			$repo = RepoFactory::createRepo($repourl);
+			error_log("Repo created");
 			$alg = new Algorithm();
 			$_SESSION['image'] = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
+			error_log("Image created");
+			callback("Test?");
 			$start = strrpos($repourl, '/');
 			$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
 			unsetAll();

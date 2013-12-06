@@ -14,7 +14,7 @@
 		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>
 		<br>
     	<?php $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== ''); ?>
-		<form role="form" action="./php/action.php" method="POST">
+		<form role="form" action="./loading.php" method="POST">
    			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">			
    				<input class="form-control" id="projectlink" name="projectlink" type="text" required="required"  placeholder="Enter repository url">
     			<span class="input-group-btn">
@@ -26,8 +26,10 @@
 					</button>
      			</span>
 			</div>
+			
+			<!-- print Error Message -->
 			<?php if ($error) {
-				echo '<div class="alert-dismissable errormessage">
+				echo '<br><div class="alert-dismissable errormessage">
        				  	<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true">     							</button>
        						<span class="help-block"><strong>&nbsp;&nbsp;Error!</strong> '.$_SESSION['error_message'].'</span>
       				  </div>';
@@ -67,12 +69,14 @@
         			<h4 class="modal-title">Repograms - Quick Help</h4>
       			</div>
       			<div class="modal-body">
-					This Website renders Chromograms of your git repository.<br>
-					To start just eter your repository URL and click on visualize.<br>
-					To see some examples, just click one below and then the 
-					<button class="btn btn-default" title="Visualize the provided repository">
+					This website renders chromograms of your git repository.<br>
+					To start just enter your repository URL and click on visualize.<br>
+					To see some examples, just click one of the icons below and then the 
+					<button class="btn btn-default" title="Visualize the provided repository" disabled>
        					<span class="glyphicon glyphicon-indent-left"></span>Visualize!
-					</button>
+					</button> button. <br>
+					If you need further assistance just go to the documentation page. It can be found if
+					you click the book in the top right corner.
       			</div>
       			<div class="modal-footer">
         			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
