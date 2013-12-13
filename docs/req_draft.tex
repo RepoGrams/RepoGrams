@@ -1,6 +1,6 @@
 \documentclass[12pt]{scrartcl}
 \usepackage[utf8]{inputenc}
-\usepackage[german]{babel}
+\usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{csquotes}
 \usepackage{amsfonts}
@@ -15,11 +15,16 @@
 \begin{document}
 \maketitle
 \section{Project description}
-The projects main goal is it to visualize repositories with chromograms.\\
-We aim at supporting git, mercurial and subversion with the main focus on git.\\
-\enquote{A chromogram is a visualization method that converts textual data to colours, producing a data-dense display that can fit a vast edit history onto a single image.}\cite{}\\
-The chromograms' purpose is it to visualize the content of the git repositories and not the structure as 
-there already exists a wide range of tools.\\
+The projects main goal is it to visualize code repositories with
+chromograms\footnote{\enquote{A chromogram is a visualization method that
+converts textual data to colours, producing a data-dense display that can fit a
+vast edit history onto a single image.}\cite{wattenberg2007}}.
+We aim at supporting Git, Mercurial and Subversion with the main focus on git.
+The chromograms' purpose is to visualize the content of the repositories and
+not their structure as 
+there already exists a wide range of tools supporting this usecase.\\
+We hope that
+this approach will result in additional insight, especially for large projects.
 \section{Must-Haves:}
 \begin{enumerate}
 \item The product's front end will be a website that will work with recent and well known browsers (Firefox 25.0, Internet Explorer 11, Google Chrome 31.0, Safari 7.0 and Opera 17.0). 
@@ -97,8 +102,14 @@ there already exists a wide range of tools.\\
 \item The application will not provide access to protected repositories.
 \item The application will not create animated renderings.
 \end{enumerate}
-\section{References}
-\begin{enumerate}
-\item[1] Martin Wattenberg, Fernanda B. Viegas, Katherine Hollenbach,  Visualizing Activity on Wikipedia with chromograms
-\end{enumerate}
+
+
+\begin{thebibliography}{9}
+
+\bibitem{wattenberg2007}
+  Martin Wattenberg, Fernanda B. Viegas, Katherine Hollenbach,  
+  \emph{Visualizing Activity on Wikipedia with chromograms}.
+  2007.
+
+\end{thebibliography}
 \end{document}
