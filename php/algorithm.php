@@ -40,7 +40,7 @@
 				    <g
 				       transform=\"translate(-34.000015,268.36218)\"
 				       id=\"g24941\">";
-			fwrite($datei, utf8_encode($s);
+			fwrite($datei, utf8_encode($s));
 			################################################## 
 			
 			$x = 0; 	#links oben -> links
