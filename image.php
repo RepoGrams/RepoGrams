@@ -34,9 +34,10 @@
   				<div class="panel-heading"><?php if (isset($_SESSION['title'])) echo $_SESSION['title'];?></div>
 				<div id="overscroll"> 
 					<ul><li>
-						<object type="image/svg+xml" data="php/visualization-<?php echo session_id();?>.svg" 
-								width="512" height="512" border="1">
-						</object>
+						<svg id="circle" height="512" width="512" 
+     						xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  							<image x="0" y="0" height="512" width="512"  xlink:href="php/visualization-<?php echo session_id();?>.svg"/>
+						</svg>
 					</li></ul>
 <!-- 					<ul> -->
 					<!-- width,height,tile.width,tile.height,tile.color -->
