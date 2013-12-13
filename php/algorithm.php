@@ -235,14 +235,15 @@
 		}
 
 		private function writeBlock($datei, $color, $x, $y, $w, $h){
+			$conv = new convert();
 			if ($w <= 0){
 				$w = 0.1;
 			}
+			$hexcolor = $conv->RGBtoHex($color[0],$color[1],$color[2])
 			$s = " <rect 	x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\"
-					rx=\"0\" ry=\"0\" fill=\"rgb(".$color[0].",".$color[1].",".$color[2].")\"
-					stroke=\"none\"
-					stroke-width=\"0\"
-					id =\"rect\"/> 			";
+					rx=\"0\" ry=\"0\" 
+					id =\"rect\"
+					 style=\"fill:".$hexcolor.";stroke:none\"/>";
 			fwrite($datei, utf8_encode($s));
 		}
 	}
