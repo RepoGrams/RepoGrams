@@ -1,7 +1,9 @@
 <?php
+require_once __DIR__.'/../RepoImporter.class.php';
+
 error_reporting(-1);
 
-class gitImport {
+class gitImport extends RepoImporter {
 	private $RepoObject;
 
 	public function __construct($repo,$user=null,$password=null){
@@ -88,15 +90,6 @@ function str_starts_with($string, $niddle) {
 			return $this->RepoObject;
 		else
 			throw new Exception("Fetching GitObject was not sucessfull");
-	}
-	
-	private function unescape($escapedString, $escapeCharacter) {
-        	// Replace bad characters with the corresponding escape sequence for JSON
-		$badCharacters = array('!\\\\!','!"!', '!/!' ,'!\\f!','!\\n!','!\\r!','!\\t!'); // Not supported: backspace, utf8-characters
-		$correspondingGoodCharacters = array('\\\\\\\\','\\\\"','\\\\/' ,'\\\\f','\\\\n','\\\\r','\\\\t');
-	        $intermediate = preg_replace($badCharacters, $correspondingGoodCharacters, $escapedString);
-	       	// Replace escapeCharacter with "
-	        return preg_replace('/'.$escapeCharacter.'/', '"', $intermediate);
 	}
 	
 	private function removeDir($path){
