@@ -36,7 +36,7 @@
 				     id=\"metadata7\">
 				    <rdf:RDF>
 				      <cc:Work
-				         rdf:about="">
+				         rdf:about=\"\">
 				        <dc:format>image/svg+xml</dc:format>
 				        <dc:type
 				           rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" />
