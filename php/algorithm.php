@@ -26,7 +26,7 @@
 			#$width = 600; # Später die Breite des Rechtecks 
 			#$height = 600; # Später die Höhe des Rechtecks 
 			$datei = fopen("visualization-".session_id().".svg",  "w+");
-			$s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
+			$s = "<?xml version=\"1.2\" encoding=\"UTF-8\" standalone=\"no\"?>
 					<svg
 					width=\"".$width."px\" height=\"".$height."px\" version=\"1.1\" id=\"test\"
 					xmlns:svg=\"http://www.w3.org/2000/svg\"> 
