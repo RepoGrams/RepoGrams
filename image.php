@@ -1,8 +1,9 @@
-<?php session_start(); if (!isset($_SESSION['image']) ) header('location: index.php')?>
+<?php session_start(); if (!isset($_SESSION['image']) ) header('location: index.php');?>
 
 <html !DOCTYPE HTML>
 <head>
 	<?php include('header.php')?>
+	<meta http-equiv="Content-Type" content="img/svg+xml; charset=UTF-8">
 </head>
 
 <body>
@@ -32,7 +33,10 @@
 			<div class="panel panel-default" style="overflow: hidden; height: 555px; width: 768px; margin: auto auto 0;">
   				<div class="panel-heading"><?php if (isset($_SESSION['title'])) echo $_SESSION['title'];?></div>
 				<div id="overscroll"> 
-					<ul><li><svg>php/visualization-<?php echo session_id(); ?>.svg</svg></li></ul>
+					<ul><li>
+<!--<svg><path  php/visualization-<?php echo session_id(); ?>.svg/> </svg>-->
+						<img src="php/visualization-<?php echo session_id();?>.svg">
+					</li></ul>
 <!-- 					<ul> -->
 					<!-- width,height,tile.width,tile.height,tile.color -->
 						<?php 
