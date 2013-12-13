@@ -34,22 +34,11 @@
   				<div class="panel-heading"><?php if (isset($_SESSION['title'])) echo $_SESSION['title'];?></div>
 				<div id="overscroll"> 
 					<ul><li>
-						<object type="image/svg+xml" data="php/visualization-<?php echo session_id();?>.svg" 
-								width="512" height="512" border="1">
-						</object>
+						<svg id="repograms" height="512" width="768" 
+     						xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  							<image x="0" y="0" height="512" width="768"  xlink:href="php/visualization-<?php echo session_id();?>.svg"/>
+						</svg>
 					</li></ul>
-<!-- 					<ul> -->
-					<!-- width,height,tile.width,tile.height,tile.color -->
-						<?php 
-// 							if (isset($_SESSION['image'])) {
-// 								foreach ($_SESSION['image'] as $row) {
-// 									foreach ($row as $tile) {
-// 										echo '<li style="background-color: rgb('.$tile['3'].');width:'.$tile['0'].';height:'.$tile['1'].'"></li>';
-// 									}
-// 								}
-// 		                	}
-// 		            	?>
-<!-- 					</ul> -->
 				</div>
 			</div>
 			<br><br>

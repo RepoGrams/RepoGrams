@@ -15,6 +15,9 @@ dump();
 <body>
 	<!-- Menu -->
 	<?php include('menu.php'); ?>
+<?php
+			$_SESSION['loading_info'] = 'Cloning repository into folder.';
+		?>
 
 	<!-- Content -->
 	<div class="container" id="wrap">
@@ -47,7 +50,7 @@ dump();
 	<?php include('footer.php')?>
 			
 	<!--include the action.php functions -->
-	<script type="text/javascript">
+	  <script type="text/javascript">
 		jQuery.ajax("php/action.php");
 	</script>
 </body>
