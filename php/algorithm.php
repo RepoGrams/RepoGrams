@@ -30,7 +30,11 @@
 <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"  \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"> \n
 <svg \n
 	width=\"".$width."px\" height=\"".$height."px\" version=\"1.1\" id=\"test\" \n
-	xmlns:svg=\"http://www.w3.org/2000/svg\"> \n
+	xmlns:dc=\"http://purl.org/dc/elements/1.1/\"
+   xmlns:cc=\"http://creativecommons.org/ns#\"
+   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"
+   xmlns:svg=\"http://www.w3.org/2000/svg\"
+   xmlns=\"http://www.w3.org/2000/svg\"> \n
 <defs id=\"defs4\" /> \n
 <g id=\"layer1\"> \n
 <g \n
