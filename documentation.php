@@ -25,13 +25,13 @@
 			 The word repogram comes from the words "Repository" and "Chromograms"
 			<li> So what is a "Repository"?<br>	
 				A repository is a collection of source code files used to develop programs or to manage other files.
-				If you ever used github, you will surely have a so called repository.
+				If you ever used GitHub, you will surely have a so called repository.
 			<li> Ok, clear on that. What is a "Chromogram"?<br>
 				A chromogram is an intelligent visualization method. It can display a huge amount of content on a small
 				image. It usually uses blocks.
 		    </div>
 		    <div class="jumbotron">
-		    <div class="h3 doc-header">Read that &#10004; So how can I use this site?</div>
+		    <div class="h3 doc-header">Read that. So how can I use this site?</div>
 		    <br>
 			That's an easy one. <br>
 			Watch this video:<br>
