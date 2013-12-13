@@ -32,18 +32,6 @@
 	width=\"".$width."px\" height=\"".$height."px\" version=\"1.1\" id=\"test\"
 	xmlns:svg=\"http://www.w3.org/2000/svg\"> 
 <defs id=\"defs4\" />
-<metadata
-id=\"metadata7\">
-	<rdf:RDF>
-	<cc:Work
-		rdf:about=\"\">
-		<dc:format>image/svg+xml</dc:format>
-		<dc:type
-			rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" />
-		<dc:title></dc:title>
-	</cc:Work>
-	</rdf:RDF>
-</metadata>
 <g id=\"layer1\">
 <g
 	transform=\"translate(-34.000015,268.36218)\"
