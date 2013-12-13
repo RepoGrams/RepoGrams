@@ -34,7 +34,7 @@
 <defs id=\"defs4\" /> \n
 <g id=\"layer1\"> \n
 <g \n
-	transform=\"translate(-34.000015,268.36218)\" \n
+	transform=\"translate(0,0)\" \n
 	id=\"g24941\"> \n";
 			fwrite($datei, utf8_encode($s));
 			################################################## 
@@ -231,7 +231,7 @@
 				$w = 0.1;
 			}
 			$hexcolor = $conv->RGBtoHex($color[0],$color[1],$color[2]);
-			$s = " <rect x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\" rx=\"0\" ry=\"0\" id =\"rect".$id."\" style=\"fill:".$hexcolor.";stroke:none\"/> \n";
+			$s = " <rect x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\" rx=\"0\" ry=\"0\" id =\"rect".$id."\" style=\"fill:".$hexcolor.";stroke:none\" /> \n";
 			fwrite($datei, utf8_encode($s));
 		}
 	}
