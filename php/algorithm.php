@@ -26,16 +26,16 @@
 			#$width = 600; # Später die Breite des Rechtecks 
 			#$height = 600; # Später die Höhe des Rechtecks 
 			$datei = fopen("visualization-".session_id().".svg",  "w+");
-			$s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
-<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"  \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">
-<svg
-	width=\"".$width."px\" height=\"".$height."px\" version=\"1.1\" id=\"test\"
-	xmlns:svg=\"http://www.w3.org/2000/svg\"> 
-<defs id=\"defs4\" />
-<g id=\"layer1\">
-<g
-	transform=\"translate(-34.000015,268.36218)\"
-	id=\"g24941\">";
+			$s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
+<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"  \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"> \n
+<svg \n
+	width=\"".$width."px\" height=\"".$height."px\" version=\"1.1\" id=\"test\" \n
+	xmlns:svg=\"http://www.w3.org/2000/svg\"> \n
+<defs id=\"defs4\" /> \n
+<g id=\"layer1\"> \n
+<g \n
+	transform=\"translate(-34.000015,268.36218)\" \n
+	id=\"g24941\"> \n";
 			fwrite($datei, utf8_encode($s));
 			################################################## 
 			
@@ -92,7 +92,7 @@
 			}
 
 			callback('Initialize image...');
-			fwrite($datei, utf8_encode("</g> </g></svg>"));
+			fwrite($datei, utf8_encode("</g> </g></svg> \n"));
 			fclose($datei);
 			return $returnArray;
 		}
@@ -231,7 +231,7 @@
 				$w = 0.1;
 			}
 			$hexcolor = $conv->RGBtoHex($color[0],$color[1],$color[2]);
-			$s = " <rect x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\" rx=\"0\" ry=\"0\" id =\"rect".$id."\" style=\"fill:".$hexcolor.";stroke:none\"/>";
+			$s = " <rect x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\" rx=\"0\" ry=\"0\" id =\"rect".$id."\" style=\"fill:".$hexcolor.";stroke:none\"/> \n";
 			fwrite($datei, utf8_encode($s));
 		}
 	}
