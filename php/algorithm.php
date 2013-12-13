@@ -92,7 +92,7 @@
 			}
 
 			callback('Initialize image...');
-			fwrite($datei, utf8_encode("</g> </g></svg>");
+			fwrite($datei, utf8_encode("</g> </g></svg>"));
 			fclose($datei);
 			return $returnArray;
 		}
