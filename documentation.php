@@ -19,9 +19,30 @@
 		<div class="h1">Documentation</div>
 		<br>
 		<p class="lead">
-			Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   
-			<br><br>
-			Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet,
+		    <div class="jumbotron">
+		    <div class="h2 doc-header ">What is Repogram?</div>
+			<br>	
+			 The word repogram comes from the words "Repository" and "Chromograms"
+			<li> So what is a "Repository"?<br>	
+				A repository is a collection of source code files used to develop programs or to manage other files.
+				If you ever used github, you will surely have a so called repository.
+			<li> Ok, clear on that. What is a "Chromogram"?<br>
+				A chromogram is an intelligent visualization method. It can display a huge amount of content on a small
+				image. It usually uses blocks.
+		    </div>
+		    <div class="jumbotron">
+		    <div class="h3 doc-header">Read that &#10004; So how can I use this site?</div>
+		    <br>
+			That's an easy one. <br>
+			Watch this video:<br>
+				TODO! Youtube click video!
+		    </div>
+		    <div class="jumbotron">
+		    <div class="h3 doc-header">Do you have some examples?</div>
+			<p>
+			  TODO! Include examples
+			</p>
+		    </div>
 		</p>
     	<div id="push"></div>
 	</div>
