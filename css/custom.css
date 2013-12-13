@@ -162,3 +162,7 @@ div[class="tooltip-inner"] {
 .doc-header {
 	border-bottom:solid 1px;
 }
+
+.custom-jumbotron{
+	background-color:#A1C782;
+}
