@@ -242,7 +242,7 @@ id=\"metadata7\">
 			if ($w <= 0){
 				$w = 0.1;
 			}
-			$hexcolor = $conv->RGBtoHex($color[0],$color[1],$color[2])
+			$hexcolor = $conv->RGBtoHex($color[0],$color[1],$color[2]);
 			$s = " <rect x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\" rx=\"0\" ry=\"0\" id =\"rect".$id."\" style=\"fill:".$hexcolor.";stroke:none\"/>";
 			fwrite($datei, utf8_encode($s));
 		}
