@@ -27,28 +27,27 @@
 			#$height = 600; # Später die Höhe des Rechtecks 
 			$datei = fopen("visualization-".session_id().".svg",  "w+");
 			$s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
-					<svg
-					width=\"".$width."px\" height=\"".$height."px\" version=\"1.1\" id=\"test\"
-					xmlns:svg=\"http://www.w3.org/2000/svg\"> 
-					<defs
-				    id=\"defs4\" />
-				  <metadata
-				     id=\"metadata7\">
-				     <rdf:RDF>
-					      <cc:Work
-					         rdf:about=\"\">
-					        <dc:format>image/svg+xml</dc:format>
-					        <dc:type
-					           rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" />
-					        <dc:title></dc:title>
-					      </cc:Work>
-					    </rdf:RDF>
-				  </metadata>
-				  <g
-				     id=\"layer1\">
-				    <g
-				       transform=\"translate(-34.000015,268.36218)\"
-				       id=\"g24941\">";
+<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"  \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">
+<svg
+	width=\"".$width."px\" height=\"".$height."px\" version=\"1.1\" id=\"test\"
+	xmlns:svg=\"http://www.w3.org/2000/svg\"> 
+<defs id=\"defs4\" />
+<metadata
+id=\"metadata7\">
+	<rdf:RDF>
+	<cc:Work
+		rdf:about=\"\">
+		<dc:format>image/svg+xml</dc:format>
+		<dc:type
+			rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" />
+		<dc:title></dc:title>
+	</cc:Work>
+	</rdf:RDF>
+</metadata>
+<g id=\"layer1\">
+<g
+	transform=\"translate(-34.000015,268.36218)\"
+	id=\"g24941\">";
 			fwrite($datei, utf8_encode($s));
 			################################################## 
 			
@@ -66,7 +65,7 @@
 			callback('Initialize image...');
 
 			$returnArray = array();
-
+			$id = 0;
 			for ($i = 0; $i < $count; $i++){
 				$diff = $commitArray[$i][1];
 				$str = $commitArray[$i][0];
@@ -75,7 +74,8 @@
  		 		if ($w > $width)
  		 		while ($w > $width){
  		 			$block = array(($width-$x), $hohe, $color);
- 		 			$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe);
+ 		 			$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
+ 		 			$id++;
 					$overlap = $w-$width;
  		 			$x = 0;
 					$y += $hohe;
@@ -83,18 +83,21 @@
 					$z += $hohe;
 					if ($w > $width){
 						$block = array($width, $hohe, $color);
-						$this->writeBlock($datei, $color, $x, $y, $width, $hohe);
+						$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
+						$id++;
 					}
 					else{
 						$block = array($overlap, $hohe, $color);
-						$this->writeBlock($datei, $color, $x, $y, $overlap, $hohe);
+						$this->writeBlock($datei, $color, $x, $y, $overlap, $hohe, $id);
+						$id++;
 					}
 					$x += $w;
 
 				}
 				else{
 					$block = array(($diff*$factor), $hohe, $color);
-					$this->writeBlock($datei, $color, $x, $y, ($diff*$factor), $hohe);
+					$this->writeBlock($datei, $color, $x, $y, ($diff*$factor), $hohe, $id);
+					$id++;
 					$x += $diff*$factor;
 				}
 				$returnArray[] = $block;
@@ -234,16 +237,13 @@
 		    return $value /26;
 		}
 
-		private function writeBlock($datei, $color, $x, $y, $w, $h){
+		private function writeBlock($datei, $color, $x, $y, $w, $h, $id){
 			$conv = new convert();
 			if ($w <= 0){
 				$w = 0.1;
 			}
 			$hexcolor = $conv->RGBtoHex($color[0],$color[1],$color[2])
-			$s = " <rect 	x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\"
-					rx=\"0\" ry=\"0\" 
-					id =\"rect\"
-					 style=\"fill:".$hexcolor.";stroke:none\"/>";
+			$s = " <rect x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\" rx=\"0\" ry=\"0\" id =\"rect".$id."\" style=\"fill:".$hexcolor.";stroke:none\"/>";
 			fwrite($datei, utf8_encode($s));
 		}
 	}
