@@ -61,5 +61,14 @@ class convert{
         }
         return array('r' => $r * 255.0, 'g' => $g * 255.0, 'b' => $b * 255.0);
 	}
+	
+	function RGBToHex($r, $g, $b) {
+		$hex = "#";
+		$hex.= str_pad(dechex($r), 2, "0", STR_PAD_LEFT);
+		$hex.= str_pad(dechex($g), 2, "0", STR_PAD_LEFT);
+		$hex.= str_pad(dechex($b), 2, "0", STR_PAD_LEFT);
+		return $hex;
+	}
+	
 }
 ?>
