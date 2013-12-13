@@ -40,7 +40,7 @@
 				    <g
 				       transform=\"translate(-34.000015,268.36218)\"
 				       id=\"g24941\">";
-			fwrite($datei, $s);
+			fwrite($datei, utf8_encode($s);
 			################################################## 
 			
 			$x = 0; 	#links oben -> links
@@ -92,7 +92,7 @@
 			}
 
 			callback('Initialize image...');
-			fwrite($datei, "</g> </g></svg>");
+			fwrite($datei, utf8_encode("</g> </g></svg>");
 			fclose($datei);
 			return $returnArray;
 		}
@@ -234,7 +234,7 @@
 					stroke=\"none\"
 					stroke-width=\"0\"
 					id =\"rect\"/> 			";
-			fwrite($datei, $s);
+			fwrite($datei, utf8_encode($s));
 		}
 	}
 ?>
