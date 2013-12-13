@@ -40,21 +40,19 @@
 		    <div class="jumbotron custom-jumbotron">
 		    <div class="h3 doc-header">Do you have some examples?</div>
 			<br>
-			<a href="https://github.com/twbs/bootstrap.git">Twitter Bootstrap</a><br>
+			<a class="h3" href="https://github.com/twbs/bootstrap.git">Twitter Bootstrap</a><br><br>
 			<p align="center">
-			<div id="overscroll">
-			  <svg id="repograms" height="512" width="768" 
+			  <svg class="borderimage" id="repograms" height="512" width="768" 
      						xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   							<image x="0" y="0" height="512" width="768"  xlink:href="img/exampleBootstrap.svg"/> </svg>
 
-			</div>			
 			</p>
 			<br>
-			<a href="https://github.com/jquery/jquery.git">JQuery</a><br>
+			<a class="h3" href="https://github.com/jquery/jquery.git">JQuery</a><br><br>
 			<p align="center">
-			  <svg id="repograms" height="512" width="768" 
+			  <svg class="borderimage" id="repograms" height="512" width="768" 
      						xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  							<image x="0" y="0" height="512" width="768"  xlink:href="img/examplejQuery.svg"/> </svg>
+  							<image x="0" y="0" height="512" width="768"  xlink:href="img/examplejQuery.svg" /> </svg>
 
 			</p>
 

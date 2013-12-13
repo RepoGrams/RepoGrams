@@ -166,3 +166,9 @@ div[class="tooltip-inner"] {
 .custom-jumbotron{
 	background-color:#A1C782;
 }
+
+.borderimage {
+	border-width:5px;
+	border-style: solid;
+	border-color: black;
+}
