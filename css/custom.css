@@ -172,3 +172,8 @@ div[class="tooltip-inner"] {
 	border-style: solid;
 	border-color: black;
 }
+
+.customdate {
+	width : 50%;
+	float: left;
+}

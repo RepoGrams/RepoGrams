@@ -3,6 +3,8 @@ session_start();
 require_once("php/functions.php");
 dump();
 	if (isset($_POST['repourl'])) $_SESSION['repourl'] = $_POST['repourl'];
+	//if (isset($_POST['start']) && $_POST['start'] != '00-00-00') $_SESSION['start'] = $_POST['start'];
+	//if (isset($_POST['start']) && $_POST['end'] != date(m-d-y)) $_SESSION['end'] = $_POST['end'];
 	if ($_SESSION['finish']) header('location:image.php');
 ?>
 

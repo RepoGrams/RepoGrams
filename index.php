@@ -1,6 +1,7 @@
-<?php session_start();
-require_once("php/functions.php");
-initSession(true);
+<?php 
+	session_start();
+	require_once("php/functions.php");
+	initSession(true);
 ?>
 <html !DOCTYPE HTML>
 <head>
@@ -29,15 +30,24 @@ initSession(true);
      			</span>
 			</div>
 			
-			<!-- print Error Message -->
+			<!-- print error message -->
 			<?php if ($error) {
 				echo '<br><div class="alert-dismissable errormessage">
-       				  	<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true">     							</button>
+       				  	<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true"></button>
        						<span class="help-block"><strong>&nbsp;&nbsp;Error!</strong> '.$_SESSION['error_message'].'</span>
       				  </div>';
 				unset($_SESSION['error_message']);
 			}
 			?>
+			
+			<!-- Date picker -->
+			<br>
+    		<div class="input-daterange urlinput" id="datepicker">
+    			<span>Select commits from </span>
+    			<input type="text" class="input-small" name="start" value="00-00-00"/>
+    			<span> till </span>
+    			<input type="text" class="input-small" name="end" value="<?php echo date('m-d-y');?>"/>
+    		</div>
 		</form>
 		<br><br>
 		<div class="examples">
@@ -65,5 +75,14 @@ initSession(true);
 	
 	<!-- Footer -->	
 	<?php include('footer.php')?>
+	
+	<script type="text/javascript">
+    	$('.input-daterange').datepicker({
+    		format: "mm-dd-yyyy",
+        	calendarWeeks: true,
+       	 	autoclose: true,
+        	todayHighlight: true
+        });
+	</script>
 </body>
 </html>
