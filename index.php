@@ -46,7 +46,7 @@
     			<span>Select commits from </span>
     			<input type="text" class="input-small" name="start" value="00-00-00"/>
     			<span> till </span>
-    			<input type="text" class="input-small" name="end" value="<?php echo date('m-d-y');?>"/>
+    			<input type="text" class="input-small" name="end" value="<?php date_default_timezone_set ( 'UTC' );echo date('m-d-y');?>"/>
     		</div>
 		</form>
 		<br><br>
