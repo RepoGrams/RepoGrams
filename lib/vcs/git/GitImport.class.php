@@ -6,7 +6,7 @@ error_reporting(-1);
 class gitImport extends RepoImporter {
 	private $RepoObject;
 
-	public function __construct($repo, $start=null, $end=null) //,$user=null,$password=null){
+	public function __construct($repo, $start=null, $end=null) { //,$user=null,$password=null){
 		if ($this->is_valid_url($repo) === false){
 			// die("<h1>Possible injection detected</h1>");
 			error_log("Injection detected: $repo");
