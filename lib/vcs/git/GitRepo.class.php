@@ -23,8 +23,8 @@ class GitRepo implements Repo_Interface {
 		);
 	}
 
-	function __construct($url) {
-		$gitImporter = new gitImport($url);
+	function __construct($url, $start, $end) {
+		$gitImporter = new gitImport($url, $start, $end);
 		foreach ($gitImporter->getRawRepoInfo() as $hash => $value) {
 			$this->commits[] = $this->rawCommit2Commit($value, $hash);
 		}
