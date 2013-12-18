@@ -60,7 +60,7 @@
 	 */
 	function renderRepo($repourl = null) {
 		try {
-			$repo = RepoFactory::createRepo($repourl);
+			$repo = RepoFactory::createRepo($repourl, $start, $end);
 			error_log("Repo created");
 			$alg = new Algorithm();
 			$_SESSION['image'] = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
