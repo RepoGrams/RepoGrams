@@ -28,10 +28,10 @@ class gitImport extends RepoImporter {
                 // if (!file_exists($tmp.'/.git')) throw new Exception ('No .git Folder found');
                 $begin = "";
                 $end = "";
-                if !is_null($start) {
+                if (!is_null($start)) {
                   $begin = "--since ".$begin." ";
                 } 
-                if !is_null($end) {
+                if (!is_null($end)) {
                   $end = "--before ".$end." ";
                 }
 		$command = "git log ".$begin.$end."--numstat --pretty='%x1A},%x1A%H%x1A:{%x1Aauthor%x1A:%x1A%an%x1A,%x1Aauthor_mail%x1A:%x1A%ae%x1A,%x1Adate%x1A:%x1A%at%x1A,%x1Amessage%x1A:%x1A%s%x1A,%x1Achanges%x1A : %x1A'";
