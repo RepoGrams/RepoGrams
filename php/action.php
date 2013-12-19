@@ -46,8 +46,14 @@
 	 * Check formular input if url is empty
 	 */
 	function checkInput($repourl = null) {
+          if (strpos($repourl, "http") === false) {
+			$_SESSION['error_message'] = 'Invalid repository url.';
+                        $_SESSION['error'] = true;
+			return false;
+          }
 		if(!str_replace(' ','',$repourl) != '') {
 			$_SESSION['error_message'] = 'Invalid repository url.';
+                        $_SESSION['error'] = true;
 			return false;
 		} else {
 			return true;
