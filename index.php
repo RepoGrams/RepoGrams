@@ -1,7 +1,10 @@
 <?php 
 	session_start();
-	require_once("php/functions.php");
+require_once("php/functions.php");
+if(!isset($_SESSION['init'])){
 	initSession(true);
+	$_SESSION['init'] = true;
+}
 ?>
 <html !DOCTYPE HTML>
 <head>
