@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 require_once("php/functions.php");
 dump();
@@ -20,7 +20,8 @@ if (isset($_POST['end']) && $_POST['end'] != date("m-d-y")) {
 if(isset($_SESSION['error']) && $_SESSION['error']) {
         error_log("got errror");
         unset($_SESSION['error']);
-        header('Location:../index.php');
+	$_SESSION['finish'] = true;
+	header('Location:index.php');
 }
 ?>
 

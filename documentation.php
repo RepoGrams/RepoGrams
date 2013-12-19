@@ -34,8 +34,12 @@
 		    <div class="h3 doc-header">Read that. So how can I use this site?</div>
 		    <br>
 			That's an easy one. <br>
-			Watch this video:<br>
-				TODO! Video!
+			You just need to go to the frontpage, enter the URL of your repository and click on 
+			<button class="btn btn-default" title="Visualize the provided repository">
+       			<span class="glyphicon glyphicon-indent-left"></span>Visualize!
+			</button> <br>
+			After a short waiting time, you will see your rendered chromogram.
+ 
 		    </div>
 		    <div class="jumbotron custom-jumbotron">
 		    <div class="h3 doc-header">Do you have some examples?</div>

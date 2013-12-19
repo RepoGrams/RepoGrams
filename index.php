@@ -1,7 +1,10 @@
 <?php 
 	session_start();
-	require_once("php/functions.php");
+require_once("php/functions.php");
+if(!isset($_SESSION['init'])){
 	initSession(true);
+	$_SESSION['init'] = true;
+}
 ?>
 <html !DOCTYPE HTML>
 <head>
@@ -37,6 +40,8 @@
        						<span class="help-block"><strong>&nbsp;&nbsp;Error!</strong> '.$_SESSION['error_message'].'</span>
       				  </div>';
 				unset($_SESSION['error_message']);
+				
+				initSession(true);
 			}
 			?>
 			
