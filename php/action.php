@@ -65,7 +65,6 @@
 			$alg = new Algorithm();
 			$_SESSION['image'] = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
 			error_log("Image created");
-			callback("Test?");
 			$start = strrpos($repourl, '/');
 			$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
 			unsetAll();
@@ -73,8 +72,9 @@
 			return null;
 		} catch (Exception $e) {
 			unsetAll();
+			$_SESSION['error'] = true;
 			$_SESSION['error_message'] = $e->getMessage();
-			header('Location: ../index.php');  
+			//header('Location: ../index.php');  
 			$_SESSION['finish'] = false;
 		}
 	}

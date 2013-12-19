@@ -16,6 +16,9 @@ if (isset($_POST['end']) && $_POST['end'] != date("m-d-y")) {
         error_log("start:".$_SESSION['start']);
         error_log("end:".$_SESSION['end']);
 	if ($_SESSION['finish']) header('location:image.php');
+
+if(isset($_SESSION['error']) && $_SESSION['error']
+	header('Location:../index.php');
 ?>
 
 <html !DOCTYPE HTML>
