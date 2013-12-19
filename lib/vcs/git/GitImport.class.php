@@ -11,6 +11,8 @@ class gitImport extends RepoImporter {
 		if ($this->is_valid_url($repo) === false){
 			// die("<h1>Possible injection detected</h1>");
 			error_log("Injection detected: $repo");
+			throw new Exception("Invalid URL!");	
+			return 0;
 		}	
 		$tmp = tempnam(sys_get_temp_dir(),"");
 		unlink($tmp);
@@ -20,12 +22,14 @@ class gitImport extends RepoImporter {
                 chdir($tmp);
 		$command = 'git clone --bare "'.$repo.'"';
 		$command."\n";
+		error_log($command);
 		shell_exec($command);
                 $split = explode("/", $repo); //http://stackoverflow.com/questions/2967597/only-variables-can-be-passed-by-reference
                 $gitdir = end($split); // the last part of the git URL is the folder name
                 $joint = getcwd()."/".$gitdir."/";
                 error_log("joint: ".$joint);
-                chdir($joint);
+                if (!file_exists($joint)) throw new Exception ('Fetching git-Repository was not sucessfull (Invalid URL?)');
+		chdir($joint);
                 // if (!file_exists($tmp.'/.git')) throw new Exception ('No .git Folder found');
                 $since = "";
                 $before= "";
@@ -49,7 +53,7 @@ class gitImport extends RepoImporter {
 			error_log("stop");
 		}
 		$this->RepoObject = $output_array;
-		self::removeDir($tmp);
+		//self::removeDir($tmp);
 	}
 
 	
