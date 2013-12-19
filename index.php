@@ -40,6 +40,8 @@ if(!isset($_SESSION['init'])){
        						<span class="help-block"><strong>&nbsp;&nbsp;Error!</strong> '.$_SESSION['error_message'].'</span>
       				  </div>';
 				unset($_SESSION['error_message']);
+				
+				initSession(true);
 			}
 			?>
 			
