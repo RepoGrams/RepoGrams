@@ -74,3 +74,7 @@
 	</script>
 </body>
 </html>
+<?php
+require_once('php/functions.php');
+	initSession(true);
+?>
