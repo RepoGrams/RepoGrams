@@ -33,10 +33,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 		$returnArray = array();
 
-		callback('Initialize image...');
-
-		$returnArray = array();
-
 
 		###################################################
 
@@ -68,8 +64,18 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		$z = $hohe;	#rechts unten -> oben HÖHE
 
 		for ($i = 0; $i < $count; $i++){
-			$block = this->commitToBlock($commitArray[i], $modus_length, $modus_color, $hohe, $all_diff, $add_diff, $del_diff, $pixel, $hohe); //length, heigth, color
-			$length = block[0];
+			if ($modus_length == 1){
+				if ($commitArray[$i][2] <= 0) {
+					break;
+				}
+			}
+			if ($modus_length == 2){
+				if ($commitArray[$i][3] <= 0) {
+					break;
+				}
+			}
+			$block = this->commitToBlock($commitArray[$i], $modus_length, $modus_color, $hohe, $all_diff, $add_diff, $del_diff, $pixel, $hohe); //length, heigth, color
+			$length = $block[0];
 			$color = $block[2];
 			$w = $x + $length;
 			if ($w > $width){
@@ -109,26 +115,26 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 	}
 
-	private function commitToBlock($commitArray[i], $modus_length, $modus_color, $all_diff, $add_diff, $del_diff, $pixel, $hohe){
+	private function commitToBlock($commitArray, $modus_length, $modus_color, $all_diff, $add_diff, $del_diff, $pixel, $hohe){
 
-		$color = $this->commitToColor($modus_color, $commitArray[i][0])
+		$color = $this->commitToColor($modus_color, $commitArray[i])
 
 		switch ($modus_length) {
 			case 0:			#all
 				$factor = ($pixel/$hohe) / $all_diff;
-				$diff = $commitArray[$i][1];
+				$diff = $commitArray[1];
 				$length = ($factor * $diff);
 				break;
 			
 			case 1:			#add
 				$factor = ($pixel/$hohe) / $add_diff;
-				$diff = $commitArray[$i][2];
+				$diff = $commitArray[2];
 				$length = ($factor * $diff);
 				break;
 
 			case 2:			#del
 				$factor = ($pixel/$hohe) / $del_diff;
-				$diff = $commitArray[$i][3];
+				$diff = $commitArray[3];
 				$length = ($factor * $diff);
 				break;
 
@@ -140,22 +146,23 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		return array($length, $hohe, $color);
 	}
 
-	private function commitToColor($modus, $msg){
+	private function commitToColor($modus, $commitArray){
 		$conv = new convert();
-		if ($msg == null)
-				return array(211,211,211);
-		$msg = preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
-	    $msg = strtolower($msg);
-	    if (strlen($msg) == 0)	
-	    	return array(211,211,211);
+	
 		switch ($modus) {
 
-			####################################################
-			### Commit Message encoded in first three letters ##
-			####################################################
+			###################################################
+			## Commit Message encoded in first three letters ##
+			###################################################
 
 			case 0:
+				$msg = $commitArray[0];
+				if ($msg == null)
+					return array(211,211,211);
 				$msg = preg_replace("/[^a-zA-Z0-9]/" , "" , $msg);
+	   			$msg = strtolower($msg);
+	    		if (strlen($msg) == 0)	
+	    			return array(211,211,211);
 		   		$first = substr($msg, 0, 1);
 				$h = $this->letterValue($first, 0);
 		   		if (strlen($msg) > 1){
@@ -178,14 +185,21 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   		$g = $convArray['g'];
 		   		$b = $convArray['b'];
 		   		$color = array($r,$g,$b);
-		    	$color = ImageColorAllocate($img, $r, $g, $b);*/
+		    	$color = ImageColorAllocate($img, $r, $g, $b);
 		    	return $color;
 
-		    ####################################################
-			##### Commit Message encoded in logical content ####
-			####################################################
+		    ###################################################
+			#### Commit Message encoded in logical content ####
+			###################################################
 
 			case 1:
+				$msg = $commitArray[0];
+				if ($msg == null)
+					return array(211,211,211);
+				$msg = preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
+			    $msg = strtolower($msg);
+			    if (strlen($msg) == 0)	
+			    	return array(211,211,211);
 				$keys1 = array("add", "new", "create");
 				$section1 = array_fill_keys($keys1, "section1");
 					
@@ -237,6 +251,84 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   		return $color;
 				break;
 
+		    ###################################################
+			#### Authorname encoded in first three letters ####
+			###################################################
+
+			case 2: 
+				$name = $commitArray[4];
+				$name = preg_replace("/[^a-zA-Z0-9]/" , "" , $name);
+	   			$name = strtolower($name);
+		   		$first = substr($name, 0, 1);
+				$h = $this->letterValue($first, 0);
+		   		if (strlen($name) > 1){
+		   			$second = substr($name, 1, 1);
+		   			$s = 0.3 + 0.6 * $this->letterValue ($second, 1);
+		   			if (strlen($msg) > 2) {
+		   				$third = substr($name, 2, 1);
+		   				$l = 0.4 + 0.5 * $this->letterValue ($third, 2);
+		   			}
+		   			else {
+		   				$l = 0.6;
+		   			}
+		   		}
+	    		else{
+	    			$s = 0.5;
+	    			$l = 0.6;
+	    		}
+	    		$convArray = $conv->ColorHSLToRGB($h,$s,$l);
+	    		$r = $convArray['r'];
+		   		$g = $convArray['g'];
+		   		$b = $convArray['b'];
+		   		$color = array($r,$g,$b);
+		    	$color = ImageColorAllocate($img, $r, $g, $b);
+		    	return $color;
+				break;
+
+			###################################################
+			############## Time of day of commit ##############
+			###################################################
+
+			case 3:
+				$time = $commitArray[5]; #TODO wie bekomme ich die genaue Zeit?
+				$hour = $time;
+				$minute = $time;
+
+				if ($hour < 12){
+					$l = 0.35;
+				}
+				else{
+					$l = 0.65;
+					$hour = $hour/2;
+				}
+
+				$h = $hour * 0.08;
+				$s = 0.39 + 0.01 * $minute;
+
+				$convArray = $conv->ColorHSLToRGB($h,$s,$l);
+	    		$r = $convArray['r'];
+		   		$g = $convArray['g'];
+		   		$b = $convArray['b'];
+		   		$color = array($r,$g,$b);
+		    	$color = ImageColorAllocate($img, $r, $g, $b);
+		    	return $color;
+				break;
+
+			###################################################
+			################# Date of commit ##################
+			###################################################
+
+			case 4:
+				$time = $commitArray[5]; #TODO wie bekomme ich die genaue Zeit?
+				$day  = $time;
+				$month = $time;
+				$year = $time;
+
+				$h = $day * 0.03;
+				$s = 0.49 + $month * 0.04;
+				$l = ($year - 1990) * 0.04;
+				break;
+
 			default:
 				echo "Hier läuft was schief.";
 				break;
@@ -246,7 +338,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		private function preprocess($obj){
 			require_once(__DIR__."/../lib/vcs/Commit.interface.php");
 			for ($i = 0; $i < count($obj); $i++){
-				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->NumChangedLines(), $obj[$i]->Author()) ;
+				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->NumChangedLines(), $obj[$i]->NumAddedLines(), $obj[$i]->NumRemovedLines(), $obj[$i]->Author(), $obj[$i]->CommitTime()) ;
 			}
 			return $array;
 		}
