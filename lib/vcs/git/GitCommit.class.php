@@ -8,14 +8,16 @@ class GitCommit implements Commit_Interface {
 	private $msg;
 	private $unix_time;
 	private $diffToParent;
+	private $author;
 
-	function __construct($chksum, $pred, $succ, $msg, $unix_time, $diffToParent) {
+	function __construct($chksum, $pred, $succ, $msg, $unix_time, $diffToParent, $author) {
 		$this->chksum = $chksum;
 		$this->pred = $pred;
 		$this->succ = $succ;
 		$this->msg = $msg;
 		$this->unix_time = $unix_time;
 		$this->diffToParent = $diffToParent;
+		$this->author = $author;
 	}
 
 	public function Predecessor() {
@@ -34,6 +36,10 @@ class GitCommit implements Commit_Interface {
 
 	public function CommitMessage() {
 		return $this->msg;
+	}
+
+	public function CommitAuthor() {
+		return $this->author;
 	}
 
 	public function CommitTime() {

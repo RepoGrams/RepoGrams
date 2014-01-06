@@ -19,7 +19,8 @@ class GitRepo implements Repo_Interface {
 			NULL,
 			$rawCommit["message"],
 			$rawCommit["date"],
-			new GitChanges($rawCommit["changes"])
+			new GitChanges($rawCommit["changes"]),
+			$rawCommit["author"]
 		);
 	}
 
