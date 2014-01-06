@@ -21,6 +21,11 @@ interface  Commit_Interface {
 	 * @return the commit message
 	 */
 	function CommitMessage();
+	
+	/**
+	 * @return the author of the commmit
+	 */
+	function CommitAuthor();	
 
 	/**
 	 * @return the time of the commit
