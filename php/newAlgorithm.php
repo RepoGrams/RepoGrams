@@ -290,7 +290,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			###################################################
 
 			case 3:
-				$time = $commitArray[5]; #TODO wie bekomme ich die genaue Zeit?
+				$time = $commitArray[5]; 
 				$hour = date('G', $time);
 				$minute = date('i', $time);
 
@@ -319,7 +319,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			###################################################
 
 			case 4:
-				$time = $commitArray[5]; #TODO wie bekomme ich die genaue Zeit?
+				$time = $commitArray[5]; 
 				$day  = date('j', $time);
 				$month = date('n', $time);
 				$year = date('Y', $time);
