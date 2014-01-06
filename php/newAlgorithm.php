@@ -291,8 +291,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 			case 3:
 				$time = $commitArray[5]; #TODO wie bekomme ich die genaue Zeit?
-				$hour = $time;
-				$minute = $time;
+				$hour = date('G', $time);
+				$minute = date('i', $time);
 
 				if ($hour < 12){
 					$l = 0.35;
@@ -320,9 +320,9 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 			case 4:
 				$time = $commitArray[5]; #TODO wie bekomme ich die genaue Zeit?
-				$day  = $time;
-				$month = $time;
-				$year = $time;
+				$day  = date('j', $time);
+				$month = date('n', $time);
+				$year = date('Y', $time);
 
 				$h = $day * 0.03;
 				$s = 0.49 + $month * 0.04;
@@ -338,7 +338,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		private function preprocess($obj){
 			require_once(__DIR__."/../lib/vcs/Commit.interface.php");
 			for ($i = 0; $i < count($obj); $i++){
-				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->NumChangedLines(), $obj[$i]->NumAddedLines(), $obj[$i]->NumRemovedLines(), $obj[$i]->Author(), $obj[$i]->CommitTime()) ;
+				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->NumChangedLines(), $obj[$i]->NumAddedLines(), $obj[$i]->NumRemovedLines(), $obj[$i]->CommitAuthor(), $obj[$i]->CommitTime()) ;
 			}
 			return $array;
 		}
