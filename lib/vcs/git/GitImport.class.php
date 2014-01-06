@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__.'/../RepoImporter.class.php';
 
+
 error_reporting(-1);
 
 class gitImport extends RepoImporter {
@@ -39,16 +40,20 @@ class gitImport extends RepoImporter {
                 if (!is_null($end) && $end !== "") {
                   $before = "--before ".$end." ";
                 }
-		$command = "git log ".$since.$before."--numstat --pretty='%x1A},%x1A%H%x1A:{%x1Aauthor%x1A:%x1A%an%x1A,%x1Aauthor_mail%x1A:%x1A%ae%x1A,%x1Adate%x1A:%x1A%at%x1A,%x1Amessage%x1A:%x1A%s%x1A,%x1Achanges%x1A : %x1A'";
+                $separator = chr(26);
+		$command = "git log ".$since.$before."--numstat --pretty='".$separator."},".$separator."%H".$separator.":{".$separator."author".$separator.":".$separator."%an".$separator.",".$separator."author_mail".$separator.":".$separator."%ae".$separator.",".$separator."date".$separator.":".$separator."%at".$separator.",".$separator."message".$separator.":".$separator."%s".$separator.",".$separator."changes".$separator." : ".$separator."'";
                 error_log($command);
 		$output = shell_exec($command);
                 chdir($cwd);
-		$json = self::unescape($output,chr(26));
+		$json = self::unescape($output,$separator);
 		$json = substr($json,3,strlen($json));
 		$json = '{'.$json.'"}}';
 		
-		$json = utf8_encode($json);
 		$output_array = json_decode($json,true);
+                if (is_null($output_array)) {
+                  $json = utf8_encode($json);
+                  $output_array = json_decode($json,true);
+                }
 		if (is_null($output_array)) {
 			error_log("stop");
 		}
