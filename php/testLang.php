@@ -103,7 +103,7 @@
       'So please be patient and get some coffee while waiting ;)'
 			=> 'Wir bitten um ein wenig Geduld ;)',
       'Close'
-			=> 'Schließen'
+			=> 'Schlie&szlig;en'
     ),
 );
  
