@@ -1,4 +1,4 @@
-<?php session_start();
+<?php
 
   $GLOBALS["messages"] = array (
     'en'=> array(
