@@ -90,13 +90,13 @@
       'Documentation'
 			=> 'Dokumentation',
       'What is Repogram?'
-			=> 'Was ist Repogram?',
+			=> 'Was ist ein Repogram?',
       'The word repogram comes from the words "Repository" and "Chromograms"'
 			=> 'Das Word Repogram kommt von den W&ouml;rtern "Repository" und "Chromograms"',
       'So what is a "Repository"?'
 			=> 'Also, was ist ein "Repository"?',
       'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.'
-			=> 'Ein Repository ist entweder eine Sammlung von Quell Code Dateien, welche zum Entwickeln von Programmen benutzt werden oder wird verwendet um andere Dateien zu verwalten. Hat man jemals GitHub benutzt, hat man sicher auch ein sogenanntes Repository.',
+			=> 'Ein Repository ist entweder eine Sammlung von Quellcodedateien, welche zum Entwickeln von Programmen benutzt werden oder wird verwendet um andere Dateien zu verwalten. Hat man jemals GitHub benutzt, hat man sicher auch ein sogenanntes Repository.',
       'Ok, clear on that. What is a "Chromogram"?'
 			=> 'Ok, klar soweit. Was ist ein "Chromogram"?',
       'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.'
@@ -199,7 +199,7 @@
 );
  
 function msg($s) {
-  $locale = 'en';
+  $locale = 'de';
     
   if (isset($GLOBALS["messages"][$locale][$s])) {
     return $GLOBALS["messages"][$locale][$s];
