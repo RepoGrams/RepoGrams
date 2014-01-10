@@ -113,9 +113,10 @@ include('menu.php');
 	$(document).ajaxComplete(
 		function (){
 			$("#loadtext").html("<?php print msg('Rendering image')?>");
+			jQuery.ajax("php/action.php");
+			document.location = "image.php";
 		}
 	);
-	jQuery.ajax("php/action.php");});
 	jQuery.ajax("php/action.php");
 	</script>
 </body>
