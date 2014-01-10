@@ -68,13 +68,14 @@
 		try {
 			switch  ($_SESSION['STATE']) {
 				case 0:
-					$_SESSION['repo'] = RepoFactory::createRepo($repourl,$_SESSION['start'], $_SESSION['end']);
+					$_SESSION['repo'] = serialize(RepoFactory::createRepo($repourl,$_SESSION['start'], $_SESSION['end']));
 					error_log("Repo created");
 					$_SESSION['STATE']=1;
 					return;
 				case 1:
 					$alg = new Algorithm();
-					$_SESSION['image'] = $alg->render($_SESSION['repo']->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
+                                        $ses = unserialize($_SESSION['repo']);
+					$_SESSION['image'] = $alg->render($ses->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
 					error_log("Image created");
 					$start = strrpos($repourl, '/');
 					$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
