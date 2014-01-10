@@ -2,41 +2,68 @@
 
   $GLOBALS["messages"] = array (
     'en'=> array(
-      'Visualize!' => 'Visualize!',
-      'Help' => 'Help',
-      'Show me some examples' => 'Show me some examples',
-      'Enter repository url' => 'Enter repository url',
-      'Select commits from' => 'Select commits from',
-      'till' => 'till',
-      'Cloning repository into folder.' => 'Cloning repository into folder.',
-      'Abort' => 'Abort',
-      'Error! Fetching repository was not sucessfull (Invalid URL?)' => 'Error! Fetching repository was not sucessfull (Invalid URL?)',
-      'Legend' => 'Legend',
-      'Documentation' => 'Documentation',
-      'What is Repogram?' => 'What is Repogram?',
-      'The word repogram comes from the words "Repository" and "Chromograms"' => 'The word repogram comes from the words "Repository" and "Chromograms"',
-      'So what is a "Repository"?' => 'So what is a "Repository"?',
-      'A repository is a collection of source code files used to develop programs or to manage other files.
-      If you ever used GitHub, you will surely have a so called repository.' => 'A repository is a collection of source code files used to develop programs or to manage other files.
-      If you ever used GitHub, you will surely have a so called repository.',
-      'Ok, clear on that. What is a "Chromogram"?' => 'Ok, clear on that. What is a "Chromogram"?',
-      'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small
-      image. It usually uses blocks.' => 'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small
-      image. It usually uses blocks.',
-      'Read that. So how can I use this site?' => 'Read that. So how can I use this site?',
-      'That\'s an easy one.' => 'That\'s an easy one.',
-      'You just need to go to the frontpage, enter the URL of your repository and click on' => 'You just need to go to the frontpage, enter the URL of your repository and click on',
-      'After a short waiting time, you will see your rendered chromogram.' => 'After a short waiting time, you will see your rendered chromogram.',
-      'Do you have some examples?' => 'Do you have some examples?',
-      'Twitter Bootstrap' => 'Twitter Bootstrap',
-      'JQuery' => 'JQuery',
-      'This website renders chromograms of your repository.' => 'This website renders chromograms of your repository.',
-      'To start just enter your repository URL and click on visualize.' => 'To start just enter your repository URL and click on visualize.',
-      'To see some examples, just choose one from below and then click' => 'To see some examples, just choose one from below and then click',
-      'Visualize the provided repository' => 'Visualize the provided repository',
-      'Large repository may need some time to be downloaded and processed.' => 'Large repository may need some time to be downloaded and processed.',
-      'So please be patient and get some coffee while waiting ;)' => 'So please be patient and get some coffee while waiting ;)',
-      'Close' => 'Close'
+      'Visualize!' 
+      		=> 'Visualize!',
+      'Help' 
+      		=> 'Help',
+      'Show me some examples' 
+      		=> 'Show me some examples',
+      'Enter repository url' 
+      		=> 'Enter repository url',
+      'Select commits from' 
+      		=> 'Select commits from',
+      'till' 
+      		=> 'till',
+      'Cloning repository into folder.' 
+      		=> 'Cloning repository into folder.',
+      'Abort' 
+      		=> 'Abort',
+      'Error! Fetching repository was not sucessfull (Invalid URL?)' 
+      		=> 'Error! Fetching repository was not sucessfull (Invalid URL?)',
+      'Legend' 
+      		=> 'Legend',
+      'Documentation' 
+      		=> 'Documentation',
+      'What is Repogram?' 
+      		=> 'What is Repogram?',
+      'The word repogram comes from the words "Repository" and "Chromograms"' 
+      		=> 'The word repogram comes from the words "Repository" and "Chromograms"',
+      'So what is a "Repository"?' 
+      		=> 'So what is a "Repository"?',
+      'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.' 
+      		=> 'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.',
+      'Ok, clear on that. What is a "Chromogram"?' 
+      		=> 'Ok, clear on that. What is a "Chromogram"?',
+      'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.' 
+      		=> 'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.',
+      'Read that. So how can I use this site?' 
+      		=> 'Read that. So how can I use this site?',
+      'That\'s an easy one.' 
+      		=> 'That\'s an easy one.',
+      'You just need to go to the frontpage, enter the URL of your repository and click on' 
+      		=> 'You just need to go to the frontpage, enter the URL of your repository and click on',
+      'After a short waiting time, you will see your rendered chromogram.' 
+      		=> 'After a short waiting time, you will see your rendered chromogram.',
+      'Do you have some examples?' 
+      		=> 'Do you have some examples?',
+      'Twitter Bootstrap' 
+      		=> 'Twitter Bootstrap',
+      'JQuery' 
+      		=> 'JQuery',
+      'This website renders chromograms of your repository.' 
+      		=> 'This website renders chromograms of your repository.',
+      'To start just enter your repository URL and click on visualize.' 
+      		=> 'To start just enter your repository URL and click on visualize.',
+      'To see some examples, just choose one from below and then click' 
+      		=> 'To see some examples, just choose one from below and then click',
+      'Visualize the provided repository' 
+      		=> 'Visualize the provided repository',
+      'Large repository may need some time to be downloaded and processed.' 
+      		=> 'Large repository may need some time to be downloaded and processed.',
+      'So please be patient and get some coffee while waiting ;)' 
+			=> 'So please be patient and get some coffee while waiting ;)',
+      'Close' 
+      		=> 'Close'
     ),
  
     'de'=> array(
@@ -68,11 +95,8 @@
 			=> 'Das Word Repogram kommt von den W&ouml;rtern "Repository" und "Chromograms"',
       'So what is a "Repository"?'
 			=> 'Also, was ist ein "Repository"?',
-      'A repository is a collection of source code files used to develop programs or to manage other files.
-      If you ever used GitHub, you will surely have a so called repository.'
-			=> 'Ein Repository ist entweder eine Sammlung von Quell Code Dateien, welche zum Entwickeln von Programmen
-			 benutzt werden oder wird verwendet um andere Dateien zu verwalten.
-			Hat man jemals GitHub benutzt, hat man sicher auch ein sogenanntes Repository.',
+      'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.'
+			=> 'Ein Repository ist entweder eine Sammlung von Quell Code Dateien, welche zum Entwickeln von Programmen benutzt werden oder wird verwendet um andere Dateien zu verwalten. Hat man jemals GitHub benutzt, hat man sicher auch ein sogenanntes Repository.',
       'Ok, clear on that. What is a "Chromogram"?'
 			=> 'Ok, klar soweit. Was ist ein "Chromogram"?',
       'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.'
@@ -82,7 +106,7 @@
       'That\'s an easy one.'
 			=> 'Das ist einfach.',
       'You just need to go to the frontpage, enter the URL of your repository and click on'
-			=> 'Auf der Hauptseite kann man eine URL einf&uumlgen und klickt;',
+			=> 'Auf der Hauptseite kann man eine URL einf&uumlgen und klickt: ',
       'After a short waiting time, you will see your rendered chromogram.'
 			=> 'Nach einer kurzen Bearbeitungszeit, wird das berechnete Chromogram erscheinen.',
       'Do you have some examples?'
@@ -175,7 +199,7 @@
 );
  
 function msg($s) {
-  $locale = 'de';
+  $locale = 'en';
     
   if (isset($GLOBALS["messages"][$locale][$s])) {
     return $GLOBALS["messages"][$locale][$s];
@@ -208,17 +232,15 @@ function msg($s) {
 			<br>	
 			 <?php print msg('The word repogram comes from the words "Repository" and "Chromograms"');?>
 			<li> <?php print msg('So what is a "Repository"?');?><br>	
-				<?php print msg('A repository is a collection of source code files used to develop programs or to manage other files.
-				If you ever used GitHub, you will surely have a so called repository.');?>
+				<?php print msg('A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.');?>
 			<li> <?php print msg('Ok, clear on that. What is a "Chromogram"?');?><br>
-				<?php print msg('A chromogram is an intelligent visualization method. It can display a huge amount of content on a small
-				image. It usually uses blocks.');?>
+				<?php print msg('A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.');?>
 		    </div>
 		    <div class="jumbotron custom-jumbotron">
 		    <div class="h3 doc-header"><?php print msg('Read that. So how can I use this site?');?></div>
 		    <br>
 			<?php print msg('That\'s an easy one.');?> <br>
-			<?php print msg('You just need to go to the frontpage, enter the URL of your repository and click on ');?>
+			<?php print msg('You just need to go to the frontpage, enter the URL of your repository and click on');?>
 			<button class="btn btn-default" title="<?php print msg('Visualize the provided repository');?>">
        			<span class="glyphicon glyphicon-indent-left"></span><?php print msg('Visualize!');?>
 			</button> <br>
