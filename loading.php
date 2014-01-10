@@ -1,6 +1,42 @@
 <?php
 session_start();
 require_once("php/functions.php");
+
+$GLOBALS["messages"] = array (
+    'en'=> array(
+    	'Cloning repository into folder.' 
+      		=> 'Cloning repository into folder.',
+      	'Abort' 
+      		=> 'Abort'
+    ),
+ 
+    'de'=> array(
+    	'Cloning repository into folder.'
+			=> 'Klone Repository in Ordner.',
+     	'Abort' 
+			=> 'Abbrechen'
+    ),
+
+    'fr' => array(
+      'Cloning repository into folder.' 
+      		=> 'Duplique repository dans un dossier.',
+      'Abort' 
+      		=> 'Abandon'
+      )
+
+);
+ 
+function msg($s) {
+  $locale = 'en';
+    
+  if (isset($GLOBALS["messages"][$locale][$s])) {
+    return $GLOBALS["messages"][$locale][$s];
+  } else {
+    error_log("l10n error: locale: "."$locale, message:'$s'");
+  }
+}
+
+
 dump();
 if (isset($_POST['repourl'])) 
 	$_SESSION['repourl'] = $_POST['repourl'];
@@ -56,13 +92,13 @@ include('menu.php');
      		</div>
 		</div>
 		<p id="loadtext" class="center">
-			Cloning repository into folder.	
+			<?php print msg('Cloning repository into folder.');?>	
 		</p>
 			<br><br>
 		<div class="center">
 			<form role="form" action="./php/abort.php" method="POST">
 				<div class="btn-group btn-group-lg">
-		  			<button class="btn btn-danger" type="Submit" >Abort</button>
+		  			<button class="btn btn-danger" type="Submit" ><?php print msg('Abort');?></button>
 				</div>
 		    </form>
 		</div>
