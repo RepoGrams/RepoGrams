@@ -199,7 +199,7 @@
 );
  
 function msg($s) {
-  $locale = 'fr';
+  $locale = 'en';
     
   if (isset($GLOBALS["messages"][$locale][$s])) {
     return $GLOBALS["messages"][$locale][$s];
