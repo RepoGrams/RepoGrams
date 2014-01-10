@@ -18,13 +18,16 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 	
 	<!-- Content in root container-->
 	<div class="container" id="wrap"> <!-- open root container-->
-
+	  
+	  <div class="row">
 	  <div class="col-xs-12 col-sm-12 col-md-offset-4 col-md-4">  <!--Responsive title -->
 	    <img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
 	    <br>
 	  </div>
+	  </div>
 
 	  <!--Input form  -->
+	  <div class="row">
 	  <div class="col-xs-12">
 		<form role="form" action="./loading.php" method="POST">
    			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">			
@@ -62,13 +65,16 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
     		</div>
 		</form>
 	  </div> <!-- collapse div for form input -->
+	  </div>
 	  <br><br>
 	  
 	  <!-- Examples -->
+	  <div class="row">
 	  <div class="col-md-offset-5 col-md-2">
 	  	<a href="examples.php">
 		  <button type="button" class="btn btn-info">Show me some examples</button>
 		</a>
+	  </div>
 	  </div>
 	</div> <!-- root container close -->
 
