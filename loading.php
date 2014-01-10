@@ -113,11 +113,10 @@ include('menu.php');
 	<script type="text/javascript">
 	$(document).ajaxComplete(
 	function (){
-			$("p").html("AJAX COMPLETE" );
-			$(document).ajaxComplete(function(){
-				$("p").html("FINISHED GOING TO IMAGE.PHP");
-			});
-			jQuery.ajax("php/action.php");});
+		$(document).ajaxComplete(function(){
+			document.getElementById("loadtext").html= "<?php print msg($_SESSION['loading_info'])?>";
+		});
+		jQuery.ajax("php/action.php");});
 		jQuery.ajax("php/action.php");
 	</script>
 </body>
