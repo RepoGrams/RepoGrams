@@ -7,8 +7,15 @@ class Cache {
         private $repoURL2frequency;
         private $repoURL2dataFolder;
 
-        public function __construct() {
-          $repo2frequency = array();
+        // currently $cache_size is the number of entries
+        // we might want to change this to MB
+        private $cache_size;
+        private $fill_size;
+
+        public function __construct($size) {
+          $this->repo2frequency = array();
+          $this->cache_size = $size;
+          $this->fill_size = 0;
           // Read the serialized value of $repo2frequency
         }
 
@@ -26,14 +33,42 @@ class Cache {
          */
         public function get($repoURL, $start, $end) {
           if (array_key_exists($repoURL, $repo2frequency)) {
-            // the element is in the cache
+            // the element is in the cache, return it
             $repoURL2frequency[$repoURL] = $repo2frequency[$repoURL] + 1;
             $datadir = $repoURL2dataFolder[$repoURL];
             return new GitRepo($url, $start, $end, $datadir);
           } else {
-            // the element is not in the cache and we return NULL
+            // the element is not in the cache so let's construct it
             $datadir = NULL;
             $repo = new GitRepo($url, $start, $end, $datadir);
+            // update the cache
+            if ($this->fill_size < $this->cache_size) {
+              // we have still free space in the cache
+              $this->repoURL2frequency[$url] = 1;
+              $this->repoURL2dataFolder[$url] = $datadir;
+              $this->fill_size++;
+            } else {
+              // no free space in the array anymore
+              // decrement frequency of all elements in cache
+              foreach($repo2frequency as $key => &$value) {
+                $value--;
+              }
+              // get the key(s) with the minimal value
+              $minimalKeys = array_keys($repo2frequency, min($repo2frequency));
+              $minimalKeys = $minimalKey[0];
+              if ($repo2frequency[$minimalKey] <= 0) {
+                // evict the cache entry
+                unset($repo2frequency[$minimalKey]);
+                // TODO
+                // delete the directory of the evicted repository
+                // $folder = $repoURL2dataFolder[$min];
+                unset($repoURL2dataFolder[$minimalKey]);
+
+                // add the new 
+                $this->repoURL2frequency[$url] = 1;
+                $this->repoURL2dataFolder[$url] = $datadir;
+              }
+            }
             return $repo;
           }
         }
