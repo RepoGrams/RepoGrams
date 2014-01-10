@@ -1,5 +1,5 @@
 <?php 
-	session_start();
+session_start();
 require_once("php/functions.php");
 if(!isset($_SESSION['init'])){
 	initSession(true);
@@ -12,24 +12,32 @@ if(!isset($_SESSION['init'])){
 </head>
 
 <body>
-	<!-- Menu -->
+	<!-- Menu in its own container -->
 	<?php include('menu.php'); ?>
 	
-	<!-- Content -->
-	<div class="container" id="wrap">
-		<img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
-		<br>
-    	<?php $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== ''); ?>
+	<!-- Content in root container-->
+	<div class="container" id="wrap"> <!-- open root container-->
+
+	  <div class="col-xs-12 col-sm-12 col-md-offset-4 col-md-4">  <!--Responsive title -->
+	    <img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
+	    <br>
+	  </div>
+
+	  <!-- Error Handling -->
+	  <?php $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== ''); ?>
+
+		<!--Input form  -->
+	  <div class="col-xs-12">
 		<form role="form" action="./loading.php" method="POST">
    			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">			
    				<input class="form-control" id="repourl" name="repourl" type="text" required="required"  placeholder="Enter repository url">
     			<span class="input-group-btn">
        				<button class="btn btn-default" type="submit" title="Visualize the provided repository">
        					<span class="glyphicon glyphicon-indent-left"></span>Visualize!
-					</button>
-					<button class="btn btn-default btn-default" data-toggle="modal" data-target="#help" title="Quick Help" type="submit">
-						<span class="glyphicon glyphicon-hand-left "></span>Help
-					</button>
+				</button>
+				<button class="btn btn-default btn-default" data-toggle="modal" data-target="#help" title="Quick Help" type="submit">
+					<span class="glyphicon glyphicon-hand-left "></span>Help
+				</button>
      			</span>
 			</div>
 			
@@ -46,34 +54,24 @@ if(!isset($_SESSION['init'])){
 			?>
 			
 			<!-- Date picker -->
-			<br>
-    		<div class="input-daterange urlinput" id="datepicker">
+		  <br>
+    		  <div class="input-daterange urlinput" id="datepicker">
     			<span>Select commits from </span>
     			<input type="text" class="input-small" name="start" value="00-00-00"/>
     			<span> till </span>
     			<input type="text" class="input-small" name="end" value="<?php date_default_timezone_set ( 'UTC' );echo date('m-d-y');?>"/>
-    		</div>
+    		  </div>
 		</form>
-		<br><br>
-		<div class="examples">
-			<div class="well example lead btn btn-lg" onclick="example('https://github.com/jquery/jquery.git');">
-				<img title="JQuery" src="img/examples/jquery.png">
-				<br>
-				JQuery
-			</div> 
-			<div class="well example lead btn btn-lg"  onclick="example('https://github.com/twbs/bootstrap.git');">
-				<img title="Twitter Bootstrap" src="img/examples/bootstrap.png">
-				<br>
-				Twitter Bootstrap
-			</div> 
-			<div class="well examplelast lead btn btn-lg"  onclick="example('https://github.com/git/git.git');">
-				<img title="Git" src="img/examples/git.png">
-				<br>
-				Git
-			</div>
-		</div>
-		<div class="clear push"></div>
-	</div>
+	  </div> <!-- collapse div for form input -->
+	  <br>
+	  <br>
+	  <div class="col-md-offset-5 col-md-2">
+		<a href="examples.php">
+		  <button type="button" class="btn btn-info">Show me some examples
+		  </button>
+		</a>
+	  </div>
+	</div> <!-- root container close -->
 
 	<!-- Help dialog -->
 	<?php include('helpdialog.php')?>
@@ -81,13 +79,5 @@ if(!isset($_SESSION['init'])){
 	<!-- Footer -->	
 	<?php include('footer.php')?>
 	
-	<script type="text/javascript">
-    	$('.input-daterange').datepicker({
-    		format: "mm-dd-yyyy",
-        	calendarWeeks: true,
-       	 	autoclose: true,
-        	todayHighlight: true
-        });
-	</script>
 </body>
 </html>
