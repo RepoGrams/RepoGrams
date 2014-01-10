@@ -57,7 +57,7 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 			
 			<!-- Date picker -->
 		  	<br>
-    		<div class="input-daterange urlinput" id="datepicker">
+    		<div class="datepicker">
     			<span>Select commits from </span>
     			<input type="text" class="input-small" name="start" value="00-00-00"/>
     			<span> till </span>
