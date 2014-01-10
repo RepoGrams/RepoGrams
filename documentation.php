@@ -91,7 +91,7 @@
 			=> 'Twitter Bootstrap',
       'JQuery'
 			=> 'JQuery',
-      'This website renders chromograms of your git repository.'
+      'This website renders chromograms of your repository.'
 			=> 'Diese Webseite berechnet Chromogramme.',
       'To start just enter your repository URL and click on visualize.'
 			=> 'Zum Starten f&uuml;gt man seine Repository URL ein und klickt auf Visualisieren.',
