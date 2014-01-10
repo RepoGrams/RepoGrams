@@ -8,12 +8,9 @@
 	/**
 	 * Check the formular input and start rendering
 	 */
-	if( !($_SESSION['ajax_called'])){
-		$_SESSION['ajax_called'] = 1;
-		if (checkInput($_SESSION['repourl'])) {
-			error_log("Rendering");
-			renderRepo($_SESSION['repourl']);
-		}
+	if (checkInput($_SESSION['repourl'])) {
+		error_log("Rendering");
+		renderRepo($_SESSION['repourl']);
 	}
 	
 	/**
@@ -66,21 +63,27 @@
 	 */
 	function renderRepo($repourl = null) {
 		try {
-			$repo = RepoFactory::createRepo($repourl,$_SESSION['start'], $_SESSION['end']);
-			error_log("Repo created");
-			$alg = new Algorithm();
-			$_SESSION['image'] = $alg->render($repo->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
-			error_log("Image created");
-			$start = strrpos($repourl, '/');
-			$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
-			unsetAll();
-			$_SESSION['finish'] = true;
-			return null;
+			switch  ($_SESSION['STATE']) {
+				case 0:
+					$_SESSION['repo'] = RepoFactory::createRepo($repourl,$_SESSION['start'], $_SESSION['end']);
+					error_log("Repo created");
+					$_SESSION['STATE']=1;
+					return;
+				case 1:
+					$alg = new Algorithm();
+//					$_SESSION['image'] = $alg->render($_SESSION['repo']->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
+					error_log("Image created");
+					$start = strrpos($repourl, '/');
+					$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
+					unsetAll();
+					$_SESSION['finish'] = true;
+					$_SESSION['state']=0;
+					return;
+			}
 		} catch (Exception $e) {
 			unsetAll();
 			$_SESSION['error'] = true;
 			$_SESSION['error_message'] = $e->getMessage();
-			//header('Location: ../index.php');  
 			$_SESSION['finish'] = false;
 		}
 	}
