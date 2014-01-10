@@ -9,6 +9,8 @@
 	 * Check the formular input and start rendering
 	 */
 	if (checkInput($_SESSION['repourl'])) {
+		if (isset ($_SESSION['repo']))
+			error_log("Repo var set");
 		error_log("Rendering");
 		renderRepo($_SESSION['repourl']);
 	}
@@ -62,6 +64,7 @@
 	 * Session-Variables: image, title, error_message, 
 	 */
 	function renderRepo($repourl = null) {
+		error_log($_SESSION['STATE']);
 		try {
 			switch  ($_SESSION['STATE']) {
 				case 0:
@@ -71,7 +74,7 @@
 					return;
 				case 1:
 					$alg = new Algorithm();
-//					$_SESSION['image'] = $alg->render($_SESSION['repo']->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
+					$_SESSION['image'] = $alg->render($_SESSION['repo']->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
 					error_log("Image created");
 					$start = strrpos($repourl, '/');
 					$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);

@@ -33,9 +33,7 @@ function dump(){
 	$_SESSION['repourl']." ".
 	$_SESSION['finish']." ".
 	$_SESSION['width']." ".
-	$_SESSION['height']." ".
-//	$_SESSION['image']." ".
-	$_SESSION['ajax_called']
+	$_SESSION['height']." "
  );
 
 }
