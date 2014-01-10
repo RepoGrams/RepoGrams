@@ -57,11 +57,11 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 			
 			<!-- Date picker -->
 		  	<br>
-    		<div class="datepicker">
+    		<div class="datepick">
     			<span>Select commits from </span>
-    			<input type="text" class="input-small" name="start" value="00-00-00"/>
+    			<input type="text" class="input-small hasDatepicker" name="start" id="start"/>
     			<span> till </span>
-    			<input type="text" class="input-small" name="end" value="<?php date_default_timezone_set ('UTC');echo date('m-d-y');?>"/>
+    			<input type="text" class="input-small hasDatepicker" name="end" id="end"/>
     		</div>
 		</form>
 	  </div> <!-- collapse div for form input -->
@@ -84,5 +84,23 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 	<!-- Footer -->	
 	<?php include('footer.php')?>
 	
+	<script>
+		$(function() {
+		 	$( "#start" ).datepicker({
+		 	defaultDate: "+1w",
+		 	changeMonth: true,
+		 	numberOfMonths: 1,
+		 	onClose: function( selectedDate ) {
+		 	$( "#end" ).datepicker( "option", "minDate", selectedDate );}});
+		 	$( "#end" ).datepicker({
+		 	defaultDate: "+1w",
+		 	changeMonth: true,
+		 	numberOfMonths: 1,
+		 	onClose: function( selectedDate ) {
+			$( "#start" ).datepicker( "option", "maxDate", selectedDate );}});
+		});
+		document.getElementById("start").value="01/01/1970";
+		document.getElementById("end").value="<?php date_default_timezone_set ('UTC');echo date('m/d/Y');?>";
+	</script>
 </body>
 </html>
