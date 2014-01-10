@@ -26,7 +26,7 @@ if(!isset($_SESSION['init'])){
 	  <!-- Error Handling -->
 	  <?php $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== ''); ?>
 
-		<!--Input form  -->
+	  <!--Input form  -->
 	  <div class="col-xs-12">
 		<form role="form" action="./loading.php" method="POST">
    			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">			
