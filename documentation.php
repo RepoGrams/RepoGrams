@@ -92,7 +92,7 @@
       'What is Repogram?'
 			=> 'Was ist ein Repogram?',
       'The word repogram comes from the words "Repository" and "Chromograms"'
-			=> 'Das Word Repogram kommt von den W&ouml;rtern "Repository" und "Chromograms"',
+			=> 'Das Wort Repogram kommt von den W&ouml;rtern "Repository" und "Chromograms".',
       'So what is a "Repository"?'
 			=> 'Also, was ist ein "Repository"?',
       'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.'
@@ -100,7 +100,7 @@
       'Ok, clear on that. What is a "Chromogram"?'
 			=> 'Ok, klar soweit. Was ist ein "Chromogram"?',
       'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.'
-			=> 'Ein Chromogram ist eine intelligente Visualisierungs-Methode. Es kann große Mengen an Informationen in einem Bild darstellen. Dazu werden häufig Blöcke verwendet.',
+			=> 'Ein Chromogram ist eine intelligente Visualisierungs-Methode. Dadurch k&ouml;nnen große Mengen an Informationen in einem Bild dargestellt werden. Dazu werden häufig Blöcke verwendet.',
       'Read that. So how can I use this site?'
 			=> 'Auch verstanden. Wie benutze ich also diese Seite?',
       'That\'s an easy one.'
@@ -155,11 +155,11 @@
       'Documentation' 
       		=> 'Documentation',
       'What is Repogram?' 
-      		=> 'Quelle est Repogram?',
+      		=> 'C\'est quoi, un Repogram?',
       'The word repogram comes from the words "Repository" and "Chromograms"' 
       		=> 'Le mot repogram vient des mots "Repository" et "Chromograms"',
       'So what is a "Repository"?' 
-      		=> 'Donc, ce quoi, un "Repository"?',
+      		=> 'Donc, c\'est quoi, un "Repository"?',
       'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.' 
       		=> 'Un r&eacute;f&eacute;rentiel est une collection de fichiers de code source utilis&eacute; pour d&eacute;velopper des programmes ou pour g&eacute;rer d\'autres fichiers. Si vous avez d&eacute;j&agrave; utilis&eacute; GitHub, vous aurez s&ucirc;rement un r&eacute;f&eacute;rentiel dite.',
       'Ok, clear on that. What is a "Chromogram"?' 
@@ -199,7 +199,7 @@
 );
  
 function msg($s) {
-  $locale = 'de';
+  $locale = 'fr';
     
   if (isset($GLOBALS["messages"][$locale][$s])) {
     return $GLOBALS["messages"][$locale][$s];
