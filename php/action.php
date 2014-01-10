@@ -3,14 +3,18 @@
 	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
 	require_once("algorithm.php");
 	require_once("functions.php");
+	require_once(__DIR__."/../lib/vcs/git/GitRepo.class.php");
 	dump();
 
 	/**
 	 * Check the formular input and start rendering
 	 */
 	if (checkInput($_SESSION['repourl'])) {
+		if( is_null($_SESSION['repo']))
+			error_log("NULLOBJ");
 		if (isset ($_SESSION['repo']))
-			error_log("Repo var set");
+			error_log("Repo var set to");
+			
 		error_log("Rendering");
 		renderRepo($_SESSION['repourl']);
 	}
@@ -68,14 +72,16 @@
 		try {
 			switch  ($_SESSION['STATE']) {
 				case 0:
-					$_SESSION['repo'] = serialize(RepoFactory::createRepo($repourl,$_SESSION['start'], $_SESSION['end']));
+					$_SESSION['repo'] = serialize(RepoFactory::createRepo($repourl,$_SESSION['start'], $_SESSION['end'])->getAllCommits());
+					error_log(gettype($_SESSION['repo']));
 					error_log("Repo created");
 					$_SESSION['STATE']=1;
 					return;
 				case 1:
 					$alg = new Algorithm();
+					error_log(gettype($_SESSION['repo']));
                                         $ses = unserialize($_SESSION['repo']);
-					$_SESSION['image'] = $alg->render($ses->getAllCommits(), 0,$_SESSION['width'], $_SESSION['height']);
+					$_SESSION['image'] = $alg->render($ses, 0,$_SESSION['width'], $_SESSION['height']);
 					error_log("Image created");
 					$start = strrpos($repourl, '/');
 					$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
