@@ -80,7 +80,7 @@
 				case 1:
 					$alg = new Algorithm();
 					error_log(gettype($_SESSION['repo']));
-                                        $ses = unserialize($_SESSION['repo']);
+                    $ses = unserialize($_SESSION['repo']);
 					$_SESSION['image'] = $alg->render($ses, 0,$_SESSION['width'], $_SESSION['height']);
 					error_log("Image created");
 					$start = strrpos($repourl, '/');

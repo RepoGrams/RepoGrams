@@ -77,7 +77,6 @@ if(isset($_SESSION['error']) && $_SESSION['error']) {
 <!-- Menu -->
 <?php 
 include('menu.php');
-//$_SESSION['loading_info'] = 'Cloning repository into folder.';
 ?>
 
 	<!-- Content -->
@@ -112,12 +111,12 @@ include('menu.php');
 	<!--include the action.php functions -->
 	<script type="text/javascript">
 	$(document).ajaxComplete(
-	function (){
-		$(document).ajaxComplete(function(){
-			document.getElementById("loadtext").html= "<?php print msg($_SESSION['loading_info'])?>";
-		});
-		jQuery.ajax("php/action.php");});
-		jQuery.ajax("php/action.php");
+		function (){
+			$("#loadtext").html("<?php print msg('Rendering image')?>");
+		}
+	);
+	jQuery.ajax("php/action.php");});
+	jQuery.ajax("php/action.php");
 	</script>
 </body>
 </html>
