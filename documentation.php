@@ -2,26 +2,8 @@
 
   $GLOBALS["messages"] = array (
     'en'=> array(
-      'Visualize!' 
-      		=> 'Visualize!',
-      'Help' 
-      		=> 'Help',
-      'Show me some examples' 
-      		=> 'Show me some examples',
-      'Enter repository url' 
-      		=> 'Enter repository url',
-      'Select commits from' 
-      		=> 'Select commits from',
-      'till' 
-      		=> 'till',
-      'Cloning repository into folder.' 
-      		=> 'Cloning repository into folder.',
-      'Abort' 
-      		=> 'Abort',
-      'Error! Fetching repository was not sucessfull (Invalid URL?)' 
-      		=> 'Error! Fetching repository was not sucessfull (Invalid URL?)',
-      'Legend' 
-      		=> 'Legend',
+    	'Visualize!' 
+          => 'Visualize!',
       'Documentation' 
       		=> 'Documentation',
       'What is Repogram?' 
@@ -50,43 +32,13 @@
       		=> 'Twitter Bootstrap',
       'JQuery' 
       		=> 'JQuery',
-      'This website renders chromograms of your repository.' 
-      		=> 'This website renders chromograms of your repository.',
-      'To start just enter your repository URL and click on visualize.' 
-      		=> 'To start just enter your repository URL and click on visualize.',
-      'To see some examples, just choose one from below and then click' 
-      		=> 'To see some examples, just choose one from below and then click',
       'Visualize the provided repository' 
-      		=> 'Visualize the provided repository',
-      'Large repository may need some time to be downloaded and processed.' 
-      		=> 'Large repository may need some time to be downloaded and processed.',
-      'So please be patient and get some coffee while waiting ;)' 
-			=> 'So please be patient and get some coffee while waiting ;)',
-      'Close' 
-      		=> 'Close'
+      		=> 'Visualize the provided repository'
     ),
  
     'de'=> array(
-      'Visualize!'
-			=> 'Visualisieren!',
-      'Help'
-			=> 'Hilfe',
-      'Show me some examples'
-			=> 'Zeige mir ein paar Beispiele',
-      'Enter repository url'
-			=> 'Repository URL einf&uuml;gen',
-      'Select commits from'
-			=> 'Commits einfügen von',
-      'till'
-			=> 'bis',
-      'Cloning repository into folder.'
-			=> 'Klone Repository in Ordner.',
-      'Abort' 
-			=> 'Abbrechen',
-      'Error! Fetching repository was not sucessfull (Invalid URL?)'
-			=> 'Fehler! Runterladen des Repository war nicht erfolgreich (Ung&uuml;ltige URL?)',
-      'Legend'
-			=> 'Legende',
+    	'Visualize!'
+      => 'Visualisieren!',
       'Documentation'
 			=> 'Dokumentation',
       'What is Repogram?'
@@ -115,43 +67,13 @@
 			=> 'Twitter Bootstrap',
       'JQuery'
 			=> 'JQuery',
-      'This website renders chromograms of your repository.'
-			=> 'Diese Webseite berechnet Chromogramme.',
-      'To start just enter your repository URL and click on visualize.'
-			=> 'Zum Starten f&uuml;gt man seine Repository URL ein und klickt auf Visualisieren.',
-      'To see some examples, just choose one from below and then click'
-			=> 'Um einige Beispiele zu sehen klickt man auf ',
       'Visualize the provided repository'
-			=> 'Visualisiere das vorgegebene Repository',
-      'Large repository may need some time to be downloaded and processed.'
-			=> 'Große Repositories ben&ouml;tigen m&ouml;glicherweise ein wenig Zeit zum Downloaden und Bearbeiten.',
-      'So please be patient and get some coffee while waiting ;)'
-			=> 'Wir bitten um ein wenig Geduld ;)',
-      'Close'
-			=> 'Schlie&szlig;en'
+			=> 'Visualisiere das vorgegebene Repository'
     ),
 
     'fr' => array(
-      'Visualize!' 
-      		=> 'Visualise!',
-      'Help' 
-      		=> 'Secours',
-      'Show me some examples' 
-      		=> 'Montrez-moi des exemples.',
-      'Enter repository url' 
-      		=> 'Entre repository url',
-      'Select commits from' 
-      		=> 's&eacute;lectionne de',
-      'till' 
-      		=> '&agrave;',
-      'Cloning repository into folder.' 
-      		=> 'Duplique repository dans un dossier.',
-      'Abort' 
-      		=> 'Abandon',
-      'Error! Fetching repository was not sucessfull (Invalid URL?)' 
-      		=> 'Erreur! Obtention r&eacute;f&eacute;rentiel n\'a pas &eacute;t&eacute; une belle r&eacute;ussite (URL invalide?)',
-      'Legend' 
-      		=> 'L&eacute;gende',
+    	'Visualize!' 
+          => 'Visualise!',
       'Documentation' 
       		=> 'Documentation',
       'What is Repogram?' 
@@ -180,20 +102,8 @@
       		=> 'Twitter Bootstrap',
       'JQuery'
       		=> 'JQuery',
-      'This website renders chromograms of your repository.' 
-      		=> 'Ce site rend chromograms de votre repository.',
-      'To start just enter your repository URL and click on visualize.' 
-      		=> 'Pour commencer, veuillez entrer votre URL du r&eacute;f&eacute;rentiel et cliquez sur Visualise.',
-      'To see some examples, just choose one from below and then click' 
-      		=> 'Pour voir quelques exemples, il suffit de choisir l\'un de ci-dessous puis cliquez sur',
       'Visualize the provided repository'
-      		=> 'Visualisez le repository pr&eacute;vu',
-      'Large repository may need some time to be downloaded and processed.' 
-      		=> 'Grand d&eacute;p&ocirc;t peut avoir besoin de temps &agrave; t&eacute;l&eacute;charger et trait&eacute;es.',
-      'So please be patient and get some coffee while waiting ;)' 
-			=> 'Alors s\'il vous plaît &ecirc;tre patient et prendre un caf&eacute; en attendant;)',
-      'Close' 
-      		=> 'Ferme'
+      		=> 'Visualisez le repository pr&eacute;vu'
       )
 
 );
