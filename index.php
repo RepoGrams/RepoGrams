@@ -71,9 +71,7 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 	  <!-- Examples -->
 	  <div class="row">
 	  <div class="col-md-offset-5 col-md-2">
-	  	<a href="examples.php">
-		  <button type="button" class="btn btn-info">Show me some examples</button>
-		</a>
+		<button type="button" class="btn btn-info" onclick="example();">Show me some examples</button>
 	  </div>
 	  </div>
 	</div> <!-- root container close -->
