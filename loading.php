@@ -112,7 +112,7 @@ include('menu.php');
 	<script type="text/javascript">
 	$(document).ajaxComplete(
 		function (){
-			jQuery.ajax("php/action.php");
+                  console.log("AJAX request completed")
 		}
 	);
 function foo() {
@@ -128,9 +128,9 @@ function foo() {
        returnedJSON = new Object();
        returnedJSON.finished = true;
     }
-  if(true || returnedJSON.finished == true) {
+  if(returnedJSON.finished == true) {
     console.log("changing location...");
-    window.location.href = "/image.php";
+    //window.location.href = "/image.php";
     console.log("changed location...");
   } else {
     $("#loadtext").html("<?php print msg('Rendering image')?>");
