@@ -107,17 +107,38 @@ include('menu.php');
 	<!-- Footer -->	
 	<?php include('footer.php')?>
 
-	<?php $_SESSION['state'] =0 ;?>
+	<?php $_SESSION['STATE'] =0 ;?>
 	<!--include the action.php functions -->
 	<script type="text/javascript">
 	$(document).ajaxComplete(
 		function (){
-			$("#loadtext").html("<?php print msg('Rendering image')?>");
 			jQuery.ajax("php/action.php");
-			document.location.href = "image.php";
 		}
 	);
-	jQuery.ajax("php/action.php");
+function foo() {
+  console.log("foo was called");
+  jQuery.getJSON("php/action.php", function(data){
+    try {
+      returnedJSON = jQuery.parseJSON(data);
+    } catch (e) {
+       console.log(e);
+       console.log(data);
+       console.log(data.finished);
+       console.log("Error occured");
+       returnedJSON = new Object();
+       returnedJSON.finished = true;
+    }
+  if(true || returnedJSON.finished == true) {
+    console.log("changing location...");
+    window.location.href = "/image.php";
+    console.log("changed location...");
+  } else {
+    $("#loadtext").html("<?php print msg('Rendering image')?>");
+    foo();
+  }
+  });
+}
+foo();
 	</script>
 </body>
 </html>

@@ -9,15 +9,16 @@
 	/**
 	 * Check the formular input and start rendering
 	 */
-	if (checkInput($_SESSION['repourl'])) {
-		if( is_null($_SESSION['repo']))
-			error_log("NULLOBJ");
-		if (isset ($_SESSION['repo']))
-			error_log("Repo var set to");
+	//if (checkInput($_SESSION['repourl'])) {
+		//if( is_null($_SESSION['repo']))
+			//error_log("NULLOBJ");
+		//if (isset ($_SESSION['repo']))
+			//error_log("Repo var set to");
 			
-		error_log("Rendering");
-		renderRepo($_SESSION['repourl']);
-	}
+		//error_log("Rendering");
+		//renderRepo($_SESSION['repourl']);
+	//}
+        renderRepo($_SESSION['repourl']);
 	
 	/**
 	 * Callback function to update progress info
@@ -76,6 +77,9 @@
 					error_log(gettype($_SESSION['repo']));
 					error_log("Repo created");
 					$_SESSION['STATE']=1;
+                                        header('Content-Type: application/json');
+                                        $retval = array("finished" => false);
+                                        echo(json_encode($retval));
 					return;
 				case 1:
 					$alg = new Algorithm();
@@ -88,6 +92,9 @@
 					unsetAll();
 					$_SESSION['finish'] = true;
 					$_SESSION['state']=0;
+                                        header('Content-Type: application/json');
+                                        $retval = array("finished" => true);
+                                        echo(json_encode($retval));
 					return;
 			}
 		} catch (Exception $e) {
