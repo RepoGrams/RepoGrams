@@ -84,19 +84,9 @@ include('menu.php');
 function foo() {
   console.log("foo was called");
   jQuery.getJSON("php/action.php", function(data){
-    try {
-      returnedJSON = jQuery.parseJSON(data);
-    } catch (e) {
-       console.log(e);
-       console.log(data);
-       console.log(data.finished);
-       console.log("Error occured");
-       returnedJSON = new Object();
-       returnedJSON.finished = true;
-    }
-  if(returnedJSON.finished == true) {
+  if(data.finished == true) {
     console.log("changing location...");
-    //window.location.href = "/image.php";
+    window.location.href = "/image.php";
     console.log("changed location...");
   } else {
     $("#loadtext").html("<?php print msg('Rendering image')?>");
