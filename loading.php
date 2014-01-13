@@ -1,41 +1,7 @@
 <?php
 session_start();
 require_once("php/functions.php");
-
-$GLOBALS["messages"] = array (
-    'en'=> array(
-    	'Cloning repository into folder.' 
-      		=> 'Cloning repository into folder.',
-      	'Abort' 
-      		=> 'Abort'
-    ),
- 
-    'de'=> array(
-    	'Cloning repository into folder.'
-			=> 'Klone Repository in Ordner.',
-     	'Abort' 
-			=> 'Abbrechen'
-    ),
-
-    'fr' => array(
-      'Cloning repository into folder.' 
-      		=> 'Duplique repository dans un dossier.',
-      'Abort' 
-      		=> 'Abandon'
-      )
-
-);
- 
-function msg($s) {
-  $locale = 'en';
-    
-  if (isset($GLOBALS["messages"][$locale][$s])) {
-    return $GLOBALS["messages"][$locale][$s];
-  } else {
-    error_log("l10n error: locale: "."$locale, message:'$s'");
-  }
-}
-
+require_once("php/language.php");
 
 dump();
 if (isset($_POST['repourl'])) 
