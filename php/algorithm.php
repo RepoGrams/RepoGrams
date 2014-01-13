@@ -65,7 +65,7 @@
 				$w = ($x+($diff*$factor));
  		 		if ($w > $width)
  		 		while ($w > $width){
- 		 			$block = array(($width-$x), $hohe, $color);
+ 		 			$block = array(($width-$x), $hohe, $color, $str);
  		 			$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
  		 			$id++;
 					$overlap = $w-$width;
@@ -74,12 +74,12 @@
 					$w = $overlap;
 					$z += $hohe;
 					if ($w > $width){
-						$block = array($width, $hohe, $color);
+						$block = array($width, $hohe, $color, $str);
 						$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
 						$id++;
 					}
 					else{
-						$block = array($overlap, $hohe, $color);
+						$block = array($overlap, $hohe, $color, $str);
 						$this->writeBlock($datei, $color, $x, $y, $overlap, $hohe, $id);
 						$id++;
 					}
@@ -87,7 +87,7 @@
 
 				}
 				else{
-					$block = array(($diff*$factor), $hohe, $color);
+					$block = array(($diff*$factor), $hohe, $color, $str);
 					$this->writeBlock($datei, $color, $x, $y, ($diff*$factor), $hohe, $id);
 					$id++;
 					$x += $diff*$factor;
