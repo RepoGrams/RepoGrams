@@ -64,6 +64,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		$z = $hohe;	#rechts unten -> oben HÖHE
 
 		for ($i = 0; $i < $count; $i++){
+			$str = $commitArray[$i][0];
 			if ($modus_length == 1){
 				if ($commitArray[$i][2] <= 0) {
 					break;
@@ -80,7 +81,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			$w = $x + $length;
 			if ($w > $width){
 	 			$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
-	 			$returnArray[] = array(($width-$x), $hohe, $color);
+	 			$returnArray[] = array(($width-$x), $hohe, $color, $str);
 	 			$id++;
 	 			$length = $length-$width;
 	 			$x = 0;
@@ -88,15 +89,15 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$z += $hohe;
 				while($length > $width){
 					$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
-	 				$returnArray[] = array($width, $hohe, $color);
+	 				$returnArray[] = array($width, $hohe, $color, $str);
 					$id++;
 					$x = 0;
 					$y += $hohe;
 					$z += $hohe;
 					$length = $length-$width;
 				}
-				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
-	 			$returnArray[] = array($length, $hohe, $color);
+				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id, $str);
+	 			$returnArray[] = array($length, $hohe, $color, $str);
 				$id++;
 				$x += $length;
 			}
