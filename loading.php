@@ -81,7 +81,7 @@ include('menu.php');
                   console.log("AJAX request completed")
 		}
 	);
-function foo() {
+function requestImage() {
   console.log("foo was called");
   jQuery.getJSON("php/action.php", function(data){
   if(data.finished == true) {
@@ -90,11 +90,11 @@ function foo() {
     console.log("changed location...");
   } else {
     $("#loadtext").html("<?php print msg('Rendering image')?>");
-    foo();
+    requestImage();
   }
   });
 }
-foo();
+requestImage();
 	</script>
 </body>
 </html>
