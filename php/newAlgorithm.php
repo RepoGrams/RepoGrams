@@ -113,7 +113,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					$y += $hohe;
 					$length = $length-$width;
 				}
-				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id, $str);
+				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
 	 			$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
 				$id++;
 				$x += $length;
@@ -137,9 +137,50 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$legende[]= array("Kategory fix", array(0,0,255));
 				break;
 			case 3:
+				$hour = 0;
+				$go = 0;
+				$minute = 0;
+				while($go < 24){
+					$hour = $go;
+					if ($hour < 12){
+						$l = 0.35;
+					}
+					else{
+						$l = 0.65;
+						$hour = $hour/2;
+					}
 
-				break;
+					$h = $hour * 0.08;
+					$s = 0.39 + 0.01 * $minute;
+
+					$convArray = $conv->ColorHSLToRGB($h,$s,$l);
+	    			$r = $convArray['r'];
+		   			$g = $convArray['g'];
+		   			$b = $convArray['b'];
+		   			$color = array($r,$g,$b);
+		    		$color = ImageColorAllocate($img, $r, $g, $b);
+		    		$legende[]=("Stunde: ".$go, $color)
+		    		$go += 2;
+				}
+ 				break;
 			case 4:
+				$day  = 1;
+				$month = 1;
+				$year = 2014;
+
+				$s = 0.49 + $month * 0.04;
+				$l = ($year - 1990) * 0.04;
+
+				while($day < 31){
+					$convArray = $conv->ColorHSLToRGB($h,$s,$l);
+		    		$r = $convArray['r'];
+			   		$g = $convArray['g'];
+			   		$b = $convArray['b'];
+			   		$color = array($r,$g,$b);
+			    	$color = ImageColorAllocate($img, $r, $g, $b);
+			    	$legende = array("Day of Month: ".$day, $color);
+			    	$day += 3;
+				}
 				break;
 			default:
 				echo "möp";
