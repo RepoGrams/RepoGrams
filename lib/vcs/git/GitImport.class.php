@@ -27,7 +27,7 @@ class gitImport extends RepoImporter {
 			mkdir($tmp);
 			if (!file_exists($tmp)) throw new Exception("Temporary folder could not be created!");
 			chdir($tmp);
-			$command = 'git clone --mirror"'.$repo.'"';
+			$command = 'git clone --mirror "'.$repo.'"';
 		} else {
 			chdir($datadir);
                         $command = 'git fetch --all'; 
@@ -42,6 +42,7 @@ class gitImport extends RepoImporter {
                 $joint = getcwd()."/".$gitdir."/";
                 error_log("joint: ".$joint);
                 if (!file_exists($joint)) throw new Exception ('Fetching git-Repository was not sucessfull (Invalid URL?)');
+                error_log("joint exists");
 		
 		if (is_null($datadir)) $datadir = $joint; // set $datadir for cache
 		
