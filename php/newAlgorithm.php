@@ -59,12 +59,11 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		$y = 0; 	#links oben -> oben
 		$hohe = 16;
 
-		returnArray[] = array();
+		$returnArray[] = array();
+		$legende = array();
 
 		while($width%$hohe != 0)
-		$hohe--; 	#rechts unten -> links BREITE
-
-		$z = $hohe;	#rechts unten -> oben HÖHE
+		$hohe--; 
 
 		for ($i = 0; $i < $count; $i++){
 			$str = $commitArray[$i][0];
@@ -80,25 +79,38 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					break;
 				}
 			}
-			$block = this->commitToBlock($commitArray[$i], $modus_length, $modus_color, $hohe, $all_diff, $add_diff, $del_diff, $pixel, $hohe); //length, heigth, color
+			$block = $this->commitToBlock($commitArray[$i], $modus_length, $modus_color, $hohe, $all_diff, $add_diff, $del_diff, $pixel, $hohe); //length, heigth, color
 			$length = $block[0];
 			$color = $block[2];
 			$w = $x + $length;
+			$partlegende = $block[3];
+			switch($modus_color){
+				case 1:
+				case 3:
+				case 4:
+					break;
+				case 0:
+				case 2:
+					$legende[$partlegende] = $color;
+					break;
+				default:
+					echo "möp";
+			}
+
+
 			if ($w > $width){
 	 			$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
 	 			$returnArray[] = array(($width-$x), $hohe, $color, $str, $time, $author);
 	 			$id++;
-	 			$length = $length-$width;
+	 			$length = $length-($width-$x);
 	 			$x = 0;
 				$y += $hohe;
-				$z += $hohe;
 				while($length > $width){
 					$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
 	 				$returnArray[] = array($width, $hohe, $color, $str, $time, $author);
 					$id++;
 					$x = 0;
 					$y += $hohe;
-					$z += $hohe;
 					$length = $length-$width;
 				}
 				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id, $str);
@@ -114,6 +126,26 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			}
 		}
 
+		switch($modus_color){
+			case 0:
+			case 2:
+			#array_keys -> alle keys raussuchen und auf 1,2 etc umschreiben, autoren auf 12 kuerzen
+				break;
+			case 1:
+				$legende[]= array("Kategory add", array(255,0,0));
+				$legende[]= array("Kategory delete", array(0,255,0));
+				$legende[]= array("Kategory fix", array(0,0,255));
+				break;
+			case 3:
+
+				break;
+			case 4:
+				break;
+			default:
+				echo "möp";
+
+		}
+		$returnArray[0] = $legende;
 		callback('Initialize image...');
 		fwrite($datei, utf8_encode("</g> </g></svg> \n"));
 		fclose($datei);
@@ -149,7 +181,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				break;
 		}
 
-		return array($length, $hohe, $color);
+		return array($length, $hohe, $color[0], $color[1]);
 	}
 
 	private function commitToColor($modus, $commitArray){
@@ -170,12 +202,12 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 	    		if (strlen($msg) == 0)	
 	    			return array(211,211,211);
 		   		$first = substr($msg, 0, 1);
+		   		$second = substr($msg, 1, 1);
+		   		$third = substr($msg, 2, 1);
 				$h = $this->letterValue($first, 0);
 		   		if (strlen($msg) > 1){
-		   			$second = substr($msg, 1, 1);
 		   			$s = 0.3 + 0.6 * $this->letterValue ($second, 1);
 		   			if (strlen($msg) > 2) {
-		   				$third = substr($msg, 2, 1);
 		   				$l = 0.4 + 0.5 * $this->letterValue ($third, 2);
 		   			}
 		   			else {
@@ -192,7 +224,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   		$b = $convArray['b'];
 		   		$color = array($r,$g,$b);
 		    	$color = ImageColorAllocate($img, $r, $g, $b);
-		    	return $color;
+		    	$txt = $first.$second.$third;
+		    	return array($color, $txt);
 
 		    ###################################################
 			#### Commit Message encoded in logical content ####
@@ -254,7 +287,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$sec3 = $p * $sec3;
 					
 				$color = $sec1.",".$sec2.",".$sec3;
-		   		return $color;
+		   		return array($color, "");
 				break;
 
 		    ###################################################
@@ -288,7 +321,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   		$b = $convArray['b'];
 		   		$color = array($r,$g,$b);
 		    	$color = ImageColorAllocate($img, $r, $g, $b);
-		    	return $color;
+		    	return array($color,$name);
 				break;
 
 			###################################################
@@ -317,7 +350,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   		$b = $convArray['b'];
 		   		$color = array($r,$g,$b);
 		    	$color = ImageColorAllocate($img, $r, $g, $b);
-		    	return $color;
+		    	return array($color,"");
 				break;
 
 			###################################################
@@ -333,6 +366,14 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$h = $day * 0.03;
 				$s = 0.49 + $month * 0.04;
 				$l = ($year - 1990) * 0.04;
+
+				$convArray = $conv->ColorHSLToRGB($h,$s,$l);
+	    		$r = $convArray['r'];
+		   		$g = $convArray['g'];
+		   		$b = $convArray['b'];
+		   		$color = array($r,$g,$b);
+		    	$color = ImageColorAllocate($img, $r, $g, $b);
+		    	return array($color,"");
 				break;
 
 			default:
