@@ -198,7 +198,8 @@ div[class="tooltip-inner"] {
 }
 
 .customBlock{
-	color:#000000;
+	background-color:#ffffff;
 	width: 5px;
 	height: 5px;
+	float:left;
 }
