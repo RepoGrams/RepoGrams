@@ -162,7 +162,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   			$g = $convArray['g'];
 		   			$b = $convArray['b'];
 		   			$color = array($r,$g,$b);
-		    		$color = ImageColorAllocate($img, $r, $g, $b);
 		    		$legende[]=array("Stunde: ".$go, $color);
 		    		$go += 2;
 				}
@@ -181,7 +180,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			   		$g = $convArray['g'];
 			   		$b = $convArray['b'];
 			   		$color = array($r,$g,$b);
-			    	$color = ImageColorAllocate($img, $r, $g, $b);
 			    	$legende = array("Day of Month: ".$day, $color);
 			    	$day += 3;
 				}
@@ -208,6 +206,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$factor = ($pixel/$hohe) / $all_diff;
 				$diff = $commitArray[1];
 				$length = ($factor * $diff);
+				if ($length < 1) $length = 1;
 				break;
 			
 			case 1:			#add
@@ -215,6 +214,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$factor = ($pixel/$hohe) / $add_diff;
 				$diff = $commitArray[2];
 				$length = ($factor * $diff);
+				if ($length < 1) $length = 1;
 				break;
 
 			case 2:			#del
@@ -222,6 +222,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$factor = ($pixel/$hohe) / $del_diff;
 				$diff = $commitArray[3];
 				$length = ($factor * $diff);
+				if ($length < 1) $length = 1;
 				break;
 
 			default:
@@ -271,7 +272,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   		$g = $convArray['g'];
 		   		$b = $convArray['b'];
 		   		$color = array($r,$g,$b);
-		    	$color = ImageColorAllocate($img, $r, $g, $b);
 		    	$txt = $first.$second.$third;
 		    	return array($color, $txt);
 
@@ -368,7 +368,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   		$g = $convArray['g'];
 		   		$b = $convArray['b'];
 		   		$color = array($r,$g,$b);
-		    	$color = ImageColorAllocate($img, $r, $g, $b);
 		    	return array($color,$name);
 				break;
 
@@ -397,7 +396,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   		$g = $convArray['g'];
 		   		$b = $convArray['b'];
 		   		$color = array($r,$g,$b);
-		    	$color = ImageColorAllocate($img, $r, $g, $b);
 		    	return array($color,"");
 				break;
 
@@ -420,7 +418,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   		$g = $convArray['g'];
 		   		$b = $convArray['b'];
 		   		$color = array($r,$g,$b);
-		    	$color = ImageColorAllocate($img, $r, $g, $b);
 		    	return array($color,"");
 				break;
 
