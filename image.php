@@ -56,7 +56,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 			<!-- Repo-Image -->
 			<script type="text/javascript" src="js/jquery.overscroll.min.js"></script>
 			<div class="custom" style="width:<?php echo $_SESSION['width']+1;?>; boder-style:solid; display:inline-block;">
-				<ul style="display:inline-block;">
+				<ul style="display:inline-block; list-style-type:none !important;">
 					<?php
 						require_once('php/functions.php');
 						renderImage();
@@ -69,21 +69,9 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						<span class="glyphicon glyphicon-download"></span> Download image <span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
-    					<li><a href="<?php echo 'visualization-'.session_id().'.svg'; ?>">as .svg</a></li>
-   						<li><a href="<?php $image = new Imagick();
-										   $image->readImageBlob(file_get_contents('visualization-'.session_id().'.svg'));
-										   $image->setImageFormat("png24");
- 										   $image->resizeImage($_SESSION["width"]*2, $_SESSION["height"]*2, imagick::FILTER_LANCZOS, 1); 
-										   $image->writeImage('visualization-'.session_id().'.png');
-										   echo 'visualization-'.session_id().'.png'; ?>">
-									as .png</a></li>
-   						<li><a href="<?php $image = new Imagick();
-										   $image->readImageBlob(file_get_contents('visualization-'.session_id().'.svg'));
-										   $image->setImageFormat("jpg");
- 										   $image->resizeImage($_SESSION["width"]*2, $_SESSION["height"]*2, imagick::FILTER_LANCZOS, 1); 
-										   $image->writeImage('visualization-'.session_id().'.jpg');
-										   echo 'visualization-'.session_id().'.png'; ?>">
-									as .jpg</a></li>
+    					<li><a href="<?php echo 'download.php?file=visualization-'.session_id().'.svg'?>">as .svg</a></li>
+   						<li><a href="<?php echo 'download.php?file=visualization-'.session_id().'.png&mode=png'?>">as .png</a></li>
+   						<li><a href="<?php echo 'download.php?file=visualization-'.session_id().'.jpg&mode=jpg'?>">as .jpg</a></li>
   					</ul>
 				</div>
 			</div>
