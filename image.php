@@ -52,5 +52,5 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 </html>
 <?php
 require_once('php/functions.php');
-//	initSession(true);
+	initSession(false);
 ?>

@@ -26,8 +26,7 @@ if (isset($debug)){
 }
 
 function dump(){
-	error_log($_SESSION['loading_info']. " ".
-	$_SESSION['progress']." ".
+	error_log($_SESSION['progress']." ".
 	$_SESSION['error_message']." ".
 	$_SESSION['title']." ".
 	$_SESSION['repourl']." ".
@@ -49,8 +48,7 @@ function renderImage(){
 function renderBlock($commit, $index){
 	$color = buildColor($commit[2]);
 	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.$commit[0].'px; height:16px;"';
-	error_log($style);
-	$effect = 'title='.$commit[5].':'.$commit[4].':'.$commit[3]; 
+	$effect = 'title="'.$commit[3].'"'; 
 	$head = '<li class="customBlock" id="'.$index.'" '.$style.' '.$effect.'>';
 	$end = '</li>';
 	echo ($head);
