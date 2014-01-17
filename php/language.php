@@ -9,7 +9,9 @@
 		      	'till' => 'till',
 		      	'Cloning repository into folder.' => 'Cloning repository into folder.',
 		      	'Abort' => 'Abort',
-		      	'Error! Fetching repository was not sucessfull (Invalid URL?)' => 'Error! Fetching repository was not sucessfull (Invalid URL?)',
+		      	'Error!'
+					=> 'Error!',
+				'Fetching repository was not sucessfull (Invalid URL?)'  => 'Fetching repository was not sucessfull (Invalid URL?)',
 		      	'Legend' => 'Legend',
 		      	'Documentation' => 'Documentation',
 		      	'What is Repogram?' => 'What is Repogram?',
@@ -31,7 +33,10 @@
 		      	'Visualize the provided repository' => 'Visualize the provided repository',
 		      	'Large repository may need some time to be downloaded and processed.' => 'Large repository may need some time to be downloaded and processed.',
 		      	'So please be patient and get some coffee while waiting ;)' => 'So please be patient and get some coffee while waiting ;)',
-		      	'Close' => 'Close'																																																			
+		      	'Close' => 'Close',
+		      	'Temporary folder could not be created!' => 'Temporary folder could not be created!',
+		      	'Invalid URL!' => 'Invalid URL!',
+		      	'given cache-directory does not exist' => 'Given cache-directory does not exist'
 			),
 			'de'=> array(
 				'Visualize!'
@@ -50,8 +55,10 @@
 			=> 'Klone Repository in Ordner.',
       'Abort' 
 			=> 'Abbrechen',
-      'Error! Fetching repository was not sucessfull (Invalid URL?)'
-			=> 'Fehler! Runterladen des Repository war nicht erfolgreich (Ung&uuml;ltige URL?)',
+      'Error!'
+			=> 'Fehler!', 
+		'Fetching repository was not sucessfull (Invalid URL?)' 
+			=> 'Runterladen des Repository war nicht erfolgreich (Ung&uuml;ltige URL?)',
       'Legend'
 			=> 'Legende',
       'Documentation'
@@ -75,7 +82,7 @@
       'You just need to go to the frontpage, enter the URL of your repository and click on'
 			=> 'Auf der Hauptseite kann man eine URL einf&uumlgen und klickt;',
       'After a short waiting time, you will see your rendered chromogram.'
-			=> 'Nach einer kurzen Bearbeitungszeit, wird das berechnete Chromogram erscheinen.',
+			=> 'Nach einer kurzen Bearbeitungszeit, erscheint das berechnete Chromogram.',
       'Do you have some examples?'
 			=> 'Gibt es Beispiele?',
       'Twitter Bootstrap'
@@ -95,7 +102,13 @@
       'So please be patient and get some coffee while waiting ;)'
 			=> 'Wir bitten um ein wenig Geduld ;)',
       'Close'
-			=> 'Schlie&szlig;en'
+			=> 'Schlie&szlig;en',
+	'Temporary folder could not be created!' 
+		=> 'Tempor&auml;rer Ordner konnte nicht erstellt werden.',
+	'Invalid URL!' 
+		=> 'Ung&uuml;ltige URL!',
+	'given cache-directory does not exist' 
+		=> 'Cache existiert nicht.'
 			),
 	'fr' => array(
 				//index.php
@@ -115,8 +128,10 @@
 			=> 'Duplique repository dans un dossier.',
 		'Abort' 
 			=> 'Abandon',
-		'Error! Fetching repository was not sucessfull (Invalid URL?)' 
-			=> 'Erreur! Obtention repository n\'a pas &eacute;t&eacute; une belle r&eacute;ussite (URL invalide?)',
+		'Error!'
+			=> 'Erreur!',
+		'Fetching repository was not sucessfull (Invalid URL?)' 
+			=> 'Obtention repository n\'a pas &eacute;t&eacute; une belle r&eacute;ussite (URL invalide?)',
 		'Legend' 
 			=> 'L&eacute;gende',
 		'Documentation' 
@@ -160,7 +175,13 @@
 		'So please be patient and get some coffee while waiting ;)' 
 			=> 'Alors s\'il vous plaît &ecirc;tre patient et prendre un caf&eacute; en attendant;)',
 		'Close' 
-			 => 'Ferme'
+			 => 'Ferme',
+		'Temporary folder could not be created!' 
+			=> 'Dossier temporaire ne peut &ecirc;tre cr&eacute&eacute;;!',
+		'Invalid URL!' 
+			=> 'URL invalide!',
+		'given cache-directory does not exist' 
+			=> 'n\'existe pas de cache-r&eacute;pertoire donn&eacute;'
 		)
 	);
 	
