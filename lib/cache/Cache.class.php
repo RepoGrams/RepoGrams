@@ -16,7 +16,7 @@ class Cache {
           $this->cache_size = $size;
           $this->fill_size = 0;
 	  error_log("Hi, Constructor of Cache speaking...");
-	  if (isset($_SESSION['repoURL2frequency']) && (isset($_SESSION['repoURL2dataFolder'])) ){
+          if (isset($_SESSION['repoURL2frequency']) && (isset($_SESSION['repoURL2dataFolder'])) ){
 		$this->repoURL2frequency = unserialize($_SESSION['repoURL2frequency']);
 		$this->repoURL2dataFolder =  unserialize($_SESSION['repoURL2dataFolder']);
 	  } else {
@@ -30,7 +30,7 @@ class Cache {
         	$_SESSION['repoURL2frequency'] = serialize($this->repoURL2frequency);
 		$_SESSION['repoURL2dataFolder'] = serialize($this->repoURL2dataFolder);
 
-		// Store the serialized value of $repo2frequency
+		// Store the serialized value of $repoURL2frequency
         }
 
         /*
@@ -64,7 +64,7 @@ class Cache {
             } else {
               // no free space in the array anymore
               // decrement frequency of all elements in cache
-              foreach($this->repo2frequency as $key => &$value) {
+              foreach($this->repoURL2frequency as $key => &$value) {
                 $value--;
               }
               // get the key(s) with the minimal value
