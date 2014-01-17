@@ -1,5 +1,9 @@
-<?php session_start(); 
-require_once("php/language.php");
+<?php 
+	session_start();  
+	require_once("php/language.php"); 
+	if (!isset($_COOKIE["language"])) {
+		setcookie("language", "en", time()+3600000, "/");
+	}
 ?>
 <div>
 	<div style="float:left; margin-left: 20px; margin-top:20px;">
