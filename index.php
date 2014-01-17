@@ -1,5 +1,6 @@
 <?php 
 session_start();
+require_once("php/language.php");
 require_once("php/functions.php");
 if(!isset($_SESSION['init'])){
 	initSession(true);
@@ -34,10 +35,10 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
    				<input class="form-control" id="repourl" name="repourl" type="text" required="required"  placeholder="Enter repository url">
     			<span class="input-group-btn">
        				<button class="btn btn-default" type="submit" title="Visualize the provided repository">
-       					<span class="glyphicon glyphicon-indent-left"></span>Visualize!
+       					<span class="glyphicon glyphicon-indent-left"></span><?php print msg('Visualize!'); ?>
 					</button>
 					<button class="btn btn-default btn-default" data-toggle="modal" data-target="#help" title="Quick Help" type="submit">
-						<span class="glyphicon glyphicon-hand-left "></span>Help
+						<span class="glyphicon glyphicon-hand-left "></span><?php print msg('Help'); ?>
 					</button>
      			</span>
 			</div>
@@ -58,9 +59,9 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 			<!-- Date picker -->
 		  	<br>
     		<div class="datepick">
-    			<span>Select commits from </span>
+    			<span><?php print msg('Select commits from'); ?> </span>
     			<input type="text" class="input-small hasDatepicker" name="start" id="start"/>
-    			<span> till </span>
+    			<span> <?php print msg('till'); ?> </span>
     			<input type="text" class="input-small hasDatepicker" name="end" id="end"/>
     		</div>
 		</form>
@@ -71,7 +72,7 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 	  <!-- Examples -->
 	  <div class="row">
 	  <div class="col-md-offset-5 col-md-2">
-		<button type="button" class="btn btn-info" onclick="example();">Show me some examples</button>
+		<button type="button" class="btn btn-info" onclick="example();"><?php print msg('Show me some examples'); ?></button>
 	  </div>
 	  </div>
 	</div> <!-- root container close -->
