@@ -65,6 +65,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		while($width%$hohe != 0)
 		$hohe--; 
 
+		$id = 0;
 		for ($i = 0; $i < $count; $i++){
 			$str = $commitArray[$i][0];
 			$time = $commitArray[$i][5];
