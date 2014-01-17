@@ -76,11 +76,6 @@ include('menu.php');
 	<?php $_SESSION['STATE'] =0 ;?>
 	<!--include the action.php functions -->
 	<script type="text/javascript">
-	$(document).ajaxComplete(
-		function (){
-                  console.log("AJAX request completed")
-		}
-	);
 function requestImage() {
   console.log("foo was called");
   jQuery.getJSON("php/action.php", function(data){
