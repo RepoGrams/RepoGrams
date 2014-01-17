@@ -16,6 +16,8 @@ echo nl2br( "\n\t\t Successor:");
 print_r($first->Successor());
 echo nl2br( "\n\t\t CommitMessage:");
 print_r($first->CommitMessage());
+echo nl2br( "\n\t\t CommitAuthor:");
+print_r($first->CommitAuthor());
 echo nl2br( "\n\t\t CommitTime:");
 print_r($first->CommitTime());
 echo nl2br( "\n\t\t NumChangedLines:");
