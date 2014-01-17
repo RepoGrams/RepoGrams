@@ -50,9 +50,9 @@ function renderImage(){
 
 function renderBlock($commit){
 	$color = buildColor($commit[2]);
-	$style = "style=\"color:#".$color.",";
-	$style += "width:".$commit[0]."px";
-	$style += "height:".$commit[1]."px";
+	$style = "style=\"color:#".$color.";";
+	$style += "width:".$commit[0]."px;";
+	$style += "height:".$commit[1]."px;";
 	$style += "\"";
 	$effect = ""; 
 	$head = "<div class=\"customBlock\" ".$style." ".$effect.">";
