@@ -101,7 +101,7 @@
 		} catch (Exception $e) {
 			unsetAll();
 			$_SESSION['error'] = true;
-			$_SESSION['error_message'] = msg($e->getMessage());
+			$_SESSION['error_message'] = $e->getMessage();
 			$_SESSION['finish'] = false;
 		}
 	}

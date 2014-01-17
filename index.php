@@ -49,7 +49,7 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 					echo '<br>
 		                  <div class="alert-dismissable errormessage">
        				  	  	<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true"></button>
-       						<span class="help-block"><strong>&nbsp;&nbsp;'.msg('Error!').'</strong> '.$_SESSION['error_message'].'</span>
+       						<span class="help-block"><strong>&nbsp;&nbsp;'.msg('Error!').'</strong> '.msg($_SESSION['error_message']).'</span>
       				  	  </div>';
 					unset($_SESSION['error_message']);
 					initSession(true);
