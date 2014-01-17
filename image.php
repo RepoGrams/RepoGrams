@@ -17,7 +17,26 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>
 		<br>
     	<div class="hero-unit">
-    		<script type="text/javascript" src="js/jquery.overscroll.min.js"></script>
+    		<div>
+    			<!-- Filtereinstellungen -->
+    			<form class="form-inline" role="form"> 
+    				<label for="filter1">NAME</label>
+    				<select id="filter1" name="filter1" class="form-control">
+  						<option>OPTION</option>
+					</select>
+					<label for="filter2">NAME</label>
+    				<select id="filter2" name="filter2" class="form-control">
+  						<option>OPTION</option>
+					</select>
+					<label for="filter3">NAME</label>
+    				<select id="filter3" name="filter3" class="form-control">
+  						<option>OPTION</option>
+					</select>
+    			</form>
+    		</div>
+    		
+    		<!-- Repo-Visualization -->
+    		<!-- Legend -->
     		<div class="color-legend">
 				<div class="legend-title"><?php print msg('Legend'); ?></div>
 					<div class="legend-scale">
@@ -32,17 +51,18 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						</ul>
 					</div>
 			</div>
+			<!-- Repo-Image -->
+			<script type="text/javascript" src="js/jquery.overscroll.min.js"></script>
 			<div class="container" style="width:<?php echo $_SESSION['width']+1;?>; boder-style:solid;">
 				<ul>
-			<?php
-			require_once('php/functions.php');
-			renderImage();
-?>
+					<?php
+						require_once('php/functions.php');
+						renderImage();
+					?>
 				</ul>
 			</div>
-			<div class="clear"></div>
+			<div id="push" class="clear"></div>
 			<br><br>
-    		<div id="push"></div>
 		</div>
 	</div>
 	
