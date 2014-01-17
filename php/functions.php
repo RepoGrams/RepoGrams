@@ -37,18 +37,17 @@ function dump(){
 }
 
 function renderImage(){
-	$array = $_SESSION['image'];
-	$width = 0;
-	foreach ($array as $index => $commit){
-		$width += $commit[0];
-		renderBlock($commit, $index);
+	for ($i = 1; $i < count($_SESSION['image']); $i++){
+		renderBlock($_SESSION['image'][$i], $i);
 	}
 }
 
 function renderBlock($commit, $index){
-	$color = buildColor($commit[2]);
+	$color = buildColor($commit[2]);$_SESSION['image'];
+	error_log($commit[4]);
+	error_log($commit[5]);
 	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.$commit[0].'px; height:16px;"';
-	$effect = 'title="'.$commit[3].'"'; 
+	$effect = 'title="'.$commit[3].' by '.$commit[5]. ' on '. $commit[4].'"'; 
 	$head = '<li class="customBlock" id="'.$index.'" '.$style.' '.$effect.'>';
 	$end = '</li>';
 	echo ($head);
@@ -61,6 +60,5 @@ function buildColor($color){
 	$ret = $ret || $color[1];
 	$ret << 4;
 	$ret = $ret || $color[2];
-
 }
 ?>
