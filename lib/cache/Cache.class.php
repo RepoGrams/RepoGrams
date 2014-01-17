@@ -16,7 +16,7 @@ class Cache {
           $this->cache_size = $size;
           $this->fill_size = 0;
 	  error_log("Hi, Constructor of Cache speaking...");
-	  if (isset($_SESSION['repo2frequency'])){
+          if (isset($_SESSION['repoURL2frequency']) && (isset($_SESSION['repoURL2dataFolder'])) ){
 		$this->repoURL2frequency = unserialize($_SESSION['repoURL2frequency']);
 		$this->repoURL2dataFolder =  unserialize($_SESSION['repoURL2dataFolder']);
 	  } else {
@@ -30,7 +30,7 @@ class Cache {
         	$_SESSION['repoURL2frequency'] = serialize($this->repoURL2frequency);
 		$_SESSION['repoURL2dataFolder'] = serialize($this->repoURL2dataFolder);
 
-		// Store the serialized value of $repo2frequency
+		// Store the serialized value of $repoURL2frequency
         }
 
         /*
@@ -44,23 +44,27 @@ class Cache {
         public function get($repoURL, $start, $end) {
           if (array_key_exists($repoURL, $this->repoURL2frequency)) {
             // the element is in the cache, return it
-            $this->repoURL2frequency[$repoURL] = $this->repoURL2frequency[$repoURL] + 1;
+            error_log("key exists!");
+	    $this->repoURL2frequency[$repoURL] = $this->repoURL2frequency[$repoURL] + 1;
             $datadir = $this->repoURL2dataFolder[$repoURL];
-            return new GitRepo($repoURL, $start, $end, $datadir);
+            error_log("Cache says datadir is: ".$datadir);
+	    return new GitRepo($repoURL, $start, $end, $datadir);
           } else {
+	    error_log("key doesnt exist");
             // the element is not in the cache so let's construct it
             $datadir = NULL;
             $repo = new GitRepo($repoURL, $start, $end, $datadir);
-            // update the cache
+            error_log('I got '.$datadir);
+	    // update the cache
             if ($this->fill_size < $this->cache_size) {
               // we have still free space in the cache
-              $this->repoURL2frequency[$url] = 1;
-              $this->repoURL2dataFolder[$url] = $datadir;
+              $this->repoURL2frequency[$repoURL] = 1;
+              $this->repoURL2dataFolder[$repoURL] = $datadir;
               $this->fill_size++;
             } else {
               // no free space in the array anymore
               // decrement frequency of all elements in cache
-              foreach($this->repo2frequency as $key => &$value) {
+              foreach($this->repoURL2frequency as $key => &$value) {
                 $value--;
               }
               // get the key(s) with the minimal value
@@ -75,8 +79,8 @@ class Cache {
                 unset($this->repoURL2dataFolder[$minimalKey]);
 
                 // add the new 
-                $this->repoURL2frequency[$url] = 1;
-                $this->repoURL2dataFolder[$url] = $datadir;
+                $this->repoURL2frequency[$repoURL] = 1;
+                $this->repoURL2dataFolder[$repoURL] = $datadir;
               }
             }
             return $repo;
