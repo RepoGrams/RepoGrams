@@ -4,7 +4,8 @@
 	class algorithm {
 
 	public function render($commitObjectArray, $modus_length = 0, $modus_color = 0, $width, $height){
-		$commitArray = $this->preprocess($commitObjectArray);
+		$commitA = $this->preprocess($commitObjectArray);
+		$commitArray = array_reverse($commitA);
 		$count = count($commitArray);
 
 		callback('Start rendering...');
