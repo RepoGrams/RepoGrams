@@ -200,7 +200,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 	private function commitToBlock($commitArray, $modus_length, $modus_color, $all_diff, $add_diff, $del_diff, $pixel, $hohe){
 
-		$color = $this->commitToColor($modus_color, $commitArray[i]);
+		$color = $this->commitToColor($modus_color, $commitArray);
 
 		switch ($modus_length) {
 			case 0:			#all
