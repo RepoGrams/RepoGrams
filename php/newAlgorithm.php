@@ -65,6 +65,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 		for ($i = 0; $i < $count; $i++){
 			$str = $commitArray[$i][0];
+			$time = $commitArray[$i][5];
+			$author = $commitArray[$i][4];
 			if ($modus_length == 1){
 				if ($commitArray[$i][2] <= 0) {
 					break;
@@ -80,7 +82,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			$color = $block[2];
 			$w = $x + $length;
 			if ($w > $width){
-	 			$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
+	 			$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id, $time, $author);
 	 			$returnArray[] = array(($width-$x), $hohe, $color, $str);
 	 			$id++;
 	 			$length = $length-$width;
@@ -89,7 +91,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$z += $hohe;
 				while($length > $width){
 					$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
-	 				$returnArray[] = array($width, $hohe, $color, $str);
+	 				$returnArray[] = array($width, $hohe, $color, $str, $time, $author);
 					$id++;
 					$x = 0;
 					$y += $hohe;
@@ -97,13 +99,13 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					$length = $length-$width;
 				}
 				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id, $str);
-	 			$returnArray[] = array($length, $hohe, $color, $str);
+	 			$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
 				$id++;
 				$x += $length;
 			}
 			else{
 				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
-				$returnArray[] = $block[i];
+				$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
 				$id++;
 				$x += $length;
 			}
