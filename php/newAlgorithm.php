@@ -58,6 +58,9 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		$x = 0; 	#links oben -> links
 		$y = 0; 	#links oben -> oben
 		$hohe = 16;
+
+		returnArray[] = array();
+
 		while($width%$hohe != 0)
 		$hohe--; 	#rechts unten -> links BREITE
 
@@ -82,8 +85,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			$color = $block[2];
 			$w = $x + $length;
 			if ($w > $width){
-	 			$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id, $time, $author);
-	 			$returnArray[] = array(($width-$x), $hohe, $color, $str);
+	 			$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
+	 			$returnArray[] = array(($width-$x), $hohe, $color, $str, $time, $author);
 	 			$id++;
 	 			$length = $length-$width;
 	 			$x = 0;
