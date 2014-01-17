@@ -99,43 +99,68 @@
 			),
 	'fr' => array(
 				//index.php
-		'Cloning repository into folder.' => 'Duplique repository dans un dossier.',
-		'Abort' => 'Abandon',
-				
-		'Visualize!' => 'Visualise!',
-		'Documentation' => 'Documentation',
-		'What is Repogram?' => 'C\'est quoi, un Repogram?',
-		'The word repogram comes from the words "Repository" and "Chromograms"' => 'Le mot repogram vient des mots "Repository" et "Chromograms"',
-		'So what is a "Repository"?' => 'Donc, c\'est quoi, un "Repository"?',
-		'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.' => 'Un Repository est une collection de fichiers de code source utilis&eacute; pour d&eacute;velopper des programmes ou pour g&eacute;rer d\'autres fichiers. Si vous avez d&eacute;j&agrave; utilis&eacute; GitHub, vous aurez s&ucirc;rement un Repository dite.',
-		'Ok, clear on that. What is a "Chromogram"?' => 'Ok, clair. Qu\'est-ce qu\'un "Chromogram"?',
-		'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.' => 'Un Chromogram est une m&eacute;thode de visualisation intelligent. Il peut afficher une grande quantit&eacute; de contenu sur une petite image. Habituellement il utilise des blocs.',
-		'Read that. So how can I use this site?' => 'Lire. Alors, comment puis-je utiliser ce site?',
-		'That\'s an easy one.' => 'C\'est facile.',
-		'You just need to go to the frontpage, enter the URL of your repository and click on' => 'Vous avez juste besoin d\'aller &agrave; la page d\'accueil, entrez l\'URL de votre r&eacute;f&eacute;rentiel et cliquez sur',
-		'After a short waiting time, you will see your rendered chromogram.' => 'Apr&egrave;s un court temps d\'attente, vous verrez votre Chromogram rendu.',
-		'Do you have some examples?' => 'Y at-il des exemples?',
-		'Twitter Bootstrap' => 'Twitter Bootstrap',
-		'JQuery' => 'JQuery',
-		'Visualize the provided repository' => 'Visualisez le repository pr&eacute;vu',
 		'Visualize!' 
-          => 'Visualise!',
-      'This website renders chromograms of your repository.' 
-          => 'Ce site rend chromograms de votre repository.',
-      'To start just enter your repository URL and click on visualize.' 
-          => 'Pour commencer, veuillez entrer votre URL du r&eacute;f&eacute;rentiel et cliquez sur Visualise.',
-      'To see some examples, just choose one from below and then click' 
-          => 'Pour voir quelques exemples, il suffit de choisir l\'un de ci-dessous puis cliquez sur',
-      'Visualize the provided repository'
-          => 'Visualisez le repository pr&eacute;vu',
-      'Large repository may need some time to be downloaded and processed.' 
-          => 'Grand d&eacute;p&ocirc;t peut avoir besoin de temps &agrave; t&eacute;l&eacute;charger et trait&eacute;es.',
-      'So please be patient and get some coffee while waiting ;)' 
-           => 'Alors s\'il vous plaît &ecirc;tre patient et prendre un caf&eacute; en attendant;)',
-      'Close' 
-          => 'Ferme',
-      'Repograms - Quick Help'
-          => 'Repograms - aide rapide'
+			=> 'Visualise!',
+		'Help' 
+			=> 'Secours',
+		'Show me some examples' 
+			=> 'Montrez-moi des exemples.',
+		'Enter repository url' 
+			=> 'Entre repository url',
+		'Select commits from' 
+			=> 's&eacute;lectionne de',
+		'till' 
+			=> '&agrave;',
+		'Cloning repository into folder.' 
+			=> 'Duplique repository dans un dossier.',
+		'Abort' 
+			=> 'Abandon',
+		'Error! Fetching repository was not sucessfull (Invalid URL?)' 
+			=> 'Erreur! Obtention repository n\'a pas &eacute;t&eacute; une belle r&eacute;ussite (URL invalide?)',
+		'Legend' 
+			=> 'L&eacute;gende',
+		'Documentation' 
+			=> 'Documentation',
+		'What is Repogram?'
+			=> 'Quelle est Repogram?',
+		'The word repogram comes from the words "Repository" and "Chromograms"' 
+			=> 'Le mot repogram vient des mots "Repository" et "Chromograms"',
+		'So what is a "Repository"?' 
+			=> 'Donc, ce quoi, un "Repository"?',
+		'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.' 
+			=> 'Un repository est une collection de fichiers de code source utilis&eacute; pour d&eacute;velopper des programmes ou pour g&eacute;rer d\'autres fichiers. Si vous avez d&eacute;j&agrave; utilis&eacute; GitHub, vous aurez s&ucirc;rement un repository dite.',
+		'Ok, clear on that. What is a "Chromogram"?' 
+			=> 'Ok, clair. Qu\'est-ce qu\'un "Chromogram"?',
+		'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.' 
+			=> 'Un Chromogram est une m&eacute;thode de visualisation intelligent. Il peut afficher une grande quantit&eacute; de contenu sur une petite image. Habituellement il utilise des blocs.',
+		'Read that. So how can I use this site?' 
+			=> 'Lire. Alors, comment puis-je utiliser ce site?',
+		'That\'s an easy one.' 
+			=> 'C\'est facile.',
+		'You just need to go to the frontpage, enter the URL of your repository and click on' 
+			=> 'Vous avez juste besoin d\'aller &agrave; la page d\'accueil, entrez l\'URL de votre repository et cliquez sur',
+		'After a short waiting time, you will see your rendered chromogram.' 
+			=> 'Apr&egrave;s un court temps d\'attente, vous verrez votre Chromogram rendu.',
+		'Do you have some examples?' 
+			=> 'Y at-il des exemples?',
+		'Twitter Bootstrap' 
+			=> 'Twitter Bootstrap',
+		'JQuery'
+			=> 'JQuery',
+		'This website renders chromograms of your repository.' 
+			=> 'Ce site rend chromograms de votre repository.',
+		'To start just enter your repository URL and click on visualize.' 
+			=> 'Pour commencer, veuillez entrer votre URL du repository et cliquez sur Visualise.',
+		'To see some examples, just choose one from below and then click' 
+			=> 'Pour voir quelques exemples, il suffit de choisir l\'un de ci-dessous puis cliquez sur',
+		'Visualize the provided repository'
+			=> 'Visualisez le repository pr&eacute;vu',
+		'Large repository may need some time to be downloaded and processed.' 
+			=> 'Grand repository peut avoir besoin de temps &agrave; t&eacute;l&eacute;charger et trait&eacute;es.',
+		'So please be patient and get some coffee while waiting ;)' 
+			=> 'Alors s\'il vous plaît &ecirc;tre patient et prendre un caf&eacute; en attendant;)',
+		'Close' 
+			 => 'Ferme'
 		)
 	);
 	
