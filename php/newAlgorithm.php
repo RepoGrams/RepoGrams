@@ -98,27 +98,27 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 
 			if ($w > $width){
-				//$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
+				$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
 	 			$returnArray[] = array(($width-$x), $hohe, $color, $str, $time, $author);
 	 			$id++;
 	 			$length = $length-($width-$x);
 	 			$x = 0;
 				$y += $hohe;
 				while($length > $width){
-					//$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
+					$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
 	 				$returnArray[] = array($width, $hohe, $color, $str, $time, $author);
 					$id++;
 					$x = 0;
 					$y += $hohe;
 					$length = $length-$width;
 				}
-				//$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
+				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
 	 			$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
 				$id++;
 				$x += $length;
 			}
 			else{
-				//$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
+				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
 				$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
 				$id++;
 				$x += $length;
@@ -442,7 +442,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		    return $value /26;
 		}
 
-		private function writeBlock($datei, $color, $x, $y, $w, $h){
+		private function writeBlock($datei, $color, $x, $y, $w, $h,$id){
 			if ($w <= 0){
 				$w = 0.1;
 			}
