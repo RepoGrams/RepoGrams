@@ -58,7 +58,6 @@ class gitImport extends RepoImporter {
 		$command = "git log ".$since.$before."--numstat --pretty='".$separator."},".$separator."%H".$separator.":{".$separator."author".$separator.":".$separator."%an".$separator.",".$separator."author_mail".$separator.":".$separator."%ae".$separator.",".$separator."date".$separator.":".$separator."%at".$separator.",".$separator."message".$separator.":".$separator."%s".$separator.",".$separator."changes".$separator." : ".$separator."'";
                 error_log($command);
 		$output = shell_exec($command);
-                chdir($cwd);
 		$json = self::unescape($output,$separator);
 		$json = substr($json,3,strlen($json));
 		$json = '{'.$json.'"}}';
