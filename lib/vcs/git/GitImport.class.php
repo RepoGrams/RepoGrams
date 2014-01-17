@@ -8,20 +8,31 @@ class gitImport extends RepoImporter {
 	private $RepoObject;
 
 	public function __construct($repo, $start, $end, &$datadir=NULL) { //,$user=null,$password=null){
-                error_log("start: ".$start." end: ".$end);
-		if ($this->is_valid_url($repo) === false){
+		if(!is_null($datadir) && !file_exists($datadir)){
+			throw new Exception("given cache-directory does not exist");
+			return 0;
+		}
+		
+		error_log("start: ".$start." end: ".$end);
+		if (($this->is_valid_url($repo) === false)){
 			// die("<h1>Possible injection detected</h1>");
 			error_log("Injection detected: $repo");
 			throw new Exception("Invalid URL!");	
 			return 0;
 		}	
-		$tmp = tempnam(sys_get_temp_dir(),"");
-		unlink($tmp);
-		mkdir($tmp);
-		if (!file_exists($tmp)) throw new Exception("Temporary folder could not be created!");
-                $cwd = getcwd();
-                chdir($tmp);
-		$command = 'git clone --bare "'.$repo.'"';
+		
+		if(is_null($datadir)){
+			$tmp = tempnam(sys_get_temp_dir(),"");
+			unlink($tmp);
+			mkdir($tmp);
+			if (!file_exists($tmp)) throw new Exception("Temporary folder could not be created!");
+			chdir($tmp);
+			$command = 'git clone --bare "'.$repo.'"';
+		} else {
+			chdir($datadir);
+			$command = 'git pull';
+		}
+                		
 		$command."\n";
 		error_log($command);
 		shell_exec($command);
@@ -30,9 +41,12 @@ class gitImport extends RepoImporter {
                 $joint = getcwd()."/".$gitdir."/";
                 error_log("joint: ".$joint);
                 if (!file_exists($joint)) throw new Exception ('Fetching git-Repository was not sucessfull (Invalid URL?)');
+		
+		if (is_null($datadir)) $datadir = $joint; // set $datadir for cache
+		
 		chdir($joint);
-                // if (!file_exists($tmp.'/.git')) throw new Exception ('No .git Folder found');
-                $since = "";
+                
+		$since = "";
                 $before= "";
                 if (!is_null($start) && $start !== "") {
                   $since= "--since ".$start." ";
@@ -44,7 +58,6 @@ class gitImport extends RepoImporter {
 		$command = "git log ".$since.$before."--numstat --pretty='".$separator."},".$separator."%H".$separator.":{".$separator."author".$separator.":".$separator."%an".$separator.",".$separator."author_mail".$separator.":".$separator."%ae".$separator.",".$separator."date".$separator.":".$separator."%at".$separator.",".$separator."message".$separator.":".$separator."%s".$separator.",".$separator."changes".$separator." : ".$separator."'";
                 error_log($command);
 		$output = shell_exec($command);
-                chdir($cwd);
 		$json = self::unescape($output,$separator);
 		$json = substr($json,3,strlen($json));
 		$json = '{'.$json.'"}}';

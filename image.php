@@ -1,4 +1,6 @@
-<?php session_start(); if (!isset($_SESSION['image']) ) header('location: index.php');?>
+<?php session_start(); 
+require_once("php/language.php");
+if (!isset($_SESSION['image']) ) header('location: index.php');?>
 
 <html !DOCTYPE HTML>
 <head>
@@ -17,7 +19,7 @@
     	<div class="hero-unit">
     		<script type="text/javascript" src="js/jquery.overscroll.min.js"></script>
     		<div class="color-legend">
-				<div class="legend-title">Legend</div>
+				<div class="legend-title"><?php print msg('Legend'); ?></div>
 					<div class="legend-scale">
   						<ul class="legend-labels">
   							<?php 

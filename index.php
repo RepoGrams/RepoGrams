@@ -32,7 +32,7 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 	  <div class="col-xs-12">
 		<form role="form" action="./loading.php" method="POST">
    			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">			
-   				<input class="form-control" id="repourl" name="repourl" type="text" required="required"  placeholder="Enter repository url">
+   				<input class="form-control" id="repourl" name="repourl" type="text" required="required"  placeholder="<?php print msg('Enter repository url'); ?>">
     			<span class="input-group-btn">
        				<button class="btn btn-default" type="submit" title="Visualize the provided repository">
        					<span class="glyphicon glyphicon-indent-left"></span><?php print msg('Visualize!'); ?>
@@ -49,7 +49,7 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 					echo '<br>
 		                  <div class="alert-dismissable errormessage">
        				  	  	<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true"></button>
-       						<span class="help-block"><strong>&nbsp;&nbsp;Error!</strong> '.$_SESSION['error_message'].'</span>
+       						<span class="help-block"><strong>&nbsp;&nbsp;<?php print msg('Error!'); ?></strong> '.$_SESSION['error_message'].'</span>
       				  	  </div>';
 					unset($_SESSION['error_message']);
 					initSession(true);

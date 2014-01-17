@@ -3,6 +3,7 @@
 	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
 	require_once("algorithm.php");
 	require_once("functions.php");
+	require_once("php/language.php");
 	require_once(__DIR__."/../lib/vcs/git/GitRepo.class.php");
 	dump();
 
@@ -51,12 +52,12 @@
 	 */
 	function checkInput($repourl = null) {
           if (strpos($repourl, "http") === false) {
-			$_SESSION['error_message'] = 'Invalid repository url.';
+			$_SESSION['error_message'] = msg('Invalid repository url.');
                         $_SESSION['error'] = true;
 			return false;
           }
 		if(!str_replace(' ','',$repourl) != '') {
-			$_SESSION['error_message'] = 'Invalid repository url.';
+			$_SESSION['error_message'] = msg('Invalid repository url.');
                         $_SESSION['error'] = true;
 			return false;
 		} else {
@@ -100,7 +101,7 @@
 		} catch (Exception $e) {
 			unsetAll();
 			$_SESSION['error'] = true;
-			$_SESSION['error_message'] = $e->getMessage();
+			$_SESSION['error_message'] = msg($e->getMessage());
 			$_SESSION['finish'] = false;
 		}
 	}
