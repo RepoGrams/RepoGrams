@@ -3,7 +3,7 @@ session_start();
 require_once("php/language.php");
 require_once("php/functions.php");
 if(!isset($_SESSION['init'])){
-	initSession(true);
+	initSession(false);
 	$_SESSION['init'] = true;
 }
 $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '');

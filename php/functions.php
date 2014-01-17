@@ -26,8 +26,7 @@ if (isset($debug)){
 }
 
 function dump(){
-	error_log($_SESSION['loading_info']. " ".
-	$_SESSION['progress']." ".
+	error_log($_SESSION['progress']." ".
 	$_SESSION['error_message']." ".
 	$_SESSION['title']." ".
 	$_SESSION['repourl']." ".
@@ -40,23 +39,19 @@ function dump(){
 function renderImage(){
 	$array = $_SESSION['image'];
 	$width = 0;
-	foreach ($array as $commit){
+	foreach ($array as $index => $commit){
 		$width += $commit[0];
-		renderBlock($commit);
-		if($width >= $_SESSION['width'])
-			echo("<br>");
+		renderBlock($commit, $index);
 	}
 }
 
-function renderBlock($commit){
+function renderBlock($commit, $index){
 	$color = buildColor($commit[2]);
-	$style = 'style="background-color:rgb('.floor($commit[2][0]).','.floor($commit[2][1]).','.floor($commit[2][2]).'); width:'.floor($commit[0]).'px; height:'.floor($commit[1]).'px;"';
-	error_log($style);
-	$effect = ''; 
-	$head = '<div class="customBlock" '.$style.' '.$effect.'>';
-	$end = '</div>';
+	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.$commit[0].'px; height:16px;"';
+	$effect = 'title="'.$commit[3].'"'; 
+	$head = '<li class="customBlock" id="'.$index.'" '.$style.' '.$effect.'>';
+	$end = '</li>';
 	echo ($head);
-	echo ($commit[3]);
 	echo ($end);
 }
 

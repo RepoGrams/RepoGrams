@@ -3,7 +3,6 @@ session_start();
 require_once("php/functions.php");
 require_once("php/language.php");
 
-dump();
 if (isset($_POST['repourl'])) 
 	$_SESSION['repourl'] = $_POST['repourl'];
 
