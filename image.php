@@ -69,9 +69,9 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						<span class="glyphicon glyphicon-download"></span> Download image <span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
-    					<li><a href="<?php echo 'download.php?file=visualization-'.session_id().'.svg'?>">as .svg</a></li>
-   						<li><a href="<?php echo 'download.php?file=visualization-'.session_id().'.png&mode=png'?>">as .png</a></li>
-   						<li><a href="<?php echo 'download.php?file=visualization-'.session_id().'.jpg&mode=jpg'?>">as .jpg</a></li>
+    					<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.svg'?>">as .svg</a></li>
+   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.png&mode=png'?>">as .png</a></li>
+   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.jpg&mode=jpg'?>">as .jpg</a></li>
   					</ul>
 				</div>
 			</div>
