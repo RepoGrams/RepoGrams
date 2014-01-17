@@ -76,20 +76,22 @@ include('menu.php');
 	<?php $_SESSION['STATE'] =0 ;?>
 	<!--include the action.php functions -->
 	<script type="text/javascript">
-function requestImage() {
-  console.log("foo was called");
-  jQuery.getJSON("php/action.php", function(data){
-  if(data.finished == true) {
-    console.log("changing location...");
-    window.location.href = "/image.php";
-    console.log("changed location...");
-  } else {
-    $("#loadtext").html("<?php print msg('Rendering image')?>");
-    requestImage();
-  }
-  });
-}
-requestImage();
+	function requestImage() {
+		jQuery.getJSON("php/action.php", 
+		function(data){
+		if(data.finished == true) {
+			console.log("changing location...");
+			window.location.href = "/image.php";
+			console.log("changed location...");
+		} else {
+			$("#loadtext").html("<?php print msg('Rendering image')?>");
+			$("#mainbar").attr( "aria-valuenow","50");
+			$("#mainbar").css({"width":"50%"});
+			requestImage();
+		}
+		});
+	}
+	requestImage();
 	</script>
 </body>
 </html>
