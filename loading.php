@@ -84,7 +84,7 @@ include('menu.php');
 			window.location.href = "/image.php";
 			console.log("changed location...");
 		} else {
-			$("#loadtext").html("<?php print msg('Rendering image')?>");
+			$("#loadtext").html("."msg('Rendering image')."");
 			$("#mainbar").attr( "aria-valuenow","50");
 			$("#mainbar").css({"width":"50%"});
 			requestImage();
