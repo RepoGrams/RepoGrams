@@ -159,7 +159,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   			$b = $convArray['b'];
 		   			$color = array($r,$g,$b);
 		    		$color = ImageColorAllocate($img, $r, $g, $b);
-		    		$legende[]=("Stunde: ".$go, $color)
+		    		$legende[]=("Stunde: ".$go, $color);
 		    		$go += 2;
 				}
  				break;
