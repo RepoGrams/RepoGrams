@@ -35,6 +35,39 @@ function dump(){
 	$_SESSION['width']." ".
 	$_SESSION['height']." "
  );
+}
+
+function renderImage(){
+	$array = $_SESSION['image'];
+	$width = 0;
+	foreach ($array as $commit){
+		$width += $commit[0];
+		renderBlock($commit);
+		if($width >= $_SESSION['width'])
+			echo("<br>");
+	}
+}
+
+function renderBlock($commit){
+	$color = buildColor($commit[2]);
+	$style = "style=\"color:#".$color.",";
+	$style += "width:".$commit[0]."px";
+	$style += "height:".$commit[1]."px";
+	$style += "\"";
+	$effect = ""; 
+	$head = "<div class=\"customBlock\" ".$style." ".$effect.">";
+	$end = "</div>";
+	echo ($head);
+	echo ($commit[3]);
+	echo ($end);
+}
+
+function buildColor($color){
+	$ret = $color[0];
+	$ret << 4;
+	$ret = $ret || $color[1];
+	$ret << 4;
+	$ret = $ret || $color[2];
 
 }
 ?>
