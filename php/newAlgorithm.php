@@ -77,7 +77,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					break;
 				}
 			}
-			$block = $this->commitToBlock($commitArray[$i], $modus_length, $modus_color, $hohe, $all_diff, $add_diff, $del_diff, $pixel, $hohe); //length, heigth, color
+			$block = $this->commitToBlock($commitArray[$i], $modus_length, $modus_color, $all_diff, $add_diff, $del_diff, $pixel, $hohe); //length, heigth, color
 			$length = $block[0];
 			$color = $block[2];
 			$w = $x + $length;
@@ -196,33 +196,21 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 		switch ($modus_length) {
 			case 0:			#all
-				if ($all_diff < 1) $all_diff = 1;
 				$factor = ($pixel/$hohe) / $all_diff;
 				$diff = $commitArray[1];
-				if ($diff < 1) $diff = 1;
-				$diff *= 20;
 				$length = ($factor * $diff);
-				if ($length < 1) $length = 1;
 				break;
 			
 			case 1:			#add
-				if ($add_diff < 1) $add_diff = 1;
 				$factor = ($pixel/$hohe) / $add_diff;
 				$diff = $commitArray[2];
-				if ($diff < 1) $diff = 1;
-				$diff *= 20;
 				$length = ($factor * $diff);
-				if ($length < 1) $length = 1;
 				break;
 
 			case 2:			#del
-				if ($del_diff < 1) $del_diff = 1;
 				$factor = ($pixel/$hohe) / $del_diff;
 				$diff = $commitArray[3];
-				if ($diff < 1) $diff = 1;
-				$diff *= 20;
 				$length = ($factor * $diff);
-				if ($length < 1) $length = 1;
 				break;
 
 			default:
