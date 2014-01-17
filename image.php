@@ -5,7 +5,6 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 <html !DOCTYPE HTML>
 <head>
 	<?php include('header.php')?>
-	<meta http-equiv="Content-Type" content="img/svg+xml; charset=UTF-8">
 </head>
 
 <body>
@@ -19,19 +18,22 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     	<div class="hero-unit">
     		<div>
     			<!-- Filtereinstellungen -->
-    			<form class="form-inline" role="form"> 
-    				<label for="filter1">NAME</label>
-    				<select id="filter1" name="filter1" class="form-control">
-  						<option>OPTION</option>
-					</select>
-					<label for="filter2">NAME</label>
-    				<select id="filter2" name="filter2" class="form-control">
-  						<option>OPTION</option>
-					</select>
-					<label for="filter3">NAME</label>
-    				<select id="filter3" name="filter3" class="form-control">
-  						<option>OPTION</option>
-					</select>
+    			<form class="form-inline" role="form">
+    				<div class="form-group"> 
+    					<label for="filter1">Commit</label>
+    					<select id="filter1" name="filter1" class="form-control">
+  							<option>Autor</option>              <!-- 2 -->
+  							<option>Commmitmessage</option>     <!-- 1 -->
+  							<option>First 3 letters</option>    <!-- 0 -->
+  							<option>Time</option>               <!-- 3 -->
+	  						<option>Date</option>               <!-- 4 -->
+						</select>
+						<label for="filter2">Operation</label>
+    					<select id="filter2" name="filter2" class="form-control">
+  							<option>Add</option>                <!-- 1 -->
+  							<option>Delete</option>             <!-- 2 -->
+						</select>
+					</div>
     			</form>
     		</div>
     		
@@ -60,6 +62,30 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 						renderImage();
 					?>
 				</ul>
+			</div>
+			<div style="float:right;">
+				<div class="btn-group">
+  					<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+  						<span class="glyphicon glyphicon-download"></span> Download image <span class="caret"></span>
+  					</button>
+  					<ul class="dropdown-menu" role="menu">
+    					<li><a href="<?php echo 'visualization-'.session_id().'.svg'; ?>">as .svg</a></li>
+   						<li><a href="<?php $image = new Imagick();
+										   $image->readImageBlob(file_get_contents('visualization-'.session_id().'.svg'));
+										   $image->setImageFormat("png24");
+ 										   $image->resizeImage($_SESSION["width"]*2, $_SESSION["height"]*2, imagick::FILTER_LANCZOS, 1); 
+										   $image->writeImage('visualization-'.session_id().'.png');
+										   echo 'visualization-'.session_id().'.png'; ?>">
+									as .png</a></li>
+   						<li><a href="<?php $image = new Imagick();
+										   $image->readImageBlob(file_get_contents('visualization-'.session_id().'.svg'));
+										   $image->setImageFormat("jpg");
+ 										   $image->resizeImage($_SESSION["width"]*2, $_SESSION["height"]*2, imagick::FILTER_LANCZOS, 1); 
+										   $image->writeImage('visualization-'.session_id().'.jpg');
+										   echo 'visualization-'.session_id().'.png'; ?>">
+									as .jpg</a></li>
+  					</ul>
+				</div>
 			</div>
 			<div id="push" class="clear"></div>
 			<br><br>
