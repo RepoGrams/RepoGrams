@@ -96,7 +96,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			}
 
 
-			if ($w > $width){
+			/*if ($w > $width){
 				//$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
 	 			$returnArray[] = array(($width-$x), $hohe, $color, $str, $time, $author);
 	 			$id++;
@@ -117,11 +117,11 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$x += $length;
 			}
 			else{
-				//$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
+				//$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);*/
 				$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
-				$id++;
+			/*	$id++;
 				$x += $length;
-			}
+			}*/
 		}
 
 		switch($modus_color){
