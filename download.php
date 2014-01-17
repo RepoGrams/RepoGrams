@@ -9,14 +9,14 @@ download_file($file);
 
 function convertImage() {
 	$image = new Imagick();
-	$image->readImageBlob(file_get_contents('visualization-'.session_id().'.svg'));
+	$image->readImageBlob(file_get_contents('php/visualization-'.session_id().'.svg'));
 	switch ($mode) {
 		case "png": $image->setImageFormat("png24"); break;
 		case "jpeg": 
 		case "jpg": $image->setImageFormat("jpg"); break;
 	}
 	$image->resizeImage($_SESSION["width"]*2, $_SESSION["height"]*2, imagick::FILTER_LANCZOS, 1);
-	$image->writeImage('visualization-'.session_id().$mode);
+	$image->writeImage('php/visualization-'.session_id().$mode);
 }
 
 function download_file( $fullPath ){
