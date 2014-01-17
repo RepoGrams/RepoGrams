@@ -204,18 +204,21 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 		switch ($modus_length) {
 			case 0:			#all
+				if ($all_diff < 1) $all_diff = 1;
 				$factor = ($pixel/$hohe) / $all_diff;
 				$diff = $commitArray[1];
 				$length = ($factor * $diff);
 				break;
 			
 			case 1:			#add
+				if ($add_diff < 1) $add_diff = 1;
 				$factor = ($pixel/$hohe) / $add_diff;
 				$diff = $commitArray[2];
 				$length = ($factor * $diff);
 				break;
 
 			case 2:			#del
+				if ($del_diff < 1) $del_diff = 1;
 				$factor = ($pixel/$hohe) / $del_diff;
 				$diff = $commitArray[3];
 				$length = ($factor * $diff);
