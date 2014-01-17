@@ -107,7 +107,7 @@
 		'What is Repogram?' => 'C\'est quoi, un Repogram?',
 		'The word repogram comes from the words "Repository" and "Chromograms"' => 'Le mot repogram vient des mots "Repository" et "Chromograms"',
 		'So what is a "Repository"?' => 'Donc, c\'est quoi, un "Repository"?',
-		'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.' => 'Un r&eacute;f&eacute;rentiel est une collection de fichiers de code source utilis&eacute; pour d&eacute;velopper des programmes ou pour g&eacute;rer d\'autres fichiers. Si vous avez d&eacute;j&agrave; utilis&eacute; GitHub, vous aurez s&ucirc;rement un r&eacute;f&eacute;rentiel dite.',
+		'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.' => 'Un Repository est une collection de fichiers de code source utilis&eacute; pour d&eacute;velopper des programmes ou pour g&eacute;rer d\'autres fichiers. Si vous avez d&eacute;j&agrave; utilis&eacute; GitHub, vous aurez s&ucirc;rement un Repository dite.',
 		'Ok, clear on that. What is a "Chromogram"?' => 'Ok, clair. Qu\'est-ce qu\'un "Chromogram"?',
 		'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.' => 'Un Chromogram est une m&eacute;thode de visualisation intelligent. Il peut afficher une grande quantit&eacute; de contenu sur une petite image. Habituellement il utilise des blocs.',
 		'Read that. So how can I use this site?' => 'Lire. Alors, comment puis-je utiliser ce site?',
