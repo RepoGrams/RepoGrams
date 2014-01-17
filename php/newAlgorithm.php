@@ -36,11 +36,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 		###################################################
 
-		$all_diff = 0;
-		for ($j = 0; $j < $count; $j++){
-			$all_diff += $commitArray[$j][1]; 
-		}
-
 		$add_diff = 0;
 		for ($j = 0; $j < $count; $j++){
 			$add_diff += $commitArray[$j][2]; 
@@ -50,6 +45,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		for ($j = 0; $j < $count; $j++){
 			$del_diff += $commitArray[$j][3]; 
 		}
+
+		$all_diff = $add_diff + $del_diff;
 
 		$pixel = $width * $height;
 
@@ -101,7 +98,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 			if ($w > $width){
 				//$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
-				error_log($time." ".$author);
 	 			$returnArray[] = array(($width-$x), $hohe, $color, $str, $time, $author);
 	 			$id++;
 	 			$length = $length-($width-$x);
@@ -109,7 +105,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$y += $hohe;
 				while($length > $width){
 					//$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
-					error_log($time." ".$author);
 	 				$returnArray[] = array($width, $hohe, $color, $str, $time, $author);
 					$id++;
 					$x = 0;
@@ -117,14 +112,12 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					$length = $length-$width;
 				}
 				//$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
-				error_log($time." ".$author);
 	 			$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
 				$id++;
 				$x += $length;
 			}
 			else{
 				//$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
-				error_log($time." ".$author);
 				$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
 				$id++;
 				$x += $length;
@@ -206,6 +199,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				if ($all_diff < 1) $all_diff = 1;
 				$factor = ($pixel/$hohe) / $all_diff;
 				$diff = $commitArray[1];
+				if ($diff < 1) $diff = 1;
+				$diff *= 20;
 				$length = ($factor * $diff);
 				if ($length < 1) $length = 1;
 				break;
@@ -214,6 +209,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				if ($add_diff < 1) $add_diff = 1;
 				$factor = ($pixel/$hohe) / $add_diff;
 				$diff = $commitArray[2];
+				if ($diff < 1) $diff = 1;
+				$diff *= 20;
 				$length = ($factor * $diff);
 				if ($length < 1) $length = 1;
 				break;
@@ -222,6 +219,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				if ($del_diff < 1) $del_diff = 1;
 				$factor = ($pixel/$hohe) / $del_diff;
 				$diff = $commitArray[3];
+				if ($diff < 1) $diff = 1;
+				$diff *= 20;
 				$length = ($factor * $diff);
 				if ($length < 1) $length = 1;
 				break;
