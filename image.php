@@ -32,12 +32,15 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						</ul>
 					</div>
 			</div>
-			<div class="container" style="float:left;">
+			<div class="container" style="width:<?php echo $_SESSION['width']+1;?>; boder-style:solid;">
+				<ul>
 			<?php
 			require_once('php/functions.php');
 			renderImage();
-			?>
+?>
+				</ul>
 			</div>
+			<div class="clear"></div>
 			<br><br>
     		<div id="push"></div>
 		</div>
