@@ -82,6 +82,8 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 	  </div>
 	  </div>
 	</div> <!-- root container close -->
+	
+	<div id="push"></div>
 
 	<!-- Help dialog -->
 	<?php include('helpdialog.php')?>
