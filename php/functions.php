@@ -60,4 +60,12 @@ function buildColor($color){
 	$ret << 4;
 	$ret = $ret || $color[2];
 }
+
+function renderLegend(){
+	$legend = $_SESSION['image'][0];
+	while( list ( $key, $val ) = each ( $legend ) )
+	{
+		    echo $key.' ' . $val . '<br>';
+	}
+}
 ?>
