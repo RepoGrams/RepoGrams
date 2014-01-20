@@ -105,6 +105,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 	 			$x = 0;
 				$y += $hohe;
 				while($length > $width){
+					if ($length < 0.01) break;
 					//$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
 	 				$returnArray[] = array($width, $hohe, $color, $str, $time, $author);
 					$id++;
