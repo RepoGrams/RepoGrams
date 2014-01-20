@@ -5,6 +5,7 @@ $mode = $_GET['mode'];
 
 if (isset($_GET['mode'])) convertImage();
 download_file($file);
+header('location: '.$_SERVER['HTTP_REFERER']);
 
 
 function convertImage() {

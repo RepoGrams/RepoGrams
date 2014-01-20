@@ -10,12 +10,12 @@ html, body {
   margin: 0 auto -60px;
 }
 
+/* Language flags */
 .flag {
 	width: 16px;
 	height: 11px;
 	background:url(../img/flags.png) no-repeat
 }
-
 .flag.flag-de {background-position: -16px 0}
 .flag.flag-fr {background-position: 0 -11px}
 .flag.flag-us {background-position: -16px -11px}
@@ -28,9 +28,6 @@ html, body {
 	margin: auto auto 0;
     text-align: center;
     width: 50%;
-}
-
-.input-group {
 }
 
 .center {
@@ -56,40 +53,6 @@ html, body {
 .errormessage {
   width: 50%;
   margin: auto auto 0;
-}
-
-
-.examples {
-	margin: auto auto 0; 
-	display: block;
-	width: 700px;
-}
-
-.example {
-	float: left;
-	text-align:center;
-	height: 200px;
-	width: 200px;
-	margin-right: 50px;
-}
-
-.example:hover{
-	border-style:solid;
-	border-width: 2px;
-	border-color: #000000;
-}
-
-.examplelast {
-	float: left;
-	text-align:center;
-	height: 200px;
-	width: 200px;
-}
-
-.examplelast:hover{
-	border-style:solid;
-	border-width: 2px;
-	border-color: #000000;
 }
 
 .clear {
@@ -166,6 +129,7 @@ html, body {
     color: #777;
 }
 
+/* Plugin to make the rendered repository scrollable */
 #overscroll { width: 768px; height: 512px; overflow: hidden; position: relative; }
 #overscroll ul { width: 768px; margin:0; padding: 0; }
 #overscroll li { display: block; float: left; background-color: #FFF; }
@@ -191,8 +155,7 @@ div[class="tooltip-inner"] {
 	border-style: solid;
 	border-color: black;
 }
-style
-.customdate {
+style .customdate {
 	width : 50%;
 	float: left;
 }

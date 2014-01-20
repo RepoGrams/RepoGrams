@@ -16,30 +16,32 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>
 		<br>
     	<div class="hero-unit">
-    		<div>
-    			<!-- Filtereinstellungen -->
-    			<form class="form-inline" role="form">
-    				<div class="form-group"> 
-    					<label for="filter1">Commit</label>
-    					<select id="filter1" name="filter1" class="form-control">
-  							<option>Autor</option>              <!-- 2 -->
-  							<option>Commmitmessage</option>     <!-- 1 -->
-  							<option>First 3 letters</option>    <!-- 0 -->
-  							<option>Time</option>               <!-- 3 -->
-	  						<option>Date</option>               <!-- 4 -->
-						</select>
-						<label for="filter2">Operation</label>
-    					<select id="filter2" name="filter2" class="form-control">
-  							<option>Add</option>                <!-- 1 -->
-  							<option>Delete</option>             <!-- 2 -->
-						</select>
-					</div>
-    			</form>
-    		</div>
+    		<!-- Filtereinstellungen -->
+ 	   		<form role="form" action="" method="POST" class="form-inline" style="text-align:center;">
+ 	   			<div class="form-group">
+    				<label for="filter1">Commit</label>
+    				<select id="filter1" name="filter1" class="form-control">
+  						<option>Autor</option>              <!-- 2 -->
+  						<option>Commmit message</option>     <!-- 1 -->
+ 	 					<option selected>First 3 letters</option>    <!-- 0 -->
+  						<option>Time</option>               <!-- 3 -->
+	  					<option>Date</option>               <!-- 4 -->
+					</select>
+  					</div>		
+
+  					<div class="form-group">
+    				<label for="filter1">Commit</label>
+					<label for="filter2">Operation</label>
+    				<select id="filter2" name="filter2" class="form-control">
+  						<option>Add</option>                <!-- 1 -->
+  						<option>Delete</option>             <!-- 2 -->
+					</select>
+  					</div>
+    		</form>
     		
     		<!-- Repo-Visualization -->
     		<!-- Legend -->
-    		<div class="color-legend">
+    		<div class="color-legend" style="float:left; width: 10%;">
 				<div class="legend-title"><?php print msg('Legend'); ?></div>
 					<div class="legend-scale">
   						<ul class="legend-labels">
@@ -63,6 +65,8 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 					?>
 				</ul>
 			</div>
+			<div class="clear"></div>
+			<!-- Download image buttons -->
 			<div style="float:right;">
 				<div class="btn-group">
   					<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
