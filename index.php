@@ -2,7 +2,7 @@
 session_start();
 require_once("php/language.php");
 require_once("php/functions.php");
-if(!isset($_SESSION['init'])){
+if(!isset($_SESSION['init'])|| is_null($_SESSION['error'])){
 	initSession(false);
 	$_SESSION['init'] = true;
 }
@@ -10,7 +10,7 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 ?>
 <html !DOCTYPE HTML>
 <head>
-	<?php include('header.php')?>
+	<?php include('header.php'); ?>
 </head>
 
 <body>
@@ -86,10 +86,10 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 	<div id="push"></div>
 
 	<!-- Help dialog -->
-	<?php include('helpdialog.php')?>
+	<?php include('helpdialog.php'); ?>
 	
 	<!-- Footer -->	
-	<?php include('footer.php')?>
+	<?php include('footer.php'); ?>
 	
 	<script>
 		$(function() {
