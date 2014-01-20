@@ -120,12 +120,12 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$id++;
 				$x += $length;
 			}
-			else{
-				//$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
-				$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
+			if ($length < 0.01) break;
+	 		else{
+	 			$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
 				$id++;
 				$x += $length;
-			}
+	 		}
 		}
 
 		switch($modus_color){
