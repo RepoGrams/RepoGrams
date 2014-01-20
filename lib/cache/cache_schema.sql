@@ -2,6 +2,6 @@ CREATE TABLE urls2data (
   id INTEGER NOT NULL AUTO_INCREMENT,
   url TEXT,
   frequency INTEGER,
-  foldername TEXT,
+  folder TEXT,
   PRIMARY KEY(id)
 );
