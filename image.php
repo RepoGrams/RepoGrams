@@ -8,6 +8,12 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 </head>
 
 <body>
+	<noscript>
+    	<p style="text-align:center; color: white; background-color: red;">
+    		Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.
+    	</p>
+	</noscript>
+	
 	<!-- Menu -->	
 	<?php include('menu.php'); ?>
 	
@@ -21,19 +27,21 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
  	   			<div class="form-group">
     				<label for="filter1">Commit</label>
     				<select id="filter1" name="filter1" class="form-control">
-  						<option>Autor</option>              <!-- 2 -->
-  						<option>Commmit message</option>     <!-- 1 -->
- 	 					<option selected>First 3 letters</option>    <!-- 0 -->
-  						<option>Time</option>               <!-- 3 -->
-	  					<option>Date</option>               <!-- 4 -->
+  						<option><?php msg('Autor') ?></option>              <!-- 2 -->
+  						<option><?php msg('Commmit message') ?></option>     <!-- 1 -->
+ 	 					<option selected><?php msg('First 3 letters') ?></option>    <!-- 0 -->
+  						<option><?php msg('Time') ?></option>               <!-- 3 -->
+	  					<option><?php msg('Date') ?></option>               <!-- 4 -->
 					</select>
+
   				</div>		
   				<div class="form-group">
     				<label for="filter1">Commit</label>
 					<label for="filter2">Operation</label>
     				<select id="filter2" name="filter2" class="form-control">
-  						<option>Add</option>                <!-- 1 -->
-  						<option>Delete</option>             <!-- 2 -->
+						<option selected><?php msg('All') ?></option>                <!-- 0 -->
+  						<option><?php msg('Add') ?></option>                <!-- 1 -->
+  						<option><?php msg('Delete') ?></option>             <!-- 2 -->
 					</select>
   				</div>
     		</form>
@@ -63,7 +71,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 			<div style="float:right;">
 				<div class="btn-group">
   					<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-  						<span class="glyphicon glyphicon-download"></span> Download image <span class="caret"></span>
+  						<span class="glyphicon glyphicon-download"></span><?php msg('Download image') ?><span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
     					<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.svg'?>">as .svg</a></li>

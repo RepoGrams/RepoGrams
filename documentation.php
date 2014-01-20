@@ -13,6 +13,12 @@
 </head>
 
 <body>
+	<noscript>
+    	<p style="text-align:center; color: white; background-color: red;">
+    		Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.
+    	</p>
+	</noscript>
+
 	<!-- Menu -->
 	<div>
 		<div style="float:left; margin-left: 20px; margin-top:20px;">

@@ -60,15 +60,4 @@ function buildColor($color){
 	$ret << 4;
 	$ret = $ret || $color[2];
 }
-
-function renderLegend(){
-	$legend = $_SESSION['image'][0];
-	for ( $i = 0; $i < count($legend); $i++)
-	{
-		$key = $legend[$i][0];
-		$val = $legend[$i][1];
-		$colorBlock = '<div style="line-height:1"><div class="customBlock" style="background-color:rgb('.ceil($val[0]).','.ceil($val[1]).','.ceil($val[2]).');width:15px;height:14px;">';
-		    echo $colorBlock .'</div>'.'&nbsp;'.$key.'<br></div>';
-	}
-}
 ?>

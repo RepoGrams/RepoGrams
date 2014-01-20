@@ -116,12 +116,9 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					$length = $length-$width;
 				}
 				//$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
-	 			if ($length < 0.01) break;
-	 			else{
-	 				$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
-					$id++;
-					$x += $length;
-	 			}
+	 			$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
+				$id++;
+				$x += $length;
 			}
 			else{
 				//$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
@@ -140,8 +137,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				for ($c = 0; $c < count($foo); $c++){
 					$bar[] = array($foo[$c], $legende[$foo[$c]]);
 				}
-				$legende = array();
 				if (count($bar) > 30){
+					$legende = array();
 					for ($c = 0; $c < 30; $c++){
 						$legende[] = $bar[$c];
 					}
@@ -149,7 +146,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				else{
 					$legende = $bar;
 				}
-				
 				break;
 			case 1:
 				$legende[]= array("Kategory add", array(255,0,0));
