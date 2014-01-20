@@ -131,7 +131,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			#array_keys -> alle keys raussuchen und auf 1,2 etc umschreiben, autoren auf 12 kuerzen
 				$foo = array_keys($legende);
 				$bar = array();
-				for (int $c = 0; $c < count($foo); $c++){
+				for ($c = 0; $c < count($foo); $c++){
 					$bar[] = array($foo[$c], $legende[$foo[$c]]);
 				}
 				$legende = $bar;

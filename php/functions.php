@@ -44,7 +44,7 @@ function renderImage(){
 
 function renderBlock($commit, $index){
 	$color = buildColor($commit[2]);$_SESSION['image'];
-	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.floor(($commit[0])).'px; height:16px;"';
+	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($commit[0]).'px; height:16px;"';
 	$datum = date("H:i:s - m.d.y", $commit[4]);
 	$effect = 'title="'.$commit[3].' by '.$commit[5]. ' on '. $datum.'"'; 
 	$head = '<li class="customBlock" id="'.$index.'" '.$style.' '.$effect.'>';
