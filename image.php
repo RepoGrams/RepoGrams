@@ -27,34 +27,27 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						<option>Time</option>               <!-- 3 -->
 	  					<option>Date</option>               <!-- 4 -->
 					</select>
-  					</div>		
-
-  					<div class="form-group">
+  				</div>		
+  				<div class="form-group">
     				<label for="filter1">Commit</label>
 					<label for="filter2">Operation</label>
     				<select id="filter2" name="filter2" class="form-control">
   						<option>Add</option>                <!-- 1 -->
   						<option>Delete</option>             <!-- 2 -->
 					</select>
-  					</div>
+  				</div>
     		</form>
     		
     		<!-- Repo-Visualization -->
     		<!-- Legend -->
     		<div class="color-legend" style="float:left; width: 10%;">
 				<div class="legend-title"><?php print msg('Legend'); ?></div>
-					<div class="legend-scale">
-  						<ul class="legend-labels">
-  							<?php 
-								if (isset($_GET['legend'])) {
-									foreach ($_GET['legend'] as $entry) {
-										echo '<li><span style="background:rgb('.$entry['c'].');"></span>'.$entry['t'].'</li>';
-									}
-		               			}
-		            		?>
-  						</ul>
-					</div>
-			</div>
+					<?php
+						require_once('php/functions.php');
+						renderLegend();
+					?>
+
+				</div>
 			<!-- Repo-Image -->
 			<script type="text/javascript" src="js/jquery.overscroll.min.js"></script>
 			<div class="custom" style="width:<?php echo $_SESSION['width']+1;?>; boder-style:solid; display:inline-block;">

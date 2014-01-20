@@ -71,11 +71,13 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 	  
 	  <!-- Examples -->
 	  <div class="row">
-	  <div class="col-md-offset-5 col-md-2">
-		<button type="button" class="btn btn-info" onclick="example();"><?php print msg('Show me some examples'); ?></button>
-	  </div>
+	  	<div class="col-md-offset-5 col-md-2">
+			<button type="button" class="btn btn-info" onclick="example();"><?php print msg('Show me some examples'); ?></button>
+	  	</div>
 	  </div>
 	</div> <!-- root container close -->
+	
+	<div id="push"></div>
 
 	<!-- Help dialog -->
 	<?php include('helpdialog.php')?>
