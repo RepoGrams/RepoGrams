@@ -224,7 +224,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				echo "Hier läuft was schief.";
 				break;
 		}
-
+		if ($length < 0.1) $length = 0;
 		return array($length, $hohe, $color[0], $color[1]);
 	}
 
