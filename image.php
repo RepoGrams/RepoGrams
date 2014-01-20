@@ -27,16 +27,15 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						<option>Time</option>               <!-- 3 -->
 	  					<option>Date</option>               <!-- 4 -->
 					</select>
-  					</div>		
-
-  					<div class="form-group">
+  				</div>		
+  				<div class="form-group">
     				<label for="filter1">Commit</label>
 					<label for="filter2">Operation</label>
     				<select id="filter2" name="filter2" class="form-control">
   						<option>Add</option>                <!-- 1 -->
   						<option>Delete</option>             <!-- 2 -->
 					</select>
-  					</div>
+  				</div>
     		</form>
     		
     		<!-- Repo-Visualization -->
