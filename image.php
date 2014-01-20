@@ -4,7 +4,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 
 <html !DOCTYPE HTML>
 <head>
-	<?php include('header.php')?>
+	<?php include('header.php') ?>
 </head>
 
 <body>
@@ -85,11 +85,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 		</div>
 	</div>
 	
-	<?php include('footer.php')?>
+	<?php include('footer.php') ?>
 
 </body>
 </html>
-<?php
-require_once('php/functions.php');
-	initSession(false);
-?>
