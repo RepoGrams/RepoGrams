@@ -134,7 +134,15 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				for ($c = 0; $c < count($foo); $c++){
 					$bar[] = array($foo[$c], $legende[$foo[$c]]);
 				}
-				$legende = $bar;
+				if (count($bar) > 30){
+					$legende = array();
+					for ($c = 0; $c < 30; $c++){
+						$legende[] = $bar[$c];
+					}
+				}
+				else{
+					$legende = $bar;
+				}
 				break;
 			case 1:
 				$legende[]= array("Kategory add", array(255,0,0));
