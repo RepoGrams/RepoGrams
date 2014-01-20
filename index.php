@@ -14,6 +14,12 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 </head>
 
 <body>
+	<noscript>
+    	<p style="text-align:center; color: white; background-color: red;">
+    		Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.
+    	</p>
+	</noscript>
+
 	<!-- Menu in its own container -->
 	<?php include('menu.php'); ?>
 	
