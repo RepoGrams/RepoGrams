@@ -81,7 +81,3 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 
 </body>
 </html>
-<?php
-require_once('php/functions.php');
-	initSession(false);
-?>

@@ -2,7 +2,7 @@
 session_start();
 require_once("php/language.php");
 require_once("php/functions.php");
-if(!isset($_SESSION['init'])){
+if(!isset($_SESSION['init'])|| is_null($_SESSION['error'])){
 	initSession(false);
 	$_SESSION['init'] = true;
 }
