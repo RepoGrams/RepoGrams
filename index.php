@@ -66,9 +66,9 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 		  	<br>
     		<div class="datepick">
     			<span><?php print msg('Select commits from'); ?> </span>
-    			<input type="text" class="input-small hasDatepicker" name="start" id="start"/>
+    			<input type="text" class="input-small hasDatepicker" name="start" id="start" style="width:90px;"/>
     			<span> <?php print msg('till'); ?> </span>
-    			<input type="text" class="input-small hasDatepicker" name="end" id="end"/>
+    			<input type="text" class="input-small hasDatepicker" name="end" id="end"  style="width:90px;"/>
     		</div>
 		</form>
 	  </div> <!-- collapse div for form input -->
