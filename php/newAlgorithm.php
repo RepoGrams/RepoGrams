@@ -101,21 +101,21 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 
 			if ($w > $width){
-				//$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
+				$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
 	 			$returnArray[] = array(($width-$x), $hohe, $color, $str, $time, $author);
 	 			$id++;
 	 			$length = $length-($width-$x);
 	 			$x = 0;
 				$y += $hohe;
 				while($length > $width){
-					//$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
+					$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
 	 				$returnArray[] = array($width, $hohe, $color, $str, $time, $author);
 					$id++;
 					$x = 0;
 					$y += $hohe;
 					$length = $length-$width;
 				}
-				//$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
+				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
 	 			if($length > 0.01){
 	 				$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
 					$id++;
@@ -123,7 +123,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 	 			}
 			}
 			else{
-				//$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
+				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
 				$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
 				$id++;
 				$x += $length;
@@ -462,9 +462,9 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		}
 
 		private function writeBlock($datei, $color, $x, $y, $w, $h,$id){
-			if ($w <= 0){
+			/*if ($w <= 0){
 				$w = 0.1;
-			}
+			}*/
 			$hexcolor = $conv->RGBtoHex($color[0],$color[1],$color[2]);
 			$s = " <rect x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\" rx=\"0\" ry=\"0\" id =\"rect".$id."\" style=\"fill:".$hexcolor.";stroke:none\" /> \n";
 			fwrite($datei, utf8_encode($s));
