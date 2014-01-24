@@ -9,9 +9,11 @@ if (isset($_GET['filter1'])) {
 }	
 
 function renderImage($fmode = null, $smode = null) {
+	error_log($fmode.' is set to render');
 	$alg = new Algorithm();
 	$_SESSION['image'] = $alg->render($ses,$fmode,$smode,$_SESSION['width'], $_SESSION['height']);
-	header('location: image.php');
+	error_log("Rendered");
 }
 	
 ?>
+Test?

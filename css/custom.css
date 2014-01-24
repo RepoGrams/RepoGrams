@@ -166,3 +166,7 @@ style .customdate {
 	height: 5px;
 	float:left;
 }
+
+.centerButton{
+	text-align:center;
+}
