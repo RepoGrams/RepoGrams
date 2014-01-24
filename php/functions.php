@@ -67,10 +67,9 @@ function render($commit, $id, $width){
 
 	$color = buildColor($commit[2]);$_SESSION['image'];
 	$datum = date("H:i:s - m.d.y", $commit[4]);
-	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
-			                                          Date: '. $datum.'<br>
-			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
-
+	$tooltip = 'data-html="true" data-original-title="<font color="#33CCFF">Author: </font>'.$commit[5].'<br>
+			                                          <font color="#33CCFF">Date: </font>'. $datum.'<br>
+			                                          <font color="#33CCFF">Comment: </font>'.$commit[3].'" data-placement="right" rel="tooltip"';
 	if($floorDiff < $ceilDiff){ //we want to floor the value
 		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($floorValue).'px; height:16px;"';
 		$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
