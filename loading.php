@@ -20,16 +20,6 @@ if (isset($_POST['end']) && $_POST['end'] != date("m-d-y")) {
 
 error_log("start:".$_SESSION['start']);
 error_log("end:".$_SESSION['end']);
-
-if ($_SESSION['finish']) 
-	header('location:image.php');
-
-if(isset($_SESSION['error']) && $_SESSION['error']) {
-        error_log("got errror");
-        unset($_SESSION['error']);
-	$_SESSION['finish'] = true;
-	header('Location:index.php');
-}
 ?>
 
 <html !DOCTYPE HTML>
@@ -72,30 +62,33 @@ include('menu.php');
 	<!-- Footer -->	
 	<?php include('footer.php')?>
 
-	<?php $_SESSION['STATE'] =0 ;?>
-	<!--include the action.php functions -->
 	<script type="text/javascript">
-	function requestImage() {
-		jQuery.getJSON("php/action.php", 
-		function(data){
+	function requestImage(currentState) {
+          jQuery.ajax({
+            dataType: "json",
+            type: "POST",
+            url:"php/action.php", 
+            success: function(data){
+                  if(data.error == true){
+                    window.location.href= "/index.php"
+                    console.log("Error detected");
+                    return;
+                  }
 		if(data.finished == true) {
 			console.log("changing location...");
 			window.location.href = "/image.php";
 			console.log("changed location...");
 		} else {
-			if(data.error == true){
-				window.location.href= "index.php"
-				console.log("Error detected");
-			}else{
 			$("#loadtext").html(<?php msg('Rendering image')?>);
 			$("#mainbar").attr( "aria-valuenow","50");
 			$("#mainbar").css({"width":"50%"});
-			requestImage();
+			requestImage(1);
 			}
-		}
-		});
+            },
+            data: {state: currentState}
+          });
 	}
-	requestImage();
+	requestImage(0);
 	</script>
 </body>
 </html>
