@@ -158,7 +158,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			#nach haeufigkeit sortieren
 
 
-				usort($legende2, "cmp");
+				usort($legende2, 'cmp');
 				
 				$foo = array_keys($legende2);	
 				$bar = array();
