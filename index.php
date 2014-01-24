@@ -40,10 +40,10 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
    			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">			
    				<input class="form-control" id="repourl" name="repourl" type="text" required="required" placeholder="<?php print msg('Enter repository url'); ?>">
     			<span class="input-group-btn">
-       				<button class="btn btn-default" type="submit" title="Visualize the provided repository">
+       				<button class="btn btn-default" type="submit" title="<?php print msg('Visualize the provided repository'); ?>">
        					<span class="glyphicon glyphicon-indent-left"></span><?php print msg('Visualize!'); ?>
 					</button>
-					<button class="btn btn-default btn-default" data-toggle="modal" data-target="#help" title="Quick Help" type="submit">
+					<button class="btn btn-default btn-default" data-toggle="modal" data-target="#help" title="<?php print msg('Quick Help'); ?>" type="submit">
 						<span class="glyphicon glyphicon-hand-left "></span><?php print msg('Help'); ?>
 					</button>
      			</span>
