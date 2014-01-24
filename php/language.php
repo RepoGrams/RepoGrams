@@ -1,6 +1,10 @@
 <?php 
 	$GLOBALS["messages"] = array (
 		'en'=> array(
+			'Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.'
+				=> 'Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.',
+			'as'
+				=> 'as',
 			'Autor'
 				=> 'Author',
 			'Commmit message'
@@ -95,6 +99,10 @@
 				=> 'Given cache-directory does not exist'
 		),
 		'de'=> array(
+			'Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.'
+				=> 'Scheinbar ist Javascript in Ihrem Browser deaktivert. Bitte aktivieren Sie Javascript um alle Funktionen diese Seite nutzen zu k&ouml;nnen.',
+			'as'
+				=> 'als',
 			'Autor'
 				=> 'Autor',
 			'Commmit message'
@@ -102,7 +110,7 @@
 			'First 3 letters'
 				=> 'Ersten 3 Buchstaben',
 			'Time'
-				=> 'Uhreit',
+				=> 'Uhrzeit',
 			'Date'
 				=> 'Datum',
 			'Commit'
@@ -189,6 +197,10 @@
 				=> 'Cache existiert nicht.'
 			),
 	'fr' => array(
+			'Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.'
+				=> 'Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.',
+			'as'
+				=> 'en',
 			'Autor'			
 				=> 'auteur',
 			'Commmit message'

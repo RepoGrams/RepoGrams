@@ -10,7 +10,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 <body>
 	<noscript>
     	<p style="text-align:center; color: white; background-color: red;">
-    		Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.
+    		<?php print msg('Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.') ?>
     	</p>
 	</noscript>
 	
@@ -76,9 +76,9 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						<span class="glyphicon glyphicon-download"></span><?php print msg('Download image') ?><span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
-    					<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.svg'?>">as .svg</a></li>
-   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.png&mode=png'?>">as .png</a></li>
-   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.jpg&mode=jpg'?>">as .jpg</a></li>
+    					<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.svg'?>"><?php print msg('as') ?> .svg</a></li>
+   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.png&mode=png'?>"><?php print msg('as') ?> .png</a></li>
+   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('as') ?> .jpg</a></li>
   					</ul>
 				</div>
 			</div>
