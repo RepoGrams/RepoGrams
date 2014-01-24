@@ -83,10 +83,15 @@ include('menu.php');
 			window.location.href = "/image.php";
 			console.log("changed location...");
 		} else {
+			if(data.error == true){
+				window.location.href= "index.php"
+				console.log("Error detected");
+			}else{
 			$("#loadtext").html(<?php msg('Rendering image')?>);
 			$("#mainbar").attr( "aria-valuenow","50");
 			$("#mainbar").css({"width":"50%"});
 			requestImage();
+			}
 		}
 		});
 	}
