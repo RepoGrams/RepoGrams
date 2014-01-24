@@ -43,7 +43,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						<option value="2"><?php print msg('Delete') ?></option>           
 					</select>
   				</div>
-  				<button class="btn btn-default" type="submit" title="Apply filters">
+  				<button class="btn btn-default" type="submit" title="Apply filters" disabled>
        				<span class="glyphicon glyphicon-indent-left"></span><?php print msg('Go'); ?>
 				</button>
     		</form>
