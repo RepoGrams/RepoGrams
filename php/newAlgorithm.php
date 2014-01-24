@@ -172,7 +172,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					}
 				}
 
-
+				$legende3 = $this->myArraySort($legende3);
 				//usort($legende3, 'myCompare');
 				
 				if (count($legende3) > 30){
@@ -514,11 +514,22 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			fwrite($datei, utf8_encode($s));
 		}
 
-		function myCompare($a, $b){
-    		if ($a[2] == $b[2]) {
-        		return 0;
+		function myArraySort($array){ //[2] = count
+			$array2 = array()
+    		for ($i = 0; $i < count($array); i++){
+    			$insert = false;
+    			for ($j = 0; $j < count($array2); j++){
+    				if ($array[$i] > $array2[$j]){
+    					array_splice( $array2, ($j+1), 0, $array[$i]);
+    					$insert = true;
+    					break;
+    				}
+    			}
+    			if (!insert){
+    				array_splice( $array2, 0, 0, $array[$i]);
+    			}
     		}
-    		return ($a[2] > $b[2]) ? -1 : 1;
+       		return $array2;
 		}
 	}
 ?>
