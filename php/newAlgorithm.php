@@ -99,12 +99,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				case 0:
 				case 2:
 					$legende2[] = array($partlegende, $color);
-				/*	if(($legende2[$partlegende][1][0] == $color[0]) && ($legende2[$partlegende][1][1] == $color[1]) && ($legende2[$partlegende][1][2] == $color[2])){
-						$legende2[$partlegende][0] = $legende2[$partlegende][0] + 1;
-					} 
-					else{
-						$legende2[$partlegende] = array(0,$color);
-					}*/
 					break;
 				default:
 					echo "möp";
@@ -171,7 +165,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					}
 				}
 
-				$legende3 = $this->myArraySort($legende3);
+				//$legende3 = $this->myArraySort($legende3);
 				
 				if (count($legende3) > 30){
 					$legende = array();	
