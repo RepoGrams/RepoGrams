@@ -55,6 +55,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 		$returnArray[] = array();
 		$legende = array();
+		$legende2 = array();
 
 		while($width%$hohe != 0)
 		$hohe--; 
@@ -82,6 +83,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			$color = $block[2];
 			$w = $x + $length;
 			$partlegende = $block[3];
+
 			switch($modus_color){
 				case 1:
 				case 3:
@@ -89,7 +91,12 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					break;
 				case 0:
 				case 2:
-					$legende[$partlegende] = $color;
+					if($legende2[$partlegende][1] == $color){
+						$legende2[$partlegende][0] = $legende2[$partlegende][0] + 1;
+					} 
+					else{
+						$legende[$partlegende] = array(0,$color);
+					}
 					break;
 				default:
 					echo "möp";
@@ -135,20 +142,24 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			case 0:
 			case 2:
 			#nach haeufigkeit sortieren
-				$foo = array_keys($legende);
+
+
+				usort($legende2, "cmp");
+				
+				$foo = array_keys($legende2);	
 				$bar = array();
 				for ($c = 0; $c < count($foo); $c++){
-					$bar[] = array($foo[$c], $legende[$foo[$c]]);
-				}
+					$bar[] = array($foo[$c], $legende2[$foo[$c]]);
+				}	
 				if (count($bar) > 30){
-					$legende = array();
+					$legende = array();	
 					for ($c = 0; $c < 30; $c++){
-						$legende[] = $bar[$c];
+						$legende2[] = $bar[$c];
 					}
 				}
-				else{
-					$legende = $bar;
-				}
+				 else{
+				 	$legende = $bar;
+				 }
 				break;
 			case 1:
 				$legende[]= array("Kategory add", array(255,0,0));
@@ -469,6 +480,13 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			$hexcolor = $conv->RGBtoHex($color[0],$color[1],$color[2]);
 			$s = " <rect x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\" rx=\"0\" ry=\"0\" id =\"rect".$id."\" style=\"fill:".$hexcolor.";stroke:none\" /> \n";
 			fwrite($datei, utf8_encode($s));
+		}
+
+		private function cmp($a, $b){
+    		if ($a[0] == $b[0]) {
+        		return 0;
+    		}
+    		return ($a[0] < $b[0]) ? -1 : 1;
 		}
 	}
 ?>
