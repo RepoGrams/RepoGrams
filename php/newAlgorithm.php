@@ -176,12 +176,14 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				if (count($legende3) > 30){
 					$legende = array();	
 					for ($c = 0; $c < 30; $c++){
-						$legende[] = array($legende3[$c][0],$legende3[$c][1]);
+						//$legende[] = array($legende3[$c][0],$legende3[$c][1]);
+						$legende3[] = array("test", array(120,120,120));
 					}
 				}
 				 else{
 				 	for ($c = 0; $c < count($legende3); $c++){
-						$legende[] = array($legende3[$c][0],$legende3[$c][1]);
+						//$legende[] = array($legende3[$c][0],$legende3[$c][1]);
+						$legende3[] = array("test", array(120,120,120));
 					}
 				 }
 				break;
