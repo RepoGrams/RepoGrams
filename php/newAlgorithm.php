@@ -516,16 +516,16 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 		function myArraySort($array){ //[2] = count
 			$array2 = array();
-    		for ($i = 0; $i < count($array); i++){
+    		for ($i = 0; $i < count($array); $i++){
     			$insert = false;
-    			for ($j = 0; $j < count($array2); j++){
+    			for ($j = 0; $j < count($array2); $j++){
     				if ($array[$i] > $array2[$j]){
     					array_splice( $array2, ($j+1), 0, $array[$i]);
     					$insert = true;
     					break;
     				}
     			}
-    			if (!insert){
+    			if (!$insert){
     				array_splice( $array2, 0, 0, $array[$i]);
     			}
     		}
