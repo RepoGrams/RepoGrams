@@ -1,4 +1,4 @@
-CREATE TABLE urls2data (
+CREATE TABLE url2data (
   id INTEGER NOT NULL AUTO_INCREMENT,
   url TEXT,
   frequency INTEGER,
