@@ -43,7 +43,10 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			$del_diff += $commitArray[$j][3]; 
 		}
 
-		$all_diff = $add_diff + $del_diff;
+		$all_diff = 0;
+		for ($j = 0; $j < $count; $j++){
+			$all_diff += $commitArray[$j][1]; 
+		}
 
 		$pixel = $width * $height;
 
