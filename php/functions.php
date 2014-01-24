@@ -38,8 +38,6 @@ function dump(){
 
 function renderImage(){
 	$count = 1;
-	error_log(count($_SESSION['image']));
-	error_log(count($_SESSION['image'][32][1]));
 	for ($i = 1; $i <= count($_SESSION['image']); ++$i){
 		$count = renderBlock($_SESSION['image'][$i], $count);
 	}
@@ -90,6 +88,8 @@ function render($commit, $id, $width){
 }
 
 function renderLast($commit, $count, $width){
+	if($commit[0]  == 0)
+		return;
 	$size = $_SESSION['width'] - $width;
 	$color = buildColor($commit[2]);$_SESSION['image'];
 	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($size).'px; height:'.$commit[1].'px;"';
