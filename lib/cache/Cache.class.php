@@ -134,7 +134,22 @@ class Cache {
             $this->atomicIncrementFrequencyForURL($repoURL);
             $datadir = $result->folder;
             error_log("Cache says datadir is: ".$datadir);
-	    return new GitRepo($repoURL, $start, $end, $datadir);
+            $repo = new GitRepo($repoURL, $start, $end, $datadir);
+            if ($datadir !== $result->folder) {
+              /* The directory was cached,
+               * but the folder containing the data has been deleted.
+               * In this case we just update the location of the cache folder
+               */
+              $query = sprintf(
+                "UPDATE url2data
+                 SET folder = '%s'
+                 WHERE url = '%s'",
+                 $datadir, $repoURL
+               );
+              $result = $this->dbconnection->query($query);
+              assert($result);
+            }
+            return $repo;
           } else {
 	    error_log("key doesnt exist");
             // the element is not in the cache so let's construct it

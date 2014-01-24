@@ -9,8 +9,8 @@ class gitImport extends RepoImporter {
 
 	public function __construct($repo, $start, $end, &$datadir=NULL) { //,$user=null,$password=null){
 		if(!is_null($datadir) && !file_exists($datadir)){
-			throw new Exception("given cache-directory does not exist");
-			return 0;
+			error_log("given cache-directory does not exist");
+			$datadir = NULL;
 		}
 		
 		error_log("start: ".$start." end: ".$end);
