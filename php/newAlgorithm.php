@@ -29,6 +29,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		################################################## 
 
 		$returnArray = array();
+		$returnArray2 = array();
 
 		###################################################
 
@@ -95,16 +96,21 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			}
 
 
+
 			if ($w > $width){
 				$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
-	 			$returnArray[] = array(($width-$x), $hohe, $color, $str, $time, $author);
+	 			$returnArray2[] = array(($width-$x), $hohe, $color, $str, $time, $author);
+	 			$returnArray[] = $returnArray2;
+	 			$returnArray2 = array();
 	 			$id++;
 	 			$length = $length-($width-$x);
 	 			$x = 0;
 				$y += $hohe;
 				while($length > $width){
 					$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);
-	 				$returnArray[] = array($width, $hohe, $color, $str, $time, $author);
+	 				$returnArray2[] = array($width, $hohe, $color, $str, $time, $author);
+	 				$returnArray[] = $returnArray2;
+	 				$returnArray2 = array();
 					$id++;
 					$x = 0;
 					$y += $hohe;
@@ -112,14 +118,14 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				}
 				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
 	 			if($length > 0.01){
-	 				$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
+	 				$returnArray2[] = array($length, $hohe, $color, $str, $time, $author);
 					$id++;
 					$x += $length;
 	 			}
 			}
 			else{
 				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
-				$returnArray[] = array($length, $hohe, $color, $str, $time, $author);
+				$returnArray2[] = array($length, $hohe, $color, $str, $time, $author);
 				$id++;
 				$x += $length;
 			}
@@ -128,7 +134,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		switch($modus_color){
 			case 0:
 			case 2:
-			#array_keys -> alle keys raussuchen und auf 1,2 etc umschreiben, autoren auf 12 kuerzen
+			#nach haeufigkeit sortieren
 				$foo = array_keys($legende);
 				$bar = array();
 				for ($c = 0; $c < count($foo); $c++){
