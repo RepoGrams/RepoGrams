@@ -89,5 +89,11 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 	
 	<?php include('footer.php') ?>
 
+	<script type="text/javascript">
+		$(function () {
+    		$("[rel='tooltip']").tooltip();
+		});
+	</script>
+	
 </body>
 </html>

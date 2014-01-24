@@ -45,9 +45,13 @@ function renderImage(){
 function renderBlock($commit, $index){
 	$color = buildColor($commit[2]);$_SESSION['image'];
 	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($commit[0]).'px; height:16px;"';
+	
+	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
+			                                          Date: '. $datum.'<br>
+			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip">';
 	$datum = date("H:i:s - m.d.y", $commit[4]);
-	$effect = 'title="'.$commit[3].' by '.$commit[5]. ' on '. $datum.'"'; 
-	$head = '<li class="customBlock" id="'.$index.'" '.$style.' '.$effect.'>';
+	//$effect = 'title="'.$commit[3].' by '.$commit[5]. ' on '. $datum.'"'; 
+	$head = '<li class="customBlock" id="'.$index.'" '.$style.' '.$tooltip.'>';
 	$end = '</li>';
 	echo ($head);
 	echo ($end);
