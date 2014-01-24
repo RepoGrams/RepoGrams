@@ -54,23 +54,23 @@
 			'What is Repogram?'
 				=> 'What is Repogram?',
 			'The word repogram comes from the words "Repository" and "Chromograms"'
-				=> 'The word repogram comes from the words "Repository" and "Chromograms"',
+				=> 'The word repogram is a portmanteau, combining the words "Repository" and "Chromograms"',
 			'So what is a "Repository"?'
 				=> 'So what is a "Repository"?',
 			'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.'
-				=> 'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.',
+				=> 'A repository is a collection of files used by developers to manage their source code. If you ever used GitHub, you will surely have a so called repository.',
 			'Ok, clear on that. What is a "Chromogram"?'
-				=> 'Ok, clear on that. What is a "Chromogram"?',
+				=> 'Ok, that\'s clear. Now, what is a "Chromogram"?',
 			'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.'
-				=> 'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.',
+				=> 'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually consists of blocks.',
 			'Read that. So how can I use this site?'
-				=> 'Read that. So how can I use this site?',
+				=> 'Got that. So how can I use this site?',
 			'That\'s an easy one.'
-				=> 'That\'s an easy one.',
+				=> 'That\'s easy.',
 			'You just need to go to the frontpage, enter the URL of your repository and click on'
 				=> 'You just need to go to the frontpage, enter the URL of your repository and click on',
 			'After a short waiting time, you will see your rendered chromogram.'
-				=> 'After a short waiting time, you will see your rendered chromogram.',
+				=> 'After a short waiting period, you will see your rendered chromogram.',
 			'Do you have some examples?'
 				=> 'Do you have some examples?',
 			'Twitter Bootstrap'
