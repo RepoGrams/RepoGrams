@@ -5,47 +5,12 @@
 	require_once("functions.php");
 	require_once("language.php");
 	require_once(__DIR__."/../lib/vcs/git/GitRepo.class.php");
-	dump();
 
 	/**
 	 * Check the formular input and start rendering
 	 */
-	//if (checkInput($_SESSION['repourl'])) {
-		//if( is_null($_SESSION['repo']))
-			//error_log("NULLOBJ");
-		//if (isset ($_SESSION['repo']))
-			//error_log("Repo var set to");
-			
-		//error_log("Rendering");
-		//renderRepo($_SESSION['repourl']);
-	//}
-        renderRepo($_SESSION['repourl']);
-	
-	/**
-	 * Callback function to update progress info
-	 * @param string $msg
-	 * @return NULL
-	 */
-	function callback($msg = null) {
-		error_log("Callback called ".$_SESSION['progress']);
-		$_SESSION['loading_info'] = $msg;
-		$_SESSION['progress'] = $_SESSION['progress']+25;
-		return null;
-	}
-	
-	/**
-	 * Initialize session variables
-	 */
-//	function initVariables() {
-//		$_SESSION['loading_info']     = '';  
-//		$_SESSION['progress'] 	      = 0;
-//		$_SESSION['error_message']    = '';     
-//		$_SESSION['title']            = ''; 
-//		$_SESSION['repourl']          = '';
-//		$_SESSION['finish']           = false;
-//		$_SESSION['width']  = 768;                                  
-//		$_SESSION['height'] = 512;
-//	}
+	checkInput($_SESSION['repourl']);
+	renderRepo($_SESSION['repourl']);
 	
 	/**
 	 * Check formular input if url is empty
@@ -53,15 +18,17 @@
 	function checkInput($repourl = null) {
           if (strpos($repourl, "http") === false) {
 			$_SESSION['error_message'] = msg('Invalid repository url.');
-                        $_SESSION['error'] = true;
-			return false;
+			$_SESSION['error'] = true;
+			$retVal = array("error"=>true);
+			echo(json_encode($retVal));
+			return;
           }
 		if(!str_replace(' ','',$repourl) != '') {
 			$_SESSION['error_message'] = msg('Invalid repository url.');
-                        $_SESSION['error'] = true;
-			return false;
-		} else {
-			return true;
+			$_SESSION['error'] = true;
+			$retVal = array("error"=>true);
+			echo(json_encode($retVal));
+			return;
 		}
 	}
 	
