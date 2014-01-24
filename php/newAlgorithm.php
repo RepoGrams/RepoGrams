@@ -135,6 +135,9 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$returnArray2[] = array($length, $hohe, $color, $str, $time, $author);
 				$id++;
 				$x += $length;
+				if ($i == $count-1){
+					$returnArray[] = $returnArray2;
+				}
 			}
 		}
 
