@@ -8,8 +8,6 @@
 		$commitArray = array_reverse($commitA);
 		$count = count($commitArray);
 
-		callback('Start rendering...');
-
 		################################################## 
 		################### Create SVG ###################
 		$datei = fopen("visualization-".session_id().".svg",  "w+");
@@ -30,10 +28,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		fwrite($datei, utf8_encode($s));
 		################################################## 
 
-		callback('Initialize image...');
-
 		$returnArray = array();
-
 
 		###################################################
 
@@ -203,7 +198,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 		}
 		$returnArray[0] = $legende;
-		callback('Initialize image...');
 		fwrite($datei, utf8_encode("</g> </g></svg> \n"));
 		fclose($datei);
 		return $returnArray;
@@ -465,6 +459,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			/*if ($w <= 0){
 				$w = 0.1;
 			}*/
+			$conv = new convert();
 			$hexcolor = $conv->RGBtoHex($color[0],$color[1],$color[2]);
 			$s = " <rect x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\" rx=\"0\" ry=\"0\" id =\"rect".$id."\" style=\"fill:".$hexcolor.";stroke:none\" /> \n";
 			fwrite($datei, utf8_encode($s));
