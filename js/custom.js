@@ -7,7 +7,7 @@ function example() {
 				var number = Math.floor(Math.random()*xhr.responseJSON.length);
 				var descr = url[number].description;
 				url = url[number].html_url;
-				$("<p style=\"text-align:center;\">"+descr+"</p>").appendTo(document.getElementById('description'));
+                                $("#description").html("<p style=\"text-align:center;\">"+descr+"</p>");
 		(document.getElementById('repourl')).value = url+'.git';
 
 				        }
