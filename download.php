@@ -17,7 +17,7 @@ function convertImage() {
 		case "jpg": $image->setImageFormat("jpg"); break;
 	}
 	$image->resizeImage($_SESSION["width"]*2, $_SESSION["height"]*2, imagick::FILTER_LANCZOS, 1);
-	$image->writeImage('php/visualization-'.session_id().$mode);
+	$image->writeImage('php/visualization-'.session_id().'.'.$mode);
 }
 
 function download_file( $fullPath ){
