@@ -107,6 +107,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					break;
 				default:
 					echo "möp";
+					break;
 			}
 
 
@@ -157,7 +158,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			#nach haeufigkeit sortieren
 
 
-				usort($legende2, "cmp");
+				usort($legende2, 'cmp');
 				
 				$foo = array_keys($legende2);	
 				$bar = array();
@@ -501,7 +502,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			fwrite($datei, utf8_encode($s));
 		}
 
-		private function cmp($a, $b){
+		function cmp($a, $b){
     		if ($a[0] == $b[0]) {
         		return 0;
     		}
