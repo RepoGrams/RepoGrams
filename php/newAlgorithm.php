@@ -61,9 +61,9 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		$id = 0;
 		for ($i = 0; $i < $count; $i++){
 			$str = $commitArray[$i][0];
-			$str = preg_replace("\"" , "&quot;" , $str);
-			$str = preg_replace("<", "&lt;", $str);
-			$str = preg_replace(">", "&gt;", $str);
+			$str = preg_replace("/\"/" , "&quot;" , $str);
+			$str = preg_replace("/</", "&lt;", $str);
+			$str = preg_replace("/>/", "&gt;", $str);
 			$time = $commitArray[$i][5];
 			$author = $commitArray[$i][4];
 			if ($modus_length == 1){
