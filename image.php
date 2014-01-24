@@ -27,11 +27,11 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
  	   			<div class="form-group">
     				<label for="filter1">Commit</label>
     				<select id="filter1" name="filter1" class="form-control">
-  						<option><?php msg('Autor') ?></option>              <!-- 2 -->
-  						<option><?php msg('Commmit message') ?></option>     <!-- 1 -->
- 	 					<option selected><?php msg('First 3 letters') ?></option>    <!-- 0 -->
-  						<option><?php msg('Time') ?></option>               <!-- 3 -->
-	  					<option><?php msg('Date') ?></option>               <!-- 4 -->
+  						<option><?php print msg('Autor') ?></option>              <!-- 2 -->
+  						<option><?php print msg('Commmit message') ?></option>     <!-- 1 -->
+ 	 					<option selected><?php print msg('First 3 letters') ?></option>    <!-- 0 -->
+  						<option><?php print msg('Time') ?></option>               <!-- 3 -->
+	  					<option><?php print msg('Date') ?></option>               <!-- 4 -->
 					</select>
 
   				</div>		
@@ -39,9 +39,9 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     				<label for="filter1">Commit</label>
 					<label for="filter2">Operation</label>
     				<select id="filter2" name="filter2" class="form-control">
-						<option selected><?php msg('All') ?></option>                <!-- 0 -->
-  						<option><?php msg('Add') ?></option>                <!-- 1 -->
-  						<option><?php msg('Delete') ?></option>             <!-- 2 -->
+						<option selected><?php print msg('All') ?></option>                <!-- 0 -->
+  						<option><?php print msg('Add') ?></option>                <!-- 1 -->
+  						<option><?php print msg('Delete') ?></option>             <!-- 2 -->
 					</select>
   				</div>
     		</form>
@@ -71,7 +71,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 			<div style="float:right;">
 				<div class="btn-group">
   					<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-  						<span class="glyphicon glyphicon-download"></span><?php msg('Download image') ?><span class="caret"></span>
+  						<span class="glyphicon glyphicon-download"></span><?php print msg('Download image') ?><span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
     					<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.svg'?>">as .svg</a></li>
