@@ -91,7 +91,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					break;
 				case 0:
 				case 2:
-					if($legende2[$partlegende][1] == $color){
+					if($legende2[$partlegende][1][0] == $color[0] && $legende2[$partlegende][1][1] == $color[1] && $legende2[$partlegende][1][2] == $color[2]){
 						$legende2[$partlegende][0] = $legende2[$partlegende][0] + 1;
 					} 
 					else{
