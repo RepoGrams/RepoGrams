@@ -515,7 +515,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		}
 
 		function myArraySort($array){ //[2] = count
-			$array2 = array()
+			$array2 = array();
     		for ($i = 0; $i < count($array); i++){
     			$insert = false;
     			for ($j = 0; $j < count($array2); j++){
