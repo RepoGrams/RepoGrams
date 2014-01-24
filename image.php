@@ -27,23 +27,25 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
  	   			<div class="form-group">
     				<label for="filter1">Commit</label>
     				<select id="filter1" name="filter1" class="form-control">
-  						<option><?php print msg('Autor') ?></option>              <!-- 2 -->
-  						<option><?php print msg('Commmit message') ?></option>     <!-- 1 -->
- 	 					<option selected><?php print msg('First 3 letters') ?></option>    <!-- 0 -->
-  						<option><?php print msg('Time') ?></option>               <!-- 3 -->
-	  					<option><?php print msg('Date') ?></option>               <!-- 4 -->
+  						<option value="2"><?php print msg('Autor') ?></option>         
+  						<option value="1"><?php print msg('Commmit message') ?></option>  
+ 	 					<option value="0" selected><?php print msg('First 3 letters') ?></option>  
+  						<option value="3"><?php print msg('Time') ?></option>        
+	  					<option value="4"><?php print msg('Date') ?></option>               
 					</select>
 
   				</div>		
   				<div class="form-group">
-    				<label for="filter1">Commit</label>
 					<label for="filter2">Operation</label>
     				<select id="filter2" name="filter2" class="form-control">
-						<option selected><?php print msg('All') ?></option>                <!-- 0 -->
-  						<option><?php print msg('Add') ?></option>                <!-- 1 -->
-  						<option><?php print msg('Delete') ?></option>             <!-- 2 -->
+						<option value="0"><?php print msg('All') ?></option>     
+  						<option value="1"><?php print msg('Add') ?></option>              
+  						<option value="2"><?php print msg('Delete') ?></option>           
 					</select>
   				</div>
+  				<button class="btn btn-default" type="submit" title="Apply filters">
+       				<span class="glyphicon glyphicon-indent-left"></span><?php print msg('Go'); ?>
+				</button>
     		</form>
     		
     		<!-- Repo-Visualization -->
