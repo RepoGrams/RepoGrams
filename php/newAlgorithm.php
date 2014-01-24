@@ -138,13 +138,16 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 	 			}
 			}
 			else{
-				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
 				$returnArray2[] = array($length, $hohe, $color, $str, $time, $author);
-				$id++;
-				$x += $length;
 				if ($i == $count-1){
 					$returnArray[] = $returnArray2;
+					$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);
 				}
+				else{
+					$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);
+				}
+				$id++;
+				$x += $length;
 			}
 		}
 
