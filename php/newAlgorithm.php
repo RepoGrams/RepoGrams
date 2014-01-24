@@ -84,6 +84,10 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			$w = $x + $length;
 			$partlegende = $block[3]; //text message
 
+			if ($length == 0){
+				continue;
+			}
+
 			switch($modus_color){
 				case 1:
 				case 3:
