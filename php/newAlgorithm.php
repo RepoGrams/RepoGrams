@@ -158,7 +158,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			case 2:
 			#nach haeufigkeit sortieren
 				$legende3 = array();
-				for ($c = 0; $c < count($legende2), $c++){
+				for ($c = 0; $c < count($legende2); $c++){
 					$found = false;
 					for ($d = 0; $d < count($legende3; $d++){
 						if ($legende2[$c][0] == $legende3[$d][0]){
