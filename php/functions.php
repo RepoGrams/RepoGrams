@@ -88,8 +88,6 @@ function render($commit, $id, $width){
 }
 
 function renderLast($commit, $count, $width){
-	if($commit[0]  == 0)
-		return;
 	$size = $_SESSION['width'] - $width;
 	$color = buildColor($commit[2]);$_SESSION['image'];
 	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($size).'px; height:'.$commit[1].'px;"';
