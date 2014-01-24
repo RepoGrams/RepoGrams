@@ -98,7 +98,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					break;
 				case 0:
 				case 2:
-					if($legende2[$partlegende][1][0] == $color[0] && $legende2[$partlegende][1][1] == $color[1] && $legende2[$partlegende][1][2] == $color[2]){
+					if(($legende2[$partlegende][1][0] == $color[0]) && ($legende2[$partlegende][1][1] == $color[1]) && ($legende2[$partlegende][1][2] == $color[2])){
 						$legende2[$partlegende][0] = $legende2[$partlegende][0] + 1;
 					} 
 					else{
@@ -107,6 +107,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					break;
 				default:
 					echo "möp";
+					break;
 			}
 
 
@@ -229,6 +230,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				break;
 			default:
 				echo "möp";
+				break;
 
 		}
 		$returnArray[0] = $legende;
@@ -266,6 +268,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				break;
 		}
 		if ($length < 0.1) $length = 0;
+		if ($length > 0.9) $length = 1;
 		return array($length, $hohe, $color[0], $color[1]);
 	}
 
@@ -310,6 +313,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   		$color = array($r,$g,$b);
 		    	$txt = $first.$second.$third;
 		    	return array($color, $txt);
+		    	break;
 
 		    ###################################################
 			#### Commit Message encoded in logical content ####
