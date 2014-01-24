@@ -107,7 +107,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					break;
 				default:
 					echo "möp";
-					break;
 			}
 
 
@@ -268,7 +267,6 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				break;
 		}
 		if ($length < 0.1) $length = 0;
-		if ($length > 0.9) $length = 1;
 		return array($length, $hohe, $color[0], $color[1]);
 	}
 
