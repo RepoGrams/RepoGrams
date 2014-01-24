@@ -9,7 +9,7 @@
 	/**
 	 * Check the formular input and start rendering
 	 */
-	checkInput($_SESSION['repourl']);
+	//checkInput($_SESSION['repourl']);
 	renderRepo($_SESSION['repourl']);
 	
 	/**

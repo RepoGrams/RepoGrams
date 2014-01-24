@@ -11,19 +11,21 @@ class Cache {
         // we might want to change this to MB
         private $cache_size;
         private $fill_size;
+        private $dbconnection;
+        private $dbalive;
 
         public function __construct($size) {
           $this->cache_size = $size;
-          $this->fill_size = 0;
+          $this->dbconnection = new mysqli("localhost","root","","se13");
+          $query = 'SELECT (*) FROM url2data;';
+          if ($this->dbconnection->connect_errno) {
+            error_log("Connecting to database failed!");
+            $this->dbalive = false;
+          } else {
+            $this->dbalive = true;
+          }
 	  error_log("Hi, Constructor of Cache speaking...");
-          if (isset($_SESSION['repoURL2frequency']) && (isset($_SESSION['repoURL2dataFolder'])) ){
-		$this->repoURL2frequency = unserialize($_SESSION['repoURL2frequency']);
-		$this->repoURL2dataFolder =  unserialize($_SESSION['repoURL2dataFolder']);
-	  } else {
-		$this->repoURL2frequency = array();	
-		$this->repoURL2dataFolder = array();
-		
-	  }
+          
         }
 
         public function __destruct() {
@@ -31,6 +33,85 @@ class Cache {
 		$_SESSION['repoURL2dataFolder'] = serialize($this->repoURL2dataFolder);
 
 		// Store the serialized value of $repoURL2frequency
+        }
+
+
+        /* 
+         * $url: the URL of the repo
+         * returns an array [frequency, foldername]
+         */
+        private function getInfo($url) {
+          $query = sprintf("SELECT folder, frequency 
+            FROM url2data WHERE url = '%s'",
+            mysql_real_escape_string($url)
+          );
+          error_log("getInfo query: ". $query);
+          $result = $this->dbconnection->query($query);
+          if ($result) {
+            $row = $result->fetch_object();
+            $result->close();
+            if ($row) {
+              return $row;
+            } else {
+              return false;
+            }
+          } else {
+            // url not in database
+            error_log("entry was not found");
+            return false;
+          }
+        }
+
+
+        /* 
+         * $url: the URL of the repo
+         * stores $url and the $path2folder
+         */
+        private function storeInfo($url, $path2folder) {
+          $query = sprintf("INSERT INTO url2data (url, frequency, folder)
+                            VALUES ('%s', 1, '%s')",
+            mysql_real_escape_string($url),
+            mysql_real_escape_string($path2folder)
+          );
+          error_log($query);
+          $result = $this->dbconnection->query($query);
+          // result must be true, else it would indicate that
+          // inserting had failed
+          assert($result === true);
+        }
+
+        /*
+         *  increments the frequency for $url
+         */
+        private function atomicIncrementFrequencyForURL($url) {
+          $query = sprintf(
+            "UPDATE url2data 
+             SET frequency  = frequency + 1
+             WHERE url = '%s'
+            ", mysql_real_escape_string($url));
+          $result = $this->dbconnection->query($query);
+          assert($result);
+        }
+
+        private function atomicDecrementFrequency() {
+          $query = sprintf(
+            "UPDATE url2data 
+             SET frequency  = frequency - 1;
+            "
+          );
+          $result = $this->dbconnection->query($query);
+          assert($result);
+        }
+
+        private function getFillSize() {
+          $query = sprintf(
+            "SELECT COUNT(*) as fillsize FROM url2data;"
+          );
+          $result = $this->dbconnection->query($query);
+          assert($result);
+          $retval = $result->fetch_object()->fillsize;
+          $result->close();
+          return $retval;
         }
 
         /*
@@ -42,11 +123,16 @@ class Cache {
          *  @returns: the corresponding Repo object
          */
         public function get($repoURL, $start, $end) {
-          if (array_key_exists($repoURL, $this->repoURL2frequency)) {
+          if ($this->dbalive !== true) {
+	    return new GitRepo($repoURL, $start, $end, $datadir);
+          }
+          $result = $this->getInfo($repoURL);
+          assert($result !== null);
+          if ($result !== false) {
             // the element is in the cache, return it
             error_log("key exists!");
-	    $this->repoURL2frequency[$repoURL] = $this->repoURL2frequency[$repoURL] + 1;
-            $datadir = $this->repoURL2dataFolder[$repoURL];
+            $this->atomicIncrementFrequencyForURL($repoURL);
+            $datadir = $result->folder;
             error_log("Cache says datadir is: ".$datadir);
 	    return new GitRepo($repoURL, $start, $end, $datadir);
           } else {
@@ -55,37 +141,42 @@ class Cache {
             $datadir = NULL;
             $repo = new GitRepo($repoURL, $start, $end, $datadir);
             error_log('I got '.$datadir);
+            error_log("fill size: ". $this->getFillSize());
 	    // update the cache
-            if ($this->fill_size < $this->cache_size) {
+            if ($this->getFillSize() < $this->cache_size) {
               // we have still free space in the cache
-              $this->repoURL2frequency[$repoURL] = 1;
-              $this->repoURL2dataFolder[$repoURL] = $datadir;
-              $this->fill_size++;
+              $this->storeInfo($repoURL, $datadir);
             } else {
               // no free space in the array anymore
               // decrement frequency of all elements in cache
-              foreach($this->repoURL2frequency as $key => &$value) {
-                $value--;
-              }
+              $this->atomicDecrementFrequency();
               // get the key(s) with the minimal value
-              $minimalKeys = array_keys($this->repoURL2frequency, min($this->repoURL2frequency));
-              $minimalKeys = $minimalKey[0];
-              if ($this->repoURL2frequency[$minimalKey] <= 0) {
+              // query returns
+              $query = "SELECT id, frequency 
+                FROM url2data
+                ORDER BY frequency
+                LIMIT 1;";
+              // result is [minimal_frequency, id]
+              $result = $this->dbconnection->query($query);
+              $min2id = $result->fetch_object();
+              $result->close();
+              if ($min2id->frequency <= 0) {
                 // evict the cache entry
-                unset($this->repoURL2frequency[$minimalKey]);
+                error_log("evicting cache entry");
+                $query = sprintf(
+                      "DELETE FROM url2data
+                      WHERE id = '%s'",
+                      mysql_real_escape_string($min2id->id)
+                );
+                $result = $this->dbconnection->query($query);
+                assert($result);
                 // TODO
                 // delete the directory of the evicted repository
-                // $folder = $repoURL2dataFolder[$min];
-                unset($this->repoURL2dataFolder[$minimalKey]);
-
-                // add the new 
-                $this->repoURL2frequency[$repoURL] = 1;
-                $this->repoURL2dataFolder[$repoURL] = $datadir;
+                $this->storeInfo($repoURL, $datadir);
               }
             }
             return $repo;
           }
         }
 }
-
 ?>
