@@ -201,7 +201,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 				$s = 0.49 + $month * 0.04;
 				$l = ($year - 1990) * 0.04;
-				
+
 				$legende = array();
 
 				while($day < 31){
@@ -490,7 +490,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
     		if ($a[0] == $b[0]) {
         		return 0;
     		}
-    		return ($a[0] < $b[0]) ? -1 : 1;
+    		return ($a[0] > $b[0]) ? -1 : 1;
 		}
 	}
 ?>
