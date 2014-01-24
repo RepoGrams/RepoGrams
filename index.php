@@ -81,6 +81,8 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 		<button type="button" class="btn btn-info" onclick="example();"><?php print msg('Show me some examples'); ?></button>
 	  </div>
 	  </div>
+	  <p id="description">
+	  </div>
 	</div> <!-- root container close -->
 	
 	<div id="push"></div>
