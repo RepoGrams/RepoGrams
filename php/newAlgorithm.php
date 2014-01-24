@@ -149,7 +149,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$foo = array_keys($legende2);	
 				$bar = array();
 				for ($c = 0; $c < count($foo); $c++){
-					$bar[] = array($foo[$c], $legende2[$foo[$c]]);
+					$bar[] = array($foo[$c], $legende2[$foo[$c]][1]);
 				}	
 				if (count($bar) > 30){
 					$legende = array();	
