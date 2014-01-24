@@ -98,12 +98,13 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					break;
 				case 0:
 				case 2:
-					if(($legende2[$partlegende][1][0] == $color[0]) && ($legende2[$partlegende][1][1] == $color[1]) && ($legende2[$partlegende][1][2] == $color[2])){
+					$legende2[] = array($partlegende, $color);
+				/*	if(($legende2[$partlegende][1][0] == $color[0]) && ($legende2[$partlegende][1][1] == $color[1]) && ($legende2[$partlegende][1][2] == $color[2])){
 						$legende2[$partlegende][0] = $legende2[$partlegende][0] + 1;
 					} 
 					else{
 						$legende2[$partlegende] = array(0,$color);
-					}
+					}*/
 					break;
 				default:
 					echo "möp";
@@ -156,14 +157,28 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			case 0:
 			case 2:
 			#nach haeufigkeit sortieren
+				$legende3 = array();
+				for ($c = 0; $c < count($legende2), $c++){
+					$found = false;
+					for ($d = 0; $d < count($legende3; $d++){
+						if ($legende2[$c][0] == $legende3[$d][0]){
+							$legende3[$d][2] = $legende3[$d][2] + 1;
+							$found = true;
+							break;
+						}
+					}
+					if (!$found){
+						$legende3[] = array($legende2[$c][0],$legende2[$c][1], 1);
+					}
+				}
 
 
-				usort($legende2, 'cmp');
+				usort($legende2, 'myCompare');
 				
-				$foo = array_keys($legende2);	
+				$foo = array_keys($legende3);	
 				$bar = array();
 				for ($c = 0; $c < count($foo); $c++){
-					$bar[] = array($foo[$c], $legende2[$foo[$c]][1]);
+					$bar[] = array($foo[$c], $legende3[$foo[$c]][1]);
 				}	
 				if (count($bar) > 30){
 					$legende = array();	
@@ -502,11 +517,11 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			fwrite($datei, utf8_encode($s));
 		}
 
-		function cmp($a, $b){
-    		if ($a[0] == $b[0]) {
+		function myCompare($a, $b){
+    		if ($a[2] == $b[2]) {
         		return 0;
     		}
-    		return ($a[0] > $b[0]) ? -1 : 1;
+    		return ($a[2] > $b[2]) ? -1 : 1;
 		}
 	}
 ?>
