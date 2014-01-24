@@ -95,7 +95,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 						$legende2[$partlegende][0] = $legende2[$partlegende][0] + 1;
 					} 
 					else{
-						$legende[$partlegende] = array(0,$color);
+						$legende2[$partlegende] = array(0,$color);
 					}
 					break;
 				default:
