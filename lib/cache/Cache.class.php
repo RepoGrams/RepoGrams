@@ -12,6 +12,7 @@ class Cache {
         private $cache_size;
         private $fill_size;
         private $dbconnection;
+        private $dbalive;
 
         public function __construct($size) {
           $this->cache_size = $size;
@@ -19,6 +20,9 @@ class Cache {
           $query = 'SELECT (*) FROM url2data;';
           if ($this->dbconnection->connect_errno) {
             error_log("Connecting to database failed!");
+            $this->dbalive = false;
+          } else {
+            $this->dbalive = true;
           }
 	  error_log("Hi, Constructor of Cache speaking...");
           
@@ -119,6 +123,9 @@ class Cache {
          *  @returns: the corresponding Repo object
          */
         public function get($repoURL, $start, $end) {
+          if ($this->dbalive !== true) {
+	    return new GitRepo($repoURL, $start, $end, $datadir);
+          }
           $result = $this->getInfo($repoURL);
           assert($result !== null);
           if ($result !== false) {
