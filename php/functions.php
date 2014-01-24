@@ -38,7 +38,9 @@ function dump(){
 
 function renderImage(){
 	$count = 1;
-	for ($i = 1; $i < count($_SESSION['image']); ++$i){
+	error_log(count($_SESSION['image']));
+	error_log(count($_SESSION['image'][32][1]));
+	for ($i = 1; $i <= count($_SESSION['image']); ++$i){
 		$count = renderBlock($_SESSION['image'][$i], $count);
 	}
 }
@@ -66,6 +68,7 @@ function render($commit, $id, $width){
 	$ceilDiff = $ceilValue - $commit[0];
 
 	$color = buildColor($commit[2]);$_SESSION['image'];
+	date_default_timezone_set ( 'UTC' );
 	$datum = date("H:i:s - m.d.y", $commit[4]);
 	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
 			                                          Date: '. $datum.'<br>
@@ -90,12 +93,13 @@ function renderLast($commit, $count, $width){
 	$size = $_SESSION['width'] - $width;
 	$color = buildColor($commit[2]);$_SESSION['image'];
 	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($size).'px; height:'.$commit[1].'px;"';
-	
+
+	date_default_timezone_set ( 'UTC' );
+	$datum = date("H:i:s - m.d.y", $commit[4]);
 	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
 			                                          Date: '. $datum.'<br>
 			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
-	$datum = date("H:i:s - m.d.y", $commit[4]);
-	$head = '<li class="customBlock" id="'.$index.'" '.$style.' '.$tooltip.'>';
+	$head = '<li class="customBlock" id="'.$count.'" '.$style.' '.$tooltip.'>';
 	$end = '</li>';
 	echo ($head);
 	echo ($end);
