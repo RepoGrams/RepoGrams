@@ -4,7 +4,7 @@ if (isset($_GET['filter1'])) {
 	$mode = $_GET['filter1'];
 	renderImage(0, $mode);
 } else if (isset($_GET['filter2'])) {
-	$secmode = $_GET['filter2'];
+	$mode = $_GET['filter2'];
 	renderImage(1, $mode);
 }	
 
