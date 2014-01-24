@@ -82,7 +82,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			$length = $block[0];
 			$color = $block[2];
 			$w = $x + $length;
-			$partlegende = $block[3];
+			$partlegende = $block[3]; //text message
 
 			switch($modus_color){
 				case 1:
@@ -154,7 +154,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				if (count($bar) > 30){
 					$legende = array();	
 					for ($c = 0; $c < 30; $c++){
-						$legende2[] = $bar[$c];
+						$legende[] = $bar[$c];
 					}
 				}
 				 else{
@@ -162,6 +162,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				 }
 				break;
 			case 1:
+				$legende = array();
 				$legende[]= array("Kategory add", array(255,0,0));
 				$legende[]= array("Kategory delete", array(0,255,0));
 				$legende[]= array("Kategory fix", array(0,0,255));
@@ -170,6 +171,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$hour = 0;
 				$go = 0;
 				$minute = 0;
+				$legende = array();
 				while($go < 24){
 					$hour = $go;
 					if ($hour < 12){
@@ -199,6 +201,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 				$s = 0.49 + $month * 0.04;
 				$l = ($year - 1990) * 0.04;
+				
+				$legende = array();
 
 				while($day < 31){
 					$convArray = $conv->ColorHSLToRGB($h,$s,$l);
