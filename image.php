@@ -23,7 +23,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 		<br>
     	<div class="hero-unit">
     		<!-- Filtereinstellungen -->
- 	   		<form role="form" action="" method="POST" class="form-inline" style="text-align:center;">
+ 	   		<form role="form" action="php/filter.php" method="POST" class="form-inline" style="text-align:center;">
  	   			<div class="form-group">
     				<label for="filter1">Commit</label>
     				<select id="filter1" name="filter1" class="form-control">
