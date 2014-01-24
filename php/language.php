@@ -189,28 +189,28 @@
 				=> 'Cache existiert nicht.'
 			),
 	'fr' => array(
-			'Autor'			//TODO uebersetzen
-				=> 'Autor',
+			'Autor'			
+				=> 'auteur',
 			'Commmit message'
-				=> 'Commmit message',
+				=> 'message de commit',
 			'First 3 letters'
-				=> 'First 3 letters',
+				=> 'Les 3 prem&egrave;&egrave;res lettres',
 			'Time'
-				=> 'Time',
+				=> 'temps',
 			'Date'
-				=> 'Date',
+				=> 'date',
 			'Commit'
-				=> 'Commit',
+				=> 'commit',
 			'Operation'
-				=> 'Operation',
+				=> 'op&eacute;ration',
 			'All'
-				=> 'All',
+				=> 'tout',
 			'Add'
-				=> 'Add',
+				=> 'ajouter',
 			'Delete'
-				=> 'Delete',
+				=> 'effacer',
 			'Download image'
-				=> 'Download image', //TODO --- ende
+				=> 't&eacute;l&eacute;charge cette image', 
 			'Visualize!' 
 				=> 'Visualise!',
 			'Help' 
