@@ -46,7 +46,7 @@ function renderImage(){
 function renderBlock($block, $count){
 	$width = 0;
 	for ($i = 0; $i < count($block); $i++){
-		if($i == count($block)){
+		if($i == count($block)-1){
 			renderLast($block[$i], $count, $width);
 			$count++;
 			$width = 0;
@@ -71,12 +71,12 @@ function render($commit, $id, $width){
 			                                          Date: '. $datum.'<br>
 			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
 	if($floorDiff < $ceilDiff){ //we want to floor the value
-		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($floorValue).'px; height:16px;"';
+		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($floorValue).'px; height:'.$commit[1].'px;"';
 		$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
 		echo ($head);
 		$width += $floorValue;
 	}else{ //we want to ceil the value
-		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($ceilValue).'px; height:16px;"';
+		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($ceilValue).'px; height:'.$commit[1].'px;"';
 		$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
 		echo ($head);
 		$width += $ceilValue;
@@ -89,7 +89,7 @@ function render($commit, $id, $width){
 function renderLast($commit, $count, $width){
 	$size = $_SESSION['width'] - $width;
 	$color = buildColor($commit[2]);$_SESSION['image'];
-	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($size).'px; height:16px;"';
+	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($size).'px; height:'.$commit[1].'px;"';
 	
 	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
 			                                          Date: '. $datum.'<br>
