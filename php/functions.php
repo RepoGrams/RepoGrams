@@ -37,20 +37,65 @@ function dump(){
 }
 
 function renderImage(){
-	for ($i = 1; $i < count($_SESSION['image']); $i++){
-		renderBlock($_SESSION['image'][$i], $i);
+	$count = 1;
+	for ($i = 1; $i < count($_SESSION['image']); ++$i){
+		$count = renderBlock($_SESSION['image'][$i], $count);
 	}
 }
 
-function renderBlock($commit, $index){
+function renderBlock($block, $count){
+	$width = 0;
+	for ($i = 0; $i < count($block); $i++){
+		if($i == count($block)){
+			renderLast($block[$i], $count, $width);
+			$count++;
+			$width = 0;
+		}else{
+			$width = render($block[$i], $count, $width);
+			$count++;
+		}
+	}
+	return $count;
+}
+
+function render($commit, $id, $width){
+	//compute values to decide what is nearer to the value: floor or ceil
+	$floorValue = floor($commit[0]);
+	$ceilValue = ceil($commit[0]);
+	$floorDiff = $commit[0] - $floorValue;
+	$ceilDiff = $ceilValue - $commit[0];
+
 	$color = buildColor($commit[2]);$_SESSION['image'];
-	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($commit[0]).'px; height:16px;"';
+	$datum = date("H:i:s - m.d.y", $commit[4]);
+	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
+			                                          Date: '. $datum.'<br>
+			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
+
+	if($floorDiff < $ceilDiff){ //we want to floor the value
+		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($floorValue).'px; height:16px;"';
+		$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
+		echo ($head);
+		$width += $floorValue;
+	}else{ //we want to ceil the value
+		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($ceilValue).'px; height:16px;"';
+		$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
+		echo ($head);
+		$width += $ceilValue;
+	}
+	$end = '</li>';
+	echo ($end);
+	return $width;
+}
+
+function renderLast($commit, $count, $width){
+	$size = $_SESSION['width'] - $width;
+	$color = buildColor($commit[2]);$_SESSION['image'];
+	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($size).'px; height:16px;"';
 	
 	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
 			                                          Date: '. $datum.'<br>
-			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip">';
+			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
 	$datum = date("H:i:s - m.d.y", $commit[4]);
-	//$effect = 'title="'.$commit[3].' by '.$commit[5]. ' on '. $datum.'"'; 
 	$head = '<li class="customBlock" id="'.$index.'" '.$style.' '.$tooltip.'>';
 	$end = '</li>';
 	echo ($head);
