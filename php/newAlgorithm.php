@@ -173,17 +173,17 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				}
 
 
-				usort($legende3, 'myCompare');
+				//usort($legende3, 'myCompare');
 				
 				if (count($legende3) > 30){
 					$legende = array();	
 					for ($c = 0; $c < 30; $c++){
-						$legende[] = array($legende3[0],$legende3[1]);
+						$legende[] = array($legende3[$c][0],$legende3[$c][1]);
 					}
 				}
 				 else{
 				 	for ($c = 0; $c < count($legende3); $c++){
-						$legende[] = array($legende3[0],$legende3[1]);
+						$legende[] = array($legende3[$c][0],$legende3[$c][1]);
 					}
 				 }
 				break;
