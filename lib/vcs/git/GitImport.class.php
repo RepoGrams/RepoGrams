@@ -50,12 +50,6 @@ class gitImport extends RepoImporter {
                 
 		$since = "";
                 $before= "";
-                if (!is_null($start) && $start !== "") {
-                  $since= "--since ".$start." ";
-                } 
-                if (!is_null($end) && $end !== "") {
-                  $before = "--before ".$end." ";
-                }
                 $separator = chr(26);
 		$command = "git log ".$since.$before."--numstat --pretty='".$separator."},".$separator."%H".$separator.":{".$separator."author".$separator.":".$separator."%an".$separator.",".$separator."author_mail".$separator.":".$separator."%ae".$separator.",".$separator."date".$separator.":".$separator."%at".$separator.",".$separator."message".$separator.":".$separator."%s".$separator.",".$separator."changes".$separator." : ".$separator."'";
                 error_log($command);
