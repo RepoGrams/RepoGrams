@@ -2,7 +2,6 @@
 function initSession ($debug){
 	$_SESSION['loading_info'] = 'Not loading';
 	$_SESSION['progress'] = 0;
-	$_SESSION['error_message'] = '';
 	$_SESSION['title'] = '';
 	$_SESSION['repourl'] = '';
 	$_SESSION['finish'] = 0;

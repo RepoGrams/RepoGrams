@@ -13,6 +13,23 @@
           renderRepo($_SESSION['repourl']);
         }
 	
+
+        /**
+         *  signals that an error has occured
+         *  by echo'ing the corresponding JSON
+         *  the error message will be written in the
+         *  'error_message' session variable
+         *  @msg: the error message
+         */
+        function reportError($msg) {
+          error_log("reporting error");
+          error_log($msg);
+          $retVal = array("error"=>true, "finished" => false);
+          header('Content-Type: application/json');
+          $_SESSION['error_message'] = $msg;
+          echo(json_encode($retVal));
+        }
+
 	/**
 	 * Check formular input if url is empty
          * @returns: true iff the url is valid
@@ -21,10 +38,8 @@
           if (   strpos($repourl, "http") === false
               || !str_replace(' ','',$repourl) != '') {
                 error_log("Illegal input");
-                $_SESSION['error_message'] = msg('Invalid repository url.');
-                $retVal = array("error"=>true, "finished" => false);
-                header('Content-Type: application/json');
-                echo(json_encode($retVal));
+                /* TODO: localization currently does not work */
+                reportError('Invalid repository url.');
                 return false;
           }
           return true;
@@ -61,7 +76,7 @@
 					return;
 			}
 		} catch (Exception $e) {
-			$_SESSION['error_message'] = $e->getMessage();
+                        reportError($e->getMessage());
 		}
 	}
 ?>

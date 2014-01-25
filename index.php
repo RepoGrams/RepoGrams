@@ -2,11 +2,12 @@
 session_start();
 require_once("php/language.php");
 require_once("php/functions.php");
-if(!isset($_SESSION['init'])|| is_null($_SESSION['error'])){
+$error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '');
+if(!isset($_SESSION['init']) || $error){
+        error_log("initializing...");
 	initSession(false);
 	$_SESSION['init'] = true;
 }
-$error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '');
 ?>
 <html !DOCTYPE HTML>
 <head>
@@ -55,7 +56,7 @@ $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['err
 					echo '<br>
 		                  <div class="alert-dismissable errormessage">
        				  	  	<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true"></button>
-       						<span class="help-block"><strong>&nbsp;&nbsp;'.msg('Error!').'</strong> '.msg($_SESSION['error_message']).'</span>
+       						<span class="help-block"><strong>&nbsp;&nbsp;'.msg('Error!').'</strong> '.$_SESSION['error_message'].'</span>
       				  	  </div>';
 					unset($_SESSION['error_message']);
 					initSession(true);
