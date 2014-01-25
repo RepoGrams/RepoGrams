@@ -312,6 +312,7 @@
 			return $GLOBALS["messages"][$locale][$s];
 		} else {
 			error_log("l10n error: locale: "."$locale, message:'$s'");
+                        return $s;
 		}
 	}
 
