@@ -39,7 +39,7 @@
               || !str_replace(' ','',$repourl) != '') {
                 error_log("Illegal input");
                 /* TODO: localization currently does not work */
-                reportError('Invalid repository url.');
+                reportError(msg('Invalid repository url.'));
                 return false;
           }
           return true;
