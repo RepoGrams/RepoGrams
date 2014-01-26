@@ -170,3 +170,7 @@ style .customdate {
 .centerButton{
 	text-align:center;
 }
+
+.wide-modal{
+	width:900px;
+}

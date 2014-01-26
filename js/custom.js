@@ -7,7 +7,12 @@ function example() {
 				var number = Math.floor(Math.random()*xhr.responseJSON.length);
 				var descr = url[number].description;
 				url = url[number].html_url;
-                                $("#description").html("<p style=\"text-align:center;\">"+descr+"</p>");
+				var head = "<div class=\"col-md-offset-4 col-md-4\">";
+				head = head + "<div class=\"panel panel-default\">";
+				head = head +"<div class=\"panel-heading\">Repository description from GitHub.com:</div>";
+				head = head +"<div class=\"panel-body\">";
+				descr = head +descr+ "</div></div></div>";
+                                $("#description").html("<div style=\"text-align:center;\">"+descr+"</div>");
 		(document.getElementById('repourl')).value = url+'.git';
 
 				        }
