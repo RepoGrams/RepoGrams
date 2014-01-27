@@ -9,6 +9,10 @@ class RepoFactory {
 		$cache = new Cache(42);
 		return $cache->get($url, $start, $end);
 	}
+
+        static function makeRepo($url, $start, $end, &$datadir) {
+	    return new GitRepo($url, $start, $end, $datadir);
+        }
 }
 
 ?>
