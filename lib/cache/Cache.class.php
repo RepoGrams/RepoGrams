@@ -44,7 +44,7 @@ class Cache {
         private function getInfo($url) {
           $query = sprintf("SELECT folder, frequency 
             FROM url2data WHERE url = '%s'",
-            mysqli::real_escape_string($url)
+            $this->dbconnection->real_escape_string($url)
           );
           error_log("getInfo query: ". $query);
           $result = $this->dbconnection->query($query);
@@ -71,8 +71,8 @@ class Cache {
         private function storeInfo($url, $path2folder) {
           $query = sprintf("INSERT INTO url2data (url, frequency, folder)
                             VALUES ('%s', 1, '%s')",
-            mysqli::real_escape_string($url),
-            mysqli::real_escape_string($path2folder)
+            $this->dbconnection->real_escape_string($url),
+            $this->dbconnection->real_escape_string($path2folder)
           );
           error_log($query);
           $result = $this->dbconnection->query($query);
@@ -89,7 +89,7 @@ class Cache {
             "UPDATE url2data 
              SET frequency  = frequency + 1
              WHERE url = '%s'
-            ", mysqli::real_escape_string($url));
+            ", $this->dbconnection->real_escape_string($url));
           $result = $this->dbconnection->query($query);
           assert($result);
         }
@@ -182,7 +182,7 @@ class Cache {
                 $query = sprintf(
                       "DELETE FROM url2data
                       WHERE id = '%s'",
-                      mysqli::real_escape_string($min2id->id)
+                      $this->dbconnection->real_escape_string($min2id->id)
                 );
                 $result = $this->dbconnection->query($query);
                 assert($result);
