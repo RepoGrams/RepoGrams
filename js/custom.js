@@ -17,22 +17,22 @@ function example() {
 	});
 }
 
-function highlight(Object obj) {
-	Object[] blocks = document.getElementsByName("renderblock");
-	for(Object o : blocks) {
+function highlight(obj) {
+	blocks = document.getElementsByName("renderblock");
+	for(var i = 0; i<=blocks.length; i++) {
 	    if (o.style.backgroundColor == obj.style.backgroundColor) {
 			o.style += "border-color: rgb(102, 175, 233); outline: 0px none; box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);";
 		}
 	}
 }
 
-function disablehighlight(Object obj) {
-	Object[] blocks = document.getElementsByName("renderblock");
-	for(Object o : blocks) {
+function disablehighlight(obj) {
+	blocks = document.getElementsByName("renderblock");
+	for(var i = 0; i<=blocks.length; i++) {
 	    if (o.style.backgroundColor == obj.style.backgroundColor) {
-			o.style.border = "none;"
+			o.style.border = "none;";
 			o.style.outline = "0;";
-			o.style.box-shadow = "none;";
+			o.style.boxshadow = "none;";
 		}
 	}
 }
