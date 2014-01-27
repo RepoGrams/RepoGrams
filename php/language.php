@@ -99,81 +99,81 @@
 				=> 'Given cache-directory does not exist'
 		),
 		'de'=> array(
-			'Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.'
+			'javascript'
 				=> 'Scheinbar ist Javascript in Ihrem Browser deaktivert. Bitte aktivieren Sie Javascript um alle Funktionen diese Seite nutzen zu k&ouml;nnen.',
-			'as'
+			'image-as'
 				=> 'als',
-			'Autor'
+			'image-option1-2'
 				=> 'Autor',
-			'Commmit message'
+			'image-option1-1'
 				=> 'Commmit Nachricht',
-			'First 3 letters'
+			'image-option1-0'
 				=> 'Ersten 3 Buchstaben',
-			'Time'
+			'image-option1-3'
 				=> 'Uhrzeit',
-			'Date'
+			'image-option1-4'
 				=> 'Datum',
-			'Commit'
+			'image-option1'
 				=> 'Commit',
-			'Operation'
+			'image-option2'
 				=> 'Operation',
-			'All'
+			'image-option2-0'
 				=> 'Alle',
-			'Add'
+			'image-option2-1'
 				=> 'Hinzugef&uuml;gt',
-			'Delete'
+			'image-option2-2'
 				=> 'gel&ouml;scht',
-			'Download image'
+			'image-dl'
 				=> 'Bild herunterladen',
-				'Visualize!'
+			'visualize'
 				=> 'Visualisieren!',
-			'Help'
+			'index-help'
 				=> 'Hilfe',
-			'Show me some examples'
+			'index-examples'
 				=> 'Zeige mir ein paar Beispiele',
-			'Enter repository url'
+			'index-enter'
 				=> 'Repository URL einf&uuml;gen',
-			'Select commits from'
+			'index-select'
 				=> 'Commits einfügen von',
-			'till'
+			'index-till'
 				=> 'bis',
-			'Cloning repository into folder.'
+			'loading-cloning'
 				=> 'Klone Repository in Ordner.',
-			'Abort' 
+			'loading-abort' 
 				=> 'Abbrechen',
-			'Error!'
+			'bug-error'
 				=> 'Fehler!', 
-			'Fetching repository was not sucessfull (Invalid URL?)' 
+			'bug-fetching' 
 				=> 'Runterladen des Repository war nicht erfolgreich (Ung&uuml;ltige URL?)',
-			'Legend'
+			'image-legend'
 				=> 'Legende',
-			'Documentation'
+			'doc-doc'
 				=> 'Dokumentation',
-			'What is Repogram?'
+			'doc-rg-q'
 				=> 'Was ist Repogram?',
-			'The word repogram comes from the words "Repository" and "Chromograms"'
+			'doc-rg-a'
 				=> 'Das Word Repogram kommt von den W&ouml;rtern "Repository" und "Chromograms"',
-			'So what is a "Repository"?'
+			'doc-repo-q'
 				=> 'Also, was ist ein "Repository"?',
-			'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.'
+			'doc-repo-a'
 				=> 'Ein Repository ist entweder eine Sammlung von Quell Code Dateien, welche zum Entwickeln von Programmen benutzt werden oder wird verwendet um andere Dateien zu verwalten. Hat man jemals GitHub benutzt, hat man sicher auch ein sogenanntes Repository.',
-			'Ok, clear on that. What is a "Chromogram"?'
+			'doc-chromo-q'
 				=> 'Ok, klar soweit. Was ist ein "Chromogram"?',
-			'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.'
+			'doc-chromo-a'
 				=> 'Ein Chromogram ist eine intelligente Visualisierungs-Methode. Es kann große Mengen an Informationen in einem Bild darstellen. Dazu werden häufig Blöcke verwendet.',
-			'Read that. So how can I use this site?'
+			'doc-use-q'
 				=> 'Auch verstanden. Wie benutze ich also diese Seite?',
-			'That\'s an easy one.'
+			'doc-use-a1'
 				=> 'Das ist einfach.',
-			'You just need to go to the frontpage, enter the URL of your repository and click on'
+			'doc-use-a2'
 				=> 'Auf der Hauptseite kann man eine URL einf&uumlgen und klickt;',
-			'After a short waiting time, you will see your rendered chromogram.'
+			'doc-use-a3'
 				=> 'Nach einer kurzen Bearbeitungszeit, erscheint das berechnete Chromogram.',
-			'Do you have some examples?'
+			'doc-ex'
 				=> 'Gibt es Beispiele?',
-			'Twitter Bootstrap'
+			'doc-ex1'
 				=> 'Twitter Bootstrap',
-			'JQuery'
+			'doc-ex2'
 				=> 'JQuery',
 			'This website renders chromograms of your git repository.'
 				=> 'Diese Webseite berechnet Chromogramme.',
@@ -187,13 +187,13 @@
 				=> 'Große Repositories ben&ouml;tigen m&ouml;glicherweise ein wenig Zeit zum Downloaden und Bearbeiten.',
 			'So please be patient and get some coffee while waiting ;)'
 				=> 'Wir bitten um ein wenig Geduld ;)',
-			'Close'
+			'doc-close'
 				=> 'Schlie&szlig;en',
-			'Temporary folder could not be created!' 
+			'bug-tempo' 
 				=> 'Tempor&auml;rer Ordner konnte nicht erstellt werden.',
-			'Invalid URL!' 
+			'bug-inv' 
 				=> 'Ung&uuml;ltige URL!',
-			'given cache-directory does not exist' 
+			'bug-cache' 
 				=> 'Cache existiert nicht.'
 			),
 	'fr' => array(
