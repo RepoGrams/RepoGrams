@@ -8,5 +8,5 @@ define("_MYSQLSERVER", "localhost"); // MySQL Server (eg. localhost)
 define("_MYSQLUSER","se2013"); // User (eg. se2013)
 define("_MYSQLPASSWORD","r5TayRyeESRJu8Mu"); // Password 
 define("_MYSQLDB","se2013"); // Database (eg se2013)
-^
+
 ?>
