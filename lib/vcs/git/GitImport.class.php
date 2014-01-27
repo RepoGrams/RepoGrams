@@ -28,15 +28,19 @@ class gitImport extends RepoImporter {
 			if (!file_exists($tmp)) throw new Exception("Temporary folder could not be created!");
 			chdir($tmp);
 			$command = 'git clone --mirror "'.$repo.'"';
+                        $command."\n";
+                        error_log($command);
+                        shell_exec($command);
 		} else {
 			chdir($datadir);
+                        error_log(">> the datadir before fetching: ". $datadir);
                         $command = 'git fetch --all'; 
+                        $command."\n";
+                        error_log($command);
+                        shell_exec($command);
                         chdir("..");// hacked. as $datadir contains the git-working directory and we want the tmp-root-directory  
 		}
                 		
-		$command."\n";
-		error_log($command);
-		shell_exec($command);
                 $split = explode("/", $repo); //http://stackoverflow.com/questions/2967597/only-variables-can-be-passed-by-reference
                 $gitdir = end($split); // the last part of the git URL is the folder name
                 $joint = getcwd()."/".$gitdir."/";
