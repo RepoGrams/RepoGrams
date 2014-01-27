@@ -51,7 +51,7 @@ if(!isset($_SESSION['init']) || $error){
 					echo '<br>
 		                  <div class="alert-dismissable errormessage">
        				  	  	<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true"></button>
-       						<span class="help-block"><strong>&nbsp;&nbsp;'.msg('bur-error').'</strong> '.$_SESSION['error_message'].'</span>
+       						<span class="help-block"><strong>&nbsp;&nbsp;'.msg('bug-error').'</strong> '.$_SESSION['error_message'].'</span>
       				  	  </div>';
 					unset($_SESSION['error_message']);
 					initSession(true);
