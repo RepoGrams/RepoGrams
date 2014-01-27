@@ -26,24 +26,19 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     		<!-- Filtereinstellungen -->
  	   		<form role="form" action="php/filter.php" method="POST" class="form-inline" style="text-align:center;">
  	   			<div class="form-group">
-    				<label for="filter1"><?php print msg('image-option1') ?> </label>
-    				<select id="filter1" name="filter1" class="form-control">
-  						<option value="2"><?php print msg('image-option1-2') ?></option>         
-  						<option value="1"><?php print msg('image-option1-1') ?></option>  
- 	 					<option value="0" selected><?php print msg('image-option1-0') ?></option>  
-  						<option value="3"><?php print msg('image-option1-3') ?></option>        
-	  					<option value="4"><?php print msg('image-option1-4') ?></option>               
+ 	   				Filter
+    				<select name="filter1" class="form-control">
+  						<option value="2"><?php print msg('Autor') ?></option>         
+  						<option value="1"><?php print msg('Commmit message') ?></option>  
+ 	 					<option value="0" selected><?php print msg('First 3 letters') ?></option>  
+  						<option value="3"><?php print msg('Time') ?></option>        
+	  					<option value="4"><?php print msg('Date') ?></option>     
+	  					<option>-------------------------------------</option>
+	  					<option value="5"><?php print msg('All') ?></option>     
+  						<option value="6"><?php print msg('Add') ?></option>              
+  						<option value="7"><?php print msg('Delete') ?></option>             
 					</select>
-
-  				</div>		
-  				<div class="form-group">
-					<label for="filter2"><?php print msg('image-option2') ?> </label>
-    				<select id="filter2" name="filter2" class="form-control">
-						<option value="0"><?php print msg('image-option2-0') ?></option>     
-  						<option value="1"><?php print msg('image-option2-1') ?></option>              
-  						<option value="2"><?php print msg('image-option2-2') ?></option>           
-					</select>
-  				</div>
+				</div>
   				<button class="btn btn-default" type="submit" title="Apply filters" disabled>
        				<span class="glyphicon glyphicon-indent-left"></span><?php print msg('image-go'); ?>
 				</button>

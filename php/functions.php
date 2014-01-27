@@ -116,7 +116,7 @@ function renderLegend(){
 	{
 		$key = $legend[$i][0];
 		$val = $legend[$i][1];
-		$colorBlock = '<div style="line-height:1"><div class="repoblock" onmouseöeave="disablehighlight(this);" onmouseover="highlight(this);" style="background-color:rgb('.ceil($val[0]).','.ceil($val[1]).','.ceil($val[2]).');width:15px;height:14px;">';
+		$colorBlock = '<div style="line-height:1"><div class="repoblock" onmouseleave="disablehighlight(this);" onmouseover="highlight(this);" style="background-color:rgb('.ceil($val[0]).','.ceil($val[1]).','.ceil($val[2]).');width:15px;height:14px;">';
 		echo $colorBlock .'</div>'.'&nbsp;'.$key.'<br></div>';
 	}
 }
