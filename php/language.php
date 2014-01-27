@@ -83,7 +83,7 @@
 				=> 'To start just enter your repository URL and click on visualize.',
 			'To see some examples, just choose one from below and then click'
 				=> 'To see some examples, just choose one from below and then click',
-			'Visualize the provided repository'
+			'index-vis'
 				=> 'Visualize the provided repository',
 			'Large repository may need some time to be downloaded and processed.'
 				=> 'Large repository may need some time to be downloaded and processed.',
@@ -96,7 +96,9 @@
 			'bug-inv'
 				=> 'Invalid URL!',
 			'bug-cache'
-				=> 'Given cache-directory does not exist'
+				=> 'Given cache-directory does not exist',
+			'image-go'
+				=> 'Go'
 		),
 		'de'=> array(
 			'javascript'
@@ -181,7 +183,7 @@
 				=> 'Zum Starten f&uuml;gt man seine Repository URL ein und klickt auf Visualisieren.',
 			'To see some examples, just choose one from below and then click'
 				=> 'Um einige Beispiele zu sehen klickt man auf ',
-			'Visualize the provided repository'
+			'index-vis'
 				=> 'Visualisiere das vorgegebene Repository',
 			'Large repository may need some time to be downloaded and processed.'
 				=> 'Große Repositories ben&ouml;tigen m&ouml;glicherweise ein wenig Zeit zum Downloaden und Bearbeiten.',
@@ -194,7 +196,9 @@
 			'bug-inv' 
 				=> 'Ung&uuml;ltige URL!',
 			'bug-cache' 
-				=> 'Cache existiert nicht.'
+				=> 'Cache existiert nicht.',
+			'image-go'
+				=> 'Los'
 			),
 	'fr' => array(
 			'javascript'
@@ -279,7 +283,7 @@
 				=> 'Pour commencer, veuillez entrer votre URL du repository et cliquez sur Visualise.',
 			'To see some examples, just choose one from below and then click' 
 				=> 'Pour voir quelques exemples, il suffit de choisir l\'un de ci-dessous puis cliquez sur',
-			'Visualize the provided repository'
+			'index-vis'
 				=> 'Visualisez le repository pr&eacute;vu',
 			'Large repository may need some time to be downloaded and processed.' 
 				=> 'Grand repository peut avoir besoin de temps &agrave; t&eacute;l&eacute;charger et trait&eacute;es.',
@@ -292,7 +296,9 @@
 			'bug-inv' 
 				=> 'URL invalide!',
 			'bug-cache' 
-				=> 'n\'existe pas de cache-r&eacute;pertoire donn&eacute;'
+				=> 'n\'existe pas de cache-r&eacute;pertoire donn&eacute;',
+			'image-go'
+				=> 'Allez'
 		)
 	);
 	
