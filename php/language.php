@@ -1,81 +1,81 @@
 <?php 
 	$GLOBALS["messages"] = array (
 		'en'=> array(
-			'Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.'
+			'javascript'
 				=> 'Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.',
-			'as'
+			'image-as'
 				=> 'as',
-			'Autor'
+			'image-option1-2'
 				=> 'Author',
-			'Commmit message'
-				=> 'Commmit message',
-			'First 3 letters'
+			'image-option1-1'
+				=> 'Commit message',
+			'image-option1-0'
 				=> 'First 3 letters',
-			'Time'
+			'image-option1-3'
 				=> 'Time',
-			'Date'
+			'image-option1-4'
 				=> 'Date',
-			'Commit'
+			'image-option1'
 				=> 'Commit',
-			'Operation'
+			'image-option2'
 				=> 'Operation',
-			'All'
+			'image-option2-0'
 				=> 'All',
-			'Add'
+			'image-option2-1'
 				=> 'Add',
-			'Delete'
+			'image-option2-2'
 				=> 'Delete',
-			'Download image'
+			'image-dl'
 				=> 'Download image',
-			'Visualize!'
+			'visualize'
 				=> 'Visualize!',
-			'Help'
+			'index-help'
 				=> 'Help',
-			'Show me some examples'
+			'index-examples'
 				=> 'Show me some examples',
-			'Enter repository url'
+			'index-enter'
 				=> 'Enter repository url',
-			'Select commits from'
+			'index-select'
 				=> 'Select commits from',
-			'till'
+			'index-till'
 				=> 'till',
-			'Cloning repository into folder.'
+			'loading-cloning'
 				=> 'Cloning repository into folder.',
-			'Abort'
+			'loading-abort'
 				=> 'Abort',
-			'Error!'
+			'bug-error'
 				=> 'Error!',
-			'Fetching repository was not sucessfull (Invalid URL?)'
+			'bug-fetching'
 				=> 'Fetching repository was not sucessfull (Invalid URL?)',
-			'Legend'
+			'image-legend'
 				=> 'Legend',
-			'Documentation'
+			'doc-doc'
 				=> 'Documentation',
-			'What is Repogram?'
+			'doc-rg-q'
 				=> 'What is Repogram?',
-			'The word repogram comes from the words "Repository" and "Chromograms"'
+			'doc-rg-a'
 				=> 'The word repogram is a portmanteau, combining the words "Repository" and "Chromograms"',
-			'So what is a "Repository"?'
+			'doc-repo-q'
 				=> 'So what is a "Repository"?',
-			'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.'
+			'doc-repo-a'
 				=> 'A repository is a collection of files used by developers to manage their source code. If you ever used GitHub, you will surely have a so called repository.',
-			'Ok, clear on that. What is a "Chromogram"?'
+			'doc-chromo-q'
 				=> 'Ok, that\'s clear. Now, what is a "Chromogram"?',
-			'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.'
+			'doc-chromo-a'
 				=> 'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually consists of blocks.',
-			'Read that. So how can I use this site?'
+			'doc-use-q'
 				=> 'Got that. So how can I use this site?',
-			'That\'s an easy one.'
+			'doc-use-a1'
 				=> 'That\'s easy.',
-			'You just need to go to the frontpage, enter the URL of your repository and click on'
+			'doc-use-a2'
 				=> 'You just need to go to the frontpage, enter the URL of your repository and click on',
-			'After a short waiting time, you will see your rendered chromogram.'
+			'doc-use-a3'
 				=> 'After a short waiting period, you will see your rendered chromogram.',
-			'Do you have some examples?'
+			'doc-ex'
 				=> 'Do you have some examples?',
-			'Twitter Bootstrap'
+			'doc-ex1'
 				=> 'Twitter Bootstrap',
-			'JQuery'
+			'doc-ex2'
 				=> 'JQuery',
 			'This website renders chromograms of your git repository.'
 				=> 'This website renders chromograms of your git repository.',
@@ -89,13 +89,13 @@
 				=> 'Large repository may need some time to be downloaded and processed.',
 			'So please be patient and get some coffee while waiting ;)'
 				=> 'So please be patient and get some coffee while waiting ;)',
-			'Close'
+			'doc-close'
 				=> 'Close',
-			'Temporary folder could not be created!'
+			'bug-tempo'
 				=> 'Temporary folder could not be created!',
-			'Invalid URL!'
+			'bug-inv'
 				=> 'Invalid URL!',
-			'given cache-directory does not exist'
+			'bug-cache'
 				=> 'Given cache-directory does not exist'
 		),
 		'de'=> array(
