@@ -18,7 +18,7 @@ if(!isset($_SESSION['init']) || $error){
 	<!-- Warning if javascript is disabled -->
 	<noscript>
     	<p style="text-align:center; color: white; background-color: red;">
-    		Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.
+    		<?php print msg('javascript') ?>
     	</p>
 	</noscript>
 
@@ -40,13 +40,13 @@ if(!isset($_SESSION['init']) || $error){
 	  <div class="col-xs-12">
 		<form role="form" action="./loading.php" method="POST">
    			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">			
-   				<input class="form-control" id="repourl" name="repourl" type="text" required="required" placeholder="<?php print msg('Enter repository url'); ?>">
+   				<input class="form-control" id="repourl" name="repourl" type="text" required="required" placeholder="<?php print msg('index-enter'); ?>">
     			<span class="input-group-btn">
-       				<button class="btn btn-primary" type="submit" title="<?php print msg('Visualize the provided repository'); ?>">
-       					<span class="glyphicon glyphicon-indent-left"></span><?php print msg('Visualize!'); ?>
+       				<button class="btn btn-primary" type="submit" title="<?php print msg('index-vis'); ?>">
+       					<span class="glyphicon glyphicon-indent-left"></span><?php print msg('visualize'); ?>
 					</button>
-					<button class="btn btn-info" data-toggle="modal" data-target="#help" title="<?php print msg('Quick Help'); ?>" type="submit">
-						<span class="glyphicon glyphicon-question-sign "></span> <?php print msg('Help'); ?>
+					<button class="btn btn-info" data-toggle="modal" data-target="#help" title="<?php print msg('index-help'); ?>" type="submit">
+						<span class="glyphicon glyphicon-question-sign "></span> <?php print msg('index-help'); ?>
 					</button>
      			</span>
 			</div>
@@ -57,7 +57,7 @@ if(!isset($_SESSION['init']) || $error){
 					echo '<br>
 		                  <div class="alert-dismissable errormessage">
        				  	  	<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true"></button>
-       						<span class="help-block"><strong>&nbsp;&nbsp;'.msg('Error!').'</strong> '.$_SESSION['error_message'].'</span>
+       						<span class="help-block"><strong>&nbsp;&nbsp;'.msg('bur-error').'</strong> '.$_SESSION['error_message'].'</span>
       				  	  </div>';
 					unset($_SESSION['error_message']);
 					initSession(true);
@@ -67,9 +67,9 @@ if(!isset($_SESSION['init']) || $error){
 			<!-- Date picker -->
 		  	<br>
     		<div class="datepick">
-    			<span><?php print msg('Select commits from'); ?> </span>
+    			<span><?php print msg('index-select'); ?> </span>
     			<input type="text" class="input-small hasDatepicker" name="start" id="start" style="width:90px;"/>
-    			<span> <?php print msg('till'); ?> </span>
+    			<span> <?php print msg('index-till'); ?> </span>
     			<input type="text" class="input-small hasDatepicker" name="end" id="end"  style="width:90px;"/>
     		</div>
 		</form>
@@ -80,7 +80,7 @@ if(!isset($_SESSION['init']) || $error){
 	  <!-- Examples -->
 	  <div class="row">
 	  <div class="centerButton">
-		<button type="button" class="btn btn-default" onclick="example();"><?php print msg('Show me some examples'); ?></button>
+		<button type="button" class="btn btn-default" onclick="example();"><?php print msg('index-examples'); ?></button>
 	  </div>
 	  </div>
 	<br>

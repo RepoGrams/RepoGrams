@@ -26,26 +26,26 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     		<!-- Filtereinstellungen -->
  	   		<form role="form" action="php/filter.php" method="POST" class="form-inline" style="text-align:center;">
  	   			<div class="form-group">
-    				<label for="filter1">Commit</label>
+    				<label for="filter1"><?php print msg('image-option1') ?> </label>
     				<select id="filter1" name="filter1" class="form-control">
-  						<option value="2"><?php print msg('Autor') ?></option>         
-  						<option value="1"><?php print msg('Commmit message') ?></option>  
- 	 					<option value="0" selected><?php print msg('First 3 letters') ?></option>  
-  						<option value="3"><?php print msg('Time') ?></option>        
-	  					<option value="4"><?php print msg('Date') ?></option>               
+  						<option value="2"><?php print msg('image-option1-2') ?></option>         
+  						<option value="1"><?php print msg('image-option1-1') ?></option>  
+ 	 					<option value="0" selected><?php print msg('image-option1-0') ?></option>  
+  						<option value="3"><?php print msg('image-option1-3') ?></option>        
+	  					<option value="4"><?php print msg('image-option1-4') ?></option>               
 					</select>
 
   				</div>		
   				<div class="form-group">
-					<label for="filter2">Operation</label>
+					<label for="filter2"><?php print msg('image-option2') ?> </label>
     				<select id="filter2" name="filter2" class="form-control">
-						<option value="0"><?php print msg('All') ?></option>     
-  						<option value="1"><?php print msg('Add') ?></option>              
-  						<option value="2"><?php print msg('Delete') ?></option>           
+						<option value="0"><?php print msg('image-option2-0') ?></option>     
+  						<option value="1"><?php print msg('image-option2-1') ?></option>              
+  						<option value="2"><?php print msg('image-option2-2') ?></option>           
 					</select>
   				</div>
   				<button class="btn btn-default" type="submit" title="Apply filters" disabled>
-       				<span class="glyphicon glyphicon-indent-left"></span><?php print msg('Go'); ?>
+       				<span class="glyphicon glyphicon-indent-left"></span><?php print msg('image-go'); ?>
 				</button>
     		</form>
     		
@@ -74,12 +74,12 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 			<div style="float:right;">
 				<div class="btn-group">
   					<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-  						<span class="glyphicon glyphicon-download"></span><?php print msg('Download image') ?><span class="caret"></span>
+  						<span class="glyphicon glyphicon-download"></span><?php print msg('image-dl') ?><span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
-    					<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.svg'?>"><?php print msg('as') ?> .svg</a></li>
-   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.png&mode=png'?>"><?php print msg('as') ?> .png</a></li>
-   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('as') ?> .jpg</a></li>
+    					<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
+   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
+   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
   					</ul>
 				</div>
 			</div>
