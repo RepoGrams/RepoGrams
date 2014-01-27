@@ -125,7 +125,7 @@ class Cache {
          */
         public function get($repoURL, $start, $end) {
           if ($this->dbalive !== true) {
-	    return new GitRepo($repoURL, $start, $end, $datadir);
+            return RepoFactory::makeRepo($repoURL, $start, $end, $datadir);
           }
           $result = $this->getInfo($repoURL);
           assert($result !== null);
@@ -135,7 +135,7 @@ class Cache {
             $this->atomicIncrementFrequencyForURL($repoURL);
             $datadir = $result->folder;
             error_log("Cache says datadir is: ".$datadir);
-            $repo = new GitRepo($repoURL, $start, $end, $datadir);
+            $repo = RepoFactory::makeRepo($repoURL, $start, $end, $datadir);
             if ($datadir !== $result->folder) {
               /* The directory was cached,
                * but the folder containing the data has been deleted.
@@ -155,7 +155,7 @@ class Cache {
 	    error_log("key doesnt exist");
             // the element is not in the cache so let's construct it
             $datadir = NULL;
-            $repo = new GitRepo($repoURL, $start, $end, $datadir);
+            $repo = RepoFactory::makeRepo($repoURL, $start, $end, $datadir);
             error_log('I got '.$datadir);
             error_log("fill size: ". $this->getFillSize());
 	    // update the cache

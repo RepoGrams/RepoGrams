@@ -83,7 +83,7 @@
 				=> 'To start just enter your repository URL and click on visualize.',
 			'To see some examples, just choose one from below and then click'
 				=> 'To see some examples, just choose one from below and then click',
-			'Visualize the provided repository'
+			'index-vis'
 				=> 'Visualize the provided repository',
 			'Large repository may need some time to be downloaded and processed.'
 				=> 'Large repository may need some time to be downloaded and processed.',
@@ -96,7 +96,9 @@
 			'bug-inv'
 				=> 'Invalid URL!',
 			'bug-cache'
-				=> 'Given cache-directory does not exist'
+				=> 'Given cache-directory does not exist',
+			'image-go'
+				=> 'Go'
 		),
 		'de'=> array(
 			'javascript'
@@ -181,7 +183,7 @@
 				=> 'Zum Starten f&uuml;gt man seine Repository URL ein und klickt auf Visualisieren.',
 			'To see some examples, just choose one from below and then click'
 				=> 'Um einige Beispiele zu sehen klickt man auf ',
-			'Visualize the provided repository'
+			'index-vis'
 				=> 'Visualisiere das vorgegebene Repository',
 			'Large repository may need some time to be downloaded and processed.'
 				=> 'Große Repositories ben&ouml;tigen m&ouml;glicherweise ein wenig Zeit zum Downloaden und Bearbeiten.',
@@ -194,84 +196,86 @@
 			'bug-inv' 
 				=> 'Ung&uuml;ltige URL!',
 			'bug-cache' 
-				=> 'Cache existiert nicht.'
+				=> 'Cache existiert nicht.',
+			'image-go'
+				=> 'Los'
 			),
 	'fr' => array(
-			'Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.'
+			'javascript'
 				=> 'Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.',
-			'as'
+			'image-as'
 				=> 'en',
-			'Autor'			
+			'image-option1-2'			
 				=> 'auteur',
-			'Commmit message'
+			'image-option1-1 message'
 				=> 'message de commit',
-			'First 3 letters'
+			'image-option1-0'
 				=> 'Les 3 prem&egrave;&egrave;res lettres',
-			'Time'
+			'image-option1-3'
 				=> 'temps',
-			'Date'
+			'image-option1-4'
 				=> 'date',
-			'Commit'
+			'image-option1'
 				=> 'commit',
-			'Operation'
+			'image-option2'
 				=> 'op&eacute;ration',
-			'All'
+			'image-option2-0'
 				=> 'tout',
-			'Add'
+			'image-option2-1'
 				=> 'ajouter',
-			'Delete'
+			'image-option2-3'
 				=> 'effacer',
-			'Download image'
+			'image-dl'
 				=> 't&eacute;l&eacute;charge cette image', 
-			'Visualize!' 
+			'visualize' 
 				=> 'Visualise!',
-			'Help' 
+			'index-help' 
 				=> 'Secours',
-			'Show me some examples' 
+			'index-examples' 
 				=> 'Montrez-moi des exemples.',
-			'Enter repository url' 
+			'index-enter' 
 				=> 'Entre repository url',
-			'Select commits from' 
+			'index-select' 
 				=> 's&eacute;lectionne de',
-			'till' 
+			'index-till' 
 				=> '&agrave;',
-			'Cloning repository into folder.' 
+			'loading-cloning' 
 				=> 'Duplique repository dans un dossier.',
-			'Abort' 
+			'loading-abort' 
 				=> 'Abandon',
-			'Error!'
+			'bug-error'
 				=> 'Erreur!',
-			'Fetching repository was not sucessfull (Invalid URL?)' 
+			'bug-fetching' 
 				=> 'Obtention repository n\'a pas &eacute;t&eacute; une belle r&eacute;ussite (URL invalide?)',
-			'Legend' 
+			'image-legend' 
 				=> 'L&eacute;gende',
-			'Documentation' 
+			'doc-doc' 
 				=> 'Documentation',
-			'What is Repogram?'
+			'doc-rg-q'
 				=> 'Quelle est Repogram?',
-			'The word repogram comes from the words "Repository" and "Chromograms"' 
+			'doc-rg-a' 
 				=> 'Le mot repogram vient des mots "Repository" et "Chromograms"',
-			'So what is a "Repository"?' 
+			'doc-repo-q' 
 				=> 'Donc, ce quoi, un "Repository"?',
-			'A repository is a collection of source code files used to develop programs or to manage other files. If you ever used GitHub, you will surely have a so called repository.' 
+			'doc-repo-a' 
 				=> 'Un repository est une collection de fichiers de code source utilis&eacute; pour d&eacute;velopper des programmes ou pour g&eacute;rer d\'autres fichiers. Si vous avez d&eacute;j&agrave; utilis&eacute; GitHub, vous aurez s&ucirc;rement un repository dite.',
-			'Ok, clear on that. What is a "Chromogram"?' 
+			'doc-chromo-q' 
 				=> 'Ok, clair. Qu\'est-ce qu\'un "Chromogram"?',
-			'A chromogram is an intelligent visualization method. It can display a huge amount of content on a small image. It usually uses blocks.' 
+			'doc-chromo-a' 
 				=> 'Un Chromogram est une m&eacute;thode de visualisation intelligent. Il peut afficher une grande quantit&eacute; de contenu sur une petite image. Habituellement il utilise des blocs.',
-			'Read that. So how can I use this site?' 
+			'doc-use-q' 
 				=> 'Lire. Alors, comment puis-je utiliser ce site?',
-			'That\'s an easy one.' 
+			'doc-use-a1' 
 				=> 'C\'est facile.',
-			'You just need to go to the frontpage, enter the URL of your repository and click on' 
+			'doc-use-a2' 
 				=> 'Vous avez juste besoin d\'aller &agrave; la page d\'accueil, entrez l\'URL de votre repository et cliquez sur',
-			'After a short waiting time, you will see your rendered chromogram.' 
+			'doc-use-a3' 
 				=> 'Apr&egrave;s un court temps d\'attente, vous verrez votre Chromogram rendu.',
-			'Do you have some examples?' 
+			'doc-ex' 
 				=> 'Y at-il des exemples?',
-			'Twitter Bootstrap' 
+			'doc-ex1' 
 				=> 'Twitter Bootstrap',
-			'JQuery'
+			'doc-ex2'
 				=> 'JQuery',
 			'This website renders chromograms of your repository.' 
 				=> 'Ce site rend chromograms de votre repository.',
@@ -279,20 +283,22 @@
 				=> 'Pour commencer, veuillez entrer votre URL du repository et cliquez sur Visualise.',
 			'To see some examples, just choose one from below and then click' 
 				=> 'Pour voir quelques exemples, il suffit de choisir l\'un de ci-dessous puis cliquez sur',
-			'Visualize the provided repository'
+			'index-vis'
 				=> 'Visualisez le repository pr&eacute;vu',
 			'Large repository may need some time to be downloaded and processed.' 
 				=> 'Grand repository peut avoir besoin de temps &agrave; t&eacute;l&eacute;charger et trait&eacute;es.',
 			'So please be patient and get some coffee while waiting ;)' 
 				=> 'Alors s\'il vous plaît &ecirc;tre patient et prendre un caf&eacute; en attendant;)',
-			'Close' 
+			'doc-close' 
 				 => 'Ferme',
-			'Temporary folder could not be created!' 
+			'doc-close' 
 				=> 'Dossier temporaire ne peut &ecirc;tre cr&eacute&eacute;;!',
-			'Invalid URL!' 
+			'bug-inv' 
 				=> 'URL invalide!',
-			'given cache-directory does not exist' 
-				=> 'n\'existe pas de cache-r&eacute;pertoire donn&eacute;'
+			'bug-cache' 
+				=> 'n\'existe pas de cache-r&eacute;pertoire donn&eacute;',
+			'image-go'
+				=> 'Allez'
 		)
 	);
 	
