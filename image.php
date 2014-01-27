@@ -11,7 +11,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 	<!-- Warning if javascript is disabled -->
 	<noscript>
     	<p style="text-align:center; color: white; background-color: red;">
-    		<?php print msg('Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.') ?>
+    		<?php print msg('javascript') ?>
     	</p>
 	</noscript>
 	
@@ -52,7 +52,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     		<!-- Repo-Visualization -->
     		<!-- Legend -->
     		<div class="color-legend" style="float:left; width: 10%;">
-				<div class="legend-title"><?php print msg('Legend'); ?></div>
+				<div class="legend-title"><?php print msg('image-legend'); ?></div>
 					<?php
 						require_once('php/functions.php');
 						renderLegend();
