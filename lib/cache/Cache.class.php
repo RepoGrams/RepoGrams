@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__."/../vcs/RepoFactory.class.php";
+require_once __DIR__."/../../config.inc.php";
 
 /* A LRU cache for repositories */
 class Cache {
@@ -16,7 +17,7 @@ class Cache {
 
         public function __construct($size) {
           $this->cache_size = $size;
-          $this->dbconnection = new mysqli("localhost","root","","se13");
+          $this->dbconnection = new mysqli(_MYSQLSERVER,_MYSQLUSER,_MYSQLPASSWORD,_MYSQLDB);
           $query = 'SELECT (*) FROM url2data;';
           if ($this->dbconnection->connect_errno) {
             error_log("Connecting to database failed!");
