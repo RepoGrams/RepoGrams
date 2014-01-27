@@ -15,6 +15,7 @@ if(!isset($_SESSION['init']) || $error){
 </head>
 
 <body>
+	<!-- Warning if javascript is disabled -->
 	<noscript>
     	<p style="text-align:center; color: white; background-color: red;">
     		Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.

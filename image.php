@@ -8,6 +8,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 </head>
 
 <body>
+	<!-- Warning if javascript is disabled -->
 	<noscript>
     	<p style="text-align:center; color: white; background-color: red;">
     		<?php print msg('Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.') ?>

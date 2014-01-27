@@ -72,12 +72,12 @@ function render($commit, $id, $width){
 			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
 	if($floorDiff < $ceilDiff){ //we want to floor the value
 		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($floorValue).'px; height:'.$commit[1].'px;"';
-		$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
+		$head = '<li class="repoblock" id="'.$id.'" '.$style.' '.$tooltip.'>';
 		echo ($head);
 		$width += $floorValue;
 	}else{ //we want to ceil the value
 		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($ceilValue).'px; height:'.$commit[1].'px;"';
-		$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
+		$head = '<li name="repoblock" class="repoblock" id="'.$id.'" '.$style.' '.$tooltip.'>';
 		echo ($head);
 		$width += $ceilValue;
 	}
@@ -96,7 +96,7 @@ function renderLast($commit, $count, $width){
 	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
 			                                          Date: '. $datum.'<br>
 			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
-	$head = '<li class="customBlock" id="'.$count.'" '.$style.' '.$tooltip.'>';
+	$head = '<li name="repoblock" class="repoblock" id="'.$count.'" '.$style.' '.$tooltip.'>';
 	$end = '</li>';
 	echo ($head);
 	echo ($end);
@@ -116,7 +116,7 @@ function renderLegend(){
 	{
 		$key = $legend[$i][0];
 		$val = $legend[$i][1];
-		$colorBlock = '<div style="line-height:1"><div class="customBlock" style="background-color:rgb('.ceil($val[0]).','.ceil($val[1]).','.ceil($val[2]).');width:15px;height:14px;">';
+		$colorBlock = '<div style="line-height:1"><div class="repoblock" onmouseöeave="disablehighlight(this);" onmouseover="highlight(this);" style="background-color:rgb('.ceil($val[0]).','.ceil($val[1]).','.ceil($val[2]).');width:15px;height:14px;">';
 		echo $colorBlock .'</div>'.'&nbsp;'.$key.'<br></div>';
 	}
 }

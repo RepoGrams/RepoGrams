@@ -24,15 +24,19 @@ error_log("end:".$_SESSION['end']);
 
 <html !DOCTYPE HTML>
 <head>
-	<?php include('header.php')?>
-	<!--<meta http-equiv="refresh" content="5">-->
+	<?php include('header.php'); ?>
 </head>
 
 <body>
-<!-- Menu -->
-<?php 
-include('menu.php');
-?>
+	<!-- Warning if javascript is disabled -->
+	<noscript>
+    	<p style="text-align:center; color: white; background-color: red;">
+    		<?php print msg('Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.') ?>
+    	</p>
+	</noscript>
+	
+	<!-- Menu -->
+	<?php include('menu.php'); ?>
 
 	<!-- Content -->
 	<div class="container" id="wrap">

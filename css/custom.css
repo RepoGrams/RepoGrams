@@ -1,6 +1,5 @@
-html, body {
-  height: 100%;
-}
+html, body { height: 100%; }
+
 /* Wrapper for page content to push down footer */
 #wrap {
   min-height: 100%;
@@ -11,63 +10,31 @@ html, body {
 }
 
 /* Language flags */
-.flag {
-	width: 16px;
-	height: 11px;
-	background:url(../img/flags.png) no-repeat
-}
-.flag.flag-de {background-position: -16px 0}
-.flag.flag-fr {background-position: 0 -11px}
-.flag.flag-us {background-position: -16px -11px}
+.flag { width: 16px; height: 11px; background:url(../img/flags.png) no-repeat; }
+.flag.flag-de {background-position: -16px 0; }
+.flag.flag-fr {background-position: 0 -11px; }
+.flag.flag-us {background-position: -16px -11px; }
 
-.inforepo {
-	margin-bottom: 0px;
-}
+.inforepo { margin-bottom: 0px; }
 
-.datepick {
-	margin: auto auto 0;
-    text-align: center;
-    width: 50%;
-}
+.datepick { margin: auto auto 0; text-align: center; width: 50%; }
 
-.center {
-	display: block; 
-	margin: auto auto 0;
-	text-align: center;
-}
+.center { display: block;  margin: auto auto 0; text-align: center; }
 
-.alert-dismissable .close {
-	color: #800000;
-	margin-left: 10px;
-}
+.alert-dismissable .close { color: #800000; margin-left: 10px; }
 
-.close {
-	opacity: 0.8;
-}
+.close { opacity: 0.8; }
 
-.urlinput {
-  width: 50%;
-  margin: auto auto 0;
-}
+.urlinput { width: 50%; margin: auto auto 0; }
 
-.errormessage {
-  width: 50%;
-  margin: auto auto 0;
-}
+.errormessage { width: 50%; margin: auto auto 0; }
 
-.clear {
-	clear:both;
-}
+.clear { clear:both; }
 
 /* Footer */
 /* Set the fixed height of the footer here */
-#push, #footer {
-  height: 60px;
-}
-#footer {
-  background-color: #eee;
-  text-align: center;
-}
+#push, #footer { height: 60px; }
+#footer { background-color: #eee; text-align: center; }
 
 /* Lastly, apply responsive CSS fixes as necessary */
 @media (max-width: 767px) {
@@ -90,7 +57,11 @@ html, body {
 	cursor: pointer;
 }
 
+/* Rendered blocks */
+.repoblock:hover { border-color: rgb(102, 175, 233); outline: 0px none; box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6); }
+
 /* Color legend */
+
 .color-legend .legend-title {
     text-align: left;
     margin-bottom: 5px;
@@ -125,9 +96,7 @@ html, body {
     color: #999;
     clear: both;
 }
-.color-legend a {
-    color: #777;
-}
+.color-legend a { color: #777; }
 
 /* Plugin to make the rendered repository scrollable */
 #overscroll { width: 768px; height: 512px; overflow: hidden; position: relative; }
@@ -137,40 +106,17 @@ html, body {
 #overscroll li.no-drag { background-color: #000; color: #FFF; }
 #overscroll li.last { clear: both; visibility: hidden; height: 0; padding: 0; }
 
-div[class="tooltip-inner"] {
-    text-align: left;
-    width: 200px;
-}
+div[class="tooltip-inner"] { text-align: left; width: 200px; }
 
-.doc-header {
-	border-bottom:solid 1px;
-}
+.doc-header { border-bottom:solid 1px; }
 
-.custom-jumbotron{
-	background-color:#A1C782;
-}
+.custom-jumbotron{ background-color:#A1C782; }
 
-.borderimage {
-	border-width:5px;
-	border-style: solid;
-	border-color: black;
-}
-style .customdate {
-	width : 50%;
-	float: left;
-}
+.borderimage { border-width:5px; border-style: solid; border-color: black; }
+style .customdate { width : 50%; float: left; }
 
-.customBlock{
-	background-color:#ffffff;
-	width: 5px;
-	height: 5px;
-	float:left;
-}
+.customBlock{ background-color:#ffffff; width: 5px; height: 5px; float:left; }
 
-.centerButton{
-	text-align:center;
-}
+.centerButton{ text-align:center; }
 
-.wide-modal{
-	width:900px;
-}
+.wide-modal{ width:900px; }
