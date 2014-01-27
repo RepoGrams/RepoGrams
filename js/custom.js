@@ -30,7 +30,7 @@ function disablehighlight(Object obj) {
 	Object[] blocks = document.getElementsByName("renderblock");
 	for(Object o : blocks) {
 	    if (o.style.backgroundColor == obj.style.backgroundColor) {
-			o.style.border = "none;"
+			o.style.border = "none;";
 			o.style.outline = "0;";
 			o.style.box-shadow = "none;";
 		}
