@@ -31,7 +31,7 @@ error_log("end:".$_SESSION['end']);
 	<!-- Warning if javascript is disabled -->
 	<noscript>
     	<p style="text-align:center; color: white; background-color: red;">
-    		<?php print msg('Looks like javascript is disabled in your browser. Please activate it to be able to use all the functions of this page.') ?>
+    		<?php print msg('javascript') ?>
     	</p>
 	</noscript>
 	
@@ -50,13 +50,13 @@ error_log("end:".$_SESSION['end']);
      		</div>
 		</div>
 		<p id="loadtext" class="center">
-			<?php print msg('Cloning repository into folder.');?>	
+			<?php print msg('loading-cloning');?>	
 		</p>
 			<br><br>
 		<div class="center">
 			<form role="form" action="./php/abort.php" method="POST">
 				<div class="btn-group btn-group-lg">
-		  			<button class="btn btn-danger" type="Submit" ><?php print msg('Abort');?></button>
+		  			<button class="btn btn-danger" type="Submit" ><?php print msg('loading-abort');?></button>
 				</div>
 		    </form>
 		</div>
