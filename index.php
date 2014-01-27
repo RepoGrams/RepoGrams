@@ -28,7 +28,7 @@ if(!isset($_SESSION['init']) || $error){
 	<!-- Content in root container-->
 	<div class="container" id="wrap"> <!-- open root container-->
 	  
-	  <div class="row">
+	  <div  class="row">
 	  <div class="col-xs-12 col-sm-12 col-md-offset-4 col-md-4">  <!--Responsive title -->
 	    <img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
 	    <br>
@@ -39,16 +39,10 @@ if(!isset($_SESSION['init']) || $error){
 	  <div class="row">
 	  <div class="col-xs-12">
 		<form role="form" action="./loading.php" method="POST">
-   			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">			
-   				<input class="form-control" id="repourl" name="repourl" type="text" required="required" placeholder="<?php print msg('index-enter'); ?>">
-    			<span class="input-group-btn">
-       				<button class="btn btn-primary" type="submit" title="<?php print msg('index-vis'); ?>">
-       					<span class="glyphicon glyphicon-indent-left"></span><?php print msg('visualize'); ?>
-					</button>
-					<button class="btn btn-info" data-toggle="modal" data-target="#help" title="<?php print msg('index-help'); ?>" type="submit">
-						<span class="glyphicon glyphicon-question-sign "></span> <?php print msg('index-help'); ?>
-					</button>
-     			</span>
+			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">
+	<input class="form-control" id="repourl" name="repourl" type="text" required="required" placeholder="<?php print msg('Enter repository url'); ?>">
+
+      			    	
 			</div>
 
 	  		<!-- Error Handling -->
@@ -64,8 +58,19 @@ if(!isset($_SESSION['init']) || $error){
 				}
 			?>
 			
-			<!-- Date picker -->
-		  	<br>
+			<br>
+		<div class="centerButton">
+<button class="btn btn-primary" type="submit" title="<?php print msg('index-vis'); ?>">
+       					<span class="glyphicon glyphicon-indent-left"></span><?php print msg('visualize'); ?>
+					</button>
+				<button type="button" class="btn btn-default" onclick="example();"><?php print msg('index-examples'); ?></button>
+										<button class="btn btn-info" data-toggle="modal" data-target="#help" title="<?php print msg('index-help'); ?>" type="submit">
+						<span class="glyphicon glyphicon-question-sign "></span> <?php print msg('index-help'); ?>
+					</button>
+
+		  </div>
+			<br>
+		<!-- Date picker -->
     		<div class="datepick">
     			<span><?php print msg('index-select'); ?> </span>
     			<input type="text" class="input-small hasDatepicker" name="start" id="start" style="width:90px;"/>
@@ -78,22 +83,18 @@ if(!isset($_SESSION['init']) || $error){
 	  <br><br>
 	  
 	  <!-- Examples -->
-	  <div class="row">
-	  <div class="centerButton">
-		<button type="button" class="btn btn-default" onclick="example();"><?php print msg('index-examples'); ?></button>
-	  </div>
-	  </div>
 	<br>
-	  <div id="description">
-	  </div>
+<div id="description"></div>
 	</div>
 	
 	</div> <!-- root container close -->
-	<div id="push"></div>
-
+	<div id="example" class="centerButton hidden">
+	<?php require_once('./php/exampleBootstrap.php') ?>
+	</div>
 	<!-- Help dialog -->
 	<?php include('helpdialog.php'); ?>
-	
+	<div id="push"></div>
+
 	<!-- Footer -->	
 	<?php include('footer.php'); ?>
 	
