@@ -165,7 +165,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 					}
 				}
 
-				//$legende3 = $this->myArraySort($legende3);
+				$legende3 = $this->myArraySort($legende3);
 				
 				if (count($legende3) > 30){
 					$legende = array();	
@@ -510,19 +510,20 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 		function myArraySort($array){ //[2] = count
 			$array2 = array();
-    		for ($i = 0; $i < count($array); $i++){
-    			$insert = false;
-    			for ($j = 0; $j < count($array2); $j++){
-    				if ($array[$i][2] > $array2[$j][2]){
-    					array_splice($array2, ($j+1), 0, $array[$i]);
-    					$insert = true;
-    					break;
-    				}
-    			}
-    			if (!$insert){
-    				array_splice($array2, 0, 0, $array[$i]);
-    			}
-    		}
+			while(count($array)>0){
+				$maxCount = -1;
+	    		$maxArray = -1;
+	    		for ($i = 0; $i < count($array); $i++){
+	    			
+	    			if ($maxCount < $array[$i][2]){
+	    				$maxCount = $array[$i][2];
+	    				$maxArray = $i;
+	    			}
+	    		}
+	    		$array2[]= $array[$maxArray];
+	    		unset($array[$maxArray]);
+	    		$array = array_values ($array);
+	    	}
        		return $array2;
 		}
 	}
