@@ -536,7 +536,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		    }
 		}
 
-		while ($value > 20) {$length = $length/2;}
+		while ($value > 20) {$value = $value/2;}
 		$h = $value/25 + 0.1;
 		$second = substr($name, 0, 1);
 		$s = 0.3 + 0.6 * $this->letterValue ($second, 1);
