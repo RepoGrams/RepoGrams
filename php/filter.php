@@ -4,7 +4,7 @@ session_start();
 error_log('HELP');
 //if (isset($_GET['filter1'])) {
 	$mode = $_POST['filter1'];
-	$mode2 = $_POST['filter1'];
+	$mode2 = $_POST['filter2'];
 	$color = 3;
 	switch ($mode) {
 		case "0": $color = 0;break;
