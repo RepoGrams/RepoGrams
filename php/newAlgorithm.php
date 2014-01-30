@@ -440,7 +440,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				}
 				else{
 					$l = 0.65;
-					$hour = $hour/2;
+					$hour = $hour-12;
 				}
 
 				$h = $hour * 0.08;
