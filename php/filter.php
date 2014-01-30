@@ -21,6 +21,7 @@ reRender(1,1);
 function reRender($fmode = null, $smode = null) {
 	error_log($fmode.' is set to render');
 	$alg = new Algorithm();
+	$ses = unserialize($_SESSION['repo']);
 	$_SESSION['image'] = $alg->render($ses,$fmode,$smode,$_SESSION['width'], $_SESSION['height']);
 	error_log("Rendered");
 	header('Location: ../image.php');
