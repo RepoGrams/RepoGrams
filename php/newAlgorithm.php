@@ -215,24 +215,34 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				}
  				break;
 			case 4:
-				$day  = 1;
+				$day  = 15;
 				$month = 1;
-				$year = 2014;
+				$year = 2005;
 
+				$l = 0.1 + $day * 0.01;
 				$s = 0.49 + $month * 0.04;
-				$l = ($year - 1990) * 0.04;
+				$h = ($year - 1990) * 0.04;
 
 				$legende = array();
 
-				while($day < 31){
+				while($year < 2015){
 					$convArray = $conv->ColorHSLToRGB($h,$s,$l);
 		    		$r = $convArray['r'];
 			   		$g = $convArray['g'];
 			   		$b = $convArray['b'];
 			   		$color = array($r,$g,$b);
-			    	$legende[] = array("Day of Month: ".$day, $color);
-			    	$day += 3;
+			    	if ($month == 1){
+			    		$legende[] = array("January of ".$year, $color);
+			    		$month = 6;
+			    	}
+			    	else{
+			    		$legende[] = array("June of  ".$year, $color);
+			    		$year++;
+			    		$month = 1;
+			    	}
+
 				}
+
 				break;
 			default:
 				echo "möp";
