@@ -28,12 +28,9 @@ if(!isset($_SESSION['init']) || $error){
 	<!-- Content in root container-->
 	<div class="container" id="wrap"> <!-- open root container-->
 	  
-	  <div  class="row">
-	  <div class="col-xs-12 col-sm-12 col-md-offset-4 col-md-4">  <!--Responsive title -->
-	    <img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
-	    <br>
-	  </div>
-	  </div>
+<div class="row title">
+<div id="description"></div>
+</div>
 
 	  <!--Input form  -->
 	  <div class="row">
@@ -84,14 +81,16 @@ if(!isset($_SESSION['init']) || $error){
 	  
 	  <!-- Examples -->
 	<br>
-<div id="description"></div>
+
+	<div id="example" class="centerButton">
+	<?php require_once('./php/exampleExplained.php') ?>
 	</div>
-	
+
+
+	</div>
+
 	</div> <!-- root container close -->
-	<div id="example" class="centerButton hidden">
-	<?php require_once('./php/exampleBootstrap.php') ?>
-	</div>
-	<!-- Help dialog -->
+		<!-- Help dialog -->
 	<?php include('helpdialog.php'); ?>
 	<div id="push"></div>
 
@@ -115,6 +114,10 @@ if(!isset($_SESSION['init']) || $error){
 		});
 		document.getElementById("start").value="01/01/1970";
 		document.getElementById("end").value="<?php date_default_timezone_set ('UTC');echo date('m/d/Y');?>";
+
+		$(function () {
+    		$("[rel='tooltip']").tooltip();
+		});
 	</script>
 </body>
 </html>

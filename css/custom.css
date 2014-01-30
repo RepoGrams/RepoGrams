@@ -117,3 +117,9 @@ style .customdate { width : 50%; float: left; }
 .centerButton{ text-align:center; }
 
 .wide-modal{ width:900px; }
+
+/* Title */
+.title{
+	margin: 150px auto 0;
+	display: block;
+}
