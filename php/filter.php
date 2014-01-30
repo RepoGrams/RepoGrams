@@ -16,7 +16,7 @@ if (isset($_GET['filter1'])) {
 }	
 
 error_log("Test");
-reRender(1,1);
+reRender(0,1);
 
 function reRender($fmode = null, $smode = null) {
 	error_log($fmode.' is set to render');
