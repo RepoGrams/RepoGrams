@@ -12,9 +12,6 @@ if (isset($_GET['filter1'])) {
 	}
 }	
 
-error_log("Test");
-reRender(2,0);
-
 function reRender($fmode = null, $smode = null) {
 	error_log($fmode.' is set to render');
 	$alg = new Algorithm();
