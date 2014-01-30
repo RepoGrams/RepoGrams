@@ -220,12 +220,12 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$year = 2005;
 
 				$l = 0.1 + $day * 0.01;
-				$s = 0.49 + $month * 0.04;
-				$h = ($year - 1990) * 0.04;
 
 				$legende = array();
 
 				while($year < 2015){
+					$s = 0.49 + $month * 0.04;
+					$h = ($year - 1990) * 0.04;
 					$convArray = $conv->ColorHSLToRGB($h,$s,$l);
 		    		$r = $convArray['r'];
 			   		$g = $convArray['g'];
