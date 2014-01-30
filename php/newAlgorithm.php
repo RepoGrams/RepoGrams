@@ -531,7 +531,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
    		else{
 			$l = 0.5;
 		}
-		return array($h,$s,$l)
+		return array($h,$s,$l);
 	}
 }
 ?>
