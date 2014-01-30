@@ -454,9 +454,9 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$month = date('n', $time);
 				$year = date('Y', $time);
 
-				$h = $day * 0.03;
+				$l = $day * 0.03;
 				$s = 0.49 + $month * 0.04;
-				$l = ($year - 1990) * 0.04;
+				$h = ($year - 1990) * 0.04;
 
 				$convArray = $conv->ColorHSLToRGB($h,$s,$l);
 	    		$r = $convArray['r'];
