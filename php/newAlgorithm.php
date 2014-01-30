@@ -1,7 +1,7 @@
 <?php
-	require_once("convert.php");
-	require_once("action.php");
-	class algorithm {
+require_once("convert.php");
+require_once("action.php");
+class algorithm {
 
 	public function render($commitObjectArray, $modus_length = 0, $modus_color = 0, $width, $height){
 		$commitA = $this->preprocess($commitObjectArray);
@@ -146,6 +146,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$x += $length;
 			}
 		}
+
 		$conv = new convert();
 		switch($modus_color){
 			case 0:
@@ -240,20 +241,16 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			    		$year++;
 			    		$month = 1;
 			    	}
-
 				}
-
 				break;
 			default:
 				echo "möp";
 				break;
-
 		}
 		$returnArray[0] = $legende;
 		fwrite($datei, utf8_encode("</g> </g></svg> \n"));
 		fclose($datei);
 		return $returnArray;
-
 	}
 
 	private function commitToBlock($commitArray, $modus_length, $modus_color, $all_diff, $add_diff, $del_diff, $pixel, $hohe){
@@ -465,79 +462,78 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		}
 	}
 
-		private function preprocess($obj){
-			require_once(__DIR__."/../lib/vcs/Commit.interface.php");
-			for ($i = 0; $i < count($obj); $i++){
-				$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->NumChangedLines(), $obj[$i]->NumAddedLines(), $obj[$i]->NumRemovedLines(), $obj[$i]->CommitAuthor(), $obj[$i]->CommitTime()) ;
-			}
-			return $array;
+	private function preprocess($obj){
+		require_once(__DIR__."/../lib/vcs/Commit.interface.php");
+		for ($i = 0; $i < count($obj); $i++){
+			$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->NumChangedLines(), $obj[$i]->NumAddedLines(), $obj[$i]->NumRemovedLines(), $obj[$i]->CommitAuthor(), $obj[$i]->CommitTime()) ;
 		}
+		return $array;
+	}
 
 
-		private function letterValue($letter) {
+	private function letterValue($letter) {
 
-			$letterArray = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
+		$letterArray = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
 
-			$numberArray = array("y", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+		$numberArray = array("y", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
 
-			if (is_numeric($letter)){
-		    	$value = array_search($letter, $numberArray);
-		    	$value = ($value * (26/10))-1;
-			}
-			else{
-		    	$value = array_search($letter, $letterArray);
-		    }
-		    return $value /26;
+		if (is_numeric($letter)){
+	    	$value = array_search($letter, $numberArray);
+	    	$value = ($value * (26/10))-1;
 		}
+		else{
+	    	$value = array_search($letter, $letterArray);
+	    }
+	    return $value /26;
+	}
 
-		private function writeBlock($datei, $color, $x, $y, $w, $h,$id){
+	private function writeBlock($datei, $color, $x, $y, $w, $h,$id){
 			/*if ($w <= 0){
 				$w = 0.1;
 			}*/
-			$conv = new convert();
-			$hexcolor = $conv->RGBtoHex($color[0],$color[1],$color[2]);
-			$s = " <rect x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\" rx=\"0\" ry=\"0\" id =\"rect".$id."\" style=\"fill:".$hexcolor.";stroke:none\" /> \n";
-			fwrite($datei, utf8_encode($s));
-		}
-
-		function myArraySort($array){ //[2] = count
-			$array2 = array();
-			while(count($array)>0){
-				$maxCount = -1;
-	    		$maxArray = -1;
-	    		for ($i = 0; $i < count($array); $i++){
-	    			
-	    			if ($maxCount < $array[$i][2]){
-	    				$maxCount = $array[$i][2];
-	    				$maxArray = $i;
-	    			}
-	    		}
-	    		$array2[]= $array[$maxArray];
-	    		unset($array[$maxArray]);
-	    		$array = array_values ($array);
-	    	}
-       		return $array2;
-		}
-
-		function nameToHash($name){
-			$name = preg_replace("/[^a-zA-Z0-9]/" , "" , $name);
-	   		$name = strtolower($name);
-	   		$length = strlen($name);
-	   		while ($length > 28) $length = $length/2;
-			$h = $length/32 + 0.1;
-	  		$second = substr($name, 0, 1);
-	   		$s = 0.3 + 0.6 * $this->letterValue ($second, 1);
-	   		if ($length > 1){
-	   			$third = substr($name, 1, 1);
-			$l = 0.4 + 0.5 * $this->letterValue ($third, 2);
-	   		}
-	   		else{
-	   			$l = 0.5;
-	   		}
-			return array($h,$s,$l)
-		}
+		$conv = new convert();
+		$hexcolor = $conv->RGBtoHex($color[0],$color[1],$color[2]);
+		$s = " <rect x = \"".$x."\" y =\"".$y."\" width =\"".$w."\" height=\"".$h."\" rx=\"0\" ry=\"0\" id =\"rect".$id."\" style=\"fill:".$hexcolor.";stroke:none\" /> \n";
+		fwrite($datei, utf8_encode($s));
 	}
+
+	function myArraySort($array){ //[2] = count
+		$array2 = array();
+		while(count($array)>0){
+			$maxCount = -1;
+	   		$maxArray = -1;
+	   		for ($i = 0; $i < count($array); $i++){   			
+	   			if ($maxCount < $array[$i][2]){
+	   				$maxCount = $array[$i][2];
+	   				$maxArray = $i;
+	   			}
+	   		}
+	   		$array2[]= $array[$maxArray];
+	   		unset($array[$maxArray]);
+	   		$array = array_values ($array);
+	   	}
+    	return $array2;
+	}
+
+	function nameToHash($name){
+		$name = preg_replace("/[^a-zA-Z0-9]/" , "" , $name);
+		$name = strtolower($name);
+		$length = strlen($name);
+		while ($length > 28) $length = $length/2;
+		$h = $length/32 + 0.1;
+		$second = substr($name, 0, 1);
+		$s = 0.3 + 0.6 * $this->letterValue ($second, 1);
+		if ($length > 1){
+			$third = substr($name, 1, 1);
+			$l = 0.4 + 0.5 * $this->letterValue ($third, 2);
+		}
+   		else{
+			$l = 0.5;
+		}
+		return array($h,$s,$l)
+	}
+}
 ?>
 
 
