@@ -2,7 +2,7 @@
 require_once("./newAlgorithm.php");
 session_start();
 error_log('HELP');
-if (isset($_GET['filter1'])) {
+//if (isset($_GET['filter1'])) {
 	$mode = $_GET['filter1'];
 	$var = 0;
 	switch ($mode) {
@@ -11,6 +11,8 @@ if (isset($_GET['filter1'])) {
 		case "2": $var = 2;break;
 		case "3": $var = 3;break;
 		case "4": $var = 4;break;
+		default:
+			break;
 	}	
 	error_log($fmode.' is set to render');
 	$alg = new Algorithm();
@@ -18,6 +20,6 @@ if (isset($_GET['filter1'])) {
 	$_SESSION['image'] = $alg->render($ses,0,$var,$_SESSION['width'], $_SESSION['height']);
 	error_log("Rendered");
 	header('Location: ../image.php');
-}
+//}
 	
 ?>
