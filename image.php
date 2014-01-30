@@ -25,8 +25,8 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     	<div class="hero-unit">
     		<!-- Filtereinstellungen -->
  	   		<form role="form" action="php/filter.php" method="POST" class="form-inline" style="text-align:center;">
+ 	   			Filter
  	   			<div class="form-group">
- 	   				Filter
     				<select name="filter1" class="form-control">
   						<option value="2"><?php print msg('image-option1-2') ?></option>         
   						<option value="1"><?php print msg('image-option1-1') ?></option>  
