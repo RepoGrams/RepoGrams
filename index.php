@@ -40,7 +40,7 @@ if(!isset($_SESSION['init']) || $error){
 	  <div class="col-xs-12">
 		<form role="form" action="./loading.php" method="POST">
 			<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">
-	<input class="form-control" id="repourl" name="repourl" type="text" required="required" placeholder="<?php print msg('Enter repository url'); ?>">
+	<input class="form-control" id="repourl" name="repourl" type="text" required="required" placeholder="<?php print msg('index-enter'); ?>">
 
       			    	
 			</div>

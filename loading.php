@@ -83,7 +83,7 @@ error_log("end:".$_SESSION['end']);
 			window.location.href = "/image.php";
 			console.log("changed location...");
 		} else {
-			$("#loadtext").html(<?php msg('Rendering image')?>);
+			$("#loadtext").html( <?php msg('Rendering image')?> );
 			$("#mainbar").attr( "aria-valuenow","50");
 			$("#mainbar").css({"width":"50%"});
 			requestImage(1);

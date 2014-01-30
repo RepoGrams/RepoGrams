@@ -100,7 +100,9 @@
 			'bug-cache'
 				=> 'Given cache-directory does not exist',
 			'image-go'
-				=> 'Go'
+				=> 'Go',
+			'loading-render'
+				=> 'Rendering image'
 		),
 		'de'=> array(
 			'javascript'
@@ -202,7 +204,9 @@
 			'bug-cache' 
 				=> 'Cache existiert nicht.',
 			'image-go'
-				=> 'Los'
+				=> 'Los',
+			'loading-render'
+				=> 'Rendere Bild'
 			),
 	'fr' => array(
 			'javascript'
@@ -304,7 +308,9 @@
 			'bug-cache' 
 				=> 'n\'existe pas de cache-r&eacute;pertoire donn&eacute;',
 			'image-go'
-				=> 'Allez'
+				=> 'Allez',
+			'loading-render'
+				=> 'rendre l\'image'
 		)
 	);
 	
