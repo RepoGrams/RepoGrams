@@ -71,16 +71,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			$str = preg_replace("/>/", "&gt;", $str);
 			$time = $commitArray[$i][5];
 			$author = $commitArray[$i][4];
-			if ($modus_length == 1){
-				if ($commitArray[$i][2] <= 0) {
-					break;
-				}
-			}
-			if ($modus_length == 2){
-				if ($commitArray[$i][3] <= 0) {
-					break;
-				}
-			}
+		
 			$block = $this->commitToBlock($commitArray[$i], $modus_length, $modus_color, $all_diff, $add_diff, $del_diff, $pixel, $hohe); //length, heigth, color
 			$length = $block[0];
 			$color = $block[2];
