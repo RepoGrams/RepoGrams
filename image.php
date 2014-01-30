@@ -34,6 +34,8 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						<option value="3"><?php print msg('image-option1-3') ?></option>        
 	  					<option value="4"><?php print msg('image-option1-4') ?></option>             
 					</select>
+				</div>
+				<div class="form-group">
 					<select name="filter2" class="form-control">
   						<option value="0" selected><?php print msg('image-option2-0') ?></option>         
   						<option value="1"><?php print msg('image-option2-1') ?></option>  
