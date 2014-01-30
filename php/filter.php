@@ -4,14 +4,11 @@ require_once("./newAlgorithm.php");
 if (isset($_GET['filter1'])) {
 	$mode = $_GET['filter1'];
 	switch ($mode) {
-		case "0": renderImage(0, $mode);break;
-		case "1": renderImage(0, $mode);break;
-		case "2": renderImage(0, $mode);break;
-		case "3": renderImage(0, $mode);break;
-		case "4": renderImage(0, $mode);break;
-		case "5": renderImage(1, 0);break;
-		case "6": renderImage(1, 1);break;
-		case "7": renderImage(1, 2);break;
+		case "0": renderImage(0, 0);break;
+		case "1": renderImage(0, 1);break;
+		case "2": renderImage(0, 2);break;
+		case "3": renderImage(0, 3);break;
+		case "4": renderImage(0, 4);break;
 	}
 }	
 

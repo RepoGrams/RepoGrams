@@ -32,11 +32,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						<option value="1"><?php print msg('Commmit message') ?></option>  
  	 					<option value="0" selected><?php print msg('First 3 letters') ?></option>  
   						<option value="3"><?php print msg('Time') ?></option>        
-	  					<option value="4"><?php print msg('Date') ?></option>     
-	  					<option>-------------------------------------</option>
-	  					<option value="5"><?php print msg('All') ?></option>     
-  						<option value="6"><?php print msg('Add') ?></option>              
-  						<option value="7"><?php print msg('Delete') ?></option>             
+	  					<option value="4"><?php print msg('Date') ?></option>             
 					</select>
 				</div>
   				<button class="btn btn-default" type="submit" title="Apply filters">
