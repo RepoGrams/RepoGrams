@@ -520,8 +520,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		$name = preg_replace("/[^a-zA-Z0-9]/" , "" , $name);
 		$name = strtolower($name);
 		$length = strlen($name);
-		while ($length > 28) {$length = $length/2;}
-		$h = $length/32 + 0.1;
+		while ($length > 12) {$length = $length/2;}
+		$h = $length/15 + 0.1;
 		$second = substr($name, 0, 1);
 		$s = 0.3 + 0.6 * $this->letterValue ($second, 1);
 		if ($length > 1){
