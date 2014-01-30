@@ -71,7 +71,16 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			$str = preg_replace("/>/", "&gt;", $str);
 			$time = $commitArray[$i][5];
 			$author = $commitArray[$i][4];
-		
+			if ($modus_length == 1){
+				if ($commitArray[$i][2] <= 0) {
+					break;
+				}
+			}
+			if ($modus_length == 2){
+				if ($commitArray[$i][3] <= 0) {
+					break;
+				}
+			}
 			$block = $this->commitToBlock($commitArray[$i], $modus_length, $modus_color, $all_diff, $add_diff, $del_diff, $pixel, $hohe); //length, heigth, color
 			$length = $block[0];
 			$color = $block[2];
@@ -390,26 +399,9 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 			case 2: 
 				$name = $commitArray[4];
-				$name = preg_replace("/[^a-zA-Z0-9]/" , "" , $name);
-	   			$name = strtolower($name);
-		   		$first = substr($name, 0, 1);
-				$h = $this->letterValue($first, 0);
-		   		if (strlen($name) > 1){
-		   			$second = substr($name, 1, 1);
-		   			$s = 0.3 + 0.6 * $this->letterValue ($second, 1);
-		   			if (strlen($msg) > 2) {
-		   				$third = substr($name, 2, 1);
-		   				$l = 0.4 + 0.5 * $this->letterValue ($third, 2);
-		   			}
-		   			else {
-		   				$l = 0.6;
-		   			}
-		   		}
-	    		else{
-	    			$s = 0.5;
-	    			$l = 0.6;
-	    		}
-	    		$convArray = $conv->ColorHSLToRGB($h,$s,$l);
+				$hash = $this->nameToHash($name);
+	    		
+	    		$convArray = $conv->ColorHSLToRGB($hash[0],$hash[1],$hash[2]);
 	    		$r = $convArray['r'];
 		   		$g = $convArray['g'];
 		   		$b = $convArray['b'];
@@ -526,6 +518,24 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 	    		$array = array_values ($array);
 	    	}
        		return $array2;
+		}
+
+		function nameToHash($name){
+			$name = preg_replace("/[^a-zA-Z0-9]/" , "" , $name);
+	   		$name = strtolower($name);
+	   		$length = strlen($name);
+	   		while ($length > 28) $length = $length/2;
+			$h = $length/32 + 0.1;
+	  		$second = substr($name, 0, 1);
+	   		$s = 0.3 + 0.6 * $this->letterValue ($second, 1);
+	   		if ($length > 1){
+	   			$third = substr($name, 1, 1);
+			$l = 0.4 + 0.5 * $this->letterValue ($third, 2);
+	   		}
+	   		else{
+	   			$l = 0.5;
+	   		}
+			return array($h,$s,$l)
 		}
 	}
 ?>
