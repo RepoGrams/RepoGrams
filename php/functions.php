@@ -37,7 +37,7 @@ function dump(){
 
 function renderImage(){
 	$count = 1;
-	for ($i = 1; $i <= count($_SESSION['image']); ++$i){
+	for ($i = 1; $i < count($_SESSION['image']); ++$i){
 		$count = renderBlock($_SESSION['image'][$i], $count);
 	}
 }
