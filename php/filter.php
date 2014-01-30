@@ -3,8 +3,8 @@ require_once("./newAlgorithm.php");
 session_start();
 error_log('HELP');
 //if (isset($_GET['filter1'])) {
-	$mode = $_GET['filter1'];
-	$var = 0;
+	$mode = $_POST['filter1'];
+	$var = 3;
 	switch ($mode) {
 		case "0": $var = 0;break;
 		case "1": $var = 1;break;
