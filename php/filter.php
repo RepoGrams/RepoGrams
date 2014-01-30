@@ -1,7 +1,7 @@
 <?php
 require_once("./newAlgorithm.php");
 session_start();
-
+error_log('HELP');
 if (isset($_GET['filter1'])) {
 	$mode = $_GET['filter1'];
 	$var = 0;
