@@ -10,15 +10,15 @@ require_once("php/language.php");
     	<div class="modal-content">
       		<div class="modal-header">
        			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-       			<h3 class="modal-title"><?php print msg('Repograms - Quick Help');?></h4>
+       			<h3 class="modal-title"><?php print msg('doc-repo-qh');?></h4>
      		</div>
       		<div class="modal-body">
 		  <p class="lead">
 		    <div class="h4 doc-header "><?php print msg('doc-rg-q');?></div>
 			<br>	
 			 <?php print msg('doc-rg-a');?>
-			<li> <?php print msg('repo-rg-q');?><br>	
-				<?php print msg('repo-rg-a');?>
+			<li> <?php print msg('doc-rg-q');?><br>	
+				<?php print msg('doc-rg-a');?>
 			<li> <?php print msg('doc-chromo-q');?><br>
 				<?php print msg('doc-chromo-a');?>
 		    <div class="h4 doc-header"><?php print msg('doc-use-q');?></div>

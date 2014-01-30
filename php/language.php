@@ -51,6 +51,8 @@
 				=> 'Legend',
 			'doc-doc'
 				=> 'Documentation',
+			'doc-repo-qh'
+				=> 'Repograms - Quick Help',
 			'doc-rg-q'
 				=> 'What is Repogram?',
 			'doc-rg-a'
@@ -151,6 +153,8 @@
 				=> 'Legende',
 			'doc-doc'
 				=> 'Dokumentation',
+			'doc-repo-qh'
+				=> 'Repograms - Schnelle Hilfe',
 			'doc-rg-q'
 				=> 'Was ist Repogram?',
 			'doc-rg-a'
@@ -251,6 +255,8 @@
 				=> 'L&eacute;gende',
 			'doc-doc' 
 				=> 'Documentation',
+			'doc-repo-qh'
+				=> 'Repograms - aide rapide',
 			'doc-rg-q'
 				=> 'Quelle est Repogram?',
 			'doc-rg-a' 
