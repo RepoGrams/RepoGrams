@@ -379,7 +379,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$sec2 = $p * $sec2;
 				$sec3 = $p * $sec3;
 					
-				$color = $sec1.",".$sec2.",".$sec3;
+				$color = array($sec1,$sec2,$sec3);
 		   		return array($color, "");
 				break;
 
