@@ -210,8 +210,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   			$g = $convArray['g'];
 		   			$b = $convArray['b'];
 		   			$color = array($r,$g,$b);
-		    		$legende[]=array("Stunde: ".$go, $color);
-		    		$go += 2;
+		    		$legende[]=array("Hour: ".$go, $color);
+		    		$go++;
 				}
  				break;
 			case 4:
@@ -230,7 +230,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			   		$g = $convArray['g'];
 			   		$b = $convArray['b'];
 			   		$color = array($r,$g,$b);
-			    	$legende = array("Day of Month: ".$day, $color);
+			    	$legende[] = array("Day of Month: ".$day, $color);
 			    	$day += 3;
 				}
 				break;
