@@ -1,5 +1,6 @@
 <?php
 require_once("./newAlgorithm.php");
+session_start();
 
 if (isset($_GET['filter1'])) {
 	$mode = $_GET['filter1'];
