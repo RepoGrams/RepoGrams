@@ -217,7 +217,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			case 4:
 				$day  = 15;
 				$month = 1;
-				$year = 2005;
+				$year = 2004;
 
 				$l = 0.1 + $day * 0.01;
 
@@ -466,7 +466,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 				$l = 0.1 + $day * 0.01;
 				$s = 0.49 + $month * 0.04;
-				$h = ($year - 1990) * 0.04;
+				$h = ($year - 2004) * 0.04;
 
 				$convArray = $conv->ColorHSLToRGB($h,$s,$l);
 	    		$r = $convArray['r'];
