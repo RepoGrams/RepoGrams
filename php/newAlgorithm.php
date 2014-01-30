@@ -146,7 +146,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				$x += $length;
 			}
 		}
-
+		$conv = new convert();
 		switch($modus_color){
 			case 0:
 			case 2:
