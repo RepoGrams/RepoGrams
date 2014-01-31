@@ -16,13 +16,13 @@ error_log('HELP');
 			break;
 	}	
 	$length = 0;
-	switch ($mode2) {
+	/*switch ($mode2) {
 		case "0": $length = 0;break;
 		case "1": $length = 1;break;
 		case "2": $length = 2;break;
 		default:
 			break;
-	}	
+	}	*/
 	error_log($fmode.' is set to render');
 	$alg = new Algorithm();
 	$ses = unserialize($_SESSION['repo']);

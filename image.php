@@ -35,13 +35,13 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 	  					<option value="4"><?php print msg('image-option1-4') ?></option>             
 					</select>
 				</div>
-				<div class="form-group">
+				<!--<div class="form-group">
 					<select name="filter2" class="form-control">
   						<option value="0" selected><?php print msg('image-option2-0') ?></option>         
   						<option value="1"><?php print msg('image-option2-1') ?></option>  
  	 					<option value="2"><?php print msg('image-option2-2') ?></option>           
 					</select>
-				</div>
+				</div>-->
   				<button class="btn btn-default" type="submit" title="Apply filters">
        				<span class="glyphicon glyphicon-indent-left"></span><?php print msg('image-go'); ?>
 				</button>
