@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
-	require_once("algorithm.php");
+	require_once(__DIR__."/algorithm.php");
 	require_once("functions.php");
 	require_once("language.php");
 	require_once(__DIR__."/../lib/vcs/git/GitRepo.class.php");
