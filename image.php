@@ -29,12 +29,19 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
  	   			Filter<br>
  	   			<div class="form-group">
     				<select id="filter1" name="filter1" class="form-control">
-  						<option value="1"><?php print msg('image-option1-2') ?></option>  
+  						<option value="1"><?php print msg('image-option1-1') ?></option>  
  	 					<option value="0" selected><?php print msg('image-option1-0') ?></option>  
   						<option value="2"><?php print msg('image-option1-3') ?></option>        
 	  					<option value="3"><?php print msg('image-option1-4') ?></option>             
 					</select>
 				</div>
+				<!--<div class="form-group">
+					<select name="filter2" class="form-control">
+  						<option value="0" selected><?php print msg('image-option2-0') ?></option>         
+  						<option value="1"><?php print msg('image-option2-1') ?></option>  
+ 	 					<option value="2"><?php print msg('image-option2-2') ?></option>           
+					</select>
+				</div>-->
   				<button id="filterbtn" class="btn btn-default" title="Apply filters">
        				<span class="glyphicon glyphicon-indent-left"></span><?php print msg('image-go'); ?>
 				</button>
@@ -43,12 +50,14 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     		<!-- Repo-Visualization -->
 		<!-- Legend -->
     		<div class="color-legend" style="float:left; width: 160px;">
-				<div id="legend" class="legend-title"><?php print msg('image-legend'); ?></div>
+				<div class="legend-title"><?php print msg('image-legend'); ?></div>
+                                <div id="legend">
 					<?php
 						require_once('php/functions.php');
                                                 $legend = "";
 						echo renderLegende($legend);
 					?>
+                                </div>
 			</div>
 			
 			<!-- Repo-Image -->
@@ -77,7 +86,6 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     					<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
    						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
    						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
-   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.pdf&mode=pdf'?>"><?php print msg('image-as') ?> .pdf</a></li>
   					</ul>
 				</div>
 			</div>
@@ -108,14 +116,13 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                   var filter_1 = $("#filterForm").find("#filter1 option:selected").val();
                   $("#placeOfImage").fadeOut();
                   $("#legend").fadeOut();
+                  $("#legend").empty();
                   // send the data
                   jQuery.post("php/filter.php",
                                 {
                                   "filter1": filter_1
                                 })
                   .done(function(data) {
-                    console.log("data");
-                    console.log("done");
                     $("#placeOfImage").html(data.image);
                     $("#legend").html(data.legend);
                     $("[rel='tooltip']").tooltip();
