@@ -50,8 +50,6 @@
 	 * Session-Variables: image, title, error_message, 
 	 */
 	function renderRepo($repourl = null) {
-          error_log("========================>");
-          error_log($_POST['state']);
 		try {
 			switch  ($_POST['state']) {
 				case 0:
