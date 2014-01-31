@@ -5,13 +5,10 @@ require_once('./config.inc.php');
 $file = $_GET['file'];
 $modeDownload = $_GET['mode'];
 
-if (isset($_GET['mode'])){
+if (isset($_GET['mode']))
  convertImage($modeDownload);
 download_file($file);
 header('location: '.$_SERVER['HTTP_REFERER']);
-}else{
-	echo "FOOO";
-}
 
 
 function convertImage($modeDownload) {
