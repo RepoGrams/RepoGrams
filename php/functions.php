@@ -126,6 +126,11 @@ function render($commit, $id, $width, &$outstr){
 	$end = '</li>';
         $outstr .= $end;
 	//return the new width of the row
+
+    $size = $_SESSION['width'] - $width;
+	if ($size < 0) return 0;
+	if ($size < $width) return $size;
+
 	return $width;
 }
 
