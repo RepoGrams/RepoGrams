@@ -10,7 +10,7 @@
 			'image-option1-1'
 				=> 'Commit message',
 			'image-option1-0'
-				=> 'First 3 letters',
+				=> 'First three letters',
 			'image-option1-3'
 				=> 'Time',
 			'image-option1-4'
@@ -114,9 +114,9 @@
 			'image-option1-2'
 				=> 'Autor',
 			'image-option1-1'
-				=> 'Commmit Nachricht',
+				=> 'Commit Nachricht',
 			'image-option1-0'
-				=> 'Ersten 3 Buchstaben',
+				=> 'Die ersten drei Buchstaben',
 			'image-option1-3'
 				=> 'Uhrzeit',
 			'image-option1-4'
@@ -223,7 +223,7 @@
 			'image-option1-1 message'
 				=> 'message de commit',
 			'image-option1-0'
-				=> 'Les 3 prem&egrave;&egrave;res lettres',
+				=> 'Les trois prem&egrave;&egrave;res lettres',
 			'image-option1-3'
 				=> 'temps',
 			'image-option1-4'
