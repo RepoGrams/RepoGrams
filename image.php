@@ -49,7 +49,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     		
     		<!-- Repo-Visualization -->
     		<!-- Legend -->
-    		<div class="color-legend" style="float:left; width: 10%;">
+    		<div class="color-legend" style="float:left; width: 130px;">
 				<div class="legend-title"><?php print msg('image-legend'); ?></div>
 					<?php
 						require_once('php/functions.php');
