@@ -101,12 +101,11 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			}
 
 			switch($modus_color){ # modus for legend 
-				case 1:
+				case 2:
 				case 3:
-				case 4:
 					break; # constant legend
 				case 0:
-				case 2:
+				case 1:
 					$ranking[] = array($txt, $color); # adding key and color 
 					break;
 				default:
@@ -170,7 +169,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			##### Cases: first three letters or author ######
 			#################################################
 			case 0:
-			case 2:
+			case 1:
 				$rankedLegend = array();   # helper array, carries key + color + quantity
 
 				##### Count appearance #####
@@ -208,20 +207,10 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				 }
 				break;
 
-			#################################
-			##### Case: Word Categories #####
-			#################################
-			case 1:
-				$legende = array();
-				$legende[]= array("Kategory add", array(255,0,0));
-				$legende[]= array("Kategory delete", array(0,255,0));
-				$legende[]= array("Kategory fix", array(0,0,255));
-				break;
-
 			######################
 			##### Case: Time #####
 			######################
-			case 3:
+			case 2:
 				$hour = 0;
 				$go = 0;
 				$minute = 0;
@@ -253,7 +242,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
  			######################
  			##### Case: Date #####
  			######################
-			case 4:
+			case 3:
 				$day  = 15;
 				$month = 1;
 				$year = 2004;
@@ -379,80 +368,12 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		    	return array($color, $txt);
 		    	break;
 
-		    ###################################################
-			#### Commit Message encoded in logical content ####
-			###################################################
-
-			case 1:
-				$msg = $commitArray[0];
-				if ($msg == null) # empty message, grey
-					return array(array(211,211,211), "");
-
-				$msg = preg_replace("/[^a-zA-Z0-9 ]/" , "" , $msg);
-			    $msg = strtolower($msg);
-
-			    if (strlen($msg) == 0)	# empty message, grey
-					return array(array(211,211,211), "");
-
-				$keys1 = array("add", "new", "create");  # Kategory 1
-				$section1 = array_fill_keys($keys1, "section1");
-					
-				$keys2 = array("delete", "remove");		# Kategory 2
-				$section2 = array_fill_keys($keys2, "section2");
-					
-				$keys3 = array("fix", "bug");			# Kategory 3
-				$section3 = array_fill_keys($keys3, "section3");
-
-				$keyword_Array = array_merge($section1, $section2, $section3);
-					
-				$stringRep = explode(" ", $msg);
-										
-				$sec1 = 0;
-				$sec2 = 0;
-				$sec3 = 0;					
-					
-				$anzahl = count($stringRep);
-
-				##### count quantity of the words from a section #####
-					
-				foreach($stringRep as $string){ 
-					foreach($keys1 as $key){
-						if(!((strripos($string, $key)) === false)){
-							$sec1++;
-						}
-					}
-					foreach($keys2 as $key){
-						if(!((strripos($string, $key)) === false)){
-							$sec2++;
-						}
-					}
-					foreach($keys3 as $key){
-						if(!((strripos($string, $key)) === false)){
-							$sec3++;
-						}
-					}	
-				}
-
-
-				#### calculate color of the block as a combination color of the section colors #####
-				$max = $sec1 + $sec2 + $sec3;
-				$p = 0;
-				if($max != 0)
-					$p = (255 / $max);
-					
-				$sec1 = $p * $sec1;
-				$sec2 = $p * $sec2;
-				$sec3 = $p * $sec3;
-					
-				$color = array($sec1,$sec2,$sec3);
-		   		return array($color, "");  # no key needed, constant legend
-				break;
-
+		   
 		    ###################################################
 			#### Authorname encoded in first three letters ####
 			###################################################
 
-			case 2: 
+			case 1: 
 				$name = $commitArray[2];
 				$hash = $this->nameToHash($name);
 				#### returns h,l and s value #####
@@ -469,7 +390,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			############## Time of day of commit ##############
 			###################################################
 
-			case 3:
+			case 2:
 				##### get time of commit #####
 				$time = $commitArray[3]; 
 				$hour = date('G', $time);
@@ -498,7 +419,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			################# Date of commit ##################
 			###################################################
 
-			case 4:
+			case 3:
 				###### calculate date of commit ######
 				$time = $commitArray[3]; 
 				$day  = date('j', $time);
