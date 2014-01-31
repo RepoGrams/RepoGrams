@@ -40,7 +40,7 @@ if(!isset($_SESSION['init']) || $error){
 					<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">
 						<input class="form-control" id="repourl" name="repourl" type="text" required="required" placeholder="<?php print msg('index-enter'); ?>">
 						<span class="input-group-btn">
-        					<button class="btn btn-info" data-toggle="modal" data-target="#help" title="<?php print msg('index-help'); ?>" type="submit">
+        					<button class="btn btn-info" data-toggle="modal" data-target="#help" title="<?php print msg('index-help'); ?>" type="button">
 								<span class="glyphicon glyphicon-question-sign"></span>&nbsp;
 							</button>
       					</span>
