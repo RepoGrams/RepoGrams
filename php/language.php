@@ -220,10 +220,10 @@
 				=> 'en',
 			'image-option1-2'			
 				=> 'auteur',
-			'image-option1-1 message'
+			'image-option1-1'
 				=> 'message de commit',
 			'image-option1-0'
-				=> 'Les trois prem&egrave;&egrave;res lettres',
+				=> 'Les trois prem&egrave;r&egrave;s lettres',
 			'image-option1-3'
 				=> 'temps',
 			'image-option1-4'
