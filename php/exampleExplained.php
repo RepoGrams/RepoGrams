@@ -1,7 +1,10 @@
 <div class="col-md-12 center-block">
-	<script type="text/javascript" src="js/jquery.overscroll.min.js"></script>
-		<div class="custom" style="width:370; boder-style:solid; display:inline-block;margin:auto auto 0;">
-			<ul style="display:inline-block; list-style-type:none !important;">
+	<div class="panel panel-default" style="width:370; display:block; margin:auto auto 0;">
+  		<div class="panel-heading">
+    		<h3 class="panel-title">Example</h3>
+  		</div>
+  	<div class="custom panel-body" style="width:370;boder-style:solid; margin:auto auto 0; display:inline-block; padding-left: 0 !important; padding-top: 0 !important;">
+		<ul style="display:inline-block; list-style-type:none !important;">
 			<li class="customBlock" id="1" style="background-color:rgb(0,128,255); width:290px; height:20px;" data-html="true" 
 			data-original-title="This is one element of a chromogram. Hover over the different items to get detailed information."
 			data-placement="right" rel="tooltip"></li>
@@ -20,10 +23,7 @@
 			<li class="customBlock" id="6" style="background-color:rgb(0,128,255); width:90px; height:20px;" data-html="true" 
 			data-original-title="Downloading is possible too. You can get svg, png and even pdf."
 			data-placement="right" rel="tooltip"></li>
-			<!--<li class="customBlock" id="6" style="background-color:rgb(255,0,243); width:400px; height:16px;" data-html="true" 
-			data-original-title="If one color spans over mutiple lines and blocks, you hav a very big commit that is being linewrapped."
-			data-placement="right" rel="tooltip"></li>-->
-			</ul>
-		</div>
+		</ul>
+	</div>
 </div>
 
