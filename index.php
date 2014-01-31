@@ -27,12 +27,8 @@ if(!isset($_SESSION['init']) || $error){
 	
 	<!-- Content in root container-->
 	<div class="container" id="wrap"> <!-- open root container-->
-		<!--<div  class="row">
-			<div class="col-xs-12 col-sm-12 col-md-offset-4 col-md-4"> --> <!--Responsive title -->
-		 		<img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
-				<br>
-			<!--</div>
-		</div>-->
+		<img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
+		<br>
 	  <!--Input form  -->
 	  	<div class="row">
 	  		<div class="col-xs-12">

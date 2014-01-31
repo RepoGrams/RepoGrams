@@ -21,7 +21,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>
+		<img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
 		<br>
     	<div class="hero-unit">
     		<!-- Filtereinstellungen -->
