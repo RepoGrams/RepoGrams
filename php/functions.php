@@ -103,6 +103,7 @@ function render($commit, $id, $width, &$outstr){
 	$floorDiff = $commit[0] - $floorValue;
 	$ceilDiff = $ceilValue - $commit[0];
 
+
 	date_default_timezone_set ( 'UTC' );
 	$datum = date("H:i:s - m.d.y", $commit[4]);
 
@@ -112,24 +113,31 @@ function render($commit, $id, $width, &$outstr){
 			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
 	//generate the block with the most precision
 	if($floorDiff < $ceilDiff){ //we want to floor the value
-		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($floorValue).'px; height:'.$commit[1].'px;"';
-		$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
+		if (($floorValue + $width) > $_SESSION['width']){
+			renderLast($commit, $id, $width, $oustr);
+		}
+		else{
+			$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($floorValue).'px; height:'.$commit[1].'px;"';
+			$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
                 $outstr .= $head;
-		$width += $floorValue;
+			$width += $floorValue;
+		}
+		
 	}else{ //we want to ceil the value
-		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($ceilValue).'px; height:'.$commit[1].'px;"';
-		$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
-                $outstr .= $head;
-		$width += $ceilValue;
+		if (($ceilValue + $width) > $_SESSION['width']){
+			renderLast($commit, $id, $width, $oustr);
+		}
+		else{
+			$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($ceilValue).'px; height:'.$commit[1].'px;"';
+			$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
+	                $outstr .= $head;
+			$width += $ceilValue;
+		}
 	}
 	//finish the list item
 	$end = '</li>';
         $outstr .= $end;
 	//return the new width of the row
-
-    $size = $_SESSION['width'] - $width;
-	if ($size < 0) return 0;
-	if ($size < $width) return $size;
 
 	return $width;
 }
