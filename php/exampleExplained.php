@@ -1,10 +1,10 @@
 <div class="col-md-12 center-block">
-	<div class="panel panel-default" style="width:370; display:block; margin:auto auto 0;">
+	<div style="width:292; display:block; margin:auto auto 0;" class="panel panel-default">
   		<div class="panel-heading">
     		<h3 class="panel-title">Example</h3>
   		</div>
-  	<div class="custom panel-body" style="width:370;boder-style:solid; margin:auto auto 0; display:inline-block; padding-left: 0 !important; padding-top: 0 !important;">
-		<ul style="display:inline-block; list-style-type:none !important;">
+  	<div style="width:300;height:80px;boder-style:solid; padding-left: 0 !important; padding-top: 0 !important;" class="custom panel-body">
+		<ul style="display:inline-block; list-style-type:none !important; padding-left:0 !important;">
 			<li class="customBlock" id="1" style="background-color:rgb(0,128,255); width:290px; height:20px;" data-html="true" 
 			data-original-title="This is one element of a chromogram. Hover over the different items to get detailed information."
 			data-placement="right" rel="tooltip"></li>
