@@ -49,10 +49,12 @@ function dump(){
  * The first block contains the legend which is handeled separately.
  */
 function renderImage(){
+        ob_start();
 	$count = 1;
 	for ($i = 1; $i < count($_SESSION['image']); ++$i){
 		$count = renderBlock($_SESSION['image'][$i], $count);
-	}
+        }
+        ob_end_flush();
 }
 
 /*
