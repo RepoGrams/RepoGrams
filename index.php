@@ -41,7 +41,7 @@ if(!isset($_SESSION['init']) || $error){
 						<input class="form-control" id="repourl" name="repourl" type="text" required="required" placeholder="<?php print msg('index-enter'); ?>">
 						<span class="input-group-btn">
         					<button class="btn btn-info" data-toggle="modal" data-target="#help" title="<?php print msg('index-help'); ?>" type="submit">
-								<span class="glyphicon glyphicon-question-sign"></span>
+								<span class="glyphicon glyphicon-question-sign"></span>&nbsp;
 							</button>
       					</span>
 					</div>
@@ -60,10 +60,10 @@ if(!isset($_SESSION['init']) || $error){
 					<br>
 					<div class="centerButton">
 						<button class="btn btn-default" type="submit" title="<?php print msg('index-vis'); ?>" style="margin-right:20px;">
-	       					<span class="glyphicon glyphicon-indent-left"></span><?php print msg('visualize'); ?>
+	       					<span class="glyphicon glyphicon-indent-left"></span>&nbsp;<?php print msg('visualize'); ?>
 						</button>
 						<button type="button" class="btn btn-default" onclick="example();">
-							<span class="glyphicon glyphicon-gift"></span><?php print msg('index-examples'); ?>
+							<span class="glyphicon glyphicon-gift"></span>&nbsp;<?php print msg('index-examples'); ?>
 						</button>
 					</div>
 					<br>
