@@ -59,7 +59,7 @@ if(!isset($_SESSION['init']) || $error){
 					?>
 					<br>
 					<div class="centerButton">
-						<button class="btn btn-primary" type="submit" title="<?php print msg('index-vis'); ?>" style="margin-right:20px;">
+						<button class="btn btn-default" type="submit" title="<?php print msg('index-vis'); ?>" style="margin-right:20px;">
 	       					<span class="glyphicon glyphicon-indent-left"></span><?php print msg('visualize'); ?>
 						</button>
 						<button type="button" class="btn btn-default" onclick="example();">
