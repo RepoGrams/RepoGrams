@@ -23,7 +23,7 @@ function example() {
 		//combine the html object
 		var head = "<div class=\"col-md-offset-4 col-md-4\">";
 		head = head + "<div class=\"panel panel-default\">";
-		head = head +"<div class=\"panel-heading\"><?php print msg ('Repository description from')?> GitHub.com:</div>";
+		head = head +"<div class=\"panel-heading\"><?php print msg ('xmpl-dis')?> GitHub.com:</div>";
 		head = head +"<div class=\"panel-body\">";
 		descr = head +descr+ "</div></div></div>";
             $("#description").html("<div style=\"text-align:center;\">"+descr+"</div>");
