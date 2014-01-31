@@ -73,6 +73,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   				</div>
 			</div>
 			<div class="clear"></div>
+			
 			<!-- Download image buttons -->
 			<div style="float:right;">
 				<div class="btn-group">
@@ -80,12 +81,13 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						<span class="glyphicon glyphicon-download"></span><?php print msg('image-dl') ?><span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
-    					<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
-   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
-   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
+    					<li><a href="<?php echo 'download.php?file='.IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
+   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
+   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
   					</ul>
 				</div>
 			</div>
+
 			<div id="push" class="clear"></div>
 			<br><br>
 		</div>
