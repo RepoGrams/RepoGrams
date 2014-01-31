@@ -112,6 +112,8 @@ div[class="tooltip-inner"] { text-align: left; width: 200px; }
 .borderimage { border-width:5px; border-style: solid; border-color: black; }
 style .customdate { width : 50%; float: left; }
 
+/* Rendered blocks */
+.customBlock:hover { border-color: rgb(102, 175, 233); outline: 0px none; box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6); }
 .customBlock{ background-color:#ffffff; width: 5px; height: 5px; float:left; }
 
 .centerButton{ text-align:center; }

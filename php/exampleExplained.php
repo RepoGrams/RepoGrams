@@ -9,7 +9,7 @@
 			data-original-title="Thats the way you do it. Each block in your chromogram represents one commit of your repository."
 			data-placement="right" rel="tooltip"></li>
 			<li class="customBlock" id="1" style="background-color:rgb(255,137,0); width:150px; height:24px;" data-html="true" 
-			data-original-title="Ok, you got the concept. The frist rendering is fixed by us. The next one can be parametrized."
+			data-original-title="Ok, you got the concept. The first rendering is fixed by us. The next one can be parametrized."
 			data-placement="right" rel="tooltip"></li>
 			<li class="customBlock" id="1" style="background-color:rgb(0,255,218); width:400px; height:24px;" data-html="true" 
 			data-original-title="It's up to you to decide wether you want the author, the commit time or line changes to incluence your image."
