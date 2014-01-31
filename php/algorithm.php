@@ -23,7 +23,7 @@ class algorithm {
 		###### Create SVG #####
 		#######################
 
-		$datei = fopen(__DIR__."/../img/visualization-".session_id().".svg",  "w+");
+		$datei = fopen(_IMAGEDIR."visualization-".session_id().".svg",  "w+");
 $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"  \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"> \n
 <svg \n
