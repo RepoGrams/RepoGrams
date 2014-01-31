@@ -1,6 +1,6 @@
 <div class="col-md-12 center-block">
 	<script type="text/javascript" src="js/jquery.overscroll.min.js"></script>
-		<div class="custom" style="width:400; boder-style:solid; display:inline-block;margin-right:40px;">
+		<div class="custom" style="width:400; boder-style:solid; display:inline-block;margin-left:80px;">
 			<ul style="display:inline-block; list-style-type:none !important;">
 			<li class="customBlock" id="1" style="background-color:rgb(0,128,255); width:290px; height:20px;" data-html="true" 
 			data-original-title="This is one element of a chromogram. Hover over the different items to get detailed information."
