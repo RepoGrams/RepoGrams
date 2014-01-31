@@ -2,6 +2,8 @@
 - image.php-> Add higlight/unhighlight function to blocks/legend
 + image.php-> Add repo-title/url
 - image.php-> Add github-info to commits/repo
+- image.php-> Add arrow to show users how to see tooltips
+- image.php-> Add github-commit link to tooltip (commitobject->hash())
 + index.php-> centering example
 + index.php-> Add "Help"-text
 

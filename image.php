@@ -73,6 +73,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   				</div>
 			</div>
 			<div class="clear"></div>
+			
 			<!-- Download image buttons -->
 			<div style="float:right;">
 				<div class="btn-group">
@@ -86,6 +87,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   					</ul>
 				</div>
 			</div>
+
 			<div id="push" class="clear"></div>
 			<br><br>
 		</div>
