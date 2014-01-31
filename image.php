@@ -113,8 +113,8 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                   var filter_1 = $("#filterForm").find("#filter1 option:selected").val();
                   console.log("filter_1 is");
                   console.log(filter_1);
+                  $("#placeOfImage").fadeOut();
                   $("#placeOfImage").empty();
-                  $("#placeOfImage").hide();
                   // send the data
                   jQuery.post("php/filter.php",
                                 {
@@ -123,7 +123,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                   .done(function(data) {
                     console.log("done");
                     $("#placeOfImage").html(data);
-                    $("#placeOfImage").show();
+                    $("#placeOfImage").fadeIn();
                   });
                   return;
                 });
