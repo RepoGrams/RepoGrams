@@ -1,4 +1,4 @@
-- image.php-> Fix download images
++ image.php-> Fix download images
 - image.php-> Add higlight/unhighlight function to blocks/legend
 + image.php-> Add repo-title/url
 - image.php-> Add github-info to commits/repo

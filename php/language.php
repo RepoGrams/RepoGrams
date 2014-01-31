@@ -32,7 +32,7 @@
 			'index-help'
 				=> 'Help',
 			'index-examples'
-				=> 'Show me some examples',
+				=> "I'm Feeling Lucky!",
 			'index-enter'
 				=> 'Enter repository url',
 			'index-select'
@@ -140,7 +140,7 @@
 			'index-help'
 				=> 'Hilfe',
 			'index-examples'
-				=> 'Zeige mir ein paar Beispiele',
+				=> 'Auf gut Glück!',
 			'index-enter'
 				=> 'Repository URL einf&uuml;gen',
 			'index-select'
@@ -248,7 +248,7 @@
 			'index-help' 
 				=> 'Secours',
 			'index-examples' 
-				=> 'Montrez-moi des exemples.',
+				=> "J'ai de la chance!",
 			'index-enter' 
 				=> 'Entre repository url',
 			'index-select' 

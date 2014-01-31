@@ -39,6 +39,11 @@ if(!isset($_SESSION['init']) || $error){
 				<form role="form" action="./loading.php" method="POST">
 					<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">
 						<input class="form-control" id="repourl" name="repourl" type="text" required="required" placeholder="<?php print msg('index-enter'); ?>">
+						<span class="input-group-btn">
+        					<button class="btn btn-info" data-toggle="modal" data-target="#help" title="<?php print msg('index-help'); ?>" type="submit">
+								<span class="glyphicon glyphicon-question-sign"></span>
+							</button>
+      					</span>
 					</div>
 			  		<!-- Error Handling -->
 			  		<?php 
@@ -54,12 +59,11 @@ if(!isset($_SESSION['init']) || $error){
 					?>
 					<br>
 					<div class="centerButton">
-						<button class="btn btn-primary" type="submit" title="<?php print msg('index-vis'); ?>">
+						<button class="btn btn-primary" type="submit" title="<?php print msg('index-vis'); ?>" style="margin-right:20px;">
 	       					<span class="glyphicon glyphicon-indent-left"></span><?php print msg('visualize'); ?>
 						</button>
-						<button type="button" class="btn btn-default" onclick="example();"><?php print msg('index-examples'); ?></button>
-						<button class="btn btn-info" data-toggle="modal" data-target="#help" title="<?php print msg('index-help'); ?>" type="submit">
-							<span class="glyphicon glyphicon-question-sign "></span> <?php print msg('index-help'); ?>
+						<button type="button" class="btn btn-default" onclick="example();">
+							<span class="glyphicon glyphicon-gift"></span><?php print msg('index-examples'); ?>
 						</button>
 					</div>
 					<br>
