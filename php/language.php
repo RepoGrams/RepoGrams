@@ -309,8 +309,8 @@
 				=> 'Alors s\'il vous plaît &ecirc;tre patient et prendre un caf&eacute; en attendant;)',
 			'doc-close' 
 				 => 'Ferme',
-			'doc-close' 
-				=> 'Dossier temporaire ne peut &ecirc;tre cr&eacute&eacute;;!',
+			'bug-tempo' 
+				=> 'Dossier temporaire ne peut &ecirc;tre cr&eacute;&eacute;!',
 			'bug-inv' 
 				=> 'URL invalide!',
 			'bug-cache' 
