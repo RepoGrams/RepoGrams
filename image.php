@@ -24,10 +24,10 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 		<br>
     	<div class="hero-unit">
     		<!-- Filtereinstellungen -->
- 	   		<form role="form" action="php/filter.php" method="POST" class="form-inline" style="text-align:center;">
+ 	   		<form id="filterForm" role="form" class="form-inline" style="text-align:center;">
  	   			Filter<br>
  	   			<div class="form-group">
-    				<select name="filter1" class="form-control">
+    				<select id="filter1" name="filter1" class="form-control">
   						<option value="2"><?php print msg('image-option1-2') ?></option>         
   						<option value="1"><?php print msg('image-option1-1') ?></option>  
  	 					<option value="0" selected><?php print msg('image-option1-0') ?></option>  
@@ -42,7 +42,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
  	 					<option value="2"><?php print msg('image-option2-2') ?></option>           
 					</select>
 				</div>-->
-  				<button class="btn btn-default" type="submit" title="Apply filters">
+  				<button id="filterbtn" class="btn btn-default" title="Apply filters">
        				<span class="glyphicon glyphicon-indent-left"></span><?php print msg('image-go'); ?>
 				</button>
     		</form>
@@ -63,7 +63,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     				<h3 class="panel-title"><a href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title']; ?></a></h3>
   				</div>
   				<div class="panel-body custom" style="width:<?php echo $_SESSION['width']+1;?>; boder-style:solid; display:inline-block;">
-    				<ul style="display:inline-block; list-style-type:none !important;">
+                                <ul id="placeOfImage" style="display:inline-block; list-style-type:none !important;">
 						<?php
 							require_once('php/functions.php');
 							renderImage();
@@ -94,8 +94,37 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 
 	<script type="text/javascript">
 		$(function () {
-    		$("[rel='tooltip']").tooltip();
-		});
+                $("#filterForm").submit(function(event) {
+                  event.stopImmediatePropagation(); // stop normal submission
+                  event.preventDefault();
+                })
+                $("#filterbtn").click(function(event) {
+                  if (!$(event.target).is(this))
+                  {
+                  return;
+                  }
+                  event.stopImmediatePropagation(); // stop normal submission
+                  event.preventDefault();
+
+                  // get the values from the formular
+                  var filter_1 = $("#filterForm").find("#filter1 option:selected").val();
+                  console.log("filter_1 is");
+                  console.log(filter_1);
+                  $("#placeOfImage").empty();
+                  $("#placeOfImage").hide();
+                  // send the data
+                  jQuery.post("php/filter.php",
+                                {
+                                  "filter1": filter_1
+                                })
+                  .done(function(data) {
+                    console.log("done");
+                    $("#placeOfImage").html(data);
+                    $("#placeOfImage").show();
+                  });
+                  return;
+                });
+                });               
 	</script>
 	
 </body>

@@ -5,6 +5,7 @@ require_once("./functions.php");
 session_start();
 error_log('HELP');
 //if (isset($_GET['filter1'])) {
+        error_log("POST is ". print_r($_POST, true));
 	$mode = $_POST['filter1'];
 	$color = 3;
 	switch ($mode) {
@@ -21,7 +22,10 @@ error_log('HELP');
 	$ses = unserialize($_SESSION['repo']);
 	$_SESSION['image'] = $alg->render($ses,$color,$_SESSION['width'], $_SESSION['height']);
 	error_log("Rendered");
-	header('Location: ../image.php');
+        header('Content-Type: text/html');
+        renderImage();
+        die();
+        
 //}
 	
 ?>
