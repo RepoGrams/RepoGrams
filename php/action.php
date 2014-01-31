@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
-	require_once("newAlgorithm.php");
+	require_once("algorithm.php");
 	require_once("functions.php");
 	require_once("language.php");
 	require_once(__DIR__."/../lib/vcs/git/GitRepo.class.php");
@@ -66,7 +66,7 @@
 					$alg = new Algorithm();
 					error_log(gettype($_SESSION['repo']));
                     $ses = unserialize($_SESSION['repo']);
-					$_SESSION['image'] = $alg->render($ses,0,0,$_SESSION['width'], $_SESSION['height']);
+					$_SESSION['image'] = $alg->render($ses,0,$_SESSION['width'], $_SESSION['height']);
 					error_log("Image created");
 					$start = strrpos($repourl, '/');
 					$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);

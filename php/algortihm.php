@@ -7,7 +7,7 @@ class algorithm {
 	##### Called to render a repository #####
 	#########################################
 
-	public function render($commitObjectArray, $modus_length = 0, $modus_color = 0, $width, $height){
+	public function render($commitObjectArray, $modus_color = 0, $width, $height){
 		$commitA = $this->preprocess($commitObjectArray); 
 		########################################### Format ############################################
 		##### array with commit message, number of changed lines, author and time for all commits #####
