@@ -1,4 +1,5 @@
 <?php
+error_reporting(-1);
 
 /*
  * Initializes the session by setting all needed variables to default values.
@@ -48,11 +49,11 @@ function dump(){
  * It calls renderBlock for every block of the given image, except the first.
  * The first block contains the legend which is handeled separately.
  */
-function renderImage(){
+function renderImage(&$outstr){
         ob_start();
 	$count = 1;
 	for ($i = 1; $i < count($_SESSION['image']); ++$i){
-		$count = renderBlock($_SESSION['image'][$i], $count);
+		$count = renderBlock($_SESSION['image'][$i], $count, $outstr);
         }
         ob_end_flush();
 }
@@ -64,15 +65,15 @@ function renderImage(){
  * @param $block, the block of the image array, as array
  * @param $count, the last set id of a block
  */
-function renderBlock($block, $count){
+function renderBlock($block, $count, &$outstr){
 	$width = 0;
 	for ($i = 0; $i < count($block); $i++){
 		if($i == count($block)-1){
-			renderLast($block[$i], $count, $width);
+			renderLast($block[$i], $count, $width, $outstr);
 			$count++;
 			$width = 0;
 		}else{
-			$width = render($block[$i], $count, $width);
+			$width = render($block[$i], $count, $width, $outstr);
 			$count++;
 		}
 	}
@@ -94,7 +95,7 @@ function renderBlock($block, $count){
  * @param $width, the width of the blocks rendered so far
  *
  */
-function render($commit, $id, $width){
+function render($commit, $id, $width, &$outstr){
 	//compute values to decide what is nearer to the value: floor or ceil
 	//to be as precise as possible
 	$floorValue = floor($commit[0]);
@@ -113,17 +114,17 @@ function render($commit, $id, $width){
 	if($floorDiff < $ceilDiff){ //we want to floor the value
 		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($floorValue).'px; height:'.$commit[1].'px;"';
 		$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
-		echo ($head);
+                $outstr .= $head;
 		$width += $floorValue;
 	}else{ //we want to ceil the value
 		$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($ceilValue).'px; height:'.$commit[1].'px;"';
 		$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
-		echo ($head);
+                $outstr .= $head;
 		$width += $ceilValue;
 	}
 	//finish the list item
 	$end = '</li>';
-	echo ($end);
+        $outstr .= $end;
 	//return the new width of the row
 	return $width;
 }
@@ -132,7 +133,7 @@ function render($commit, $id, $width){
  * This function is used to render the last block of a row, as this block needs special handling.
  * @param see render function
  */
-function renderLast($commit, $count, $width){
+function renderLast($commit, $count, $width, &$outstr){
 	//compute the size that is available for the block and use this one instead of the
 	//value saved in the array
 	$size = $_SESSION['width'] - $width;
@@ -145,8 +146,8 @@ function renderLast($commit, $count, $width){
 			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
 	$head = '<li class="customBlock" id="'.$count.'" '.$style.' '.$tooltip.'>';
 	$end = '</li>';
-	echo ($head);
-	echo ($end);
+        $outstr.=$head;
+        $outstr.=$end;
 }
 
 /*

@@ -23,7 +23,9 @@ error_log('HELP');
 	$_SESSION['image'] = $alg->render($ses,$color,$_SESSION['width'], $_SESSION['height']);
 	error_log("Rendered");
         header('Content-Type: text/html');
-        renderImage();
+        $image = "";
+        renderImage($image);
+        echo $image;
         die();
         
 //}
