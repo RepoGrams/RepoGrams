@@ -1,5 +1,8 @@
 <?php
+error_reporting(-1);
 require_once("convert.php");
+require_once(__DIR__."/../lib/vcs/git/GitChanges.class.php");
+require_once(__DIR__."/../lib/vcs/git/GitCommit.class.php");
 class algorithm {
 
 	############# Render Fuction ############

@@ -1,5 +1,7 @@
 <?php
+error_reporting(-1);
 require_once("./algorithm.php");
+require_once("./functions.php");
 session_start();
 error_log('HELP');
 //if (isset($_GET['filter1'])) {
@@ -14,7 +16,7 @@ error_log('HELP');
 		default:
 			break;
 	}	
-	error_log($fmode.' is set to render');
+	error_log($mode.' is set to render');
 	$alg = new Algorithm();
 	$ses = unserialize($_SESSION['repo']);
 	$_SESSION['image'] = $alg->render($ses,$color,$_SESSION['width'], $_SESSION['height']);
