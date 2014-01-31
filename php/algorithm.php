@@ -83,6 +83,10 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 			$time = $commitArray[$i][3];
 			$author = $commitArray[$i][2];
+			$author = preg_replace("/\"/" , "&quot;" , $author);
+			$author = preg_replace("/</", "&lt;", $author);
+			$author = preg_replace("/>/", "&gt;", $author);
+
 
 			$block = $this->commitToBlock($commitArray[$i], $modus_color, $all_diff, $pixel, $hohe); 
 			
