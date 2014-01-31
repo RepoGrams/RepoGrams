@@ -54,5 +54,8 @@ interface  Commit_Interface {
 	 */
 	function NumRemovedLines();
 
-	// everything else we need
+	/**
+	 * @ return Hash of commit
+	 */
+	function Hash();
 }
