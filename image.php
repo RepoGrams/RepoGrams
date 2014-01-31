@@ -24,29 +24,8 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 		<img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
 		<br>
     	<div class="hero-unit">
-    		<!-- Filtereinstellungen -->
- 	   		<form id="filterForm" role="form" class="form-inline" style="text-align:center;">
- 	   			Filter<br>
- 	   			<div class="form-group">
-    				<select id="filter1" name="filter1" class="form-control">
-  						<option value="1"><?php print msg('image-option1-1') ?></option>  
- 	 					<option value="0" selected><?php print msg('image-option1-0') ?></option>  
-  						<option value="2"><?php print msg('image-option1-3') ?></option>        
-	  					<option value="3"><?php print msg('image-option1-4') ?></option>             
-					</select>
-				</div>
-				<!--<div class="form-group">
-					<select name="filter2" class="form-control">
-  						<option value="0" selected><?php print msg('image-option2-0') ?></option>         
-  						<option value="1"><?php print msg('image-option2-1') ?></option>  
- 	 					<option value="2"><?php print msg('image-option2-2') ?></option>           
-					</select>
-				</div>-->
-				</button>
-    		</form>
-    		
-    		<!-- Repo-Visualization -->
-		<!-- Legend -->
+    	<!-- Repo-Visualization -->
+			<!-- Legend -->
     		<div class="color-legend" style="float:left; width: 160px;">
 				<div class="legend-title"><?php print msg('image-legend'); ?></div>
                                 <div id="legend">
@@ -61,7 +40,22 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 			<!-- Repo-Image -->
 			<div class="panel panel-default" style="width:770; display:block; margin:auto auto 0;">
   				<div class="panel-heading">
-    				<h3 class="panel-title"><a href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title'];?></a></h3>
+    				<h3 class="panel-title">
+    					<a href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title'];?></a>
+    					&nbsp;
+    					<!-- Filtereinstellungen -->
+ 	   		<form id="filterForm" role="form" class="form-inline" style="text-align:center;">
+ 	   			Filter
+ 	   			<div class="form-group">
+    				<select id="filter1" name="filter1" class="form-control">
+  						<option value="1"><?php print msg('image-option1-1') ?></option>  
+ 	 					<option value="0" selected><?php print msg('image-option1-0') ?></option>  
+  						<option value="2"><?php print msg('image-option1-3') ?></option>        
+	  					<option value="3"><?php print msg('image-option1-4') ?></option>             
+					</select>
+				</div>
+    		</form>
+    				</h3>
   				</div>
   				<div class="panel-body" style="width:<?php echo $_SESSION['width']+1;?>;boder-style:solid; display:inline-block; padding-left: 0 !important; padding-top: 0 !important;">
     				<ul id="placeOfImage" style="display:inline-block; list-style-type:none !important; padding-left: 0 !important;">
