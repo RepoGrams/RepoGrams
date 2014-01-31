@@ -2,7 +2,7 @@
 include __DIR__.'/../Commit.interface.php';
 
 class GitCommit implements Commit_Interface {
-
+	private $chksum;
 	private $pred;
 	private $succ;
 	private $msg;
@@ -48,6 +48,10 @@ class GitCommit implements Commit_Interface {
 
 	public function DiffToParent() {
 		throw new Exception("NOT IMPLEMENTED");
+	}
+
+	public function Hash(){
+		return $this->chksum;
 	}
 
 	public function NumChangedLines() {

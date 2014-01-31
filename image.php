@@ -28,11 +28,10 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
  	   			Filter<br>
  	   			<div class="form-group">
     				<select id="filter1" name="filter1" class="form-control">
-  						<option value="2"><?php print msg('image-option1-2') ?></option>         
   						<option value="1"><?php print msg('image-option1-1') ?></option>  
  	 					<option value="0" selected><?php print msg('image-option1-0') ?></option>  
-  						<option value="3"><?php print msg('image-option1-3') ?></option>        
-	  					<option value="4"><?php print msg('image-option1-4') ?></option>             
+  						<option value="2"><?php print msg('image-option1-3') ?></option>        
+	  					<option value="3"><?php print msg('image-option1-4') ?></option>             
 					</select>
 				</div>
 				<!--<div class="form-group">
@@ -49,7 +48,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     		
     		<!-- Repo-Visualization -->
     		<!-- Legend -->
-    		<div class="color-legend" style="float:left; width: 160px;">
+    		<div class="color-legend" style="float:left; min-width: 160px;">
 				<div class="legend-title"><?php print msg('image-legend'); ?></div>
 					<?php
 						require_once('php/functions.php');
@@ -58,12 +57,14 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 			</div>
 			
 			<!-- Repo-Image -->
-			<div class="panel panel-default">
+			<div class="panel panel-default" style="width:770; display:block; margin:auto auto 0;>
   				<div class="panel-heading">
     				<h3 class="panel-title"><a href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title']; ?></a></h3>
   				</div>
-  				<div class="panel-body custom" style="width:<?php echo $_SESSION['width']+1;?>; boder-style:solid; display:inline-block;">
-                                <ul id="placeOfImage" style="display:inline-block; list-style-type:none !important;">
+  				<div class="panel-body" 
+  					style="width:<?php echo $_SESSION['width']+1;?>;boder-style:solid; display:inline-block; 
+  						   padding-left: 0 !important; padding-top: 0 !important">
+    				<ul id="placeOfImage" style="display:inline-block; list-style-type:none !important; padding-left: 0 !important;">
 						<?php
 							require_once('php/functions.php');
 							renderImage();
@@ -72,6 +73,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   				</div>
 			</div>
 			<div class="clear"></div>
+			
 			<!-- Download image buttons -->
 			<div style="float:right;">
 				<div class="btn-group">
@@ -79,12 +81,13 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   						<span class="glyphicon glyphicon-download"></span><?php print msg('image-dl') ?><span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
-    					<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
-   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
-   						<li><a href="<?php echo 'download.php?file=php/visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
+    					<li><a href="<?php echo 'download.php?file='.IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
+   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
+   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
   					</ul>
 				</div>
 			</div>
+
 			<div id="push" class="clear"></div>
 			<br><br>
 		</div>

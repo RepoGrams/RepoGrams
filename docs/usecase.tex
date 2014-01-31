@@ -9,7 +9,6 @@
 \usepackage{color}	
 \usepackage{calc}
 \usepackage{enumitem}
-\newcommand{\todo}[1]{\textbf{\textsc{\textcolor{red}{(TODO: #1)}}}}
 \renewcommand{\baselinestretch}{1.0}\normalsize
 \parindent 0pt
 \author{Maike Maas \and Valerie Poser \and Sebastian Becking \and
@@ -97,30 +96,6 @@
 	\item[Frequency of use:] Very often -- this is the main functionality of the system
 
 \end{description}	
-	
-\section{Use Case}
-
-\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Frequency of use:}]
-
-	\item[Use-case:] Reading the documentation of the project
-	\item[Primary actor:] User of a desktop browser 
-	\item[Goal in context:] Reading the documentation of the project
-	\item[Preconditions:] Browser with a working Internet connection
-	\item[Trigger:] The user wants to inform himself about the project
-	\item[Scenario:]
-		\begin{enumerate}[leftmargin=1.5em]
-			\item The user opens the website and arrives at the home page.
-			\item The user clicks on the button in the upper right corner labeled with a book.
-			\item The website opens the documentation page.
-			\item The user reads the documentation and is informed.
-			\item The user clicks on \enquote{return}.
-			\item The user is back on the home page.
-		\end{enumerate}
-	
-	\item[Priority:] medium
-	\item[Frequency of use:] Usually at the first visit of the website
-	
-\end{description}
 
 \section{Use Case}
 
@@ -135,7 +110,7 @@
 		\begin{enumerate}[leftmargin=1.5em]
 			\item The user opens the website and arrives at the home page.
 			\item The user clicks on the button \enquote{Help}.
-			\item The website overlays a help box with explaining texts and a link to the documentation.
+			\item The website overlays a help box with explaining texts and a documentation.
 			\item The user reads the helpful information and found a way to interact with the website.
 			
 		\end{enumerate}

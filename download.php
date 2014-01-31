@@ -10,14 +10,13 @@ header('location: '.$_SERVER['HTTP_REFERER']);
 
 function convertImage() {
 	$image = new Imagick();
-	$image->readImageBlob(file_get_contents('php/visualization-'.session_id().'.svg'));
-	switch ($mode) {
-		case "png": $image->setImageFormat("png24"); break;
+	$image->readImage(_IMAGEDIR.'visualization-'.session_id().'.svg');
+	switch ($mode) {se "png": $image->setImageFormat("png24"); break;
 		case "jpeg": 
 		case "jpg": $image->setImageFormat("jpg"); break;
 	}
 	$image->resizeImage($_SESSION["width"]*2, $_SESSION["height"]*2, imagick::FILTER_LANCZOS, 1);
-	$image->writeImage('php/visualization-'.session_id().'.'.$mode);
+	$image->writeImage(_IMAGEDIR.'visualization-'.session_id().'.'.$mode);
 }
 
 function download_file( $fullPath ){

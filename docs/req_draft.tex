@@ -28,13 +28,12 @@ this approach will result in additional insight, especially for large projects.
 \section{Must-Haves:}
 \begin{enumerate}
 \item [R01] The product's front end will be a website that will work with recent and well known browsers (Firefox 25.0, Internet Explorer 11, Google Chrome 31.0, Safari 7.0 and Opera 17.0).
-\item [R02] The website will contain a home page, with an input field, a visualize button, a help button and a documentation button.
+\item [R02] The website will contain a home page, with an input field, a visualize button a help button and a small example.
 \item [R03] The input field is used to enter a URL to a repository.
 \item [R04] The visualize button starts visualizing the provided repository and opens the rendering page.
 \item [R05] The help button displays an overlaying help box.
-\item [R06] The documentation button opens the documentation page.
-\item [R07] The home page will also have three buttons to automatically insert an example URL into the input field [example repositories are \enquote{JQuery}, \enquote{Twitter Bootstrap} and \enquote{Git}.
-\item [R08] The documentation page will provide an detailed description of the project and a button that directs the user back to the home page.
+\item [R07] The home page will also have a button to automatically insert an example URL into the input field.
+\item [R08] The example is a static repogram, featuring some explanatory comments.
 \item [R09] The system will support visualization of the commit comments of a provided git repository by representing every commit comment as a colored block.
 \item [R10] A repository will be provided by the user by entering a URL which refers to the repository that should be visualized.
 \item [R11] The rendering page will display a progress bar while the system is rendering the picture.
@@ -46,7 +45,7 @@ this approach will result in additional insight, especially for large projects.
 	that the image is a rectangle consisting of multiple rectangles
 	representing each commit message.
 \item [R15] The main visualization parameter will be the commit message.
-\item [R16] The user will be able to select the number of commit messages to visualize. 
+\item [R16] The user will be able to select a period of time to visualize. 
 \item [R17] The product will be released open source.
 \item [R18] The application language will be English.
 \item [R19] The application will detect if the repository's hosting server doesn't answer and will inform the user about that fact by printing an error message.
@@ -67,28 +66,19 @@ this approach will result in additional insight, especially for large projects.
 \begin{enumerate}
 \item user\\
 (the person that made the commit to the repository)
-\item kind of change\\  
-(the numbers of lines that were added, modified or deleted with the commit we're working with)
-\item only added something \\
-(taking only the commits into account that added lines or files)
-\item only deleted something\\
-(taking only the commits into account that removed lines or files)
 \item time of day of commit\\
 (the time of day at which the commit we're currently working with was made)
 \item date of commit\\
 (the date at which the commit we're currently working with was made)
-\item structure of the repository\\
-(branches, merges)
 \end{enumerate}
-\item [M06] The parameters may influence a block's color, size, alignment and order.
+\item [M06] The parameters may influence a block's color and size.
 \item [M07] The visualization may be supported by a legend mapping used colors to the corresponding words.
 \item [M08] The product website may be responsive and may also work with mobile clients. In this context responsive means, the layout will be optimized for the current browser used by the user.
-\item [M09] The visualization may be downloadable as a PDF or JPEG.
-\item [M10] The website may show the URL from a random repository of Github as example. 
-\item [M11] The user may click on a single block within the visualization to see further information about the specific commit comment represented by that block.
-\item [M12] The application may be available in multiple languages.
-\item [M13] The visualization of the repository created on the rendering page may be scalable.
-\item [M14] The application may cache repositories that have already been displayed by the user.
+\item [M09] The visualization may be downloadable as a PDF, SVG or JPEG.
+\item [M10] The user may click on a single block within the visualization to see further information about the specific commit comment represented by that block.
+\item [M11] The application may be available in multiple languages.
+\item [M12] The visualization of the repository created on the rendering page may be scalable.
+\item [M13] The application may cache repositories that have already been displayed by the user.
 \end{enumerate}
 \section{Won't-have:}
 \begin{enumerate}
