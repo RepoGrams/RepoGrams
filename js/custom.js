@@ -24,6 +24,7 @@ function example() {
             $("#description").html("<div style=\"text-align:center;\">"+descr+"</div>");
 	    //add the element to the document
             (document.getElementById('repourl')).value = url+'.git';
+	    (document.getElementById('example')).style.display = "none";
 		}
 	});
 }
