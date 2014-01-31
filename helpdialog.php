@@ -1,6 +1,5 @@
 <?php
-
-session_start();
+if (session_id() == '') session_start();
 require_once("php/language.php");
 
 ?>

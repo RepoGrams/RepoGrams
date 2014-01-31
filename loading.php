@@ -1,8 +1,11 @@
 <?php
-session_start();
+if (session_id() == '') session_start();
 require_once("php/functions.php");
 require_once("php/language.php");
 
+// PHP requires a call to the function below,
+// else all date related functions will write a warning into the error_log
+date_default_timezone_set ( 'UTC' );
 if (isset($_POST['repourl'])) 
 	$_SESSION['repourl'] = $_POST['repourl'];
 

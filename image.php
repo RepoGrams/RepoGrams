@@ -1,4 +1,5 @@
-<?php session_start(); 
+<?php 
+if (session_id() == '') session_start(); 
 require_once('config.inc.php');
 require_once("php/language.php");
 if (!isset($_SESSION['image']) ) header('location: index.php');?>

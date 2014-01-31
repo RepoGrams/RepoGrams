@@ -1,5 +1,5 @@
 <?php
-session_start();
+if (session_id() == '') session_start();
 require_once('./config.inc.php');
 
 $file = $_GET['file'];
