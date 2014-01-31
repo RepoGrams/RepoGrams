@@ -86,7 +86,7 @@ if(!isset($_SESSION['init']) || $error){
 	<!--</div>  root container close -->
 	<!-- Help dialog -->
 	<?php include('helpdialog.php'); ?>
-
+	<div id="push"></div>
 	<!-- Footer -->	
 	<?php include('footer.php'); ?>
 	

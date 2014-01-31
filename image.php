@@ -28,11 +28,10 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
  	   			Filter<br>
  	   			<div class="form-group">
     				<select name="filter1" class="form-control">
-  						<option value="2"><?php print msg('image-option1-2') ?></option>         
-  						<option value="1"><?php print msg('image-option1-1') ?></option>  
+  						<option value="1"><?php print msg('image-option1-2') ?></option>  
  	 					<option value="0" selected><?php print msg('image-option1-0') ?></option>  
-  						<option value="3"><?php print msg('image-option1-3') ?></option>        
-	  					<option value="4"><?php print msg('image-option1-4') ?></option>             
+  						<option value="2"><?php print msg('image-option1-3') ?></option>        
+	  					<option value="3"><?php print msg('image-option1-4') ?></option>             
 					</select>
 				</div>
 				<!--<div class="form-group">
