@@ -43,10 +43,11 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     		<!-- Repo-Visualization -->
 		<!-- Legend -->
     		<div class="color-legend" style="float:left; width: 160px;">
-				<div class="legend-title"><?php print msg('image-legend'); ?></div>
+				<div id="legend" class="legend-title"><?php print msg('image-legend'); ?></div>
 					<?php
 						require_once('php/functions.php');
-						renderLegend();
+                                                $legend = "";
+						echo renderLegende($legend);
 					?>
 			</div>
 			
@@ -105,19 +106,21 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 
                   // get the values from the formular
                   var filter_1 = $("#filterForm").find("#filter1 option:selected").val();
-                  console.log("filter_1 is");
-                  console.log(filter_1);
                   $("#placeOfImage").fadeOut();
+                  $("#legend").fadeOut();
                   // send the data
                   jQuery.post("php/filter.php",
                                 {
                                   "filter1": filter_1
                                 })
                   .done(function(data) {
+                    console.log("data");
                     console.log("done");
-                    $("#placeOfImage").html(data);
+                    $("#placeOfImage").html(data.image);
+                    $("#legend").html(data.legend);
                     $("[rel='tooltip']").tooltip();
                     $("#placeOfImage").fadeIn();
+                    $("#legend").fadeIn();
                   });
                   return;
                 });

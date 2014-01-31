@@ -22,10 +22,13 @@ error_log('HELP');
 	$ses = unserialize($_SESSION['repo']);
 	$_SESSION['image'] = $alg->render($ses,$color,$_SESSION['width'], $_SESSION['height']);
 	error_log("Rendered");
-        header('Content-Type: text/html');
+        header('Content-Type: application/json');
         $image = "";
         renderImage($image);
-        echo $image;
+        $legend = "";
+        renderLegende($legend);
+
+        echo json_encode(array("image" => $image, "legend" => $legend));
         die();
         
 //}

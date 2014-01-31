@@ -153,7 +153,7 @@ function renderLast($commit, $count, $width, &$outstr){
 /*
  * Renders the legend taken from the first element of the image array
  */
-function renderLegend(){
+function renderLegende(&$outstr){
 	//save to variable
 	$legend = $_SESSION['image'][0];
 	//iterate over all items
@@ -163,7 +163,8 @@ function renderLegend(){
 		$key = $legend[$i][0];
 		$val = $legend[$i][1];
 		$colorBlock = '<div style="line-height:1"><div class="customBlock" onmouseover="highlightBlocks();" onmouseleave="unhighlightBlocks();" style="background-color:rgb('.ceil($val[0]).','.ceil($val[1]).','.ceil($val[2]).');width:15px;height:14px;">';
-		echo $colorBlock .'</div>'.'&nbsp;'.$key.'<br></div>';
+		$outstr .= $colorBlock .'</div>'.'&nbsp;'.$key.'<br></div>';
 	}
+        return $outstr;
 }
 ?>
