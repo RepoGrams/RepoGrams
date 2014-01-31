@@ -104,7 +104,9 @@
 			'image-go'
 				=> 'Go',
 			'loading-render'
-				=> 'Rendering image'
+				=> 'Rendering image',
+			'xmpl-dis'
+				=> 'Repository description from '
 		),
 		'de'=> array(
 			'javascript'
@@ -183,7 +185,6 @@
 				=> 'Gibt es Beispiele?',
 			'doc-examples'
 				=> 'Du kannst viele verschiedene Beispiele auf der Hauptseite finden. Klicke einfach auf "Zeige mir ein paar Beispiele" und dann auf "Visualisieren".',
-
 			'doc-ex1'
 				=> 'Twitter Bootstrap',
 			'doc-ex2'
@@ -211,7 +212,9 @@
 			'image-go'
 				=> 'Los',
 			'loading-render'
-				=> 'Rendere Bild'
+				=> 'Rendere Bild',
+			'xmpl-dis'
+				=> 'Repository Beschreibung von '
 			),
 	'fr' => array(
 			'javascript'
@@ -290,7 +293,6 @@
 				=> 'Y at-il des exemples?',
 			'doc-examples'
 				=> 'Il y a beaucoup d\'exemples sur la page d\'accueil. Appuye sur "Montrez moi des exemples" et sur "Visualise".',
-
 			'doc-ex1' 
 				=> 'Twitter Bootstrap',
 			'doc-ex2'
@@ -318,7 +320,9 @@
 			'image-go'
 				=> 'Allez',
 			'loading-render'
-				=> 'rendre l\'image'
+				=> 'rendre l\'image',
+			'xmpl-dis'
+				=> 'Description r&ecute;f$ecute;rentiel de '
 		)
 	);
 	
