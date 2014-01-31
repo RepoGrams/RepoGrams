@@ -114,8 +114,8 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 
                   // get the values from the formular
                   var filter_1 = $("#filterForm").find("#filter1 option:selected").val();
-                  $("#placeOfImage").fadeOut();
-                  $("#legend").fadeOut();
+                  $("#placeOfImage").fadeToggle();
+                  $("#legend").fadeToggle();
                   $("#legend").empty();
                   // send the data
                   jQuery.post("php/filter.php",
@@ -126,8 +126,8 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                     $("#placeOfImage").html(data.image);
                     $("#legend").html(data.legend);
                     $("[rel='tooltip']").tooltip();
-                    $("#placeOfImage").fadeIn();
-                    $("#legend").fadeIn();
+                    $("#placeOfImage").fadeToggle();
+                    $("#legend").fadeToggle();
                   });
                   return;
                 });
