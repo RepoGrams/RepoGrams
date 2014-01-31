@@ -1,6 +1,18 @@
 <?php 
 class convert{
 	
+	#############
+	## This function converts an HSL color representation to an RGB color representation.
+	## Input - color in HSL, represented as:
+	## 		$h - hue
+	##		$s - saturation
+	##		$l - lightness
+	## Output - RGB values of the color:
+	## 		$r - red
+	##		$g - green
+	##		$b - blue
+	#############	
+	
 	function ColorHSLToRGB($h, $s, $l){
 
         $r = $l;
@@ -61,6 +73,16 @@ class convert{
         }
         return array('r' => $r * 255.0, 'g' => $g * 255.0, 'b' => $b * 255.0);
 	}
+	
+	#############
+	## This function converts an RGB color representation into the specific Hex representation.
+	## Input - RGB values of the color:
+	## 		$r - red
+	##		$g - green
+	##		$b - blue
+	## Output - hex representation of the given color:
+	## 		$hex
+	#############
 	
 	function RGBToHex($r, $g, $b) {
 		$hex = "#";
