@@ -1,22 +1,27 @@
 <?php
+session_start();
+require_once('./config.inc.php');
 
 $file = $_GET['file'];
-$mode = $_GET['mode'];
+$modeDownload = $_GET['mode'];
 
-if (isset($_GET['mode'])) convertImage();
+if (isset($_GET['mode'])){
+ convertImage($modeDownload);
 download_file($file);
 header('location: '.$_SERVER['HTTP_REFERER']);
+}else{
+	echo "FOOO";
+}
 
 
-function convertImage() {
-	$image = new Imagick();
-	$image->readImage(_IMAGEDIR.'visualization-'.session_id().'.svg');
-	switch ($mode) {se "png": $image->setImageFormat("png24"); break;
-		case "jpeg": 
-		case "jpg": $image->setImageFormat("jpg"); break;
-	}
-	$image->resizeImage($_SESSION["width"]*2, $_SESSION["height"]*2, imagick::FILTER_LANCZOS, 1);
-	$image->writeImage(_IMAGEDIR.'visualization-'.session_id().'.'.$mode);
+function convertImage($modeDownload) {
+	$image = new Imagick(_IMAGEDIR.'visualization-'.session_id().'.svg');
+	if($modeDownload == "png")
+			$image->setImageFormat("png");
+	else if ($modeDownload == "jpeg" || $modeDownload == "jpg")
+		 $image->setImageFormat("jpg");
+//	$image->resizeImage($_SESSION["width"]*2, $_SESSION["height"]*2, imagick::FILTER_LANCZOS, 1);
+	$image->writeImage(_IMAGEDIR.'visualization-'.session_id().'.'.$modeDownload);
 }
 
 function download_file( $fullPath ){
