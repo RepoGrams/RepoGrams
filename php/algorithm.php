@@ -13,7 +13,7 @@ class algorithm {
 	public function render($commitObjectArray, $modus_color = 0, $width, $height){
 		$commitA = $this->preprocess($commitObjectArray); 
 		########################################### Format ############################################
-		##### array with commit message, number of changed lines, author and time for all commits #####
+		##### array with commit message, number of changed lines, author, time and hash for all commits #####
 		###############################################################################################
 
 		$commitArray = array_reverse($commitA); #input is sorted by desc
@@ -89,6 +89,8 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			$author = preg_replace("/</", "&lt;", $author);
 			$author = preg_replace("/>/", "&gt;", $author);
 
+			$hash = $commitArray[$i][4];
+
 
 			$block = $this->commitToBlock($commitArray[$i], $modus_color, $all_diff, $pixel, $hohe); 
 			
@@ -124,7 +126,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 			if ($w > $width){ 
 				##### color the block till the end of the line #####  
 				$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id);			# write SVG
-	 			$currentArray[] = array(($width-$x), $hohe, $color, $str, $time, $author); 	# adding block to current line
+	 			$currentArray[] = array(($width-$x), $hohe, $color, $str, $time, $author, $hash); 	# adding block to current line
 	 			$returnArray[] = $currentArray; 		# end of currend line, adding to return array
 	 			$currentArray = array(); 				# clear current array
 	 			$id++; 
@@ -135,7 +137,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				##### check if the carryover is still larger then the picture #####
 				while($length > $width){
 					$this->writeBlock($datei, $color, $x, $y, $width, $hohe, $id);  		# write hole line to svg
-	 				$currentArray[] = array($width, $hohe, $color, $str, $time, $author);	# color hole line  
+	 				$currentArray[] = array($width, $hohe, $color, $str, $time, $author, $hash);	# color hole line  
 	 				$returnArray[] = $currentArray;		# end of current line, adding to return array
 	 				$currentArray = array(); 			# clear current array
 					$id++;
@@ -145,13 +147,13 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				}
 				$this->writeBlock($datei, $color, $x, $y, $length, $hohe, $id);				# write carryover to svg
 	 			if($length > 0.01){
-	 				$currentArray[] = array($length, $hohe, $color, $str, $time, $author); 	# wrinte carryover to current line
+	 				$currentArray[] = array($length, $hohe, $color, $str, $time, $author, $hash); 	# wrinte carryover to current line
 					$id++;
 					$x += $length; 						# set current position
 	 			}
 			}
 			else{
-				$currentArray[] = array($length, $hohe, $color, $str, $time, $author); 		# write block to current line
+				$currentArray[] = array($length, $hohe, $color, $str, $time, $author, $hash); 		# write block to current line
 				if ($i == $count-1){					# check if it is the last commit
 					$returnArray[] = $currentArray; 	# end of current line
 					$this->writeBlock($datei, $color, $x, $y, ($width-$x), $hohe, $id); 	# write block to svg til the end of the line (decimal point adjustment)
@@ -453,17 +455,17 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		}
 	}
 
-	###################################### Function preprocess ############################################
-	##### convert into array of expected order                                                        #####
-	##### Input: Object of Commit Interface                                                           #####
-	##### Output: array with commit message, number of changed lines, author and time for all commits #####
-	####################################################################################################### 
+	######################################### Function preprocess ###############################################
+	##### convert into array of expected order                                                              #####
+	##### Input: Object of Commit Interface                                                                 #####
+	##### Output: array with commit message, number of changed lines, author, time and hash for all commits #####
+	############################################################################################################# 
 
 	private function preprocess($obj){
 
 		require_once(__DIR__."/../lib/vcs/Commit.interface.php");
 		for ($i = 0; $i < count($obj); $i++){
-			$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->NumChangedLines(), $obj[$i]->CommitAuthor(), $obj[$i]->CommitTime()) ;
+			$array[$i] = array($obj[$i]->CommitMessage(), $obj[$i]->NumChangedLines(), $obj[$i]->CommitAuthor(), $obj[$i]->CommitTime(), $obj[$i]->Hash()) ;
 		}
 		return $array;
 	}
