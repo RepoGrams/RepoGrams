@@ -21,7 +21,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 	
 	<!-- Content -->
 	<div class="container" id="wrap">
-		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>
+		<img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
 		<br>
     	<div class="hero-unit">
     		<!-- Filtereinstellungen -->
@@ -42,8 +42,6 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
  	 					<option value="2"><?php print msg('image-option2-2') ?></option>           
 					</select>
 				</div>-->
-  				<button id="filterbtn" class="btn btn-default" title="Apply filters">
-       				<span class="glyphicon glyphicon-indent-left"></span><?php print msg('image-go'); ?>
 				</button>
     		</form>
     		
@@ -104,7 +102,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                   event.stopImmediatePropagation(); // stop normal submission
                   event.preventDefault();
                 })
-                $("#filterbtn").click(function(event) {
+                $("#filter1").change(function(event) {
                   if (!$(event.target).is(this))
                   {
                   return;
