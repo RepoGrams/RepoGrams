@@ -105,7 +105,7 @@ if(!isset($_SESSION['init']) || $error){
 		 	onClose: function( selectedDate ) {
 			$( "#start" ).datepicker( "option", "maxDate", selectedDate );}});
 		});
-		document.getElementById("start").value="01/01/1970";
+		document.getElementById("start").value="01/01/2004";
 		document.getElementById("end").value="<?php date_default_timezone_set ('UTC');echo date('m/d/Y');?>";
 
 		$(function () {
