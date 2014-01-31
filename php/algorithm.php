@@ -373,13 +373,16 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		    	break;
 
 		   
-			###################################################
-			#### Authorname encoded in first three letters ####
-			###################################################
+			####################################
+			#### Authorname encoded in hash ####
+			####################################
 
 			case 1: 
-				$name = $commitArray[2];
-				$hash = $this->nameToHash($name);
+				$author = $commitArray[2];
+				$author = preg_replace("/\"/" , "&quot;" , $author);
+				$author = preg_replace("/</", "&lt;", $author);
+				$author = preg_replace("/>/", "&gt;", $author);
+				$hash = $this->nameToHash($author);
 				#### returns h,l and s value #####
 	    		
 	    		$convArray = $conv->ColorHSLToRGB($hash[0],$hash[1],$hash[2]);
@@ -387,7 +390,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		   		$g = $convArray['g'];
 		   		$b = $convArray['b'];
 		   		$color = array($r,$g,$b);
-		    	return array($color,$name);
+		    	return array($color,$author);
 				break;
 
 			###################################################
