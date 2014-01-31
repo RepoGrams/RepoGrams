@@ -13,7 +13,6 @@ error_log('HELP');
 		case "1": $color = 1;break;
 		case "2": $color = 2;break;
 		case "3": $color = 3;break;
-		case "4": $color = 4;break;
 		default:
 			break;
 	}	
