@@ -401,10 +401,10 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 				}
 				else{
 					$l = 0.65;
-					$hour = $hour-12;
+					//$hour = $hour-12;
 				}
 
-				$h = $hour * 0.08;
+				$h = $hour * 0.04;
 				$s = 0.39 + 0.01 * $minute;
 
 				$convArray = $conv->ColorHSLToRGB($h,$s,$l);
