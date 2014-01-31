@@ -66,7 +66,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     				<ul id="placeOfImage" style="display:inline-block; list-style-type:none !important; padding-left: 0 !important;">
 						<?php
 							require_once('php/functions.php');
-							renderImage();
+							$img = ""; renderImage($img); echo $img;
 						?>
 					</ul>
   				</div>
