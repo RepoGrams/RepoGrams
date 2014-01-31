@@ -98,6 +98,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 
 	<script type="text/javascript">
 		$(function () {
+                $("[rel='tooltip']").tooltip();
                 $("#filterForm").submit(function(event) {
                   event.stopImmediatePropagation(); // stop normal submission
                   event.preventDefault();
@@ -115,7 +116,6 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                   console.log("filter_1 is");
                   console.log(filter_1);
                   $("#placeOfImage").fadeOut();
-                  $("#placeOfImage").empty();
                   // send the data
                   jQuery.post("php/filter.php",
                                 {
@@ -124,6 +124,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                   .done(function(data) {
                     console.log("done");
                     $("#placeOfImage").html(data);
+                    $("[rel='tooltip']").tooltip();
                     $("#placeOfImage").fadeIn();
                   });
                   return;
