@@ -35,13 +35,6 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 	  					<option value="3"><?php print msg('image-option1-4') ?></option>             
 					</select>
 				</div>
-				<!--<div class="form-group">
-					<select name="filter2" class="form-control">
-  						<option value="0" selected><?php print msg('image-option2-0') ?></option>         
-  						<option value="1"><?php print msg('image-option2-1') ?></option>  
- 	 					<option value="2"><?php print msg('image-option2-2') ?></option>           
-					</select>
-				</div>-->
   				<button id="filterbtn" class="btn btn-default" title="Apply filters">
        				<span class="glyphicon glyphicon-indent-left"></span><?php print msg('image-go'); ?>
 				</button>
@@ -83,7 +76,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     					<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
    						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
    						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
-   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=pdf'?>"><?php print msg('image-as') ?> .pdf</a></li>
+   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.pdf&mode=pdf'?>"><?php print msg('image-as') ?> .pdf</a></li>
   					</ul>
 				</div>
 			</div>
