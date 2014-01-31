@@ -58,14 +58,18 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 			</div>
 			
 			<!-- Repo-Image -->
-			<script type="text/javascript" src="js/jquery.overscroll.min.js"></script>
-			<div class="custom" style="width:<?php echo $_SESSION['width']+1;?>; boder-style:solid; display:inline-block;">
-				<ul style="display:inline-block; list-style-type:none !important;">
-					<?php
-						require_once('php/functions.php');
-						renderImage();
-					?>
-				</ul>
+			<div class="panel panel-default">
+  				<div class="panel-heading">
+    				<h3 class="panel-title"><a href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title']; ?></a></h3>
+  				</div>
+  				<div class="panel-body custom" style="width:<?php echo $_SESSION['width']+1;?>; boder-style:solid; display:inline-block;">
+    				<ul style="display:inline-block; list-style-type:none !important;">
+						<?php
+							require_once('php/functions.php');
+							renderImage();
+						?>
+					</ul>
+  				</div>
 			</div>
 			<div class="clear"></div>
 			<!-- Download image buttons -->
