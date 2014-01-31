@@ -137,6 +137,7 @@ function renderLast($commit, $count, $width, &$outstr){
 	//compute the size that is available for the block and use this one instead of the
 	//value saved in the array
 	$size = $_SESSION['width'] - $width;
+	if ($size < 0) $size = 0;
 	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($size).'px; height:'.$commit[1].'px;"';
 
 	date_default_timezone_set ( 'UTC' );
