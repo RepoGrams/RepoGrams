@@ -319,6 +319,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 	############################################################################
 
 	private function commitToColor($modus, $commitArray){
+          date_default_timezone_set ( 'UTC' );
 		$conv = new convert();
 	
 		switch ($modus) {
