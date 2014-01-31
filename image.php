@@ -24,11 +24,11 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 		<br>
     	<div class="hero-unit">
     		<!-- Filtereinstellungen -->
- 	   		<form role="form" action="php/filter.php" method="POST" class="form-inline" style="text-align:center;">
+ 	   		<form id="filterForm" role="form" class="form-inline" style="text-align:center;">
  	   			Filter<br>
  	   			<div class="form-group">
-    				<select name="filter1" class="form-control">
-  						<option value="1"><?php print msg('image-option1-2') ?></option>  
+    				<select id="filter1" name="filter1" class="form-control">
+  						<option value="1"><?php print msg('image-option1-1') ?></option>  
  	 					<option value="0" selected><?php print msg('image-option1-0') ?></option>  
   						<option value="2"><?php print msg('image-option1-3') ?></option>        
 	  					<option value="3"><?php print msg('image-option1-4') ?></option>             
@@ -41,7 +41,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
  	 					<option value="2"><?php print msg('image-option2-2') ?></option>           
 					</select>
 				</div>-->
-  				<button class="btn btn-default" type="submit" title="Apply filters">
+  				<button id="filterbtn" class="btn btn-default" title="Apply filters">
        				<span class="glyphicon glyphicon-indent-left"></span><?php print msg('image-go'); ?>
 				</button>
     		</form>
@@ -64,7 +64,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   				<div class="panel-body" 
   					style="width:<?php echo $_SESSION['width']+1;?>;boder-style:solid; display:inline-block; 
   						   padding-left: 0 !important; padding-top: 0 !important">
-    				<ul style="display:inline-block; list-style-type:none !important; padding-left: 0 !important;">
+    				<ul id="placeOfImage" style="display:inline-block; list-style-type:none !important; padding-left: 0 !important;">
 						<?php
 							require_once('php/functions.php');
 							renderImage();
@@ -97,8 +97,37 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 
 	<script type="text/javascript">
 		$(function () {
-    		$("[rel='tooltip']").tooltip();
-		});
+                $("#filterForm").submit(function(event) {
+                  event.stopImmediatePropagation(); // stop normal submission
+                  event.preventDefault();
+                })
+                $("#filterbtn").click(function(event) {
+                  if (!$(event.target).is(this))
+                  {
+                  return;
+                  }
+                  event.stopImmediatePropagation(); // stop normal submission
+                  event.preventDefault();
+
+                  // get the values from the formular
+                  var filter_1 = $("#filterForm").find("#filter1 option:selected").val();
+                  console.log("filter_1 is");
+                  console.log(filter_1);
+                  $("#placeOfImage").fadeOut();
+                  $("#placeOfImage").empty();
+                  // send the data
+                  jQuery.post("php/filter.php",
+                                {
+                                  "filter1": filter_1
+                                })
+                  .done(function(data) {
+                    console.log("done");
+                    $("#placeOfImage").html(data);
+                    $("#placeOfImage").fadeIn();
+                  });
+                  return;
+                });
+                });               
 	</script>
 	
 </body>
