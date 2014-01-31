@@ -48,7 +48,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
     		</form>
     		
     		<!-- Repo-Visualization -->
-    		<!-- Legend -->
+		<!-- Legend -->
     		<div class="color-legend" style="float:left; width: 160px;">
 				<div class="legend-title"><?php print msg('image-legend'); ?></div>
 					<?php
@@ -58,7 +58,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 			</div>
 			
 			<!-- Repo-Image -->
-			<div class="panel panel-default" style="width:770; display:block; margin:auto auto 0;>
+			<div class="panel panel-default" style="width:770; display:block; margin:auto auto 0;">
   				<div class="panel-heading">
     				<h3 class="panel-title"><a href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title'];?></a></h3>
   				</div>
