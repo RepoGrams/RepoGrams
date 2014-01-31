@@ -43,9 +43,9 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 		###################################################
 
-		$ll_diff = 0;
+		$all_diff = 0;
 		for ($j = 0; $j < $count; $j++){
-			$ll_diff += $commitArray[$j][1]; 
+			$all_diff += $commitArray[$j][1]; 
 		}
 
 		$pixel = $width * $height;
