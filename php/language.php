@@ -75,6 +75,8 @@
 				=> 'After a short waiting period, you will see your rendered chromogram.',
 			'doc-ex'
 				=> 'Do you have some examples?',
+			'doc-examples'
+				=> 'You can find plenty of examples on the front page. Just click on the "Show me some examples" button and then on Visualize.',
 			'doc-ex1'
 				=> 'Twitter Bootstrap',
 			'doc-ex2'
@@ -179,6 +181,9 @@
 				=> 'Nach einer kurzen Bearbeitungszeit, erscheint das berechnete Chromogram.',
 			'doc-ex'
 				=> 'Gibt es Beispiele?',
+			'doc-examples'
+				=> 'Du kannst viele verschiedene Beispiele auf der Hauptseite finden. Klicke einfach auf "Zeige mir ein paar Beispiele" und dann auf "Visualisieren".',
+
 			'doc-ex1'
 				=> 'Twitter Bootstrap',
 			'doc-ex2'
@@ -283,6 +288,9 @@
 				=> 'Apr&egrave;s un court temps d\'attente, vous verrez votre Chromogram rendu.',
 			'doc-ex' 
 				=> 'Y at-il des exemples?',
+			'doc-examples'
+				=> 'Il y a beaucoup d\'exemples sur la page d\'accueil. Appuye sur "Montrez moi des exemples" et sur "Visualise".',
+
 			'doc-ex1' 
 				=> 'Twitter Bootstrap',
 			'doc-ex2'

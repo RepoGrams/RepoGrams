@@ -32,6 +32,8 @@ require_once("php/language.php");
  
 		    <div class="h4 doc-header"><?php print msg('doc-ex');?></div>
 			<br>
+			<?php print msg('doc-examples');?>
+			<br>
 		</p>
       		</div>
       		<div class="modal-footer">
