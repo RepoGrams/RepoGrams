@@ -80,7 +80,8 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                                         <div id="smoother" title="Smoothing"></div>
                                         <div id="visu_legend"></div>
                                 </div>
-  				</div>
+                                <div id="visu-slider"></div>
+                                </div>
 			</div>
 			<div class="clear"></div>
 			
@@ -191,29 +192,35 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                         renderer: 'line',
                         series: [ {
                           color: 'steelblue',
-                          data: data
+                          data: data,
+                          name: '#Commits'
                         } ]
                     } );
 
                     var time = new Rickshaw.Fixtures.Time();
                     var tunit = time.unit("month");
-                    //var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-                      //graph: graph
-                    //} );
+                    var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+                      graph: graph
+                    } );
                     var legend = new Rickshaw.Graph.Legend( {
                       graph: graph,
                       element: document.querySelector('#visu_legend')
                     });
 
-                    var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
-                      graph: graph,
-                      legend: legend
-                    } );
-
-
                     var xAxis = new Rickshaw.Graph.Axis.Time( {
                       graph: graph,
                       timeUnit: tunit
+                    });
+
+                    
+                    var y_ticks = new Rickshaw.Graph.Axis.Y( {
+                      graph: graph,
+                        tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+                    } );
+
+                    var slider = new Rickshaw.Graph.RangeSlider({
+                        graph: graph,
+                        element: $('#visu-slider')
                     });
 
                     graph.render();
