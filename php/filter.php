@@ -2,7 +2,7 @@
 error_reporting(-1);
 require_once("./algorithm.php");
 require_once("./functions.php");
-require_once('./php/utils.php');
+require_once('./utils.php');
 startSessionIfNotStarted();
 error_log('HELP');
 //if (isset($_GET['filter1'])) {

@@ -1,4 +1,5 @@
 <?php
+error_reporting(-1);
 require_once('./php/utils.php');
 startSessionIfNotStarted();
 require_once('config.inc.php');

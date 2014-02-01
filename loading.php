@@ -1,8 +1,10 @@
 <?php
+error_reporting(-1);
 require_once('./php/utils.php');
 startSessionIfNotStarted();
 require_once("php/functions.php");
 require_once("php/language.php");
+date_default_timezone_set('UTC');
 
 if (isset($_POST['repourl'])) 
 	$_SESSION['repourl'] = $_POST['repourl'];
