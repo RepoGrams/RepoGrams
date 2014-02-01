@@ -1,5 +1,6 @@
 <?php
-	session_start();
+require_once('./php/utils.php');
+startSessionIfNotStarted();
 error_reporting(-1);
 	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
 	require_once(__DIR__."/algorithm.php");

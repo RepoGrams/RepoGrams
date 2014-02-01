@@ -2,7 +2,8 @@
 error_reporting(-1);
 require_once("./algorithm.php");
 require_once("./functions.php");
-session_start();
+require_once('./php/utils.php');
+startSessionIfNotStarted();
 error_log('HELP');
 //if (isset($_GET['filter1'])) {
         error_log("POST is ". print_r($_POST, true));

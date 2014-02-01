@@ -1,6 +1,7 @@
 <?php
 
-session_start();
+require_once('./php/utils.php');
+startSessionIfNotStarted();
 require_once("php/language.php");
 
 ?>
