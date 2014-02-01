@@ -139,18 +139,42 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                 }
                 jQuery.post("php/visualization.php")
                   .done(function(initial_data) {
-                    var data = jQuery.map(initial_data, function (arr, index) {
-                        return {x: parseInt(arr[3]), y: parseInt(arr[1])};
-                    });
-                    data.sort(function (a,b) {
-                        if (a.x < b.x) {
+                    var time2commitAmount = initial_data.map(function (arr, index) {
+                      // only select the relevant data, the commit time in our 
+                      // case
+                        return {time: parseInt(arr[3])};
+                    })
+                    .sort(function (a,b) {
+                      // sort commit time in ascending order
+                        if (a.time < b.time) {
                           return -1;
-                        } else if (a.x > b.x) {
+                        } else if (a.time > b.time) {
                           return 1;
                         } else {
                           return 0;
                         }
-                    });
+                    })
+                    .reduce(function(acc, cur, index, arr) {
+                      /* cur is a mapping from months (as epoch) to number of 
+                        * occurences
+                       *
+                       */
+                      var d = unixtime2date(cur.time);
+                      var firstOfMonth = new Date(d.getFullYear(), d.getMonth() -1 ,1);
+                      // get time returns milliseconds, but epoch is in seconds
+                      var yearAndMonthEpoch = firstOfMonth.getTime() / 1000;
+                      // if the value alredy exists, increment the counter
+                      // else initialize it with 1
+                      acc[yearAndMonthEpoch] ? acc[yearAndMonthEpoch] += 1
+                                             : acc[yearAndMonthEpoch] = 1;
+                      return acc;
+                    }, {});
+
+                    // transform the data so that RickShaw can use it
+                    var data = [];
+                    for (var key in time2commitAmount) {
+                      data.push({x: parseInt(key), y: parseInt(time2commitAmount[key])});
+                    }
 
                     var graph = new Rickshaw.Graph( {
                       element: document.querySelector("#visu"),
