@@ -198,7 +198,6 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                     } );
 
                     var time = new Rickshaw.Fixtures.Time();
-                    var tunit = time.unit("month");
                     var hoverDetail = new Rickshaw.Graph.HoverDetail( {
                       graph: graph
                     } );
@@ -209,7 +208,6 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 
                     var xAxis = new Rickshaw.Graph.Axis.Time( {
                       graph: graph,
-                      timeUnit: tunit
                     });
 
                     
