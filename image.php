@@ -13,6 +13,10 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 <script src="http://code.shutterstock.com/rickshaw/vendor/d3.layout.min.js"></script>
 <script src="http://code.shutterstock.com/rickshaw/rickshaw.js"></script>
 
+<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/legend.css">
+<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/graph.css">
+<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/detail.css">
+
 </head>
 
 <body>
@@ -71,6 +75,11 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 							$img = ""; renderImage($img); echo $img;
 						?>
 					</ul>
+                                <div id="visu"></div>
+                                <div id="visu_legend_container">
+                                        <div id="smoother" title="Smoothing"></div>
+                                        <div id="visu_legend"></div>
+                                </div>
   				</div>
 			</div>
 			<div class="clear"></div>
@@ -90,7 +99,6 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 			</div>
 
                         <!-- GitHub visualization -->
-                        <div id="visu"></div>
 			<div id="push" class="clear"></div>
 			<br><br>
 		</div>
@@ -188,13 +196,28 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                     } );
 
                     var time = new Rickshaw.Fixtures.Time();
-                    var tunit = time.unit("seconds");
-                    var axes = new Rickshaw.Graph.Axis.Time( {
+                    var tunit = time.unit("month");
+                    //var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+                      //graph: graph
+                    //} );
+                    var legend = new Rickshaw.Graph.Legend( {
                       graph: graph,
-                      timeUnit: tunit
+                      element: document.querySelector('#visu_legend')
+                    });
+
+                    var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+                      graph: graph,
+                      legend: legend
                     } );
 
+
+                    var xAxis = new Rickshaw.Graph.Axis.Time( {
+                      graph: graph,
+                      timeUnit: tunit
+                    });
+
                     graph.render();
+                    xAxis.render();
 
 
                   });
