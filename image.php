@@ -189,11 +189,11 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                       element: document.querySelector("#visu"),
                         width: $("#placeOfImage").width(),
                         height: 250,
-                        renderer: 'line',
+                        renderer: 'scatterplot',
                         series: [ {
                           color: 'steelblue',
                           data: data,
-                          name: '#Commits'
+                          name: '#Commits/month'
                         } ]
                     } );
 
