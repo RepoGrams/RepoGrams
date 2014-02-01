@@ -1,8 +1,11 @@
 <?php
 require_once __DIR__.'/../RepoImporter.class.php';
 
-
 error_reporting(-1);
+if (function_exists('mb_internal_encoding')) {
+  error_log("using utf8!");
+  mb_internal_encoding( 'UTF-8' );
+}
 
 class gitImport extends RepoImporter {
 	private $RepoObject;
@@ -54,7 +57,7 @@ class gitImport extends RepoImporter {
                 
 		$since = "";
                 $before= "";
-                $separator = chr(26);
+                $separator = utf8_encode(chr(26));
 		$command = "git log ".$since.$before."--numstat --pretty='".$separator."},".$separator."%H".$separator.":{".$separator."author".$separator.":".$separator."%an".$separator.",".$separator."author_mail".$separator.":".$separator."%ae".$separator.",".$separator."date".$separator.":".$separator."%at".$separator.",".$separator."message".$separator.":".$separator."%s".$separator.",".$separator."changes".$separator." : ".$separator."'";
                 error_log($command);
 		$output = shell_exec($command);
@@ -64,10 +67,45 @@ class gitImport extends RepoImporter {
 		
 		$output_array = json_decode($json,true);
                 if (is_null($output_array)) {
-                  $json = utf8_encode($json);
+                  // hit string with sledgehammer until it is Unicode
+                  // this implies so much failure:
+                  // git --log doesn't return real unicode (e.g. for git.git)
+                  // but some gibberish character
+                  // in theory mb_convert_encoding UTF-8 to UTF-8 should fix this
+                  // in practice it doesn't; so we apply he regex from [1]
+                  // however, even after this, some weird \x1b character is left 
+                  // over, so we replace every occurence of it 
+                  // [1] http://stackoverflow.com/questions/1401317/remove-non-utf8-characters-from-string
+                  if (function_exists('mb_convert_encoding')) {
+                    error_log("Using mb_convert_encoding");
+                    mb_substitute_character(0xFFFD);
+                    $json = mb_convert_encoding($json, 'UTF-8', 'UTF-8');
+                  } else {
+                    error_log("No mb functionality?????");
+                    $json = utf8_encode($json);
+                  }
                   $output_array = json_decode($json,true);
+                  if (is_null($output_array)) {
+                    ini_set('pcre.backtrack_limit', 99999999999);
+                    $json= preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.
+                      '|[\x00-\x7F][\x80-\xBF]+'.
+                      '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'.
+                      '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.
+                      '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
+                      '?', $json);
+                    
+                    //reject overly long 3 byte sequences and UTF-16 surrogates and replace with ?
+                    $json = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]'.
+                      '|\xED[\xA0-\xBF][\x80-\xBF]/S','?', $json );
+                    $output_array = json_decode($json,true);
+                    if (is_null($output_array)) {
+                      $json = preg_replace("/\x1b/", "", $json);
+                      $output_array = json_decode($json,true);
+                    }
+                  }
                 }
 		if (is_null($output_array)) {
+                        file_put_contents("/tmp/test2.txt", $json);
 			error_log("stop");
 		}
 		$this->RepoObject = $output_array;
