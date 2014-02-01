@@ -1,5 +1,5 @@
 <?php 
-if (session_id == '') session_start();
+session_start();
 require_once("php/language.php");
 require_once("php/functions.php");
 $error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '');

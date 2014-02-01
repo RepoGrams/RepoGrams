@@ -1,5 +1,5 @@
 <?php
-	if (session_id() == '') session_start();
+	session_start();
 	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
 	require_once(__DIR__."/algorithm.php");
 	require_once("functions.php");

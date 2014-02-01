@@ -17,6 +17,7 @@ function initSession ($debug){
 	$_SESSION['image'] = '';
 if (isset($debug)){
 	error_log($_SESSION['progress']." ".
+	$_SESSION['error_message']." ".
 	$_SESSION['title']." ".
 	$_SESSION['repourl']." ".
 	$_SESSION['finish']." ".
@@ -32,6 +33,7 @@ if (isset($debug)){
  */
 function dump(){
 	error_log($_SESSION['progress']." ".
+	$_SESSION['error_message']." ".
 	$_SESSION['title']." ".
 	$_SESSION['repourl']." ".
 	$_SESSION['finish']." ".
