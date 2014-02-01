@@ -1,14 +1,14 @@
 <?php 
-require_once('./php/utils.php');
-startSessionIfNotStarted();
-require_once("php/language.php");
-require_once("php/functions.php");
-$error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '');
-if(!isset($_SESSION['init']) || $error){
-        error_log("initializing...");
-	initSession(false);
-	$_SESSION['init'] = true;
-}
+	require_once('./php/utils.php');
+	require_once("./php/language.php");
+	require_once("./php/functions.php");
+	startSessionIfNotStarted();
+	$error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '');
+	if(!isset($_SESSION['init']) || $error){
+		error_log("initializing...");
+		initSession(false);
+		$_SESSION['init'] = true;
+	}
 ?>
 <html !DOCTYPE HTML>
 <head>
@@ -28,9 +28,9 @@ if(!isset($_SESSION['init']) || $error){
 	
 	<!-- Content in root container-->
 	<div class="container" id="wrap"> <!-- open root container-->
-		<img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
+		<a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a>
 		<br>
-	  <!--Input form  -->
+	  	<!--Input Form  -->
 	  	<div class="row">
 	  		<div class="col-xs-12">
 				<form role="form" action="./loading.php" method="POST">
@@ -55,6 +55,7 @@ if(!isset($_SESSION['init']) || $error){
 						}
 					?>
 					<br>
+					<!-- Submit&Example Button -->
 					<div class="centerButton">
 						<button class="btn btn-default" type="submit" title="<?php print msg('index-vis'); ?>" style="margin-right:20px;">
 	       					<span class="glyphicon glyphicon-indent-left"></span>&nbsp;<?php print msg('visualize'); ?>
@@ -72,26 +73,27 @@ if(!isset($_SESSION['init']) || $error){
 		    			<input type="text" class="input-small hasDatepicker" name="end" id="end"  style="width:90px;"/>
 	    			</div>
 				</form>
-	  		</div> <!-- collapse div for form input -->
-	  </div>
-	  <br>
-	<div class="row">
-	  <div id="description"></div>
-	  <!-- Examples -->
-		<div id="example" class="centerButton">
-			<?php require_once('./php/exampleExplained.php') ?>
+	  		</div>
+		</div>
+	  	<br>
+	  	<!-- Examples -->
+		<div class="row">
+	  		<div id="description"></div>
+			<div id="example" class="centerButton">
+				<?php require_once('./php/exampleExplained.php') ?>
+			</div>
 		</div>
 	</div>
-	</div>
 
-	<!--</div>  root container close -->
 	<!-- Help dialog -->
 	<?php include('helpdialog.php'); ?>
-	<div id="push"></div>
+	
 	<!-- Footer -->	
+	<div id="push"></div>
 	<?php include('footer.php'); ?>
 	
 	<script>
+		//Enabling datepicker for commit range
 		$(function() {
 		 	$( "#start" ).datepicker({
 		 	defaultDate: "+1w",
@@ -109,6 +111,7 @@ if(!isset($_SESSION['init']) || $error){
 		document.getElementById("start").value="01/01/2004";
 		document.getElementById("end").value="<?php date_default_timezone_set ('UTC');echo date('m/d/Y');?>";
 
+		//Enabling tooltips for example
 		$(function () {
     		$("[rel='tooltip']").tooltip();
 		});
