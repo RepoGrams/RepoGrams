@@ -1,4 +1,7 @@
-<?php session_start(); 
+<?php
+error_reporting(-1);
+require_once('./php/utils.php');
+startSessionIfNotStarted();
 require_once('config.inc.php');
 require_once("php/language.php");
 if (!isset($_SESSION['image']) ) header('location: index.php');?>
@@ -6,6 +9,14 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 <html !DOCTYPE HTML>
 <head>
 	<?php include('header.php') ?>
+<script type="text/javascript" src="js/d3.v3.min.js"></script>
+<script src="http://code.shutterstock.com/rickshaw/vendor/d3.layout.min.js"></script>
+<script src="http://code.shutterstock.com/rickshaw/rickshaw.js"></script>
+
+<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/legend.css">
+<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/graph.css">
+<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/detail.css">
+
 </head>
 
 <body>
@@ -64,7 +75,13 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 							$img = ""; renderImage($img); echo $img;
 						?>
 					</ul>
-  				</div>
+                                <div id="visu"></div>
+                                <div id="visu_legend_container">
+                                        <div id="smoother" title="Smoothing"></div>
+                                        <div id="visu_legend"></div>
+                                </div>
+                                <div id="visu-slider"></div>
+                                </div>
 			</div>
 			<div class="clear"></div>
 			
@@ -82,6 +99,7 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 				</div>
 			</div>
 
+                        <!-- GitHub visualization -->
 			<div id="push" class="clear"></div>
 			<br><br>
 		</div>
@@ -123,6 +141,91 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
                   });
                   return;
                 });
+                function unixtime2date(unixtime) {
+                  // JavaScript's date is base on microseconds, unix time on 
+                  // seconds
+                  return new Date(unixtime*1000);
+                }
+                jQuery.post("php/visualization.php")
+                  .done(function(initial_data) {
+                    var time2commitAmount = initial_data.map(function (arr, index) {
+                      // only select the relevant data, the commit time in our 
+                      // case
+                        return {time: parseInt(arr[3])};
+                    })
+                    .sort(function (a,b) {
+                      // sort commit time in ascending order
+                        if (a.time < b.time) {
+                          return -1;
+                        } else if (a.time > b.time) {
+                          return 1;
+                        } else {
+                          return 0;
+                        }
+                    })
+                    .reduce(function(acc, cur, index, arr) {
+                      /* cur is a mapping from months (as epoch) to number of 
+                        * occurences
+                       *
+                       */
+                      var d = unixtime2date(cur.time);
+                      var firstOfMonth = new Date(d.getFullYear(), d.getMonth() -1 ,1);
+                      // get time returns milliseconds, but epoch is in seconds
+                      var yearAndMonthEpoch = firstOfMonth.getTime() / 1000;
+                      // if the value alredy exists, increment the counter
+                      // else initialize it with 1
+                      acc[yearAndMonthEpoch] ? acc[yearAndMonthEpoch] += 1
+                                             : acc[yearAndMonthEpoch] = 1;
+                      return acc;
+                    }, {});
+
+                    // transform the data so that RickShaw can use it
+                    var data = [];
+                    for (var key in time2commitAmount) {
+                      data.push({x: parseInt(key), y: parseInt(time2commitAmount[key])});
+                    }
+
+                    var graph = new Rickshaw.Graph( {
+                      element: document.querySelector("#visu"),
+                        width: $("#placeOfImage").width(),
+                        height: 250,
+                        renderer: 'line',
+                        series: [ {
+                          color: 'steelblue',
+                          data: data,
+                          name: '#Commits'
+                        } ]
+                    } );
+
+                    var time = new Rickshaw.Fixtures.Time();
+                    var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+                      graph: graph
+                    } );
+                    var legend = new Rickshaw.Graph.Legend( {
+                      graph: graph,
+                      element: document.querySelector('#visu_legend')
+                    });
+
+                    var xAxis = new Rickshaw.Graph.Axis.Time( {
+                      graph: graph,
+                    });
+
+                    
+                    var y_ticks = new Rickshaw.Graph.Axis.Y( {
+                      graph: graph,
+                        tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+                    } );
+
+                    var slider = new Rickshaw.Graph.RangeSlider({
+                        graph: graph,
+                        element: $('#visu-slider')
+                    });
+
+                    graph.render();
+                    xAxis.render();
+
+
+                  });
                 });               
 	</script>
 	

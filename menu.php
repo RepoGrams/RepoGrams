@@ -1,5 +1,6 @@
 <?php 
-	session_start();  
+        require_once('./php/utils.php');
+        startSessionIfNotStarted();
 	require_once("php/language.php"); 
 	if (!isset($_COOKIE["language"])) {
 		setcookie("language", "en", time()+3600000, "/");

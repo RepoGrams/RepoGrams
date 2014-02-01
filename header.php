@@ -16,6 +16,7 @@
 <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
 <link rel="stylesheet" type="text/css" href="css/datepicker.css">
 <link rel="stylesheet" type="text/css" href="css/custom.css">
+<link rel="stylesheet" type="text/css" href="css/jquery-ui/css/smoothness/jquery-ui-1.10.4.custom.min.css">
 
 <!-- JS sources -->
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
