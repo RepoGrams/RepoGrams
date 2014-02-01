@@ -1,13 +1,7 @@
 html, body { height: 100%; }
 
 /* Wrapper for page content to push down footer */
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  /* Negative indent footer by it's height */
-  margin: 0 auto -60px;
-}
+#wrap { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -60px; padding-top:50px;}
 
 /* Language flags */
 .flag { width: 16px; height: 11px; background:url(../img/flags.png) no-repeat; }
@@ -33,66 +27,20 @@ html, body { height: 100%; }
 
 /* Footer */
 /* Set the fixed height of the footer here */
-#push, #footer { height: 60px; }
-#footer { background-color: #eee; text-align: center; }
-
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-	#footer {
-  		margin-left: -20px;
-  		margin-right: -20px;
-  		padding-left: 20px;
-  		padding-right: 20px;
-  		text-align: center;
-	}
-}
+.container .credit { margin: 20px 0; }
+#footer { bottom:0; position:absolute; background-color:#eee; text-align:center; width:100%; }
 
 /* Title */
-#title, img.title{
-	margin: 50px auto 0;
-	display: block;
-}
-#title:hover, img.title:hover{
-	cursor: hand;
-	cursor: pointer;
-}
+.titlecontainer { width:300px; height: 100px; margin:auto auto 0; }
+#title, img.title{ margin: 50px auto 0; display: block;}
+#title:hover, img.title:hover{ cursor: hand; cursor: pointer; }
 
 /* Color legend */
-
-.color-legend .legend-title {
-    text-align: left;
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 90%;
-}
-.color-legend .legend-scale ul {
-    margin: 0;
-    margin-bottom: 5px;
-    padding: 0;
-    float: left;
-    list-style: none;
-}
-.color-legend .legend-scale ul li {
-    font-size: 80%;
-    list-style: none;
-    margin-left: 0;
-    line-height: 18px;
-    margin-bottom: 2px;
-}
-.color-legend ul.legend-labels li span {
-    display: block;
-    float: left;
-    height: 16px;
-    width: 50px;
-    margin-right: 5px;
-    margin-left: 0;
-    border: 1px solid #999;
-}
-.color-legend .legend-source {
-    font-size: 70%;
-    color: #999;
-    clear: both;
-}
+.color-legend .legend-title { text-align: left; margin-bottom: 5px; font-weight: bold; font-size: 90%; }
+.color-legend .legend-scale ul { margin: 0; margin-bottom: 5px; padding: 0; float: left; list-style: none; }
+.color-legend .legend-scale ul li { font-size: 80%; list-style: none; mmargin-left: 0; line-height: 18px; margin-bottom: 2px; }
+.color-legend ul.legend-labels li span { display: block; float: left; height: 16px; width: 50px; margin-right: 5px; margin-left: 0; border: 1px solid #999; }
+.color-legend .legend-source { font-size: 70%; color: #999; clear: both; }
 .color-legend a { color: #777; }
 
 /* Plugin to make the rendered repository scrollable */

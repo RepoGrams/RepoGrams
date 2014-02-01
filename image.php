@@ -1,22 +1,15 @@
 <?php
-error_reporting(-1);
-require_once('./php/utils.php');
-startSessionIfNotStarted();
-require_once('config.inc.php');
-require_once("php/language.php");
-if (!isset($_SESSION['image']) ) header('location: index.php');?>
+	require_once('./php/utils.php');	
+	require_once('config.inc.php');
+	require_once("php/language.php");
+	error_reporting(-1);
+	startSessionIfNotStarted();
+	if (!isset($_SESSION['image']) ) header('location: index.php');
+?>
 
 <html !DOCTYPE HTML>
 <head>
 	<?php include('header.php') ?>
-<script type="text/javascript" src="js/d3.v3.min.js"></script>
-<script src="http://code.shutterstock.com/rickshaw/vendor/d3.layout.min.js"></script>
-<script src="http://code.shutterstock.com/rickshaw/rickshaw.js"></script>
-
-<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/legend.css">
-<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/graph.css">
-<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/detail.css">
-
 </head>
 
 <body>
@@ -31,41 +24,40 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 	<?php include('menu.php'); ?>
 	
 	<!-- Content -->
-	<div class="container" id="wrap">
-		<img class="title" title="Repograms" src="img/title.png" onclick="location.href='index.php'">
-		<br>
-    	<div class="hero-unit">
-    	<!-- Repo-Visualization -->
+	<div id="wrap">
+		<div class="container">
+			<div class="titlecontainer"><a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a></div>
+			<br>
+    		<!-- Repo-Visualization -->
 			<!-- Legend -->
     		<div class="color-legend" style="float:left; width: 160px;">
 				<div class="legend-title"><?php print msg('image-legend'); ?></div>
-                                <div id="legend">
+                <div id="legend">
 					<?php
 						require_once('php/functions.php');
-                                                $legend = "";
+                        $legend = "";
 						echo renderLegende($legend);
 					?>
-                                </div>
+                </div>
 			</div>
 			
 			<!-- Repo-Image -->
 			<div class="panel panel-default" style="width:770; display:block; margin:auto auto 0;">
   				<div class="panel-heading">
     				<h3 class="panel-title">
-    					<a href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title'];?></a>
-    					&nbsp;
+    					<a href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title'];?></a>&nbsp;
     					<!-- Filtereinstellungen -->
- 	   		<form id="filterForm" role="form" class="form-inline" style="text-align:center;">
- 	   			Filter
- 	   			<div class="form-group">
-    				<select id="filter1" name="filter1" class="form-control">
-  						<option value="1"><?php print msg('image-option1-1') ?></option>  
- 	 					<option value="0" selected><?php print msg('image-option1-0') ?></option>  
-  						<option value="2"><?php print msg('image-option1-3') ?></option>        
-	  					<option value="3"><?php print msg('image-option1-4') ?></option>             
-					</select>
-				</div>
-    		</form>
+ 	   					<form id="filterForm" role="form" class="form-inline" style="text-align:center;">
+ 	   						Filter
+ 	   						<div class="form-group">
+    							<select id="filter1" name="filter1" class="form-control">
+  									<option value="1"><?php print msg('image-option1-1') ?></option>  
+ 	 								<option value="0" selected><?php print msg('image-option1-0') ?></option>  
+  									<option value="2"><?php print msg('image-option1-3') ?></option>        
+	  								<option value="3"><?php print msg('image-option1-4') ?></option>             
+								</select>
+							</div>
+    					</form>
     				</h3>
   				</div>
   				<div class="panel-body" style="width:<?php echo $_SESSION['width']+1;?>;boder-style:solid; display:inline-block; padding-left: 0 !important; padding-top: 0 !important;">
@@ -75,13 +67,13 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
 							$img = ""; renderImage($img); echo $img;
 						?>
 					</ul>
-                                <div id="visu"></div>
-                                <div id="visu_legend_container">
-                                        <div id="smoother" title="Smoothing"></div>
-                                        <div id="visu_legend"></div>
-                                </div>
-                                <div id="visu-slider"></div>
-                                </div>
+                    <div id="visu"></div>
+                    <div id="visu_legend_container">
+                    	<div id="smoother" title="Smoothing"></div>
+                        <div id="visu_legend"></div>
+                    </div>
+                    <div id="visu-slider"></div>
+                 </div>
 			</div>
 			<div class="clear"></div>
 			
@@ -98,13 +90,11 @@ if (!isset($_SESSION['image']) ) header('location: index.php');?>
   					</ul>
 				</div>
 			</div>
-
-                        <!-- GitHub visualization -->
-			<div id="push" class="clear"></div>
 			<br><br>
 		</div>
 	</div>
 	
+	<!-- Footer -->
 	<?php include('footer.php') ?>
 
 	<script type="text/javascript">

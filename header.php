@@ -17,6 +17,9 @@
 <link rel="stylesheet" type="text/css" href="css/datepicker.css">
 <link rel="stylesheet" type="text/css" href="css/custom.css">
 <link rel="stylesheet" type="text/css" href="css/jquery-ui/css/smoothness/jquery-ui-1.10.4.custom.min.css">
+<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/legend.css">
+<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/graph.css">
+<link rel="stylesheet" type="text/css" href="http://code.shutterstock.com/rickshaw/src/css/detail.css">
 
 <!-- JS sources -->
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
@@ -24,6 +27,9 @@
 <script type="text/javascript" src="js/custom.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/d3.v3.min.js"></script>
+<script src="http://code.shutterstock.com/rickshaw/vendor/d3.layout.min.js"></script>
+<script src="http://code.shutterstock.com/rickshaw/rickshaw.js"></script>
 	
 <!-- Browser fixes -->
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
