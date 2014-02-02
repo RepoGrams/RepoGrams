@@ -136,6 +136,23 @@
                   // seconds
                   return new Date(unixtime*1000);
                 }
+                /*
+                 * Initializes a mapping of months to number of commits with 0
+                 * @start: the first Date
+                 * @end: the last Date
+                 */
+                function initializeNumCommits(start, end) {
+                  var month2commits = {};
+                  var start_date = unixtime2date(start.time);
+                  var end_date = unixtime2date(end.time);
+                  for (var d = start_date; d < end_date; d.setMonth(d.getMonth() + 1)) {
+                    var firstOfMonth = new Date(d.getFullYear(), d.getMonth() -1 ,1);
+                    // get time returns milliseconds, but epoch is in seconds
+                    var yearAndMonthEpoch = firstOfMonth.getTime() / 1000;
+                    month2commits[yearAndMonthEpoch] = 0;
+                  }
+                  return month2commits;
+                }
                 jQuery.post("php/visualization.php")
                   .done(function(initial_data) {
                     var time2commitAmount = initial_data.map(function (arr, index) {
@@ -152,8 +169,9 @@
                         } else {
                           return 0;
                         }
-                    })
-                    .reduce(function(acc, cur, index, arr) {
+                    });
+                    initialMapping = jQuery.extend(true, {}, initializeNumCommits(time2commitAmount[0], time2commitAmount[time2commitAmount.length-1]));
+                    time2commitAmount = time2commitAmount.reduce(function(acc, cur, index, arr) {
                       /* cur is a mapping from months (as epoch) to number of 
                         * occurences
                        *
@@ -164,10 +182,11 @@
                       var yearAndMonthEpoch = firstOfMonth.getTime() / 1000;
                       // if the value alredy exists, increment the counter
                       // else initialize it with 1
-                      acc[yearAndMonthEpoch] ? acc[yearAndMonthEpoch] += 1
-                                             : acc[yearAndMonthEpoch] = 1;
+                      acc.hasOwnProperty(yearAndMonthEpoch) ? acc[yearAndMonthEpoch] += 1
+                                             : acc[yearAndMonthEpoch] = -100;
+
                       return acc;
-                    }, {});
+                    }, initialMapping);
 
                     // transform the data so that RickShaw can use it
                     var data = [];
