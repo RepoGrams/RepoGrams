@@ -67,3 +67,5 @@ style .customdate { width : 50%; float: left; }
 .centerButton{ text-align:center; }
 
 .wide-modal{ width:900px; }
+
+.top-buffer { margin-top: 1em};

@@ -38,6 +38,9 @@
                         $legend = "";
 						echo renderLegende($legend);
 					?>
+                    <div id="visu_legend_container">
+                        <div id="visu_legend"></div>
+                    </div>
                 </div>
 			</div>
 			
@@ -67,12 +70,11 @@
 							$img = ""; renderImage($img); echo $img;
 						?>
 					</ul>
+                    <div id="visu-area">
+                    <div class="top-buffer"></div>
                     <div id="visu"></div>
-                    <div id="visu_legend_container">
-                    	<div id="smoother" title="Smoothing"></div>
-                        <div id="visu_legend"></div>
-                    </div>
                     <div id="visu-slider"></div>
+                    </div>
                  </div>
 			</div>
 			<div class="clear"></div>
@@ -145,7 +147,9 @@
                   var month2commits = {};
                   var start_date = unixtime2date(start.time);
                   var end_date = unixtime2date(end.time);
-                  for (var d = start_date; d < end_date; d.setMonth(d.getMonth() + 1)) {
+                  var numMonths = 0;
+                  for (var d = start_date; (d < end_date || numMonths < 3); d.setMonth(d.getMonth() + 1)) {
+                    numMonths++;
                     var firstOfMonth = new Date(d.getFullYear(), d.getMonth() -1 ,1);
                     // get time returns milliseconds, but epoch is in seconds
                     var yearAndMonthEpoch = firstOfMonth.getTime() / 1000;
@@ -236,11 +240,35 @@
                         graph: graph,
                         element: $('#visu-slider')
                     });
-
                     graph.render();
                     xAxis.render();
 
+                    // set position of legend
+                    function setLegendPosition() {
+                      var visu = $("#visu");
+                      var visu_legend = $("#visu_legend_container");
+                      var offset =  (2*visu.position().top + visu.height())/2 
+                        - (visu_legend.position().top + visu_legend.height());
+                      console.log(offset);
+                      $("#visu_legend_container").css("margin-top", offset);
+                    }
+                    $(window).resize(setLegendPosition);
+                    setLegendPosition();
 
+                    var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+                      graph: graph,
+                        legend: legend
+                    } );
+
+                    var order = new Rickshaw.Graph.Behavior.Series.Order( {
+                      graph: graph,
+                        legend: legend
+                    } );
+
+                    var highlight = new Rickshaw.Graph.Behavior.Series.Highlight( {
+                      graph: graph,
+                        legend: legend
+                    } );
                   });
                 });               
 	</script>
