@@ -302,7 +302,11 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 		##### Format #####
 		##################
 
-		$factor = ($pixel/$hohe) / $all_diff;
+                if ($all_diff !== 0) {
+                  $factor = ($pixel/$hohe) / $all_diff;
+                } else {
+                  $factor = 0;
+                }
 		$diff = $commitArray[1];
 		$length = ($factor * $diff);
 
