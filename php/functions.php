@@ -192,7 +192,7 @@ function renderLegende(&$outstr){
                 $green = ceil($val[1]);
                 $blue = ceil($val[2]);
                 $rgb = RGBtoHex($red, $green, $blue);
-		$colorBlock = '<div style="line-height:1"><div class="customBlock '.$rgb.'" onmouseover="highlightBlocks();" onmouseleave="unhighlightBlocks();" style="background-color:#'.$rgb.';width:15px;height:14px;">';
+		$colorBlock = '<div style="line-height:1"><div class="customBlock '.$rgb.'" style="background-color:#'.$rgb.';width:15px;height:14px;">';
 		$outstr .= $colorBlock .'</div>'.'&nbsp;'.$key.'<br></div>';
 	}
         return $outstr;
