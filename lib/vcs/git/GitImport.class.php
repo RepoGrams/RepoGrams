@@ -23,14 +23,8 @@ class gitImport extends RepoImporter {
 			throw new Exception("Invalid URL!");	
 			return 0;
 		}	
-		
-                if (defined(_TIMEOUT)) {
-                  $timeout = _TIMEOUT;
-                } else {
-                  error_log("Please set the _TIMEOUT constant! Using 3 minutes for now.");
-                  $timeout =  180;
-                }
-                $command = "timeout ".$timeout." "; // let command timeout
+                $command = "";
+                self::prepareCommandTimeOut($command); // let command timeout
 		if(is_null($datadir)){
 			$tmp = tempnam(sys_get_temp_dir(),"");
 			unlink($tmp);
