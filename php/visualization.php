@@ -21,7 +21,8 @@ function preprocess($obj){
 
 function dumpRepoAsJSON() {
         $repo = preprocess(unserialize($_SESSION['repo']));
-        return json_encode($repo, JSON_UNESCAPED_UNICODE);
+        return json_encode($repo);
+        //return json_encode($repo, JSON_UNESCAPED_UNICODE);
 }
 
 error_log("=================================");
