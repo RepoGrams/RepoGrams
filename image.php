@@ -187,7 +187,7 @@
                       // if the value alredy exists, increment the counter
                       // else initialize it with 1
                       acc.hasOwnProperty(yearAndMonthEpoch) ? acc[yearAndMonthEpoch] += 1
-                                             : acc[yearAndMonthEpoch] = -100;
+                                             : acc[yearAndMonthEpoch] = 0;
 
                       return acc;
                     }, initialMapping);
@@ -249,7 +249,6 @@
                       var visu_legend = $("#visu_legend_container");
                       var offset =  (2*visu.position().top + visu.height())/2 
                         - (2*visu_legend.position().top + visu_legend.height())/2;
-                      console.log(offset);
                       $("#visu_legend_container").css("margin-top", offset);
                     }
                     $(window).resize(setLegendPosition);
