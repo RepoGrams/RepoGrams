@@ -118,7 +118,7 @@ function render($commit, $id, $width, &$outstr){
 		}
 		else{
 			$style = 'style="background-color:#'.$rgb.'; width:'.($floorValue).'px; height:'.$commit[1].'px;"';
-			$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
+			$head = '<li class="customBlock '.$rgb.'" id="'.$id.'" '.$style.' '.$tooltip.'>';
                 $outstr .= $head;
 			$width += $floorValue;
 		}
@@ -129,7 +129,7 @@ function render($commit, $id, $width, &$outstr){
 		}
 		else{
 			$style = 'style="background-color:#'.$rgb.'; width:'.($ceilValue).'px; height:'.$commit[1].'px;"';
-			$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
+			$head = '<li class="customBlock '.$rgb.'" id="'.$id.'" '.$style.' '.$tooltip.'>';
 	                $outstr .= $head;
 			$width += $ceilValue;
 		}
@@ -151,14 +151,15 @@ function renderLast($commit, $count, $width, &$outstr){
 	//value saved in the array
 	$size = $_SESSION['width'] - $width;
 	if ($size < 0) $size = 0;
-	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($size).'px; height:'.$commit[1].'px;"';
+        $rgb = RGBtoHex(ceil($commit[2][0]),ceil($commit[2][1]),ceil($commit[2][2]));
+	$style = 'style="background-color:#'.$rgb.'; width:'.($size).'px; height:'.$commit[1].'px;"';
 
 	date_default_timezone_set ( 'UTC' );
 	$datum = date("H:i:s - m.d.y", $commit[4]);
 	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
 			                                          Date: '. $datum.'<br>
 			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
-	$head = '<li class="customBlock" id="'.$count.'" '.$style.' '.$tooltip.'>';
+	$head = '<li class="'.$rgb.' customBlock" id="'.$count.'" '.$style.' '.$tooltip.'>';
 	$end = '</li>';
         $outstr.=$head;
         $outstr.=$end;
@@ -191,7 +192,7 @@ function renderLegende(&$outstr){
                 $green = ceil($val[1]);
                 $blue = ceil($val[2]);
                 $rgb = RGBtoHex($red, $green, $blue);
-		$colorBlock = '<div style="line-height:1"><div class="customBlock" class="'.$rgb.'" onmouseover="highlightBlocks();" onmouseleave="unhighlightBlocks();" style="background-color:#'.$rgb.';width:15px;height:14px;">';
+		$colorBlock = '<div style="line-height:1"><div class="customBlock '.$rgb.'" onmouseover="highlightBlocks();" onmouseleave="unhighlightBlocks();" style="background-color:#'.$rgb.';width:15px;height:14px;">';
 		$outstr .= $colorBlock .'</div>'.'&nbsp;'.$key.'<br></div>';
 	}
         return $outstr;
