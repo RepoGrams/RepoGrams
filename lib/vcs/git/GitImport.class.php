@@ -24,20 +24,27 @@ class gitImport extends RepoImporter {
 			return 0;
 		}	
 		
+                if (defined(_TIMEOUT)) {
+                  $timeout = _TIMEOUT;
+                } else {
+                  error_log("Please set the _TIMEOUT constant! Using 3 minutes for now.");
+                  $timeout =  180;
+                }
+                $command = "timeout ".$timeout." "; // let command timeout
 		if(is_null($datadir)){
 			$tmp = tempnam(sys_get_temp_dir(),"");
 			unlink($tmp);
 			mkdir($tmp);
 			if (!file_exists($tmp)) throw new Exception("Temporary folder could not be created!");
 			chdir($tmp);
-			$command = 'git clone --mirror "'.$repo.'"';
+			$command .= 'git clone --mirror "'.$repo.'"';
                         $command."\n";
                         error_log($command);
                         shell_exec($command);
 		} else {
 			chdir($datadir);
                         error_log(">> the datadir before fetching: ". $datadir);
-                        $command = 'git fetch --all'; 
+                        $command .= 'git fetch --all';
                         $command."\n";
                         error_log($command);
                         shell_exec($command);
