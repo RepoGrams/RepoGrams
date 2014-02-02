@@ -54,7 +54,7 @@
 			'doc-repo-qh'
 				=> 'Repograms - Quick Help',
 			'doc-rg-q'
-				=> 'What is Repogram?',
+				=> 'What is a Repogram?',
 			'doc-rg-a'
 				=> 'The word repogram is a portmanteau, combining the words "Repository" and "Chromograms"',
 			'doc-repo-q'
