@@ -22,7 +22,7 @@ class RepoImporter {
     if ($output !== "works\n") {
       return false;
     } else {
-      if (defined(_TIMEOUT)) {
+      if (defined('_TIMEOUT')) {
         $timeout = _TIMEOUT;
       } else {
         error_log("Please set the _TIMEOUT constant! Using 3 minutes for now.");
