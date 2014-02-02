@@ -248,7 +248,7 @@
                       var visu = $("#visu");
                       var visu_legend = $("#visu_legend_container");
                       var offset =  (2*visu.position().top + visu.height())/2 
-                        - (visu_legend.position().top + visu_legend.height());
+                        - (2*visu_legend.position().top + visu_legend.height())/2;
                       console.log(offset);
                       $("#visu_legend_container").css("margin-top", offset);
                     }
