@@ -1,7 +1,7 @@
 html, body { height: 100%; }
 
 /* Wrapper for page content to push down footer */
-#wrap { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -60px; padding-top:50px;}
+#wrap { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -60px; padding-top:50px; padding-bottom: 70px;}
 
 /* Language flags */
 .flag { width: 16px; height: 11px; background:url(../img/flags.png) no-repeat; }
@@ -28,7 +28,7 @@ html, body { height: 100%; }
 /* Footer */
 /* Set the fixed height of the footer here */
 .container .credit { margin: 20px 0; }
-#footer { bottom:0; position:absolute; background-color:#eee; text-align:center; width:100%; }
+#footer {  background-color:#eee; text-align:center; width:100%; }
 
 /* Title */
 .titlecontainer { width:300px; height: 100px; margin:auto auto 0; }
