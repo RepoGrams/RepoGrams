@@ -14,12 +14,12 @@
       		<div class="modal-body">
 		    		<div class="h4 doc-header "><?php print msg('doc-rg-q');?></div>
 					<br>	
-					<ul>
-						<li> <?php print msg('doc-rg-q');?><br><?php print msg('doc-rg-a');?></li>
-						<li> <?php print msg('doc-chromo-q');?><br><?php print msg('doc-chromo-a');?></li>
-					</ul>	
-					
-					
+						<?php print msg('doc-rg-a');?>
+					<br><br>
+				<div class="h4 doc-header "><?php print msg('doc-chromo-q');?></div>
+					<br>
+						<?php print msg('doc-chromo-a');?>	
+					<br><br>
 		    		<div class="h4 doc-header"><?php print msg('doc-use-q');?></div>
 		    		<br>
 					<?php print msg('doc-use-a1');?> <br>
