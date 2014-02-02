@@ -198,13 +198,20 @@
                       element: document.querySelector("#visu"),
                         width: $("#placeOfImage").width(),
                         height: 250,
-                        renderer: 'scatterplot',
+                        renderer: 'multi',
                         series: [ {
-                          color: 'steelblue',
+                          color: 'red',
                           data: data,
+                          renderer: 'scatterplot',
                           name: '#Commits/month'
-                        } ]
-                    } );
+                          }, {
+                            color: 'steelblue',
+                            data: data,
+                            renderer: 'line',
+                            name: 'progression'
+                          }
+                        ]
+                      } );
 
                     var time = new Rickshaw.Fixtures.Time();
                     var hoverDetail = new Rickshaw.Graph.HoverDetail( {
