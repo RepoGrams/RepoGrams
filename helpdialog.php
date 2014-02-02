@@ -32,7 +32,12 @@
 					
 		    		<div class="h4 doc-header"><?php print msg('doc-ex');?></div>
 					<br>
-					<?php print msg('doc-examples');?>
+					<?php print msg('doc-examples');?> <button type="button" class="btn btn-default" onclick="example();">
+								<span class="glyphicon glyphicon-gift"></span>&nbsp;<?php print msg('index-examples'); ?>
+							</button>
+					<?php print msg('doc-examples-2');?> <button class="btn btn-default" title="<?php print msg('index-vis');?>">
+       					<span class="glyphicon glyphicon-indent-left"></span><?php print msg('visualize');?>
+					</button> 
 			</div>
       		<div class="modal-footer">
         		<button type="button" class="btn btn-default" data-dismiss="modal"><?php print msg('doc-close');?></button>
