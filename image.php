@@ -49,7 +49,7 @@
 			<!-- Repo-Image -->
 			<div class="panel panel-default" style="width:770; display:block; margin:auto auto 0;">
   				<div class="panel-heading">
-    				<h3 class="panel-title">
+    				<div class="panel-title">
     					<a href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title'];?></a>&nbsp;
     					<!-- Filtereinstellungen -->
  	   					<form id="filterForm" role="form" class="form-inline" style="text-align:center;">
@@ -62,11 +62,8 @@
 	  								<option value="3"><?php print msg('image-option1-4') ?></option>             
 								</select>
 							</div>
-    					</form>
-    								
-						<!-- Download image buttons -->
-				
-    				</h3>
+    					</form>    									
+    				</div>
   				</div>
   				<div class="panel-body" style="width:<?php echo $_SESSION['width']+1;?>;boder-style:solid; display:inline-block; padding-left: 0 !important; padding-top: 0 !important;">
     				<ul id="placeOfImage" style="display:inline-block; list-style-type:none !important; padding-left: 0 !important;">
@@ -76,10 +73,11 @@
 						?>
 					</ul>
 				</div>
-				<div class="panel-footer" style="float:right; height:60px;">		
+				<div class="panel-footer" style="float:right; height:60px;">
+					<!-- Download image buttons -->		
 					<div class="btn-group">
 			  			<button type="button" class="btn btn-info dropdown-toggle margin-button" data-toggle="dropdown">
-			  				<span class="glyphicon glyphicon-download"></span><?php print msg('image-dl') ?><span class="caret"></span>
+			  				<span class="glyphicon glyphicon-download"></span>&nbsp;<?php print msg('image-dl') ?><span class="caret"></span>
 			  			</button>
 			  			<ul class="dropdown-menu" role="menu">
 			    			<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
@@ -259,7 +257,7 @@
                       $("#visu_legend_container").css("margin-top", offset);
                     }
                     $(window).resize(setLegendPosition);
-                    //setLegendPosition();
+                    setLegendPosition();
 
                     var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
                       graph: graph,
