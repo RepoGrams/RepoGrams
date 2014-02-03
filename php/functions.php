@@ -111,13 +111,12 @@ function render($commit, $id, $width, &$outstr){
 			                                          Date: '. $datum.'<br>
 			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
 	//generate the block with the most precision
-        $rgb = RGBtoHex(ceil($commit[2][0]),ceil($commit[2][1]),ceil($commit[2][2]));
 	if($floorDiff < $ceilDiff){ //we want to floor the value
 		if (($floorValue + $width) > $_SESSION['width']){
 			renderLast($commit, $id, $width, $oustr);
 		}
 		else{
-			$style = 'style="background-color:#'.$rgb.'; width:'.($floorValue).'px; height:'.$commit[1].'px;"';
+			$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).');  width:'.($floorValue).'px; height:'.$commit[1].'px;"';
 			$head = '<li class="customBlock '.$rgb.'" id="'.$id.'" '.$style.' '.$tooltip.'>';
                 $outstr .= $head;
 			$width += $floorValue;
@@ -128,7 +127,7 @@ function render($commit, $id, $width, &$outstr){
 			renderLast($commit, $id, $width, $oustr);
 		}
 		else{
-			$style = 'style="background-color:#'.$rgb.'; width:'.($ceilValue).'px; height:'.$commit[1].'px;"';
+			$style = 'style=""background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).');width:'.($ceilValue).'px; height:'.$commit[1].'px;"';
 			$head = '<li class="customBlock '.$rgb.'" id="'.$id.'" '.$style.' '.$tooltip.'>';
 	                $outstr .= $head;
 			$width += $ceilValue;
@@ -151,8 +150,7 @@ function renderLast($commit, $count, $width, &$outstr){
 	//value saved in the array
 	$size = $_SESSION['width'] - $width;
 	if ($size < 0) $size = 0;
-        $rgb = RGBtoHex(ceil($commit[2][0]),ceil($commit[2][1]),ceil($commit[2][2]));
-	$style = 'style="background-color:#'.$rgb.'; width:'.($size).'px; height:'.$commit[1].'px;"';
+	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($size).'px; height:'.$commit[1].'px;"';
 
 	date_default_timezone_set ( 'UTC' );
 	$datum = date("H:i:s - m.d.y", $commit[4]);
@@ -163,17 +161,6 @@ function renderLast($commit, $count, $width, &$outstr){
 	$end = '</li>';
         $outstr.=$head;
         $outstr.=$end;
-}
-
-/*
- * Converts a triple of integer values denoting the colors red, green and blue 
- * in RGB to a hexstring denoting the same color
- */
-function RGBtoHex($red, $green, $blue) {
-       $rgb = $red;
-       $rgb = ($rgb << 8) + $green;
-       $rgb = ($rgb << 8) + $blue;
-       return dechex($rgb);
 }
 
 /*
