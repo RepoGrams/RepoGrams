@@ -1,4 +1,5 @@
 <?php
+require_once "svn/SvnRepo.class.php";
 require_once "git/GitRepo.class.php";
 require_once __DIR__."/../../php/action.php";
 require_once __DIR__."/../cache/Cache.class.php";
@@ -23,6 +24,11 @@ class RepoFactory {
             if ($exitcode === 0) {
               return new GitRepo($url, $start, $end, $datadir);
             } else {
+              $command = "svn ls ".$url." --depth empty";
+              exec($command, $output, $exitcode);
+              if ($exitcode === 0) {
+                return new SvnRepo($url, $start, $end, $datadir);
+              }
               throw new Exception("URL does not point to a repository!");
             }
         }
