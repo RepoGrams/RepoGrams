@@ -80,7 +80,7 @@
 			  				<span class="glyphicon glyphicon-download"></span>&nbsp;<?php print msg('image-dl') ?><span class="caret"></span>
 			  			</button>
 			  			<ul class="dropdown-menu" role="menu">
-			    			<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
+			    			<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.svg&mode=svg'?>"><?php print msg('image-as') ?> .svg</a></li>
 			   				<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
 			   				<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
 			  				<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.pdf&mode=pdf'?>"><?php print msg('image-as') ?> .pdf</a></li>
