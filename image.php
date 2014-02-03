@@ -107,6 +107,14 @@
 	<script type="text/javascript">
 		$(function () {
                 $("[rel='tooltip']").tooltip();
+                // set position of legend
+                function setLegendPosition() {
+                  var visu = $("#visu");
+                  var visu_legend = $("#visu_legend_container");
+                  var offset =  (2*visu.position().top + visu.height())/2 
+                    - (2*visu_legend.position().top + visu_legend.height())/2;
+                  $("#visu_legend_container").css("margin-top", offset);
+                }
                 $("#filterForm").submit(function(event) {
                   event.stopImmediatePropagation(); // stop normal submission
                   event.preventDefault();
@@ -135,6 +143,7 @@
                     $("[rel='tooltip']").tooltip();
                     $("#placeOfImage").fadeToggle();
                     $("#legend-inner").fadeToggle();
+                    setLegendPosition();
                   });
                   return;
                 });
@@ -248,14 +257,6 @@
                     graph.render();
                     xAxis.render();
 
-                    // set position of legend
-                    function setLegendPosition() {
-                      var visu = $("#visu");
-                      var visu_legend = $("#visu_legend_container");
-                      var offset =  (2*visu.position().top + visu.height())/2 
-                        - (2*visu_legend.position().top + visu_legend.height())/2;
-                      $("#visu_legend_container").css("margin-top", offset);
-                    }
                     $(window).resize(setLegendPosition);
                     setLegendPosition();
 
