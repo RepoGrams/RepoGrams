@@ -1,0 +1,17 @@
+#################################################
+##           IMPORTANT INFORMATION             ##
+#################################################
+
+To use this program you need to install some programs:
+
+1. apache websevrer
+2. PHP>= 5.3
+3. git>= 1.8.1
+4. subversion
+5. hg-git
+
+Quick Installation:
+
+sudo apt-get install php5 apache2 git subversion hg-git
+
+sudo ln -s /usr/share/git/remote-helpers/git-remote-hg /usr/bin/
