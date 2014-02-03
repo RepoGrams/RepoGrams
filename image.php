@@ -65,7 +65,18 @@
     					</form>
     								
 						<!-- Download image buttons -->
-						<div style="float:right;">
+				
+    				</h3>
+  				</div>
+  				<div class="panel-body" style="width:<?php echo $_SESSION['width']+1;?>;boder-style:solid; display:inline-block; padding-left: 0 !important; padding-top: 0 !important;">
+    				<ul id="placeOfImage" style="display:inline-block; list-style-type:none !important; padding-left: 0 !important;">
+						<?php
+							require_once('php/functions.php');
+							$img = ""; renderImage($img); echo $img;
+						?>
+					</ul>
+				</div>
+				<div class="panel-footer">		<div style="float:right;">
 							<div class="btn-group">
 			  					<button type="button" class="btn btn-info dropdown-toggle margin-button" data-toggle="dropdown">
 			  						<span class="glyphicon glyphicon-download"></span><?php print msg('image-dl') ?><span class="caret"></span>
@@ -77,17 +88,7 @@
 			  						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.pdf&mode=pdf'?>"><?php print msg('image-as') ?> .pdf</a></li>
 			  					</ul>
 							</div>
-						</div>
-    				</h3>
-  				</div>
-  				<div class="panel-body" style="width:<?php echo $_SESSION['width']+1;?>;boder-style:solid; display:inline-block; padding-left: 0 !important; padding-top: 0 !important;">
-    				<ul id="placeOfImage" style="display:inline-block; list-style-type:none !important; padding-left: 0 !important;">
-						<?php
-							require_once('php/functions.php');
-							$img = ""; renderImage($img); echo $img;
-						?>
-					</ul>
-				</div>
+						</div></div>
 			</div>
 			<div class="clear"></div>
 			<br><br>
