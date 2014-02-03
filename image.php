@@ -70,13 +70,7 @@
 							$img = ""; renderImage($img); echo $img;
 						?>
 					</ul>
-                    <div id="visu-area">
-                    <div class="top-buffer"></div>
-                    <div id="visu"></div>
-                    <div id="visu-slider"></div>
-                    </div>
-                 </div>
-			</div>
+
 			<div class="clear"></div>
 			
 			<!-- Download image buttons -->
@@ -93,6 +87,15 @@
 				</div>
 			</div>
 			<br><br>
+
+
+                    <div id="visu-area">
+                    <div class="top-buffer"></div>
+                    <div id="visu"></div>
+                    <div id="visu-slider"></div>
+                    </div>
+                 </div>
+			</div>
 		</div>
 	</div>
 	
