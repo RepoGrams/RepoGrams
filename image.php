@@ -61,6 +61,21 @@
 								</select>
 							</div>
     					</form>
+    								
+						<!-- Download image buttons -->
+						<div style="float:right;">
+							<div class="btn-group">
+			  					<button type="button" class="btn btn-info dropdown-toggle margin-button" data-toggle="dropdown">
+			  						<span class="glyphicon glyphicon-download"></span><?php print msg('image-dl') ?><span class="caret"></span>
+			  					</button>
+			  					<ul class="dropdown-menu" role="menu">
+			    					<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
+			   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
+			   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
+			  						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.pdf&mode=pdf'?>"><?php print msg('image-as') ?> .pdf</a></li>
+			  					</ul>
+							</div>
+						</div>
     				</h3>
   				</div>
   				<div class="panel-body" style="width:<?php echo $_SESSION['width']+1;?>;boder-style:solid; display:inline-block; padding-left: 0 !important; padding-top: 0 !important;">
@@ -70,32 +85,17 @@
 							$img = ""; renderImage($img); echo $img;
 						?>
 					</ul>
-
-			<div class="clear"></div>
-			
-			<!-- Download image buttons -->
-			<div style="float:right;">
-				<div class="btn-group">
-  					<button type="button" class="btn btn-info dropdown-toggle margin-button" data-toggle="dropdown">
-  						<span class="glyphicon glyphicon-download"></span><?php print msg('image-dl') ?><span class="caret"></span>
-  					</button>
-  					<ul class="dropdown-menu" role="menu">
-    					<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
-   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
-   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
-  					</ul>
 				</div>
 			</div>
+			<div class="clear"></div>
 			<br><br>
-
-
-                    <div id="visu-area">
-                    <div class="top-buffer"></div>
-                    <div id="visu"></div>
-                    <div id="visu-slider"></div>
-                    </div>
-                 </div>
-			</div>
+			
+			<!-- Graphs -->
+			<div id="visu-area">
+            	<div class="top-buffer"></div>
+            	<div id="visu"></div>
+            	<div id="visu-slider"></div>
+            </div>
 		</div>
 	</div>
 	

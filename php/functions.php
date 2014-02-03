@@ -111,13 +111,14 @@ function render($commit, $id, $width, &$outstr){
 			                                          Date: '. $datum.'<br>
 			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
 	//generate the block with the most precision
+        $rgb = RGBtoHex(ceil($commit[2][0]),ceil($commit[2][1]),ceil($commit[2][2]));
 	if($floorDiff < $ceilDiff){ //we want to floor the value
 		if (($floorValue + $width) > $_SESSION['width']){
 			renderLast($commit, $id, $width, $oustr);
 		}
 		else{
-			$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).');  width:'.($floorValue).'px; height:'.$commit[1].'px;"';
-			$head = '<li class="customBlock '.$rgb.'" id="'.$id.'" '.$style.' '.$tooltip.'>';
+			$style = 'style="background-color:#'.$rgb.'; width:'.($floorValue).'px; height:'.$commit[1].'px;"';
+			$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
                 $outstr .= $head;
 			$width += $floorValue;
 		}
@@ -127,8 +128,8 @@ function render($commit, $id, $width, &$outstr){
 			renderLast($commit, $id, $width, $oustr);
 		}
 		else{
-			$style = 'style=""background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).');width:'.($ceilValue).'px; height:'.$commit[1].'px;"';
-			$head = '<li class="customBlock '.$rgb.'" id="'.$id.'" '.$style.' '.$tooltip.'>';
+			$style = 'style="background-color:#'.$rgb.'; width:'.($ceilValue).'px; height:'.$commit[1].'px;"';
+			$head = '<li class="customBlock" id="'.$id.'" '.$style.' '.$tooltip.'>';
 	                $outstr .= $head;
 			$width += $ceilValue;
 		}
@@ -157,10 +158,21 @@ function renderLast($commit, $count, $width, &$outstr){
 	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
 			                                          Date: '. $datum.'<br>
 			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
-	$head = '<li class="'.$rgb.' customBlock" id="'.$count.'" '.$style.' '.$tooltip.'>';
+	$head = '<li class="customBlock" id="'.$count.'" '.$style.' '.$tooltip.'>';
 	$end = '</li>';
         $outstr.=$head;
         $outstr.=$end;
+}
+
+/*
+ * Converts a triple of integer values denoting the colors red, green and blue 
+ * in RGB to a hexstring denoting the same color
+ */
+function RGBtoHex($red, $green, $blue) {
+       $rgb = $red;
+       $rgb = ($rgb << 8) + $green;
+       $rgb = ($rgb << 8) + $blue;
+       return dechex($rgb);
 }
 
 /*
@@ -179,7 +191,7 @@ function renderLegende(&$outstr){
                 $green = ceil($val[1]);
                 $blue = ceil($val[2]);
                 $rgb = RGBtoHex($red, $green, $blue);
-		$colorBlock = '<div style="line-height:1"><div class="customBlock '.$rgb.'" style="background-color:#'.$rgb.';width:15px;height:14px;">';
+		$colorBlock = '<div style="line-height:1"><div class="customBlock" class="'.$rgb.'" onmouseover="highlightBlocks();" onmouseleave="unhighlightBlocks();" style="background-color:#'.$rgb.';width:15px;height:14px;">';
 		$outstr .= $colorBlock .'</div>'.'&nbsp;'.$key.'<br></div>';
 	}
         return $outstr;

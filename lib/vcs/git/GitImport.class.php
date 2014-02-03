@@ -23,6 +23,8 @@ class gitImport extends RepoImporter {
 			throw new Exception("Invalid URL!");	
 			return 0;
 		}	
+                $exitcode = 0;
+                $output = array();
                 $command = "";
                 self::prepareCommandTimeOut($command); // let command timeout
 		if(is_null($datadir)){
@@ -34,22 +36,37 @@ class gitImport extends RepoImporter {
 			$command .= 'git clone --mirror "'.$repo.'"';
                         $command."\n";
                         error_log($command);
-                        shell_exec($command);
+                        exec($command, $output, $exitcode);
+                        if ($exitcode === 124) {
+                          throw new Exception("Connection timed out. The repository was too large or the connection to the server dropped");
+                        }
 		} else {
 			chdir($datadir);
                         error_log(">> the datadir before fetching: ". $datadir);
                         $command .= 'git fetch --all';
                         $command."\n";
                         error_log($command);
-                        shell_exec($command);
+                        exec($command, $output, $exitcode);
+                        if ($exitcode === 124) {
+                          throw new Exception("Connection timed out. The repository was too large or the connection to the server dropped.");
+                        }
                         chdir("..");// hacked. as $datadir contains the git-working directory and we want the tmp-root-directory  
 		}
                 		
+                $repo = rtrim($repo, '/');
                 $split = explode("/", $repo); //http://stackoverflow.com/questions/2967597/only-variables-can-be-passed-by-reference
                 $gitdir = end($split); // the last part of the git URL is the folder name
+                error_log($gitdir);
                 $joint = getcwd()."/".$gitdir."/";
                 error_log("joint: ".$joint);
-                if (!file_exists($joint)) throw new Exception ('Fetching git-Repository was not sucessfull (Invalid URL?)');
+                if (!file_exists($joint)) {
+                  $joint = rtrim($joint, '/');
+                  $joint = $joint.".git";
+                  if (!file_exists($joint)) {
+                    error_log("joint: ".$joint);
+                    throw new Exception ('Fetching git-Repository was not sucessfull (Invalid URL?)');
+                  }
+                }
                 error_log("joint exists");
 		
 		if (is_null($datadir)) $datadir = $joint; // set $datadir for cache

@@ -24,7 +24,6 @@ class algorithm {
 		#######################
 
 		$datei = fopen(_IMAGEDIR."visualization-".session_id().".svg",  "w");
-		error_log("try to svg: "._IMAGEDIR."visualization-".session_id().".svg");
 $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"  \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"> \n
 <svg \n
