@@ -33,6 +33,7 @@
     		<div class="color-legend" style="float:left; width: 160px;">
 				<div class="legend-title"><?php print msg('image-legend'); ?></div>
                 <div id="legend">
+<<<<<<< HEAD
                 	<div id="legend-inner">
 	                	<?php
 							require_once('php/functions.php');
@@ -40,6 +41,13 @@
 							echo renderLegende($legend);
 						?>
                 	</div>
+=======
+					<?php
+						require_once('php/functions.php');
+                        $legend = "";
+						echo renderLegende($legend);
+					?>
+>>>>>>> 5ddb098b9a45999d52bfb5851d1c027dc7a46ac6
                     <div id="visu_legend_container">
                         <div id="visu_legend"></div>
                     </div>
