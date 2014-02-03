@@ -40,16 +40,14 @@
 							echo renderLegende($legend);
 						?>
                 	</div>
-                    <div id="visu_legend_container">
-                        <div id="visu_legend"></div>
-                    </div>
+
                 </div>
 			</div>
 			
 			<!-- Repo-Image -->
 			<div class="panel panel-default" style="width:770; display:block; margin:auto auto 0;">
   				<div class="panel-heading">
-    				<h3 class="panel-title">
+    				<div class="panel-title">
     					<a href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title'];?></a>&nbsp;
     					<!-- Filtereinstellungen -->
  	   					<form id="filterForm" role="form" class="form-inline" style="text-align:center;">
@@ -62,13 +60,10 @@
 	  								<option value="3"><?php print msg('image-option1-4') ?></option>             
 								</select>
 							</div>
-    					</form>
-    								
-						<!-- Download image buttons -->
-				
-    				</h3>
+    					</form>    									
+    				</div>
   				</div>
-  				<div class="panel-body" style="width:<?php echo $_SESSION['width']+1;?>;boder-style:solid; display:inline-block; padding-left: 0 !important; padding-top: 0 !important;">
+  				<div class="panel-body" style="width:<?php echo $_SESSION['width']+1;?>;boder-style:solid; display:inline-block; padding-left: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important;">
     				<ul id="placeOfImage" style="display:inline-block; list-style-type:none !important; padding-left: 0 !important;">
 						<?php
 							require_once('php/functions.php');
@@ -76,38 +71,52 @@
 						?>
 					</ul>
 				</div>
-				<div class="panel-footer">		<div style="float:right;">
-							<div class="btn-group">
+				<div class="panel-footer" style="height:60px;">
+					<!-- Download image buttons -->		
+							<div class="btn-group" style="float:right;">
 			  					<button type="button" class="btn btn-info dropdown-toggle margin-button" data-toggle="dropdown">
-			  						<span class="glyphicon glyphicon-download"></span><?php print msg('image-dl') ?><span class="caret"></span>
+			  						<span class="glyphicon glyphicon-download"></span>&nbsp;<?php print msg('image-dl') ?><span class="caret"></span>
 			  					</button>
 			  					<ul class="dropdown-menu" role="menu">
-			    					<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
-			   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
-			   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
-			  						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.pdf&mode=pdf'?>"><?php print msg('image-as') ?> .pdf</a></li>
+			    					<li><a href="<?php echo 'download.php?mode=svg'?>" target="_BLANK"><?php print msg('image-as') ?> .svg</a></li>
+			   						<li><a href="<?php echo 'download.php?&mode=png'?>" target="_BLANK"><?php print msg('image-as') ?> .png</a></li>
+			   						<li><a href="<?php echo 'download.php?&mode=jpg'?>"target="_BLANK"><?php print msg('image-as') ?> .jpg</a></li>
+			  						<li><a href="<?php echo 'download.php?mode=pdf'?>" target="_BLANK"><?php print msg('image-as') ?> .pdf</a></li>
 			  					</ul>
 							</div>
 						</div></div>
 			</div>
-			<div class="clear"></div>
-			<br><br>
-			
+			<br><br>	
 			<!-- Graphs -->
-			<div id="visu-area">
-            	<div class="top-buffer"></div>
-            	<div id="visu"></div>
-            	<div id="visu-slider"></div>
-            </div>
+			<div id="visu_legend_container" style="float:left; padding-left: 200px;">
+            	<div id="visu_legend"></div>
+           </div>
+			<div style="display:block; margin:auto auto 0; width: 768px;">
+				<div id="visu-area">
+	            	<div class="top-buffer"></div>
+	            	<div id="visu"></div>
+	            	<div id="visu-slider"></div>
+	            </div>
+			</div>
 		</div>
 	</div>
 	
+			<div class="clear"></div>
 	<!-- Footer -->
 	<?php include('footer.php') ?>
 
 	<script type="text/javascript">
 		$(function () {
                 $("[rel='tooltip']").tooltip();
+                // set position of legend
+                function setLegendPosition() {
+                  return;
+                  var visu = $("#visu");
+                  var visu_legend = $("#visu_legend_container");
+                  var offset =  (2*visu.position().top + visu.height())/2 
+                    - (2*visu_legend.position().top + visu_legend.height())/2;
+                  $("#visu_legend_container").css("margin-top", offset);
+                }
                 $("#filterForm").submit(function(event) {
                   event.stopImmediatePropagation(); // stop normal submission
                   event.preventDefault();
@@ -136,6 +145,7 @@
                     $("[rel='tooltip']").tooltip();
                     $("#placeOfImage").fadeToggle();
                     $("#legend-inner").fadeToggle();
+                    setLegendPosition();
                   });
                   return;
                 });
@@ -249,16 +259,8 @@
                     graph.render();
                     xAxis.render();
 
-                    // set position of legend
-                    function setLegendPosition() {
-                      var visu = $("#visu");
-                      var visu_legend = $("#visu_legend_container");
-                      var offset =  (2*visu.position().top + visu.height())/2 
-                        - (2*visu_legend.position().top + visu_legend.height())/2;
-                      $("#visu_legend_container").css("margin-top", offset);
-                    }
                     $(window).resize(setLegendPosition);
-                    setLegendPosition();
+                    //setLegendPosition();
 
                     var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
                       graph: graph,
