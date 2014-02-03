@@ -40,9 +40,7 @@
 							echo renderLegende($legend);
 						?>
                 	</div>
-                    <div id="visu_legend_container">
-                        <div id="visu_legend"></div>
-                    </div>
+
                 </div>
 			</div>
 			
@@ -90,6 +88,9 @@
 			</div>
 			<br><br>	
 			<!-- Graphs -->
+			<div id="visu_legend_container" style="float:left;">
+            	<div id="visu_legend"></div>
+           </div>
 			<div style="display:block; margin:auto auto 0; width: 768px;">
 				<div id="visu-area">
 	            	<div class="top-buffer"></div>
@@ -258,7 +259,7 @@
                     xAxis.render();
 
                     $(window).resize(setLegendPosition);
-                    setLegendPosition();
+                    //setLegendPosition();
 
                     var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
                       graph: graph,
