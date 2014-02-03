@@ -104,7 +104,7 @@ function render($commit, $id, $width, &$outstr){
 
 
 	date_default_timezone_set ( 'UTC' );
-	$datum = date("H:i:s - Y.m.d", $commit[4]);
+	$datum = date("Y-m-d, H:i:s", $commit[4]);
 
 	//generate the tooltip of the final block
 	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
