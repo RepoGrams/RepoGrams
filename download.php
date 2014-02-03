@@ -19,6 +19,8 @@ function convertImage($modeDownload) {
 			$image->setImageFormat("png");
 	else if ($modeDownload == "jpeg" || $modeDownload == "jpg")
 		 $image->setImageFormat("jpg");
+	else if ($modeDownload == "pdf")
+		$image->setImageFormat("pdf");
 //	$image->resizeImage($_SESSION["width"]*2, $_SESSION["height"]*2, imagick::FILTER_LANCZOS, 1);
 	$image->writeImage(_IMAGEDIR.'visualization-'.session_id().'.'.$modeDownload);
 }
@@ -47,6 +49,7 @@ function download_file( $fullPath ){
       case "jpeg":
       case "jpg": $ctype="image/jpg"; break;
       case "svg": $ctype="image/svg"; break;
+      case "pdf": $ctype="image/pdf"; break;
       default: $ctype="application/force-download";
     }
 

@@ -1,4 +1,4 @@
-Ghtml, body { height: 100%; }
+html, body { height: 100%; }
 
 /* Wrapper for page content to push down footer */
 #wrap { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -60px; padding-top:50px; padding-bottom: 70px;}
