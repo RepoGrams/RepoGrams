@@ -33,7 +33,7 @@
     		<div class="color-legend" style="float:left; width: 160px;">
 				<div class="legend-title"><?php print msg('image-legend'); ?></div>
                 <div id="legend">
-                	<div id="legend-inner>
+                	<div id="legend-inner">
 	                	<?php
 							require_once('php/functions.php');
 	                        $legend = "";
