@@ -15,3 +15,8 @@ Quick Installation:
 sudo apt-get install php5 apache2 git subversion hg-git
 
 sudo ln -s /usr/share/git/remote-helpers/git-remote-hg /usr/bin/
+
+If the above solution does not work for you, because you have a up-to-date
+git installation, you can use the following script:
+
+https://raw2.github.com/felipec/git/fc/master/git-remote-hg.py 
