@@ -90,9 +90,7 @@
 							</div>
 						</div></div>
 			</div>
-			<div class="clear"></div>
-			<br><br>
-			
+			<br><br>	
 			<!-- Graphs -->
 			<div id="visu-area">
             	<div class="top-buffer"></div>
@@ -102,6 +100,7 @@
 		</div>
 	</div>
 	
+			<div class="clear"></div>
 	<!-- Footer -->
 	<?php include('footer.php') ?>
 
