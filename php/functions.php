@@ -107,12 +107,11 @@ function render($commit, $id, $width, &$outstr){
 	$datum = date("Y-m-d, H:i:s", $commit[4]);
 
 	//generate the tooltip of the final block
-	$hashurl = substr($_SESSION["repourl"],0,-4).'/commit/'.$commit[6];
 	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
 			                                          Date: '. $datum.'<br>
 			                                          Comment: '.$commit[3].'<br>
-			                                          Hash: <a href='.$hashurl.'>'.$commit[6].'</a>" 
-			    data-placement="right" rel="tooltip"';
+			                                          Hash: '.$commit[6].'" 
+			    data-placement="right" rel="tooltip" data-animation="true" data-trigger="click hover focus"';
 	//generate the block with the most precision
 	if($floorDiff < $ceilDiff){ //we want to floor the value
 		if (($floorValue + $width) > $_SESSION['width']){
@@ -159,7 +158,9 @@ function renderLast($commit, $count, $width, &$outstr){
 	$datum = date('Y-m-d, H:i:s', $commit[4]);
 	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
 			                                          Date: '. $datum.'<br>
-			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
+			                                          Comment: '.$commit[3].'<br>
+			                                          Hash: '.$commit[6].'" 
+			    data-placement="right" rel="tooltip" data-animation="true" data-trigger="click hover focus"';
 	$head = '<li class="customBlock" id="'.$count.'" '.$style.' '.$tooltip.'>';
 	$end = '</li>';
         $outstr.=$head;
