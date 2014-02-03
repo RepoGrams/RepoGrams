@@ -23,6 +23,8 @@ class gitImport extends RepoImporter {
 			throw new Exception("Invalid URL!");	
 			return 0;
 		}	
+                $exitcode = 0;
+                $output = array();
                 $command = "";
                 self::prepareCommandTimeOut($command); // let command timeout
 		if(is_null($datadir)){
@@ -34,14 +36,20 @@ class gitImport extends RepoImporter {
 			$command .= 'git clone --mirror "'.$repo.'"';
                         $command."\n";
                         error_log($command);
-                        shell_exec($command);
+                        exec($command, $output, $exitcode);
+                        if ($exitcode === 124) {
+                          throw new Exception("Connection timed out. The repository was too large or the connection to the server dropped");
+                        }
 		} else {
 			chdir($datadir);
                         error_log(">> the datadir before fetching: ". $datadir);
                         $command .= 'git fetch --all';
                         $command."\n";
                         error_log($command);
-                        shell_exec($command);
+                        exec($command, $output, $exitcode);
+                        if ($exitcode === 124) {
+                          throw new Exception("Connection timed out. The repository was too large or the connection to the server dropped.");
+                        }
                         chdir("..");// hacked. as $datadir contains the git-working directory and we want the tmp-root-directory  
 		}
                 		
