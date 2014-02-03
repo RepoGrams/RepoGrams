@@ -153,7 +153,7 @@ function renderLast($commit, $count, $width, &$outstr){
 	$style = 'style="background-color:rgb('.ceil($commit[2][0]).','.ceil($commit[2][1]).','.ceil($commit[2][2]).'); width:'.($size).'px; height:'.$commit[1].'px;"';
 
 	date_default_timezone_set ( 'UTC' );
-	$datum = date("H:i:s - m.d.y", $commit[4]);
+	$datum = date('Y-m-d, H:i:s', $commit[4]);
 	$tooltip = 'data-html="true" data-original-title="Author: '.$commit[5].'<br>
 			                                          Date: '. $datum.'<br>
 			                                          Comment: '.$commit[3].'" data-placement="right" rel="tooltip"';
