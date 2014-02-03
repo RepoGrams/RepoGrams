@@ -1,4 +1,4 @@
-html, body { height: 100%; }
+Ghtml, body { height: 100%; }
 
 /* Wrapper for page content to push down footer */
 #wrap { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -60px; padding-top:50px; padding-bottom: 70px;}
@@ -69,3 +69,5 @@ style .customdate { width : 50%; float: left; }
 .wide-modal{ width:900px; }
 
 .top-buffer { margin-top: 1em};
+
+.margin-button{ margin-bottom: 5px;}

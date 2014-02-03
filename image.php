@@ -82,7 +82,7 @@
 			<!-- Download image buttons -->
 			<div style="float:right;">
 				<div class="btn-group">
-  					<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+  					<button type="button" class="btn btn-info dropdown-toggle margin-button" data-toggle="dropdown">
   						<span class="glyphicon glyphicon-download"></span><?php print msg('image-dl') ?><span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
