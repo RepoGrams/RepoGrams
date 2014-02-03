@@ -88,7 +88,7 @@
 			</div>
 			<br><br>	
 			<!-- Graphs -->
-			<div id="visu_legend_container" style="float:left;">
+			<div id="visu_legend_container" style="float:left; padding-left: 200px;">
             	<div id="visu_legend"></div>
            </div>
 			<div style="display:block; margin:auto auto 0; width: 768px;">
