@@ -110,6 +110,7 @@
                 $("[rel='tooltip']").tooltip();
                 // set position of legend
                 function setLegendPosition() {
+                  return;
                   var visu = $("#visu");
                   var visu_legend = $("#visu_legend_container");
                   var offset =  (2*visu.position().top + visu.height())/2 
