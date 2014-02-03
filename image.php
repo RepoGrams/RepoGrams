@@ -33,13 +33,11 @@
     		<div class="color-legend" style="float:left; width: 160px;">
 				<div class="legend-title"><?php print msg('image-legend'); ?></div>
                 <div id="legend">
-                	<div id="legend-inner>
-	                	<?php
-							require_once('php/functions.php');
-	                        $legend = "";
-							echo renderLegende($legend);
-						?>
-                	</div>
+					<?php
+						require_once('php/functions.php');
+                        $legend = "";
+						echo renderLegende($legend);
+					?>
                     <div id="visu_legend_container">
                         <div id="visu_legend"></div>
                     </div>
@@ -49,24 +47,10 @@
 			<!-- Repo-Image -->
 			<div class="panel panel-default" style="width:770; display:block; margin:auto auto 0;">
   				<div class="panel-heading">
-    				<div class="panel-title">
-    					<a style="float:left;line-height:32px;" href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title'];?></a>&nbsp;			
-    					<!-- Download image buttons -->
-						<div style="float:right;">
-							<div class="btn-group">
-			  					<button type="button" class="btn btn-info dropdown-toggle margin-button" data-toggle="dropdown">
-			  						<span class="glyphicon glyphicon-download"></span>&nbsp;<?php print msg('image-dl') ?><span class="caret"></span>
-			  					</button>
-			  					<ul class="dropdown-menu" role="menu">
-			    					<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
-			   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
-			   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
-			  						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.pdf&mode=pdf'?>"><?php print msg('image-as') ?> .pdf</a></li>
-			  					</ul>
-							</div>
-						</div>							
+    				<h3 class="panel-title">
+    					<a href="<?php echo $_SESSION['repourl'];?>"><?php echo $_SESSION['title'];?></a>&nbsp;
     					<!-- Filtereinstellungen -->
- 	   					<form id="filterForm" role="form" class="form-inline" style="text-align:center; margin: auto auto 0;">
+ 	   					<form id="filterForm" role="form" class="form-inline" style="text-align:center;">
  	   						Filter
  	   						<div class="form-group">
     							<select id="filter1" name="filter1" class="form-control">
@@ -76,8 +60,23 @@
 	  								<option value="3"><?php print msg('image-option1-4') ?></option>             
 								</select>
 							</div>
-    					</form>					
-    				</div>
+    					</form>
+    								
+						<!-- Download image buttons -->
+						<div style="float:right;">
+							<div class="btn-group">
+			  					<button type="button" class="btn btn-info dropdown-toggle margin-button" data-toggle="dropdown">
+			  						<span class="glyphicon glyphicon-download"></span><?php print msg('image-dl') ?><span class="caret"></span>
+			  					</button>
+			  					<ul class="dropdown-menu" role="menu">
+			    					<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
+			   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
+			   						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
+			  						<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.pdf&mode=pdf'?>"><?php print msg('image-as') ?> .pdf</a></li>
+			  					</ul>
+							</div>
+						</div>
+    				</h3>
   				</div>
   				<div class="panel-body" style="width:<?php echo $_SESSION['width']+1;?>;boder-style:solid; display:inline-block; padding-left: 0 !important; padding-top: 0 !important;">
     				<ul id="placeOfImage" style="display:inline-block; list-style-type:none !important; padding-left: 0 !important;">
@@ -92,12 +91,11 @@
 			<br><br>
 			
 			<!-- Graphs -->
-			<div style="text-align:center; margin: auto auto 0; width:768px;">
-				<div id="visu-area">
+			<div id="visu-area">
             	<div class="top-buffer"></div>
             	<div id="visu"></div>
             	<div id="visu-slider"></div>
-			</div>
+            </div>
 		</div>
 	</div>
 	
@@ -122,8 +120,8 @@
                   // get the values from the formular
                   var filter_1 = $("#filterForm").find("#filter1 option:selected").val();
                   $("#placeOfImage").fadeToggle();
-                  $("#legend").fadeToggle();
-                  $("#legend").empty();
+                  $("#legend-inner").fadeToggle();
+                  $("#legend-inner").empty();
                   // send the data
                   jQuery.post("php/filter.php",
                                 {
@@ -131,10 +129,10 @@
                                 })
                   .done(function(data) {
                     $("#placeOfImage").html(data.image);
-                    $("#legend").html(data.legend);
+                    $("#legend-inner").html(data.legend);
                     $("[rel='tooltip']").tooltip();
                     $("#placeOfImage").fadeToggle();
-                    $("#legend").fadeToggle();
+                    $("#legend-inner").fadeToggle();
                   });
                   return;
                 });
