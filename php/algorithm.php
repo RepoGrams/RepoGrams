@@ -289,7 +289,7 @@ $s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> \n
 
 	######################################## commitToBlock Function ########################################
 	##### Computate the length and color of the blocks                                                 #####
-	##### Input: commitArray(ommit message, number of changed lines, author and time for all commits), #####
+	##### Input: commitArray(commit message, number of changed lines, author and time for all commits), #####
 	#####                     modus of the color, diff, amount of pixel and height of the hole picture #####
 	##### Output: length of the block, color of the block and key for the legend                       #####
 	########################################################################################################
