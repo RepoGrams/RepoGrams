@@ -73,20 +73,20 @@
 						?>
 					</ul>
 				</div>
-				<div class="panel-footer" style="float:right; height:60px;">
+				<div class="panel-footer" style="height:60px;">
 					<!-- Download image buttons -->		
-					<div class="btn-group">
-			  			<button type="button" class="btn btn-info dropdown-toggle margin-button" data-toggle="dropdown">
-			  				<span class="glyphicon glyphicon-download"></span>&nbsp;<?php print msg('image-dl') ?><span class="caret"></span>
-			  			</button>
-			  			<ul class="dropdown-menu" role="menu">
-			    			<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.svg'?>"><?php print msg('image-as') ?> .svg</a></li>
-			   				<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.png&mode=png'?>"><?php print msg('image-as') ?> .png</a></li>
-			   				<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.jpg&mode=jpg'?>"><?php print msg('image-as') ?> .jpg</a></li>
-			  				<li><a href="<?php echo 'download.php?file='._IMAGEDIR.'visualization-'.session_id().'.pdf&mode=pdf'?>"><?php print msg('image-as') ?> .pdf</a></li>
-			  			</ul>
-					</div>
-				</div>
+							<div class="btn-group" style="float:right;">
+			  					<button type="button" class="btn btn-info dropdown-toggle margin-button" data-toggle="dropdown">
+			  						<span class="glyphicon glyphicon-download"></span>&nbsp;<?php print msg('image-dl') ?><span class="caret"></span>
+			  					</button>
+			  					<ul class="dropdown-menu" role="menu">
+			    					<li><a href="<?php echo 'download.php?mode=svg'?>" target="_BLANK"><?php print msg('image-as') ?> .svg</a></li>
+			   						<li><a href="<?php echo 'download.php?&mode=png'?>" target="_BLANK"><?php print msg('image-as') ?> .png</a></li>
+			   						<li><a href="<?php echo 'download.php?&mode=jpg'?>"target="_BLANK"><?php print msg('image-as') ?> .jpg</a></li>
+			  						<li><a href="<?php echo 'download.php?mode=pdf'?>" target="_BLANK"><?php print msg('image-as') ?> .pdf</a></li>
+			  					</ul>
+							</div>
+						</div></div>
 			</div>
 			<br><br>	
 			<!-- Graphs -->
