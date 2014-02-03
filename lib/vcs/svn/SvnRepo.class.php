@@ -16,16 +16,16 @@ class SvnRepo implements Repo_Interface {
 			$index,
 			NULL,
 			NULL,
-			$rawCommit["msg"],
-			$rawCommit["date"],
-			$rawCommit["author"]
+			isset($rawCommit["msg"]) ? $rawCommit["msg"] : "empty",
+			isset($rawCommit["date"]) ? $rawCommit["date"] : "2004-01-02T22:39:18.000000Z",
+			isset($rawCommit["author"]) ? $rawCommit["author"] : "John Doe"
 		);
 	}
 
 	function __construct($url, $start=NULL, $end=NULL, &$datadir=NULL) {
 		$SvnImporter = new SvnImport($url, $start, $end, $datadir);
 		foreach ($SvnImporter->getRawRepoInfo() as $hash => $value) {
-			if(isset($value["date"]) || $rawCommit["msg"] || $rawCommit["author"]){
+			if(isset($value["date"]) || isset($value["msg"]) || isset($value["author"])){
 				$this->commits[] = $this->rawCommit2Commit($value, $hash);
 				echo "";
 			}

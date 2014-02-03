@@ -1,5 +1,7 @@
 <?php
-include __DIR__.'/../Commit.interface.php';
+require_once __DIR__.'/../Commit.interface.php';
+
+date_default_timezone_set('UTC');
 
 class SvnCommit implements Commit_Interface {
 

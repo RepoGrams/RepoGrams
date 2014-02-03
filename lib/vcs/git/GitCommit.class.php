@@ -1,5 +1,5 @@
 <?php
-include __DIR__.'/../Commit.interface.php';
+require_once __DIR__.'/../Commit.interface.php';
 
 class GitCommit implements Commit_Interface {
 	private $chksum;

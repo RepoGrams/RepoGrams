@@ -3,6 +3,7 @@ error_reporting(-1);
 if (session_id() == '') session_start();
 require_once(__DIR__."/../lib/vcs/git/GitChanges.class.php");
 require_once(__DIR__."/../lib/vcs/git/GitCommit.class.php");
+require_once(__DIR__."/../lib/vcs/svn/SvnCommit.class.php");
 
 ############################### Function preprocess ############################
 ##### convert into array of expected order                                                              #####
