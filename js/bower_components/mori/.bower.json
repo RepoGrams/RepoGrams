@@ -1,0 +1,15 @@
+{
+  "name": "mori",
+  "homepage": "https://github.com/swannodette/mori",
+  "version": "0.2.6",
+  "_release": "0.2.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.6",
+    "commit": "8757738ac1395db6c892fdc7ccdb945fd8f4b006"
+  },
+  "_source": "git://github.com/swannodette/mori.git",
+  "_target": "~0.2.6",
+  "_originalSource": "mori",
+  "_direct": true
+}
