@@ -5,7 +5,7 @@ function commitMsgLength(commitMsgs){ // array of all commit messages
 		commit[0] = i;
 		var commitMsg = commitMsgs[i];
 		commitMsg.trim();
-		var length = commitMsg.split(" ");
+		var length = commitMsg.split(" ").length;
 		commit[1] = length;
 		output[i] = commit;
 	}
