@@ -9,5 +9,5 @@ function commitMsgLength(commitMsgs){ // array of all commit messages
 		commit[1] = length;
 		output[i] = commit;
 	}
-	return output;
+	return output; // returns all commit messages length with id(?)
 }
