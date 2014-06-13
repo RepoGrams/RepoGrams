@@ -23,9 +23,9 @@ To use this program you need to install some programs:
 
 Quick Installation:
 
-sudo apt-get install php5 apache2 git subversion mercurial-git
+`sudo apt-get install php5 apache2 git subversion mercurial-git`
 
-sudo ln -s /usr/share/git/remote-helpers/git-remote-hg /usr/bin/
+`sudo ln -s /usr/share/git/remote-helpers/git-remote-hg /usr/bin/`
 
 If the above solution does not work for you, because you have a up-to-date
 git installation, you can use the following script:
