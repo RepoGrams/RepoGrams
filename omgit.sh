@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+function msg() {
+  echo ">>>  $1"
+}
 
 # $1: the commit for which you want to obtain the children
 function list_children() {
@@ -8,6 +11,14 @@ function list_children() {
 }
 
 # Test
-list_children 6f8d17c604045e312ff5b0d373946b4fcaea5c55
+#list_children 6f8d17c604045e312ff5b0d373946b4fcaea5c55
+# iterate over commits
+for commit in $(git rev-list --branches --topo-order --reverse)
+do
+    git diff-tree --always -s --pretty=format:'id:%H%nparents:%P%n' --root -r $commit
+  msg "Children:"
+  list_children $commit;
+done
+
 
 # Wenn commmit mehrere Children hat, finde oldest common ancestor
