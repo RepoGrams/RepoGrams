@@ -18,35 +18,48 @@ def list_children(commit_id):
 
 
 def get_commit_data(commit_id):
+    # iterate over commits
+    # --always: handle empty commits
+    # -s: don't show p, we do it later
+    # --root: else the first commit won't work
+    # -r: the commit we want to display
+    # --pretty: format string which prints all we need
     separator = "\a"
     command = """git diff-tree --always -s --pretty=format:%P{1}%B' --root -r {0}""".format(commit_id, separator)
     pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
     out, err = pipe.communicate()
     parents, commitmsg = out.decode().split(separator)
-    return parents.split(" "), commitmsg
+    return parents.split(), commitmsg
 
 
-# Test
-#list_children 6f8d17c604045e312ff5b0d373946b4fcaea5c55
-# iterate over commits
-# --always: handle empty commits
-# -s: don't show p, we do it later
-# --root: else the first commit won't work
-# -r: the commit we want to display
-# --pretty: format string which prints all we need
-command = """git rev-list --branches --topo-order --reverse"""
-list_children("HEAD")
-pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
-out, err = pipe.communicate()
-all_commits = out.decode().split("\n")[:-1]
-for commit in all_commits:
-    print(get_commit_data(commit), list_children(commit))
-    #for commit in $(git rev-list --branches --topo-order --reverse)
-    #do
-    #git diff-tree --always -s --pretty=format:'id:%H%nparents:%P%n' --root -r $commit
-    #msg "Children:"
-    #list_children $commit;
-    #done
+def get_all_commits():
+    command = """git rev-list --branches --reverse"""
+    list_children("HEAD")
+    pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
+    out, err = pipe.communicate()
+    all_commits = out.decode().split("\n")[:-1]
+    return all_commits
 
 
-# Wenn commmit mehrere Children hat, finde oldest common ancestor
+def metric6():
+    already_seen = set()
+    branch_counter = 0
+    for commit in get_all_commits():
+        parents, commitmsg = get_commit_data(commit)
+        children = list_children(commit)
+        if len(parents) == 0:  # first commit of branch
+            branch_counter += 1
+            print("initial commit")
+        if (len(children) > 1):  # commit starts new branch
+            branch_counter += 1
+            print("new branch")
+        if len(parents) > 1:
+            branch_counter -= (len(parents)-1)
+            print("merge commit") # TODO but maybe not the last commit
+        #already_seen |= set(children)
+        already_seen.add(commit)
+        print(commitmsg, branch_counter, "======")
+
+
+if __name__ == "__main__":
+    metric6()
