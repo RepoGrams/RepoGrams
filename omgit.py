@@ -50,8 +50,8 @@ def metric6():
         if len(parents) == 0:  # first commit of branch
             branch_counter += 1
             print("initial commit")
-        if (len(children) > 1):  # commit starts new branch
-            branch_counter += 1
+        elif (len(children) > 1):  # commit starts one or more new branches
+            branch_counter += (len(children) - 1)  # -1 to account for original branch
             print("new branch")
         if len(parents) > 1:
             branch_counter -= (len(parents)-1)
