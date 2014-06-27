@@ -1,0 +1,4 @@
+{
+    "FIELD1":["CMakeLists.txt","Gnumakefile","Makefile","build.xml","gnumakefile","makefile","pom.xml"],
+    "FIELD2":["CMake","make","make","Ant/XML","make","make","Maven/XML"]
+}
