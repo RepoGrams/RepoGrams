@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 
 from __future__ import print_function
 
 import subprocess
 import itertools
-
+import networkx as nx
 
 """Returns the ids of all children of a given commit
 :commit_id: the commit for which you want to obtain the children"""
@@ -42,8 +42,25 @@ def get_all_commits():
     return all_commits
 
 
+class GitGraph():
+
+    def __init__(self):
+        self.graph = nx.DiGraph()
+        self.graph.add_node("VIRTUAL")
+        for commit in get_all_commits():
+            parents, commitmsg = get_commit_data(commit)
+            self.graph.add_node(commit, commitmsg=commitmsg)
+            for parent in parents:
+                self.graph.add_edge(parent, commit)
+
+    def plot(self):
+        import matplotlib.pyplot as plt
+        nx.draw(self.graph)
+        plt.show()
+
+
+
 def metric6():
-    already_seen = set()
     branch_counter = 0
     for commit in get_all_commits():
         parents, commitmsg = get_commit_data(commit)
@@ -60,11 +77,7 @@ def metric6():
             here E will have two children, F and G
             However, it doesn't create a new branch, because it was already
             created by A
-            Therefore, we use git-merge-base --fork as suggested in
-            http://stackoverflow.com/questions/1527234/finding-a-branch-point-with-git
-            to find the oldest common ancestor (OCA) of each pair of the first child
-            and the other children. Then, only if OCA equals the current commit
-            we increment the branch counter
+            To fix this, we increase the counter iff the commit dominates it children
             """
             # TODO: merge-base does not work for this :-(
             command = "git merge-base --fork {} {}"
@@ -81,10 +94,9 @@ def metric6():
         if len(parents) > 1:
             branch_counter -= (len(parents)-1)
             print("merge commit") # TODO but maybe not the last commit
-        #already_seen |= set(children)
-        already_seen.add(commit)
         print(commitmsg, branch_counter, "======")
 
 
 if __name__ == "__main__":
-    metric6()
+    g = GitGraph()
+    g.plot()
