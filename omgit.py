@@ -77,11 +77,25 @@ class GitGraph():
         # Cooper, Keith D.; Harvey, Timothy J; and Kennedy, Ken (2001).
         # "A Simple, Fast Dominance Algorithm".
 
+        # initialize the dominator sets
         dominators = collections.defaultdict(set) # { block : {dominators} }
         for node in self.graph.nodes_iter():
             dominators[node] = set(self.graph.nodes())
 
+        # first block is only dominated by itself
         dominators[self.sentinel] = set(self.sentinel)
+        changed = True
+        while (changed):
+            changed = False
+            for node in self.graph.nodes_iter():
+                if node == self.sentinel:
+                    continue
+                pred_doms = [dominators[pred] for pred in self.graph.predecessors(node)]
+                new_doms = set(node) | set.intersection(*pred_doms or [set()])
+                if (new_doms != dominators[node]):
+                    dominators[node] = new_doms
+                    changed = True
+
         # TODO
 
         return dominators
