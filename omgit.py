@@ -102,43 +102,35 @@ class GitGraph():
 
 
 
-def metric6():
-    branch_counter = 0
-    for commit in get_all_commits():
-        parents, commitmsg = get_commit_data(commit)
-        children = list_children(commit)
-        if len(parents) == 0:  # first commit of branch
-            branch_counter += 1
-            print("initial commit")
-        elif (len(children) > 1):  # commit starts one or more new branches
-            """
-            Consider
-            A---B---D--F---...
-            \         /
-             \--C---E---G---...
-            here E will have two children, F and G
-            However, it doesn't create a new branch, because it was already
-            created by A
-            To fix this, we increase the counter iff the commit dominates it children
-            """
-            # TODO: merge-base does not work for this :-(
-            command = "git merge-base --fork {} {}"
-            for child_pair in itertools.product(children[0:1], children[1:]):
-                print(child_pair)
-                pipe = subprocess.Popen(command.format(*child_pair).split(" "), stdout=subprocess.PIPE)
-                out, err = pipe.communicate()
-                oca = out.decode('utf8', 'ignore').strip()
-                if (commit == oca):
-                    print("new branch")
-                    branch_counter += 1
-                else:
-                    print(oca)
-        if len(parents) > 1:
-            branch_counter -= (len(parents)-1)
-            print("merge commit") # TODO but maybe not the last commit
-        print(commitmsg, branch_counter, "======")
+    def metric6(self):
+        branch_counter = 1
+        for commit_node in self.graph.nodes_iter():
+            parents = self.graph.predecessors(commit_node)
+            children = self.graph.successors(commit_node)
+            if len(parents) == 0:  # first commit of branch
+                branch_counter += 1
+                print("sentinel")
+            elif (len(children) > 1):  # commit starts one or more new branches
+                """
+                Consider
+                A---B---D--F---...
+                \         /
+                \--C---E---G---...
+                here E will have two children, F and G
+                However, it doesn't create a new branch, because it was already
+                created by A
+                To fix this, we increase the counter iff the commit dominates it children
+                """
+                for child in children:
+                    if commit_node in self.dominators[child]:
+                        branch_counter += 1
+            if len(parents) > 1:
+                branch_counter -= (len(parents)-1)
+                print("merge commit") # TODO but maybe not the last commit
+            print(branch_counter, "======")
 
 
 if __name__ == "__main__":
     g = GitGraph()
+    g.metric6()
     g.plot()
