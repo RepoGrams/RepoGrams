@@ -50,10 +50,10 @@ class GitGraph():
     def __init__(self):
         self.graph = nx.DiGraph()
         self.sentinel = "SENTINEL"
-        self.graph.add_node(self.sentinel)
+        self.graph.add_node(self.sentinel, {"commitmsg": "SENTINEL"})
         for commit in get_all_commits():
             parents, commitmsg = get_commit_data(commit)
-            self.graph.add_node(commit, commitmsg=commitmsg)
+            self.graph.add_node(commit, {"commitmsg": commitmsg})
             if not parents:
                 self.graph.add_edge(self.sentinel, commit)
                 continue
@@ -103,7 +103,7 @@ class GitGraph():
 
 
     def metric6(self):
-        branch_counter = 1
+        branch_counter = 0
         for commit_node in self.graph.nodes_iter():
             parents = self.graph.predecessors(commit_node)
             children = self.graph.successors(commit_node)
@@ -127,7 +127,7 @@ class GitGraph():
             if len(parents) > 1:
                 branch_counter -= (len(parents)-1)
                 print("merge commit") # TODO but maybe not the last commit
-            print(branch_counter, "======")
+            print(branch_counter, self.graph.node[commit_node]["commitmsg"], "======")
 
 
 if __name__ == "__main__":
