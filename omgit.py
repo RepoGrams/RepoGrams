@@ -1,9 +1,12 @@
 #!/usr/bin/env python2
+# -!- encoding: utf-8
 
 from __future__ import print_function
 
 import subprocess
 import itertools
+import collections
+
 import networkx as nx
 
 """Returns the ids of all children of a given commit
@@ -12,7 +15,7 @@ def list_children(commit_id):
     command = """git rev-list --all --not {0}^@ --children""".format(commit_id)
     pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
     for line in pipe.stdout:
-        line = line.decode().strip()
+        line = line.decode('utf8', 'ignore').strip()
         if line.startswith(commit_id):
             return line.split(" ")[1:]
     return []
@@ -29,7 +32,7 @@ def get_commit_data(commit_id):
     command = """git diff-tree --always -s --pretty=format:%P{1}%B' --root -r {0}""".format(commit_id, separator)
     pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
     out, err = pipe.communicate()
-    parents, commitmsg = out.decode().split(separator)
+    parents, commitmsg = out.decode('utf8', 'ignore').split(separator)
     return parents.split(), commitmsg
 
 
@@ -38,7 +41,7 @@ def get_all_commits():
     list_children("HEAD")
     pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
     out, err = pipe.communicate()
-    all_commits = out.decode().split("\n")[:-1]
+    all_commits = out.decode('utf8', 'ignore').split("\n")[:-1]
     return all_commits
 
 
@@ -46,17 +49,42 @@ class GitGraph():
 
     def __init__(self):
         self.graph = nx.DiGraph()
-        self.graph.add_node("VIRTUAL")
+        self.sentinel = "SENTINEL"
+        self.graph.add_node(self.sentinel)
         for commit in get_all_commits():
             parents, commitmsg = get_commit_data(commit)
             self.graph.add_node(commit, commitmsg=commitmsg)
+            if not parents:
+                self.graph.add_edge(self.sentinel, commit)
+                continue
             for parent in parents:
                 self.graph.add_edge(parent, commit)
+        self.dominators = self.compute_dominators()
 
     def plot(self):
         import matplotlib.pyplot as plt
         nx.draw(self.graph)
         plt.show()
+
+    def compute_dominators(self):
+        """
+        Compute the dominators
+
+        dominators(root) = {root}
+        dominators(x) = {x} ∪ (∩ dominators(y) for y ∈ preds(x))
+        """
+        # TODO: this is rather slow, one should rather use
+        # Cooper, Keith D.; Harvey, Timothy J; and Kennedy, Ken (2001).
+        # "A Simple, Fast Dominance Algorithm".
+
+        dominators = collections.defaultdict(set) # { block : {dominators} }
+        for node in self.graph.nodes_iter():
+            dominators[node] = set(self.graph.nodes())
+
+        dominators[self.sentinel] = set(self.sentinel)
+        # TODO
+
+        return dominators
 
 
 
@@ -85,7 +113,7 @@ def metric6():
                 print(child_pair)
                 pipe = subprocess.Popen(command.format(*child_pair).split(" "), stdout=subprocess.PIPE)
                 out, err = pipe.communicate()
-                oca = out.decode().strip()
+                oca = out.decode('utf8', 'ignore').strip()
                 if (commit == oca):
                     print("new branch")
                     branch_counter += 1
