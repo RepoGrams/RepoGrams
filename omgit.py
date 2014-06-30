@@ -4,14 +4,15 @@
 from __future__ import print_function
 
 import subprocess
-import itertools
+# import itertools
 import collections
 
 import networkx as nx
 
-"""Returns the ids of all children of a given commit
-:commit_id: the commit for which you want to obtain the children"""
+
 def list_children(commit_id):
+    """Returns the ids of all children of a given commit
+    :commit_id: the commit for which you want to obtain the children"""
     command = """git rev-list --all --not {0}^@ --children""".format(commit_id)
     pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
     for line in pipe.stdout:
@@ -78,7 +79,7 @@ class GitGraph():
         # "A Simple, Fast Dominance Algorithm".
 
         # initialize the dominator sets
-        dominators = collections.defaultdict(set) # { block : {dominators} }
+        dominators = collections.defaultdict(set)  # { block : {dominators} }
         for node in self.graph.nodes_iter():
             dominators[node] = set(self.graph.nodes())
 
@@ -90,7 +91,8 @@ class GitGraph():
             for node in self.graph.nodes_iter():
                 if node == self.sentinel:
                     continue
-                pred_doms = [dominators[pred] for pred in self.graph.predecessors(node)]
+                pred_doms = [dominators[pred] for pred
+                             in self.graph.predecessors(node)]
                 new_doms = set(node) | set.intersection(*pred_doms or [set()])
                 if (new_doms != dominators[node]):
                     dominators[node] = new_doms
@@ -100,13 +102,16 @@ class GitGraph():
 
         return dominators
 
-
-
     def metric6(self):
         branch_counter = 0
-        for commit_node in self.graph.nodes_iter():
+        nodes = [self.sentinel]
+        already_seen = set()
+        while(nodes):
+            commit_node = nodes.pop(0)
+            already_seen.add(commit_node)
             parents = self.graph.predecessors(commit_node)
             children = self.graph.successors(commit_node)
+            nodes += [child for child in children if child not in already_seen]
             if len(parents) == 0:  # first commit of branch
                 branch_counter += 1
                 print("sentinel")
@@ -119,15 +124,18 @@ class GitGraph():
                 here E will have two children, F and G
                 However, it doesn't create a new branch, because it was already
                 created by A
-                To fix this, we increase the counter iff the commit dominates it children
+                To fix this, we increase the counter
+                iff the commit dominates it children
                 """
                 for child in children:
                     if commit_node in self.dominators[child]:
                         branch_counter += 1
             if len(parents) > 1:
                 branch_counter -= (len(parents)-1)
-                print("merge commit") # TODO but maybe not the last commit
-            print(branch_counter, self.graph.node[commit_node]["commitmsg"], "======")
+                print("merge commit")  # TODO but maybe not the last commit
+            print(branch_counter,
+                  self.graph.node[commit_node]["commitmsg"],
+                  "======")
 
 
 if __name__ == "__main__":
