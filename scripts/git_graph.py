@@ -138,6 +138,31 @@ class GitGraph():
 
         return dominators
 
+    def _created_branches_count(self, commit_node, children):
+        """
+        Returns the number of new branches a commit creates
+        Consider
+        A---B---D--F---...
+        \        /
+        \--C---E---G---...
+        here E will have two children, F and G
+        However, it doesn't create a new branch, because it was already
+        created by A
+        To fix this, we increase the counter
+        ifF the commit dominates it children
+        """
+        if len(children) == 1:
+            return 0
+        branch_counter = 0
+        for child in children:
+            if commit_node in self.dominators[child]:
+                branch_counter += 1
+        branch_counter -= 1  # one child is from the "main" branch
+        return branch_counter
+
+
+
+
     def metric6(self):
         branch_counter = 0
         result = []
@@ -147,22 +172,8 @@ class GitGraph():
             children = self.graph.successors(commit_node)
             if parents[0] == self.sentinel:  # first commit of branch
                 branch_counter += 1
-            if (len(children) > 1):  # commit starts one or more new branches
-                """
-                Consider
-                A---B---D--F---...
-                 \        /
-                  \--C---E---G---...
-                here E will have two children, F and G
-                However, it doesn't create a new branch, because it was already
-                created by A
-                To fix this, we increase the counter
-                ifF the commit dominates it children
-                """
-                for child in children:
-                    if commit_node in self.dominators[child]:
-                        branch_counter += 1
-                branch_counter -= 1  # one child is from the "main" branch
+            branch_counter += self._created_branches_count(commit_node,
+                                                           children)
             if len(parents) > 1:
                 """
                 Consider
