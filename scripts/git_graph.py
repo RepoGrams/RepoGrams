@@ -95,6 +95,7 @@ class GitGraph():
                 continue
             for parent in parents:
                 self.graph.add_edge(parent, commit)
+        assert nx.is_directed_acyclic_graph(self.graph)
         self.dominators = self.compute_dominators()
 
     def plot(self):
