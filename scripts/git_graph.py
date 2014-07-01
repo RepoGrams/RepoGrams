@@ -150,8 +150,8 @@ class GitGraph():
                 """
                 Consider
                 A---B---D--F---...
-                \         /
-                \--C---E---G---...
+                 \        /
+                  \--C---E---G---...
                 here E will have two children, F and G
                 However, it doesn't create a new branch, because it was already
                 created by A
@@ -166,8 +166,8 @@ class GitGraph():
                 """
                 Consider
                 A------C--D--F (master)
-                    \    /
-                    \--B-----E  (feature branch)
+                 \    /
+                  \--B-----E  (feature branch)
                 In this case, C has multiple parents
                 However, it is NOT the end of a branch, as the feature
                 branch is still continued (by commit E)
