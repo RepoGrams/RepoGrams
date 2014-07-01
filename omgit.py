@@ -108,10 +108,11 @@ class GitGraph():
         already_seen = set()
         while(nodes):
             commit_node = nodes.pop(0)
-            already_seen.add(commit_node)
             parents = self.graph.predecessors(commit_node)
             children = self.graph.successors(commit_node)
-            nodes += [child for child in children if child not in already_seen]
+            new_nodes = [child for child in children if child not in already_seen]
+            nodes += new_nodes
+            already_seen |= set(new_nodes)
             if len(parents) == 0:  # first commit of branch
                 branch_counter += 1
                 print("sentinel")
@@ -131,8 +132,11 @@ class GitGraph():
                     if commit_node in self.dominators[child]:
                         branch_counter += 1
             if len(parents) > 1:
-                branch_counter -= (len(parents)-1)
-                print("merge commit")  # TODO but maybe not the last commit
+                for parent in parents:
+                    if len(self.graph.successors(parent)) == 1:
+                        # commit_node is the last commit of the branch
+                        branch_counter -= 1
+                print("merge commit")
             print(branch_counter,
                   self.graph.node[commit_node]["commitmsg"],
                   "======")
