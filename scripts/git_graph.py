@@ -189,18 +189,18 @@ class GitGraph():
         for initial_commit in self.graph.successors_iter(self.sentinel):
             unvisited_nodes.push(initial_commit, self.graph.node[initial_commit]["commit_timestamp"])
             already_seen.add(initial_commit)
-        try:
-            while(True):
-                # iterate over commits in order of commit_timestamps
+        while(True):
+            # iterate over commits in order of commit_timestamps
+            try:
                 commit_node = unvisited_nodes.pop()
-                children = self.graph.successors(commit_node)
-                new_nodes = [child for child in children if child not in already_seen]
-                for node in new_nodes:
-                    unvisited_nodes.push(node, self.graph.node[node]["commit_timestamp"])
-                already_seen |= set(new_nodes)
-                yield commit_node
-        except IndexError:
-            raise StopIteration
+            except IndexError:
+                raise StopIteration
+            yield commit_node
+            children = self.graph.successors(commit_node)
+            new_nodes = [child for child in children if child not in already_seen]
+            for node in new_nodes:
+                unvisited_nodes.push(node, self.graph.node[node]["commit_timestamp"])
+            already_seen |= set(new_nodes)
 
 
 if __name__ == "__main__":
