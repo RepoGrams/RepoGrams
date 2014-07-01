@@ -128,6 +128,7 @@ class GitGraph():
         for initial_commit in self.graph.successors_iter(self.sentinel):
             unvisited_nodes.push(initial_commit, self.graph.node[initial_commit]["commit_timestamp"])
             already_seen.add(initial_commit)
+        result = []
         try:
             while(True):
                 # iterate over commits in order of commit_timestamps
@@ -140,7 +141,6 @@ class GitGraph():
                 already_seen |= set(new_nodes)
                 if parents[0] == self.sentinel:  # first commit of branch
                     branch_counter += 1
-                    print("initial commit of branch")
                 if (len(children) > 1):  # commit starts one or more new branches
                     """
                     Consider
@@ -174,14 +174,12 @@ class GitGraph():
                             # commit_node is the last commit of the branch
                             branch_counter -= 1
                     branch_counter += 1  # one parent is from the "main" branch
-                    print("merge commit")
-                print(branch_counter,
-                    self.graph.node[commit_node]["commitmsg"],
-                    "======")
+                result.append((1,branch_counter))
         except IndexError:
-            pass  # visited all nodes
+            # visited all nodes
+            return result
 
 
 if __name__ == "__main__":
     g = GitGraph()
-    g.metric6()
+    print(g.metric6())
