@@ -24,7 +24,6 @@ class PriorityQueue:
             return heapq.heappop(self._queue)[-1]
 
 
-
 def list_children(commit_id):
     """Returns the ids of all children of a given commit
     :commit_id: the commit for which you want to obtain the children"""
@@ -44,12 +43,13 @@ def get_commit_data(commit_id):
     # --root: else the first commit won't work
     # -r: the commit we want to display
     # --pretty: format string which prints all we need
+    #   %P: parents   |   %ct: commiter time stamp     | %B commitmsg
     separator = "\a"
-    command = """git diff-tree --always -s --pretty=format:%P{1}%B' --root -r {0}""".format(commit_id, separator)
+    command = """git diff-tree --always -s --pretty=format:%P{1}%ct{1}%B' --root -r {0}""".format(commit_id, separator)
     pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
     out, err = pipe.communicate()
-    parents, commitmsg = out.decode('utf8', 'ignore').split(separator)
-    return parents.split(), commitmsg
+    parents, commit_timestamp, commitmsg = out.decode('utf8', 'ignore').split(separator)
+    return parents.split(), commit_timestamp, commitmsg
 
 
 def get_all_commits():
@@ -68,8 +68,11 @@ class GitGraph():
         self.sentinel = "SENTINEL"
         self.graph.add_node(self.sentinel, {"commitmsg": "SENTINEL"})
         for commit in get_all_commits():
-            parents, commitmsg = get_commit_data(commit)
-            self.graph.add_node(commit, {"commitmsg": commitmsg})
+            parents, commit_timestamp, commitmsg = get_commit_data(commit)
+            self.graph.add_node(commit, {
+                "commitmsg": commitmsg,
+                "commit_timestamp": commit_timestamp,
+            })
             if not parents:
                 self.graph.add_edge(self.sentinel, commit)
                 continue
