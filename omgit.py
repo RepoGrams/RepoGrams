@@ -12,16 +12,17 @@ import networkx as nx
 
 
 class PriorityQueue:
+    """A priority queue. Returs elements with __lower__ first"""
     def __init__(self):
         self._queue = []
         self._index = 0
 
-        def push(self, item, priority):
-            heapq.heappush(self._queue, (-priority, self._index, item))
-            self._index += 1
+    def push(self, item, priority):
+        heapq.heappush(self._queue, (priority, self._index, item))
+        self._index += 1
 
-        def pop(self):
-            return heapq.heappop(self._queue)[-1]
+    def pop(self):
+        return heapq.heappop(self._queue)[-1]
 
 
 def list_children(commit_id):
@@ -122,42 +123,50 @@ class GitGraph():
 
     def metric6(self):
         branch_counter = 0
-        nodes = [self.sentinel]
+        unvisited_nodes = PriorityQueue()
         already_seen = set()
-        while(nodes):
-            commit_node = nodes.pop(0)
-            parents = self.graph.predecessors(commit_node)
-            children = self.graph.successors(commit_node)
-            new_nodes = [child for child in children if child not in already_seen]
-            nodes += new_nodes
-            already_seen |= set(new_nodes)
-            if len(parents) == 0:  # first commit of branch
-                branch_counter += 1
-                print("sentinel")
-            elif (len(children) > 1):  # commit starts one or more new branches
-                """
-                Consider
-                A---B---D--F---...
-                \         /
-                \--C---E---G---...
-                here E will have two children, F and G
-                However, it doesn't create a new branch, because it was already
-                created by A
-                To fix this, we increase the counter
-                iff the commit dominates it children
-                """
-                for child in children:
-                    if commit_node in self.dominators[child]:
-                        branch_counter += 1
-            if len(parents) > 1:
-                for parent in parents:
-                    if len(self.graph.successors(parent)) == 1:
-                        # commit_node is the last commit of the branch
-                        branch_counter -= 1
-                print("merge commit")
-            print(branch_counter,
-                  self.graph.node[commit_node]["commitmsg"],
-                  "======")
+        for initial_commit in self.graph.successors_iter(self.sentinel):
+            unvisited_nodes.push(initial_commit, self.graph.node[initial_commit]["commit_timestamp"])
+            already_seen.add(initial_commit)
+        try:
+            while(True):
+                # iterate over commits in order of commit_timestamps
+                commit_node = unvisited_nodes.pop()
+                parents = self.graph.predecessors(commit_node)
+                children = self.graph.successors(commit_node)
+                new_nodes = [child for child in children if child not in already_seen]
+                for node in new_nodes:
+                    unvisited_nodes.push(node, self.graph.node[node]["commit_timestamp"])
+                already_seen |= set(new_nodes)
+                if parents[0] == self.sentinel:  # first commit of branch
+                    branch_counter += 1
+                    print("initial commit of branch")
+                elif (len(children) > 1):  # commit starts one or more new branches
+                    """
+                    Consider
+                    A---B---D--F---...
+                    \         /
+                    \--C---E---G---...
+                    here E will have two children, F and G
+                    However, it doesn't create a new branch, because it was already
+                    created by A
+                    To fix this, we increase the counter
+                    iff the commit dominates it children
+                    """
+                    for child in children:
+                        if commit_node in self.dominators[child]:
+                            branch_counter += 1
+                if len(parents) > 1:
+                    for parent in parents:
+                        if len(self.graph.successors(parent)) == 1:
+                            # commit_node is the last commit of the branch
+                            branch_counter -= 1
+                    print("merge commit")
+                print(branch_counter,
+                    self.graph.node[commit_node]["commitmsg"],
+                    "======")
+        except IndexError:
+            pass  # visited all nodes
 
 
 if __name__ == "__main__":
