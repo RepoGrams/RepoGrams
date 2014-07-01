@@ -158,6 +158,17 @@ class GitGraph():
                             branch_counter += 1
                     branch_counter -= 1  # one child is from the "main" branch
                 if len(parents) > 1:
+                    """
+                    Consider
+                    A------C--D--F (master)
+                     \    /
+                      \--B-----E  (feature branch)
+                    In this case, C has multiple parents
+                    However, it is NOT the end of a branch, as the feature
+                    branch is still continued (by commit E)
+                    To respect this, we only substract one from the counter for
+                    each parent with only one child
+                    """
                     for parent in parents:
                         if len(self.graph.successors(parent)) == 1:
                             # commit_node is the last commit of the branch
