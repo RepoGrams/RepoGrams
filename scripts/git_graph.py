@@ -139,61 +139,49 @@ class GitGraph():
 
     def metric6(self):
         branch_counter = 0
-        unvisited_nodes = PriorityQueue()
-        already_seen = set()
-        for initial_commit in self.graph.successors_iter(self.sentinel):
-            unvisited_nodes.push(initial_commit, self.graph.node[initial_commit]["commit_timestamp"])
-            already_seen.add(initial_commit)
         result = []
-        try:
-            while(True):
-                # iterate over commits in order of commit_timestamps
-                commit_node = unvisited_nodes.pop()
-                parents = self.graph.predecessors(commit_node)
-                children = self.graph.successors(commit_node)
-                new_nodes = [child for child in children if child not in already_seen]
-                for node in new_nodes:
-                    unvisited_nodes.push(node, self.graph.node[node]["commit_timestamp"])
-                already_seen |= set(new_nodes)
-                if parents[0] == self.sentinel:  # first commit of branch
-                    branch_counter += 1
-                if (len(children) > 1):  # commit starts one or more new branches
-                    """
-                    Consider
-                    A---B---D--F---...
-                    \         /
-                    \--C---E---G---...
-                    here E will have two children, F and G
-                    However, it doesn't create a new branch, because it was already
-                    created by A
-                    To fix this, we increase the counter
-                    ifF the commit dominates it children
-                    """
-                    for child in children:
-                        if commit_node in self.dominators[child]:
-                            branch_counter += 1
-                    branch_counter -= 1  # one child is from the "main" branch
-                if len(parents) > 1:
-                    """
-                    Consider
-                    A------C--D--F (master)
-                     \    /
-                      \--B-----E  (feature branch)
-                    In this case, C has multiple parents
-                    However, it is NOT the end of a branch, as the feature
-                    branch is still continued (by commit E)
-                    To respect this, we only substract one from the counter for
-                    each parent with only one child
-                    """
-                    for parent in parents:
-                        if len(self.graph.successors(parent)) == 1:
-                            # commit_node is the last commit of the branch
-                            branch_counter -= 1
-                    branch_counter += 1  # one parent is from the "main" branch
-                result.append((1,branch_counter))
-        except IndexError:
-            # visited all nodes
-            return result
+        for commit_node in self.iterate_commits():
+            # iterate over commits in order of commit_timestamps
+            parents = self.graph.predecessors(commit_node)
+            children = self.graph.successors(commit_node)
+            if parents[0] == self.sentinel:  # first commit of branch
+                branch_counter += 1
+            if (len(children) > 1):  # commit starts one or more new branches
+                """
+                Consider
+                A---B---D--F---...
+                \         /
+                \--C---E---G---...
+                here E will have two children, F and G
+                However, it doesn't create a new branch, because it was already
+                created by A
+                To fix this, we increase the counter
+                ifF the commit dominates it children
+                """
+                for child in children:
+                    if commit_node in self.dominators[child]:
+                        branch_counter += 1
+                branch_counter -= 1  # one child is from the "main" branch
+            if len(parents) > 1:
+                """
+                Consider
+                A------C--D--F (master)
+                    \    /
+                    \--B-----E  (feature branch)
+                In this case, C has multiple parents
+                However, it is NOT the end of a branch, as the feature
+                branch is still continued (by commit E)
+                To respect this, we only substract one from the counter for
+                each parent with only one child
+                """
+                for parent in parents:
+                    if len(self.graph.successors(parent)) == 1:
+                        # commit_node is the last commit of the branch
+                        branch_counter -= 1
+                branch_counter += 1  # one parent is from the "main" branch
+            result.append((1,branch_counter))
+        # visited all nodes
+        return result
 
     def iterate_commits(self):
         unvisited_nodes = PriorityQueue()
