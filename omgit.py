@@ -103,7 +103,7 @@ class GitGraph():
             dominators[node] = set(self.graph.nodes())
 
         # first block is only dominated by itself
-        dominators[self.sentinel] = set(self.sentinel)
+        dominators[self.sentinel] = set([self.sentinel])
         changed = True
         while (changed):
             changed = False
@@ -112,7 +112,7 @@ class GitGraph():
                     continue
                 pred_doms = [dominators[pred] for pred
                              in self.graph.predecessors(node)]
-                new_doms = set(node) | set.intersection(*pred_doms or [set()])
+                new_doms = set([node]) | set.intersection(*(pred_doms or [set()]))
                 if (new_doms != dominators[node]):
                     dominators[node] = new_doms
                     changed = True
@@ -141,7 +141,7 @@ class GitGraph():
                 if parents[0] == self.sentinel:  # first commit of branch
                     branch_counter += 1
                     print("initial commit of branch")
-                elif (len(children) > 1):  # commit starts one or more new branches
+                if (len(children) > 1):  # commit starts one or more new branches
                     """
                     Consider
                     A---B---D--F---...
@@ -151,16 +151,18 @@ class GitGraph():
                     However, it doesn't create a new branch, because it was already
                     created by A
                     To fix this, we increase the counter
-                    iff the commit dominates it children
+                    ifF the commit dominates it children
                     """
                     for child in children:
                         if commit_node in self.dominators[child]:
                             branch_counter += 1
+                    branch_counter -= 1  # one child is from the "main" branch
                 if len(parents) > 1:
                     for parent in parents:
                         if len(self.graph.successors(parent)) == 1:
                             # commit_node is the last commit of the branch
                             branch_counter -= 1
+                    branch_counter += 1  # one parent is from the "main" branch
                     print("merge commit")
                 print(branch_counter,
                     self.graph.node[commit_node]["commitmsg"],
@@ -172,4 +174,3 @@ class GitGraph():
 if __name__ == "__main__":
     g = GitGraph()
     g.metric6()
-    g.plot()
