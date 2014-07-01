@@ -46,11 +46,25 @@ def get_commit_data(commit_id):
     # --pretty: format string which prints all we need
     #   %P: parents   |   %ct: commiter time stamp     | %B commitmsg
     separator = "\a"
-    command = """git diff-tree --always -s --pretty=format:%P{1}%ct{1}%B' --root -r {0}""".format(commit_id, separator)
+    command = """git diff-tree --always --root --no-commit-id --numstat --pretty=format:{1}%P{1}%ct{1}%B{1} -r {0}""".format(commit_id, separator)
     pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
     out, err = pipe.communicate()
-    parents, commit_timestamp, commitmsg = out.decode('utf8', 'ignore').split(separator)
-    return parents.split(), commit_timestamp, commitmsg
+    filestats, parents, commit_timestamp, commitmsg, _ = out.decode('utf8', 'ignore').split(separator)
+    lines_added = 0
+    lines_removed = 0
+    file_names = []
+    for file_info in filestats.split("\n"):
+        if file_info:
+            added, removed, name = file_info.split("\t")
+            try:
+                lines_added += int(added)
+                lines_removed += int(removed)
+            except ValueError:
+                pass  # binary files don't have those numbers
+            # TODO: deal with renames!
+            file_names.append(name)
+    return (parents.split(), commit_timestamp, commitmsg,
+            lines_added, lines_removed, file_names)
 
 
 def get_all_commits():
@@ -69,10 +83,12 @@ class GitGraph():
         self.sentinel = "SENTINEL"
         self.graph.add_node(self.sentinel, {"commitmsg": "SENTINEL"})
         for commit in get_all_commits():
-            parents, commit_timestamp, commitmsg = get_commit_data(commit)
+            parents, commit_timestamp, commitmsg, added, removed, files = get_commit_data(commit)
             self.graph.add_node(commit, {
                 "commitmsg": commitmsg,
                 "commit_timestamp": commit_timestamp,
+                "file_list": files,
+                "churn": added+removed,
             })
             if not parents:
                 self.graph.add_edge(self.sentinel, commit)
