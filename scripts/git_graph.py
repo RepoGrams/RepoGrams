@@ -7,6 +7,7 @@ import subprocess
 # import itertools
 import collections
 import heapq
+import json
 
 import networkx as nx
 
@@ -218,7 +219,19 @@ class GitGraph():
                 unvisited_nodes.push(node, self.graph.node[node]["commit_timestamp"])
             already_seen |= set(new_nodes)
 
+    def export_as_json(self):
+        result = []
+        for commit in self.iterate_commits():
+            result.append({
+                "churn": self.graph.node[commit]["churn"],
+                "commitmsg": self.graph.node[commit]["commitmsg"],
+                "files": self.graph.node[commit]["file_list"],
+            })
+        return json.dumps(result, indent=4)
+
 
 if __name__ == "__main__":
     g = GitGraph()
-    print(g.metric6())
+    #print(g.metric6())
+    exported = g.export_as_json()
+    print(exported)
