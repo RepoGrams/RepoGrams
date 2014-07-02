@@ -151,7 +151,7 @@ class GitGraph():
         To fix this, we increase the counter
         ifF the commit dominates it children
         """
-        if len(children) == 1:
+        if not len(children) > 1:
             return 0
         branch_counter = 0
         for child in children:
