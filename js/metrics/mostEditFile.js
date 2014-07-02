@@ -27,7 +27,7 @@ function mostEditFile(inputList){
 	 */
 	var map = {};
 	
-	var outputList = ;
+	var outputList = [];
 	
 	// for c in commit
 	for(var i = 0; i < inputList.length(); i++){
