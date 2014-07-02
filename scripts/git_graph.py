@@ -160,7 +160,27 @@ class GitGraph():
         branch_counter -= 1  # one child is from the "main" branch
         return branch_counter
 
-
+    def _ended_branches_count(self, parents):
+        if not len(parents) > 1:
+            return 0
+        """
+        Consider
+        A------C--D--F (master)
+            \    /
+            \--B-----E  (feature branch)
+        In this case, C has multiple parents
+        However, it is NOT the end of a branch, as the feature
+        branch is still continued (by commit E)
+        To respect this, we only substract one from the counter for
+        each parent with only one child
+        """
+        ended_counter = 0
+        for parent in parents:
+            if len(self.graph.successors(parent)) == 1:
+                # commit_node is the last commit of the branch
+                ended_counter += 1
+        ended_counter -= 1  # one parent is from the "main" branch
+        return ended_counter
 
 
     def metric6(self):
@@ -174,23 +194,7 @@ class GitGraph():
                 branch_counter += 1
             branch_counter += self._created_branches_count(commit_node,
                                                            children)
-            if len(parents) > 1:
-                """
-                Consider
-                A------C--D--F (master)
-                 \    /
-                  \--B-----E  (feature branch)
-                In this case, C has multiple parents
-                However, it is NOT the end of a branch, as the feature
-                branch is still continued (by commit E)
-                To respect this, we only substract one from the counter for
-                each parent with only one child
-                """
-                for parent in parents:
-                    if len(self.graph.successors(parent)) == 1:
-                        # commit_node is the last commit of the branch
-                        branch_counter -= 1
-                branch_counter += 1  # one parent is from the "main" branch
+            branch_counter -= self._ended_branches_count(parents)
             result.append((1,branch_counter))
         # visited all nodes
         return result
