@@ -22,7 +22,7 @@
 	<?php include('header.php'); ?>
         <script type="text/javascript" src="js/metrics/branchComp.js"></script>
         <script type="text/javascript" src="js/metrics/branchUse.js"></script>
-        <script type="text/javascript" src="js/metrics/commitLangComple.js"></script>
+        <script type="text/javascript" src="js/metrics/commitLangCompl.js"></script>
         <script type="text/javascript" src="js/metrics/commitModul.js"></script>
         <script type="text/javascript" src="js/metrics/commitMsgLength.js"></script>
         <script type="text/javascript" src="js/metrics/driver.js"></script>
@@ -95,7 +95,7 @@
                 jQuery.post("php/action.php", {state: 2}, function(data) {
                    $("#mainbar").attr( "aria-valuenow","100");
                    $("#mainbar").css({"width":"100%"});
-                   $("#mainbar").hide();
+                   $("#wrap").hide();
                    console.log(runMetrics(data));
                 });
 	</script>

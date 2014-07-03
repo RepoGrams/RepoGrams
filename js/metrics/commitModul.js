@@ -5,7 +5,7 @@ function substName(stringToSplit, splitter){
 	var result = "";
 	var splitted = stringToSplit.split(splitter);
 
-	for(int i = 0; i < splitted.length-1; i++){
+	for(var i = 0; i < splitted.length-1; i++){
 		result += splitted[i];
 		result += splitter;
 	}

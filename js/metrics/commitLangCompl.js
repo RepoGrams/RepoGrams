@@ -48,7 +48,8 @@ function getMetric(fileList) {
 		fileList.forEach(function (entry){
 			if(isValidFile(entry, JSONValues)){
 				entry in mem? mem[entry] +=1 : mem[entry] = 1;
-			else
+                        }
+			else {
 				"Other" in mem ? mem["Other"] += 1: mem[entry] = 1;
 			}
 		});
@@ -56,15 +57,15 @@ function getMetric(fileList) {
 		var array = fileList.map(function(obj){
 		var all = obj.split();
 		return all[all.length-1];
-			);
+                });
 
-		array.forEach(function (entry){
-			if(isValidEnding(entry, JSONValues)){
-				entry in mem ? mem[entry] += 1 : mem[entry] = 1;
-			}else
-				"Other" in mem ? mem["Other"] +=1 : mem[entry] = 1;
-			}
-			);
+                array.forEach(function (entry){
+                  if(isValidEnding(entry, JSONValues)){
+                    entry in mem ? mem[entry] += 1 : mem[entry] = 1;
+                  } else {
+                    "Other" in mem ? mem["Other"] +=1 : mem[entry] = 1;
+                  }
+                });
 		
 	}
 	);
