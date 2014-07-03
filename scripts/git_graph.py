@@ -227,7 +227,7 @@ class GitGraph():
                 "commitmsg": self.graph.node[commit]["commitmsg"],
                 "files": self.graph.node[commit]["file_list"],
             })
-        return json.dumps(result, indent=4)
+        return json.dumps(result, separators=(',', ':'))
 
 
 if __name__ == "__main__":
@@ -235,7 +235,6 @@ if __name__ == "__main__":
     import os
     import tempfile
     dirpath = tempfile.mkdtemp()
-    print(dirpath, file=sys.stderr)
     os.chdir(dirpath)
     command = "git clone {} .".format(sys.argv[1])
     subprocess.check_call(command.split())

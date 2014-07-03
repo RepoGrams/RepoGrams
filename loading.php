@@ -93,6 +93,8 @@
 	          });
 		}
                 jQuery.post("php/action.php", {state: 2}, function(data) {
+                  console.log("hi!");
+                   console.log(data);
                    $("#mainbar").attr( "aria-valuenow","100");
                    $("#mainbar").css({"width":"100%"});
                    $("#wrap").hide();

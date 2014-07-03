@@ -2,11 +2,11 @@
 error_reporting(-1);
 require_once('./utils.php');
 startSessionIfNotStarted();
-	require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
-	require_once(__DIR__."/algorithm.php");
+	//require_once(__DIR__."/../lib/vcs/RepoFactory.class.php");
+	//require_once(__DIR__."/algorithm.php");
 	require_once("functions.php");
 	require_once("language.php");
-	require_once(__DIR__."/../lib/vcs/git/GitRepo.class.php");
+	//require_once(__DIR__."/../lib/vcs/git/GitRepo.class.php");
 
 	/**
 	 * Check the formular input and start rendering
@@ -52,33 +52,34 @@ startSessionIfNotStarted();
 	 * Session-Variables: image, title, error_message, 
 	 */
 	function renderRepo($repourl = null) {
+                header('Content-Type: application/json');
 		try {
 			switch  ($_POST['state']) {
-				case 0:
-					$_SESSION['repo'] = serialize(RepoFactory::createRepo($repourl,$_SESSION['start'], $_SESSION['end'])->getAllCommits());
-					error_log(gettype($_SESSION['repo']));
-					error_log("Repo created");
-                                        header('Content-Type: application/json');
-                                        $retval = array("error" => false, "finished" => false);
-                                        echo(json_encode($retval));
-					return;
-				case 1:
-					$alg = new Algorithm();
-					error_log(gettype($_SESSION['repo']));
-                    $ses = unserialize($_SESSION['repo']);
-					$_SESSION['image'] = $alg->render($ses,0,$_SESSION['width'], $_SESSION['height']);
-					error_log("Image created");
-					$start = strrpos($repourl, '/');
-					$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
-                                        header('Content-Type: application/json');
-                                        $retval = array("error" => false, "finished" => true);
-                                        echo(json_encode($retval));
-					return;
+				//case 0:
+					//$_SESSION['repo'] = serialize(RepoFactory::createRepo($repourl,$_SESSION['start'], $_SESSION['end'])->getAllCommits());
+					//error_log(gettype($_SESSION['repo']));
+					//error_log("Repo created");
+                                        //header('Content-Type: application/json');
+                                        //$retval = array("error" => false, "finished" => false);
+                                        //echo(json_encode($retval));
+					//return;
+				//case 1:
+					//$alg = new Algorithm();
+					//error_log(gettype($_SESSION['repo']));
+                    //$ses = unserialize($_SESSION['repo']);
+					//$_SESSION['image'] = $alg->render($ses,0,$_SESSION['width'], $_SESSION['height']);
+					//error_log("Image created");
+					//$start = strrpos($repourl, '/');
+					//$_SESSION['title'] = substr($repourl, $start+1, strrpos($repourl, '.')-$start-1);
+                                        //header('Content-Type: application/json');
+                                        //$retval = array("error" => false, "finished" => true);
+                                        //echo(json_encode($retval));
+					//return;
                                case 2:
                                  $command = "/usr/bin/python2 ../scripts/git_graph.py ".$repourl;
                                  error_log($command);
                                  $output = shell_exec($command);
-                                 echo(json_encode($output));
+                                 echo $output;
                                  return;
 			}
 		} catch (Exception $e) {

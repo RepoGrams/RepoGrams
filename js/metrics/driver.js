@@ -2,7 +2,9 @@ function runMetrics(dataAsJSON) {
   try {
   var data = jQuery.parseJSON(dataAsJSON);
   } catch (e) {
+    console.log("=============================");
     console.log(dataAsJSON);
+    console.log("=============================");
   }
   var commit_langcomp_data = [];
   var commit_msglength_data = [];
