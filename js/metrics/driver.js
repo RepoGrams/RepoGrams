@@ -18,4 +18,5 @@ function runMetrics(dataAsJSON) {
   });
 
   var metric5data = mostEditFile(metric5data);
+  return [commit_langcomp_data, commit_msglength_data, commit_modularity_data, metric5data]
 }

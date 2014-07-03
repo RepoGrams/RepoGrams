@@ -20,6 +20,12 @@
 <html !DOCTYPE HTML>
 <head>
 	<?php include('header.php'); ?>
+        <script type="text/javascript" src="js/metrics/branchComp.js"></script>
+        <script type="text/javascript" src="js/metrics/branchUse.js"></script>
+        <script type="text/javascript" src="js/metrics/commitLangComple.js"></script>
+        <script type="text/javascript" src="js/metrics/commitModul.js"></script>
+        <script type="text/javascript" src="js/metrics/commitMsgLength.js"></script>
+        <script type="text/javascript" src="js/metrics/driver.js"></script>
 </head>
 
 <body>
@@ -89,7 +95,8 @@
                 jQuery.post("php/action.php", {state: 2}, function(data) {
                    $("#mainbar").attr( "aria-valuenow","100");
                    $("#mainbar").css({"width":"100%"});
-                   console.log(data);
+                   $("#mainbar").hide();
+                   console.log(runMetrics(data));
                 });
 	</script>
 </body>
