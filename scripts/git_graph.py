@@ -231,6 +231,14 @@ class GitGraph():
 
 
 if __name__ == "__main__":
+    import sys
+    import os
+    import tempfile
+    dirpath = tempfile.mkdtemp()
+    print(dirpath, file=sys.stderr)
+    os.chdir(dirpath)
+    command = "git clone {} .".format(sys.argv[1])
+    subprocess.check_call(command.split())
     g = GitGraph()
     #print(g.metric6())
     exported = g.export_as_json()

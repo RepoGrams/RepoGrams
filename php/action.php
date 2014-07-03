@@ -74,6 +74,12 @@ startSessionIfNotStarted();
                                         $retval = array("error" => false, "finished" => true);
                                         echo(json_encode($retval));
 					return;
+                               case 2:
+                                 $command = "/usr/bin/python2 ../scripts/git_graph.py ".$repourl;
+                                 error_log($command);
+                                 $output = shell_exec($command);
+                                 echo(json_encode($output));
+                                 return;
 			}
 		} catch (Exception $e) {
                         reportError($e->getMessage());

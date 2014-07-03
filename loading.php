@@ -86,7 +86,11 @@
 	            data: {state: currentState}
 	          });
 		}
-		requestImage(0);
+                jQuery.post("php/action.php", {state: 2}, function(data) {
+                   $("#mainbar").attr( "aria-valuenow","100");
+                   $("#mainbar").css({"width":"100%"});
+                   console.log(data);
+                });
 	</script>
 </body>
 </html>
