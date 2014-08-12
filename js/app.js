@@ -18,7 +18,7 @@ repogramsModule.controller('RepogramsConfig',
 
 repogramsModule.controller('RepogramsRender',
 	['$scope',
-	function ($scope){
+	function ($scope, repos){
 		//TODO: This is the place where the variables need to be stored!
 		$scope.repos = [
 		{ name:"jQuery",metric: "B"}
@@ -27,7 +27,7 @@ repogramsModule.controller('RepogramsRender',
 	]);
 
 repogramsModule.controller('RepogramsImporter',
-	['$scope',function ($scope){
+	['$scope',function ($scope, repos){
 	$scope.ImportButtonText = "Add";
 	$scope.importURL = "";
 	$scope.importRepo = 
@@ -35,7 +35,8 @@ repogramsModule.controller('RepogramsImporter',
 		if($scope.importURL == "")
 			  console.log("Use random repo now!");
 		else
-			  console.log("AJAX call to backend now!");
+			
+			console.log("AJAX call to backend now!");
 		};
 }]);
 
@@ -49,3 +50,21 @@ repogramsModule.directive('ngRendermetric', function(){return {
 	    template: '<div class="sparkline"><h4></h4></div>'
 		}
 });
+
+//
+//services
+//
+repogramsModule.service('repos',
+			function(){
+				var RepoArr = null;
+				var size = 0;
+				return{
+					getRepoArr : function(){
+						return RepoArr;
+					},
+					addRepo : function(repoJSON){
+						RepoArr[size] = repoJSON;
+						size++;
+						}
+				};
+			});
