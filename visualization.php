@@ -27,24 +27,27 @@ require_once('header.php');
 		</div>
 
 		<!-- Main Block with the Repo name and Metric render -->
-		<div ng-controller="RepogramsRender">
-			<div class="repo" ng-repeat="repo in repos">
-                        <h3>{{repo.name}}</h3>
-			<div class="row">
-				<div class="col-md-2"></div>
-				<div class="col-md-10"><ng-rendermetric></ng-rendermetric></div>
-			</div>
-			</div>
-			<div style="outline: 1px solid black;">
-			<ng-legend></ng-legend>
-			</div>
-		</div>
+                <div ng-controller="RepogramsRender" class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-8" style="outline: 1px solid red;">
+                            <div class="repo" ng-repeat="repo in repos">
+                              <h3>{{repo.name}}</h3>
+                              <ng-rendermetric></ng-rendermetric>
+                            </div>
+                          </div>
+                          <div class="col-md-4" style="outline: 1px solid black;">
+                            <ng-legend></ng-legend>
+                          </div>
+                        </div>
+                </div>
 		<br><br>
 		<div class="row">
 		<!-- last block for import box -->
-		<div ng-controller="RepogramsImporter">
+		<div ng-controller="RepogramsImporter" class=row>
+                  <div class="col-md-12">
 			<input type="text" ng-model="importURL"/>
 			<button ng-click="importRepo()">{{ImportButtonText}}</button>
+                  </div>
 		</div>
 		</div>
 	</div>
