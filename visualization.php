@@ -29,14 +29,13 @@ require_once('header.php');
 		<!-- Main Block with the Repo name and Metric render -->
 		<div ng-controller="RepogramsRender">
 			<div class="repo" ng-repeat="repo in repos">
+                        <h3>{{repo.name}}</h3>
 			<div class="row">
-				<div class="col-md-2">
-				<h3>{{repo.name}}</h3>
-				</div>
+				<div class="col-md-2"></div>
 				<div class="col-md-10"><ng-rendermetric></ng-rendermetric></div>
 			</div>
 			</div>
-			<div>
+			<div style="outline: 1px solid black;">
 			<ng-legend></ng-legend>
 			</div>
 		</div>

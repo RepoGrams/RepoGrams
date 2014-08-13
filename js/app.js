@@ -107,8 +107,8 @@ repogramsModule.directive('ngRendermetric', function(){return {
 repogramsModule.directive('ngLegend', function(){ return {
 	restrict: 'E',
 	scope: {},
-	template: '<ul style="list-style:none;" ng-bind-html="metricLegend"></ul>',
+	template: '<h3>Legend:</h3><ul style="list-style:none;" ng-bind-html="metricLegend"></ul>',
 	controller: ['$scope', '$sce', function($scope, $sce){
-                $scope.metricLegend = $sce.trustAsHtml('<li style="background-color:#00ff00; height:10px; width: 10px; border:1px solid;"></li>');
+                $scope.metricLegend = $sce.trustAsHtml('<li style="background-color:#00ff00; height:10px; width: 10px; border:1px solid;"></li>Description');
 	}]
 }});
