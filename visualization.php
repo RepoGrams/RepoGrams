@@ -37,7 +37,7 @@ require_once('header.php');
 			</div>
 			</div>
 			<div>
-			<ng-legend></ng-lng-legend>
+			<ng-legend></ng-legend>
 			</div>
 		</div>
 		<br><br>
