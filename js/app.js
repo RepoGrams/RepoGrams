@@ -71,7 +71,7 @@ repogramsModule.controller('RepogramsRender',
 repogramsModule.controller('RepogramsImporter',
 	['$scope',function ($scope, reposService){
 	$scope.ImportButtonText = "Add";
-	$scope.importURL = "";
+	$scope.importURL = "git@github.com:mozilla/firefox.git";
 	$scope.importRepo = 
 	function() {
 		if($scope.importURL == "")

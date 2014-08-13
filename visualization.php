@@ -14,6 +14,7 @@ require_once('header.php');
 		<title>RepoGrams</title>
 	</head>
 	<body>
+        <h1>Repograms</h1> <!-- how about a fancy font? Or a logo? -->
 	<div class="container">
 		<!-- First block for the selection box and zoom slider -->
 		<div class="row">
@@ -41,14 +42,20 @@ require_once('header.php');
                         </div>
                 </div>
 		<br><br>
-		<div class="row">
-		<!-- last block for import box -->
-		<div ng-controller="RepogramsImporter" class=row>
-                  <div class="col-md-12">
-			<input type="text" ng-model="importURL"/>
-			<button ng-click="importRepo()">{{ImportButtonText}}</button>
+		<div class="container-fluid">
+                  <!-- last block for import box -->
+                  <div ng-controller="RepogramsImporter" class="row">
+                    <!-- TODO: the layout is quite bad currently -->
+                    <div class="col-md-6">
+                          <input type="text" class="form-control" ng-model="importURL"/>
+                    </div>
+                    <div class="col-md-6">
+                          <a class="clear" ng-click="importURL = null">
+                              <span class="glyphicon glyphicon-remove"></span>
+                          </a>
+                          <button ng-click="importRepo()">{{ImportButtonText}}</button>
+                    </div>
                   </div>
-		</div>
 		</div>
 	</div>
 
