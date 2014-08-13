@@ -3,31 +3,31 @@ require_once('header.php');
 ?>
 
 <html ng-app="repogramsModule">
-	<head>
-		<!-- include Angular.js -->
-		<script type="text/javascript" src="/js/angular.min.js"></script>
-		<!-- Sanitize Module for HTML injections -->
-		<script type="text/javascript" src="/js/sanitize.js"></script>
-		<!-- include the app controllers -->
-		<script type="text/javascript" src="/js/app.js"></script>
+        <head>
+                <!-- include Angular.js -->
+                <script type="text/javascript" src="/js/angular.min.js"></script>
+                <!-- Sanitize Module for HTML injections -->
+                <script type="text/javascript" src="/js/sanitize.js"></script>
+                <!-- include the app controllers -->
+                <script type="text/javascript" src="/js/app.js"></script>
 
-		<title>RepoGrams</title>
-	</head>
-	<body>
+                <title>RepoGrams</title>
+        </head>
+        <body>
         <h1>Repograms</h1> <!-- how about a fancy font? Or a logo? -->
-	<div class="container">
-		<!-- First block for the selection box and zoom slider -->
-		<div class="row">
-		<div ng-controller="RepogramsConfig">
-			<!-- Dropdown Menu for Metric Selection -->
-			<select  ng-model="metricId" 
-			ng-options="metric.metricId as metric.name for metric in metrics">
-			</select>
-			<!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
-		</div>
-		</div>
+        <div class="container">
+                <!-- First block for the selection box and zoom slider -->
+                <div class="row">
+                <div ng-controller="RepogramsConfig">
+                        <!-- Dropdown Menu for Metric Selection -->
+                        <select  ng-model="metricId" 
+                        ng-options="metric.metricId as metric.name for metric in metrics">
+                        </select>
+                        <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
+                </div>
+                </div>
 
-		<!-- Main Block with the Repo name and Metric render -->
+                <!-- Main Block with the Repo name and Metric render -->
                 <div ng-controller="RepogramsRender" class="container-fluid">
                         <div class="row">
                           <div class="col-md-8" style="outline: 1px solid red;">
@@ -41,8 +41,8 @@ require_once('header.php');
                           </div>
                         </div>
                 </div>
-		<br><br>
-		<div class="container-fluid">
+                <br><br>
+                <div class="container-fluid">
                   <!-- last block for import box -->
                   <div ng-controller="RepogramsImporter" class="row">
                     <!-- TODO: the layout is quite bad currently -->
@@ -56,8 +56,8 @@ require_once('header.php');
                           <button ng-click="importRepo()">{{ImportButtonText}}</button>
                     </div>
                   </div>
-		</div>
-	</div>
+                </div>
+        </div>
 
 </body>
 </html>
