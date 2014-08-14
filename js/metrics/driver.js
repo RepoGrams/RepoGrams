@@ -18,5 +18,10 @@ function runMetrics(data) {
 
   var metric5data = mostEditFile(metric5data);
   console.log("alive");
-  return [commit_langcomp_data, commit_msglength_data, commit_modularity_data, metric5data]
+  return {
+    languageComplexityData: commit_langcomp_data,
+    msglengthData: commit_msglength_data,
+    modularityData: commit_modularity_data,
+    mostEditFileData:  metric5data
+  }
 }
