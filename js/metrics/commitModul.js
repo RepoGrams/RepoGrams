@@ -10,6 +10,18 @@ function substName(stringToSplit, splitter){
 		result += splitter;
 	}
 }
+
+
+/*
+ *  Strips filename from path
+ *  @precond: path must be a valid Unix path and contain a filename
+ *  @returns: the path without the filename
+ *  Removes everything after last /
+ */
+function getDirPath(path) {
+    return path.substr(path.lastIndexOf("/"));
+}
+
 /*
  * Compute the modularity of a given commit for the list of the files
  */
@@ -21,7 +33,7 @@ function getMetrictCommitModularity(fileList){
 		for (var i = 0; i < fileList.length; i++){
 			for (var j = i+1; j < fileList.length; j++){
 				var string1 = getDirPath(fileList[i]);
-				var string2 = getDirPaht(fileList[j]);
+				var string2 = getDirPath(fileList[j]);
 
 				//Windows filenames can't contain a /, check 
 				//first if we have unix filepaths
@@ -33,7 +45,7 @@ function getMetrictCommitModularity(fileList){
 					string1 = substName(string1, WINSPLIT);
 					string2 = substName(string2, WINSPLIT);
 				}
-				var res = cij_fuzzy.metrics.Jaro_Winkler(string1, string2);
+				var res = clj_fuzzy.metrics.jaro_winkler(string1, string2);
 				resultContainer.push(res); 
 			}
 		}

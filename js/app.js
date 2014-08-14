@@ -159,6 +159,7 @@ repogramsModule.controller('RepogramsImporter',
               "blen": [ 1,2,1,5,1,3,2],
               "bmetric": [33,0,20,35,40,10,11]
             });
+            runMetrics(data);
           });
         }
 }]);
