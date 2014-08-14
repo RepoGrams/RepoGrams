@@ -45,8 +45,9 @@ var MapperFactory = function () {
 
   this.createMapper = function(maxValue, metricName) {
     console.assert(outer.chunkNum > 0, outer.chunkNum);
+    console.log("maxValue is" + maxValue);
     var step = Math.floor(maxValue/outer.chunkNum);
-    console.assert(step > 0, "negative number!");
+    console.assert(step > 0, "negative number! " + step);
     var mName = metricName;
     this.map = function(value) {
        return outer.metric2color[mName][Math.min(outer.chunkNum-1,Math.floor(value/step))];
@@ -54,7 +55,7 @@ var MapperFactory = function () {
   }
 }
 
-var mf = new MapperFactory();
+var mapperFactory = new MapperFactory();
 
 
 var repogramsModule = angular.module('repogramsModule',['ngSanitize'])
@@ -75,8 +76,8 @@ repogramsModule.service('reposService',
 				RepoArr[size++] = {
 						"name": "Testrepo A",
 						"pos": 0,
-						"blen": [ 1,1,1,1,1],
-						"bmetric": [2,2,2,2,2]
+						"blen": [ 1,2,1,1,1],
+						"bmetric": [2,12,8,1,40]
 						}
 				//TODO: Testcode ends here
 
@@ -106,8 +107,8 @@ repogramsModule.service('reposService',
 						RepoArr[size] = {
 						"name": "Testrepo A",
 						"pos" : pos,
-						"blen": [ 1,1,1,1,1],
-						"bmetric": [2,2,2,2,2]
+						"blen": [ 1,2,1,1,1],
+						"bmetric": [2,12,8,1,40]
 						};
 						size++;
 						},
@@ -158,8 +159,8 @@ repogramsModule.controller('RepogramsImporter',
 		else
 			reposService.addRepo({
 						"name": "Testrepo A",
-						"blen": [ 1,1,1,1,1],
-						"bmetric": [2,2,2,2,2]
+						"blen": [ 1,2,1,1,1],
+						"bmetric": [2,12,8,1,40]
 						});
 
 			console.log("AJAX call to backend now!");
@@ -178,8 +179,12 @@ repogramsModule.directive('ngRendermetric', function(){return {
 		//TODO: Add every metricvalue
 		var list = '';
 		var repo = reposService.getCurrentRepo();
+                var maxval = Math.max.apply(Math, repo.bmetric);
+                console.log(repo.bmetric);
+                console.log("maxval is " + maxval);
+                var mapper = new mapperFactory.createMapper(maxval, "branch_complexity"); // TODO: use real values
 		for( var i = 0; i < repo.blen.length; i++){
-			list += '<li class="customBlock" style="background-color:'+getBgColor(repo.bmetric[i])+'; height:20px; width:'+10*repo.blen[i]+'px; border:1px solid;">';
+			list += '<li class="customBlock" style="background-color:'+mapper.map(repo.bmetric[i])+'; height:20px; width:'+10*repo.blen[i]+'px; border:1px solid;">';
 			list += '</li>'
 		}
 		$scope.metricValues = $sce.trustAsHtml(list);
