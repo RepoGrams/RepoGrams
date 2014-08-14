@@ -76,14 +76,6 @@ repogramsModule.service('reposService',
 				var size = 0;
 				var pos = 0;
 
-				//TODO: Remove test code!!
-				RepoArr[size++] = {
-						"name": "Testrepo A",
-						"blen": [ 1,2,1,1,1],
-						"bmetric": [2,12,8,1,40]
-						}
-				//TODO: Testcode ends here
-
 				return{
 					getRepoArr : function(){
 						return RepoArr;
@@ -146,22 +138,29 @@ repogramsModule.controller('RepogramsRender',
 	]);
 
 repogramsModule.controller('RepogramsImporter',
-	['$scope', 'reposService', function ($scope, reposService){
+	['$scope', '$http', 'reposService', function ($scope, $http, reposService){
 	$scope.ImportButtonText = "Add";
-	$scope.importURL = "git@github.com:mozilla/firefox.git";
+	$scope.importURL = "https://github.com/Inkane/chakra-paste.git";
 	$scope.importRepo = 
 	function() {
-		if($scope.importURL == "")
-			  console.log("Use random repo now!");
-		else
-			reposService.addRepo({
-						"name": $scope.importURL.split("/").pop(),
-						"blen": [ 1,2,1,5,1,3,2],
-						"bmetric": [33,0,20,35,40,10,11]
-						});
-
-			console.log("AJAX call to backend now!");
-		};
+          // TODO: get random URL
+                  var url = ($scope.importURL === "")
+                           ? "https://github.com/Inkane/chakra-paste.git"
+                           : $scope.importURL;
+          console.log("fetch " + url);
+          var result = $http.post(
+             "php/data.php",
+             {"repourl": url}
+          );
+          result.success(function(data) {
+            reposService.addRepo({
+              "name": $scope.importURL.split("/").pop(),
+              "rawdata": data,
+              "blen": [ 1,2,1,5,1,3,2],
+              "bmetric": [33,0,20,35,40,10,11]
+            });
+          });
+        }
 }]);
 
 //
