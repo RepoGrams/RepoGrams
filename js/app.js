@@ -74,6 +74,7 @@ repogramsModule.service('reposService',
 				//TODO: Remove test code!!
 				RepoArr[size++] = {
 						"name": "Testrepo A",
+						"pos": 0,
 						"blen": [ 1,1,1,1,1],
 						"bmetric": [2,2,2,2,2]
 						}
@@ -85,6 +86,9 @@ repogramsModule.service('reposService',
 					},
 					getCurrentRepo : function(){
 						return RepoArr[pos];
+					},
+					getCurrentPos : function(){
+						return pos;
 					},
 					advance : function(){
 						if(pos < size){
@@ -98,9 +102,27 @@ repogramsModule.service('reposService',
 						return 0;
 					},
 					addRepo : function(repoJSON){
-						RepoArr[size] = repoJSON;
+//						RepoArr[size] = repoJSON;
+						RepoArr[size] = {
+						"name": "Testrepo A",
+						"pos" : pos,
+						"blen": [ 1,1,1,1,1],
+						"bmetric": [2,2,2,2,2]
+						};
 						size++;
+						},
+					removeRepo : function(place){
+						var RepoArrNew = {};
+						
+						for(var i = 0; i < place; i++){
+							RepoArrNew[i] = RepoArr[i];
 						}
+						for(var i  = place; i < size; i++){
+							RepoArrNew[i] = RepoArr[i+1];
+						}
+						size--;
+						RepoArr = RepoArrNew;
+					}
 				};
 			});
 
@@ -124,11 +146,16 @@ repogramsModule.controller('RepogramsRender',
 	['$scope','reposService',
 	function ($scope, reposService){
 		$scope.repos = reposService.getRepoArr();
+//		$scope.repos = angular.extend('repos',reposService.getRepoArr());
+		$scope.removeRepo = function (pos){
+				console.log("Delete repo");
+				reposService.removeRepo(pos);
+		};
 	}
 	]);
 
 repogramsModule.controller('RepogramsImporter',
-	['$scope',function ($scope, reposService){
+	['$scope', 'reposService', function ($scope, reposService){
 	$scope.ImportButtonText = "Add";
 	$scope.importURL = "git@github.com:mozilla/firefox.git";
 	$scope.importRepo = 
@@ -136,6 +163,12 @@ repogramsModule.controller('RepogramsImporter',
 		if($scope.importURL == "")
 			  console.log("Use random repo now!");
 		else
+			reposService.addRepo({
+						"name": "Testrepo A",
+						"blen": [ 1,1,1,1,1],
+						"bmetric": [2,2,2,2,2]
+						});
+
 			console.log("AJAX call to backend now!");
 		};
 }]);
@@ -157,9 +190,6 @@ repogramsModule.directive('ngRendermetric', function(){return {
 			list += '</li>'
 		}
 		$scope.metricValues = $sce.trustAsHtml(list);
-//		$scope.metricValues = $sce.trustAsHtml('<li class="customBlock" style="background-color:rgb(0,255,0); height:30px; width:20px; border:1px solid;"></li>\
-//		<li class="customBlock" style="background-color:rgb(255,0,0); height:30px; width:60px; border:1px solid;"></li>\
-//		<li class="customBlock" style="background-color:rgb(0,0,255); height:30px; width:40px; border:1px solid;"></li>');
 	    }]
 }});
 
