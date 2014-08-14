@@ -153,7 +153,7 @@ repogramsModule.controller('RepogramsImporter',
 			  console.log("Use random repo now!");
 		else
 			reposService.addRepo({
-						"name": "Testrepo A",
+						"name": $scope.importURL.split("/").pop(),
 						"blen": [ 1,2,1,1,1],
 						"bmetric": [33,0,20,35,40]
 						});
