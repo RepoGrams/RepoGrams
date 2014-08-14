@@ -33,7 +33,7 @@ require_once('header.php');
                           <div class="col-md-8" style="outline: 1px solid red;">
                             <div class="repo" ng-repeat="repo in repos">
                               <div class="row">
-                                <h3 class="col-md-3">{{repo.name}}</h3>
+                                <div class="col-md-3"><h3>{{repo.name}}</h3></div>
                                 <div class="col-md-9"><ng-rendermetric></ng-rendermetric></div>
                               </div>
                             </div>

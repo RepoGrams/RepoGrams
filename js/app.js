@@ -1,3 +1,62 @@
+//TODO: move those functions into different file
+var MapperFactory = function () {
+
+  this.metric2color = {
+    "branch_complexity": ["#f7fcfd",
+      "#e5f5f9",
+      "#ccece6",
+      "#99d8c9",
+      "#66c2a4",
+      "#41ae76",
+      "#238b45",
+      "#005824"
+    ],
+    "commit_lang_complexity": ["#f7fcfd",
+      "#e0ecf4",
+      "#bfd3e6",
+      "#9ebcda",
+      "#8c96c6",
+      "#8c6bb1",
+      "#88419d",
+      "#6e016b"
+    ],
+    "commit_message_length": ["#f7fcf0",
+      "#e0f3db",
+      "#ccebc5",
+      "#a8ddb5",
+      "#7bccc4",
+      "#4eb3d3",
+      "#2b8cbe",
+      "#08589e"
+    ],
+    "commit_modularity": ["#fff7ec",
+      "#fee8c8",
+      "#fdd49e",
+      "#fdbb84",
+      "#fc8d59",
+      "#ef6548",
+      "#d7301f",
+      "#990000"
+    ]
+  }
+  this.chunkNum = 8;
+
+  var outer = this;
+
+  this.createMapper = function(maxValue, metricName) {
+    console.assert(outer.chunkNum > 0, outer.chunkNum);
+    var step = Math.floor(maxValue/outer.chunkNum);
+    console.assert(step > 0, "negative number!");
+    var mName = metricName;
+    this.map = function(value) {
+       return outer.metric2color[mName][Math.floor(value/step)];
+    }
+  }
+}
+
+var mf = new MapperFactory();
+
+
 var repogramsModule = angular.module('repogramsModule',['ngSanitize'])
 function getBgColor(blen){
  return '#00ff00';
