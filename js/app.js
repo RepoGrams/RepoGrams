@@ -125,8 +125,8 @@ repogramsModule.controller('RepogramsConfig',
 		$scope.metricId = 1;
 		$scope.MetricTitle = "Metric"
 		$scope.metrics = [
-			{ metricId: 1, name : 'A', link: '#'},
-			{ metricId: 2, name : 'B', link: '#'}
+			{ metricId: 1, name : 'Metric A', link: '#'},
+			{ metricId: 2, name : 'Metric B', link: '#'}
 		];  
 	}
 	]);

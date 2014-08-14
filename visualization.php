@@ -20,6 +20,7 @@ require_once('header.php');
                 <div class="row">
                 <div ng-controller="RepogramsConfig">
                         <!-- Dropdown Menu for Metric Selection -->
+                        Metrics:
                         <select  ng-model="metricId" 
                         ng-options="metric.metricId as metric.name for metric in metrics">
                         </select>
