@@ -67,7 +67,7 @@ function getBgColor(blen){
 //
 repogramsModule.service('reposService',
 			function(){
-				var RepoArr = {};
+				var RepoArr = [];
 				var size = 0;
 				var pos = 0;
 
@@ -112,19 +112,9 @@ repogramsModule.service('reposService',
 						size++;
 						},
 					removeRepo : function(place){
-						var RepoArrNew = {};
-						
-						for(var i = 0; i < place; i++){
-							RepoArrNew[i] = RepoArr[i];
-						}
-						for(var i  = place; i < size; i++){
-							RepoArrNew[i] = RepoArr[i+1];
-						}
+                                                RepoArr.splice(place,1);
 						size--;
 						console.log(RepoArr);
-						console.log(RepoArrNew);
-						RepoArr = RepoArrNew;
-
 					}
 				};
 			});
