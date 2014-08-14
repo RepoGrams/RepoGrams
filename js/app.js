@@ -121,7 +121,10 @@ repogramsModule.service('reposService',
 							RepoArrNew[i] = RepoArr[i+1];
 						}
 						size--;
+						console.log(RepoArr);
+						console.log(RepoArrNew);
 						RepoArr = RepoArrNew;
+
 					}
 				};
 			});

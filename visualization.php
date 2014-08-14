@@ -33,7 +33,7 @@ require_once('header.php');
                           <div class="col-md-8" style="outline: 1px solid red;">
                             <div class="repo" ng-repeat="repo in repos">
                               <div class="row">
-                                <div class="col-md-4"><h3>{{repo.name}}</h3><button ng-click="removeRepo(repo.pos)">Remove</button> </div>
+                                <div class="col-md-4"><h3>{{repo.name}}</h3><button ng-click="removeRepo(repo.pos)"><span class="glyphicon glyphicon-remove"></span></button> </div>
                                 <div class="col-md-8"><ng-rendermetric></ng-rendermetric></div>
                               </div>
                             </div>
