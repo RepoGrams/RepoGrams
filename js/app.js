@@ -75,7 +75,6 @@ repogramsModule.service('reposService',
 				//TODO: Remove test code!!
 				RepoArr[size++] = {
 						"name": "Testrepo A",
-						"pos": 0,
 						"blen": [ 1,2,1,1,1],
 						"bmetric": [2,12,8,1,40]
 						}
@@ -135,7 +134,6 @@ repogramsModule.controller('RepogramsRender',
 	['$scope','reposService',
 	function ($scope, reposService){
 		$scope.repos = reposService.getRepoArr();
-//		$scope.repos = angular.extend('repos',reposService.getRepoArr());
 		$scope.removeRepo = function (pos){
 				console.log("Delete repo");
 				reposService.removeRepo(pos);
