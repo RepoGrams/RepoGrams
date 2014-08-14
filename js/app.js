@@ -43,7 +43,7 @@ var MapperFactory = function () {
 
   var outer = this;
 
-  this.createMapper = function(maxValue, metricName) {
+  var Mapper = function(maxValue, metricName) {
     console.assert(outer.chunkNum > 0, outer.chunkNum);
     console.log("maxValue is" + maxValue);
     var step = Math.floor(maxValue/outer.chunkNum);
@@ -52,6 +52,10 @@ var MapperFactory = function () {
     this.map = function(value) {
        return outer.metric2color[mName][Math.min(outer.chunkNum-1,Math.floor(value/step))];
     }
+  }
+
+  this.createMapper = function(maxValue, metricName) {
+    return new Mapper(maxValue, metricName);
   }
 }
 
@@ -175,7 +179,7 @@ repogramsModule.directive('ngRendermetric', function(){return {
                 var maxval = Math.max.apply(Math, repo.bmetric);
                 console.log(repo.bmetric);
                 console.log("maxval is " + maxval);
-                var mapper = new mapperFactory.createMapper(maxval, "branch_complexity"); // TODO: use real values
+                var mapper = mapperFactory.createMapper(maxval, "branch_complexity"); // TODO: use real values
 		for( var i = 0; i < repo.blen.length; i++){
 			list += '<li class="customBlock" style="background-color:'+mapper.map(repo.bmetric[i])+'; height:20px; width:'+10*repo.blen[i]+'px; border:1px solid;">';
 			list += '</li>'
