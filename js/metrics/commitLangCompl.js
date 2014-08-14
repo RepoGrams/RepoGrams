@@ -42,7 +42,7 @@ function isValidFile(entry, JSONvalues){
 function getMetric(fileList) {
 	var mem = new Object();	
 
-	var result = jQuery.get("js/filenames.json", function(data){
+	var result = jQuery.get("js/metrics/filenames.json", function(data){
 		var JSONvalues = jQuery.parseJSON(data);
 		
 		fileList.forEach(function (entry){
