@@ -49,7 +49,7 @@ var MapperFactory = function () {
     console.assert(step > 0, "negative number!");
     var mName = metricName;
     this.map = function(value) {
-       return outer.metric2color[mName][Math.floor(value/step)];
+       return outer.metric2color[mName][Math.min(outer.chunkNum,Math-1.floor(value/step))];
     }
   }
 }
