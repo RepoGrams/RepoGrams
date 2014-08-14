@@ -103,13 +103,8 @@ repogramsModule.service('reposService',
 						return 0;
 					},
 					addRepo : function(repoJSON){
-//						RepoArr[size] = repoJSON;
-						RepoArr[size] = {
-						"name": "Testrepo A",
-						"pos" : pos,
-						"blen": [ 1,2,1,1,1],
-						"bmetric": [2,12,8,1,40]
-						};
+                                                console.log(repoJSON);
+						RepoArr[size] = repoJSON;
 						size++;
 						},
 					removeRepo : function(place){
@@ -160,7 +155,7 @@ repogramsModule.controller('RepogramsImporter',
 			reposService.addRepo({
 						"name": "Testrepo A",
 						"blen": [ 1,2,1,1,1],
-						"bmetric": [2,12,8,1,40]
+						"bmetric": [33,0,20,35,40]
 						});
 
 			console.log("AJAX call to backend now!");
@@ -172,13 +167,13 @@ repogramsModule.controller('RepogramsImporter',
 //
 repogramsModule.directive('ngRendermetric', function(){return {
 	    restrict: 'E',
-	    scope:{
-	    },
+	    scope:{},
 	    template: '<ul style="list-style:none;" ng-bind-html="metricValues"></ul>',
 	    controller: ['$scope','reposService', '$sce', function($scope, reposService, $sce){
 		//TODO: Add every metricvalue
 		var list = '';
-		var repo = reposService.getCurrentRepo();
+                console.log($scope.$parent.$index);
+		var repo = reposService.getRepoArr()[$scope.$parent.$index];
                 var maxval = Math.max.apply(Math, repo.bmetric);
                 console.log(repo.bmetric);
                 console.log("maxval is " + maxval);
