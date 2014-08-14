@@ -42,7 +42,7 @@ function mostEditFile(inputList){
 				map[pathToFile] += 1;
 			}
 			else{
-				map[pathToFile] = 1];
+				map[pathToFile] = 1;
 			}
 			
 			if(map[pathToFile] > max){

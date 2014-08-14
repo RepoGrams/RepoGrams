@@ -10,6 +10,15 @@ require_once('header.php');
                 <script type="text/javascript" src="/js/sanitize.js"></script>
                 <!-- include the app controllers -->
                 <script type="text/javascript" src="/js/app.js"></script>
+                <!-- include metrics code -->
+                <script type="text/javascript" src="/js/metrics/branchComp.js"></script>
+                <script type="text/javascript" src="/js/metrics/branchUse.js"></script>
+                <script type="text/javascript" src="/js/metrics/commitLangCompl.js"></script>
+                <script type="text/javascript" src="/js/metrics/commitModul.js"></script>
+                <script type="text/javascript" src="/js/metrics/commitMsgLength.js"></script>
+                <script type="text/javascript" src="/js/metrics/mostEditFile.js"></script>
+                <script type="text/javascript" src="/js/metrics/driver.js"></script>
+
 
                 <title>RepoGrams</title>
         </head>
