@@ -154,8 +154,8 @@ repogramsModule.controller('RepogramsImporter',
 		else
 			reposService.addRepo({
 						"name": $scope.importURL.split("/").pop(),
-						"blen": [ 1,2,1,1,1],
-						"bmetric": [33,0,20,35,40]
+						"blen": [ 1,2,1,5,1,3,2],
+						"bmetric": [33,0,20,35,40,10,11]
 						});
 
 			console.log("AJAX call to backend now!");
