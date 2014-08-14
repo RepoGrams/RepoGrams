@@ -155,13 +155,10 @@ repogramsModule.controller('RepogramsImporter',
           result.success(function(data) {
             reposService.addRepo({
               "name": $scope.importURL.split("/").pop(),
-              "rawdata": data,
+              "metricData": runMetrics(data),
               "blen": [ 1,2,1,5,1,3,2],
               "bmetric": [33,0,20,35,40,10,11]
             });
-            console.log("==============================")
-            console.log(runMetrics(data));
-            console.log("==============================")
           });
         }
 }]);
@@ -176,14 +173,13 @@ repogramsModule.directive('ngRendermetric', function(){return {
 	    controller: ['$scope','reposService', '$sce', function($scope, reposService, $sce){
 		//TODO: Add every metricvalue
 		var list = '';
-                console.log($scope.$parent.$index);
 		var repo = reposService.getRepoArr()[$scope.$parent.$index];
-                var maxval = Math.max.apply(Math, repo.bmetric);
-                console.log(repo.bmetric);
+                // TODO: replace hardcoded metric with selected one
+                var maxval = Math.max.apply(Math, repo.metricData.msgLengthData);
                 console.log("maxval is " + maxval);
-                var mapper = mapperFactory.createMapper(maxval, "branch_complexity"); // TODO: use real values
-		for( var i = 0; i < repo.blen.length; i++){
-			list += '<li class="customBlock" style="background-color:'+mapper.map(repo.bmetric[i])+'; height:20px; width:'+10*repo.blen[i]+'px; border:1px solid;">';
+                var mapper = mapperFactory.createMapper(maxval, "commit_message_length");
+		for( var i = 0; i < repo.metricData.msgLengthData.length; i++){
+			list += '<li class="customBlock" style="background-color:'+mapper.map(repo.metricData.msgLengthData[i])+'; height:20px; width:'+10/**repo.blen[i]*/+'px; border:1px solid;">';
 			list += '</li>'
 		}
 		$scope.metricValues = $sce.trustAsHtml(list);

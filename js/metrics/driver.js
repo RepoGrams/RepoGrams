@@ -20,7 +20,7 @@ function runMetrics(data) {
   console.log("alive");
   return {
     languageComplexityData: commit_langcomp_data,
-    msglengthData: commit_msglength_data,
+    msgLengthData: commit_msglength_data,
     modularityData: commit_modularity_data,
     mostEditFileData:  metric5data
   }
