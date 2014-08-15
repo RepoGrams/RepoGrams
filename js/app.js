@@ -45,8 +45,7 @@ var MapperFactory = function () {
 
   var Mapper = function(maxValue, metricName) {
     console.assert(outer.chunkNum > 0, outer.chunkNum);
-    console.log("maxValue is" + maxValue);
-    var step = Math.floor(maxValue/outer.chunkNum);
+    var step = maxValue/outer.chunkNum;
     console.assert(step > 0, "negative number! " + step);
     var mName = metricName;
     this.map = function(value) {
@@ -57,11 +56,11 @@ var MapperFactory = function () {
       var mappingInfo = [];
       for (var i = 0; i < outer.chunkNum; i++) {
         mappingInfo.push({
-          lowerBound: boundary,
-          upperBound: boundary+step,
+          lowerBound: Math.floor(boundary),
+          upperBound: Math.floor(boundary+step),
           color: outer.metric2color[mName][i]
         });
-        boundary += step+1;
+        boundary += step;
       }
       return mappingInfo;
     };
@@ -95,7 +94,6 @@ repogramsModule.service('reposService',
 						return RepoArr;
 					},
 					addRepo : function(repoJSON){
-                                          console.log(repoJSON);
 						RepoArr.push(repoJSON);
                                                 var localMaxVal = Math.max.apply(Math, repoJSON.metricData.msgLengthData); // TODO: support all metrics
                                                 if (localMaxVal > maxVal) {
@@ -141,7 +139,6 @@ repogramsModule.controller('RepogramsRender',
 	function ($scope, reposService){
 		$scope.repos = reposService.getRepoArr();
 		$scope.removeRepo = function (pos){
-				console.log("Delete repo");
 				reposService.removeRepo(pos);
 		};
 	}
