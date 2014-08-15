@@ -231,7 +231,7 @@ repogramsModule.directive('ngRendermetric', function(){
                       scope.styles[i].color = newVal.map(scope.repo.metricData.msgLengthData[i]);
                     }
                   } 
-                });
+                }, true);
 
                 // user selects a new metric
                 $scope.$watch('metricSelectionService.selectedMetrics', function (newVal, oldVal, scope) {
@@ -243,7 +243,7 @@ repogramsModule.directive('ngRendermetric', function(){
                       scope.styles[i].color = scope.reposService.mapToColor(newVal[0] ,scope.repo[newVal[0]][i]);
                     }
                   } 
-                });
+                }, true);
 
 
 	    }]
@@ -257,10 +257,15 @@ repogramsModule.directive('ngLegend', function(){ return {
                   '<ul>' +
                   '<li ng-repeat="style in styles">{{style.lowerBound}}-{{style.upperBound}}: <span class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></span></li>' +
                   '</ul>',
-	controller: ['$scope', 'reposService', function($scope, reposService){
+	controller: ['$scope', 'reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService){
           $scope.reposService = reposService;
+          console.log("!--->");
+          $scope.selectedMetric = metricSelectionService.getSelectedMetrics()[0].id;
+          console.log($scope.selectedMetric);
+          console.log($scope.reposService.getMapper($scope.selectedMetric));
           $scope.styles = [];
-          $scope.$watch('reposService.mapper', function (newVal, oldVal, scope) {
+          $scope.$watch('reposService.getMapper(selectedMetric)', function (newVal, oldVal, scope) {
+            console.log(newVal);
             if (newVal !== undefined) {
               var mappingInfo = newVal.getMappingInfo();
               console.log(mappingInfo);
@@ -273,6 +278,6 @@ repogramsModule.directive('ngLegend', function(){ return {
                 };
               }
             }
-          });
+          }, /*do a deep comparision; TODO: use event??*/true);
 	}]
 };});
