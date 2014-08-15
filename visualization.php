@@ -24,7 +24,7 @@ require_once('header.php');
                 <title>RepoGrams</title>
         </head>
         <body>
-        <h1>Repograms</h1> <!-- how about a fancy font? Or a logo? -->
+        <h1 style="text-align: center;">Repograms</h1> <!-- how about a fancy font? Or a logo? -->
         <div class="container">
                 <!-- First block for the selection box and zoom slider -->
                 <div class="row">
