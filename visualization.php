@@ -41,15 +41,15 @@ require_once('header.php');
                 <!-- Main Block with the Repo name and Metric render -->
                 <div ng-controller="RepogramsRender" class="container-fluid">
                         <div class="row">
-                          <div class="col-md-8" style="outline: 1px solid red;">
+                          <div class="col-md-10" style="outline: 1px solid red;">
                             <div class="repo" ng-repeat="repo in repos">
                               <div class="row">
-                                <div class="col-md-4"><h3>{{repo.name}}</h3><button ng-click="removeRepo($index)"><span class="glyphicon glyphicon-remove"></span></button> </div>
-                                <div class="col-md-8"><ng-rendermetric></ng-rendermetric></div>
+                                <div class="col-md-2"><label for="{{'metricBox'+$index}}">{{repo.name}}<label><button ng-click="removeRepo($index)"><span class="glyphicon glyphicon-remove"></span></button> </div>
+                                <div class="col-md-10" id="{{'metricBox'+$index}}"><ng-rendermetric></ng-rendermetric></div>
                               </div>
                             </div>
                           </div>
-                          <div class="col-md-4" style="outline: 1px solid black;">
+                          <div class="col-md-2" style="outline: 1px solid black;">
                             <ng-legend></ng-legend>
                           </div>
                         </div>

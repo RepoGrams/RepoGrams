@@ -176,9 +176,9 @@ repogramsModule.directive('ngRendermetric', function(){
         return {
 	    restrict: 'E',
 	    scope:{},
-	    template: '<ul style="list-style:none;">' + 
-'<li ng-repeat="style in styles" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></li>' +
-  '</ul>',
+	    template: '<div style="width:auto">' +
+'<div ng-repeat="style in styles" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></div>' +
+  '</div>',
 	    controller: ['$scope','reposService', '$sce', function($scope, reposService, $sce){
 		//TODO: Add every metricvalue
                 $scope.reposService = reposService;
