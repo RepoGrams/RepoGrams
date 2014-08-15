@@ -161,8 +161,6 @@ repogramsModule.controller('RepogramsImporter',
             reposService.addRepo({
               "name": $scope.importURL.split("/").pop(),
               "metricData": runMetrics(data),
-              "blen": [ 1,2,1,5,1,3,2],
-              "bmetric": [33,0,20,35,40,10,11]
             });
           });
         };
@@ -188,9 +186,10 @@ repogramsModule.directive('ngRendermetric', function(){
                 // upon which we need to recalculate the colour
                 $scope.styles = [];
 		for( var i = 0; i < $scope.repo.metricData.msgLengthData.length; i++){
+                  console.log("blen:" + $scope.repo.metricData.defaultBlen[i]);
                   $scope.styles.push({
                     color: reposService.mapToColor("commit_message_length", $scope.repo.metricData.msgLengthData[i]),
-                    width: "10px"
+                    width: "" + ($scope.repo.metricData.defaultBlen[i]+1) + "px" 
                   });
 		}
                 $scope.$watch('reposService.mapper', function (newVal, oldVal, scope) {
