@@ -52,6 +52,19 @@ var MapperFactory = function () {
     this.map = function(value) {
        return outer.metric2color[mName][Math.min(outer.chunkNum-1,Math.floor(value/step))];
     };
+    this.getMappingInfo = function() {
+      var boundary = 0;
+      var mappingInfo = [];
+      for (var i = 0; i < outer.chunkNum; i++) {
+        mappingInfo.push({
+          lowerBound: boundary,
+          upperBound: boundary+step,
+          color: outer.metric2color[mName][i]
+        });
+        boundary += step+1;
+      }
+      return mappingInfo;
+    };
   };
 
   this.createMapper = function(maxValue, metricName) {
@@ -196,8 +209,27 @@ repogramsModule.directive('ngRendermetric', function(){
 repogramsModule.directive('ngLegend', function(){ return {
 	restrict: 'E',
 	scope: {},
-	template: '<h3>Legend:</h3><ul style="list-style:none;" ng-bind-html="metricLegend"></ul>',
-	controller: ['$scope', '$sce', function($scope, $sce){
-                $scope.metricLegend = $sce.trustAsHtml('<li style="background-color:#00ff00; height:10px; width: 10px; border:1px solid;"></li>Description');
+  //TODO: The legend looks funny, but at least it seems to work
+	template: '<h3>Legend:</h3>' +
+                  '<ul>' +
+                  '<li ng-repeat="style in styles">{{style.lowerBound}}-{{style.upperBound}}: <span class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></span></li>' +
+                  '</ul>',
+	controller: ['$scope', 'reposService', function($scope, reposService){
+          $scope.reposService = reposService;
+          $scope.styles = [];
+          $scope.$watch('reposService.mapper', function (newVal, oldVal, scope) {
+            if (newVal !== undefined) {
+              var mappingInfo = newVal.getMappingInfo();
+              console.log(mappingInfo);
+              for (var i=0; i < mappingInfo.length; i++) {
+                $scope.styles[i] = {
+                  color: mappingInfo[i].color,
+                  width: "10px",
+                  lowerBound: mappingInfo[i].lowerBound,
+                  upperBound: mappingInfo[i].upperBound
+                };
+              }
+            }
+          });
 	}]
 };});
