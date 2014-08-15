@@ -38,7 +38,7 @@ var MapperFactory = function () {
       "#d7301f",
       "#990000"
     ]
-  }
+  };
   this.chunkNum = 8;
 
   var outer = this;
@@ -51,18 +51,19 @@ var MapperFactory = function () {
     var mName = metricName;
     this.map = function(value) {
        return outer.metric2color[mName][Math.min(outer.chunkNum-1,Math.floor(value/step))];
-    }
-  }
+    };
+  };
 
   this.createMapper = function(maxValue, metricName) {
     return new Mapper(maxValue, metricName);
-  }
-}
+  };
+};
 
 var mapperFactory = new MapperFactory();
 
 
-var repogramsModule = angular.module('repogramsModule',['ngSanitize'])
+var repogramsModule = angular.module('repogramsModule',['ngSanitize']);
+
 function getBgColor(blen){
  return '#00ff00';
 }
@@ -118,7 +119,7 @@ repogramsModule.controller('RepogramsConfig',
 	function ($scope){
 		//default metric is 1
 		$scope.metricId = 1;
-		$scope.MetricTitle = "Metric"
+		$scope.MetricTitle = "Metric";
 		$scope.metrics = [
 			{ metricId: 1, name : 'Metric A', link: '#'},
 			{ metricId: 2, name : 'Metric B', link: '#'}
@@ -144,9 +145,7 @@ repogramsModule.controller('RepogramsImporter',
 	$scope.importRepo = 
 	function() {
           // TODO: get random URL
-                  var url = ($scope.importURL === "")
-                           ? "https://github.com/Inkane/chakra-paste.git"
-                           : $scope.importURL;
+                  var url = ($scope.importURL === "") ? "https://github.com/Inkane/chakra-paste.git" : $scope.importURL;
           console.log("fetch " + url);
           var result = $http.post(
              "php/data.php",
@@ -160,12 +159,13 @@ repogramsModule.controller('RepogramsImporter',
               "bmetric": [33,0,20,35,40,10,11]
             });
           });
-        }
+        };
 }]);
 
 //
 //directives
 //
+
 repogramsModule.directive('ngRendermetric', function(){return {
 	    restrict: 'E',
 	    scope:{},
@@ -180,11 +180,11 @@ repogramsModule.directive('ngRendermetric', function(){return {
                 var mapper = mapperFactory.createMapper(maxval, "commit_message_length");
 		for( var i = 0; i < repo.metricData.msgLengthData.length; i++){
 			list += '<li class="customBlock" style="background-color:'+mapper.map(repo.metricData.msgLengthData[i])+'; height:20px; width:'+10/**repo.blen[i]*/+'px; border:1px solid;">';
-			list += '</li>'
+			list += '</li>';
 		}
 		$scope.metricValues = $sce.trustAsHtml(list);
 	    }]
-}});
+};});
 
 repogramsModule.directive('ngLegend', function(){ return {
 	restrict: 'E',
@@ -193,4 +193,4 @@ repogramsModule.directive('ngLegend', function(){ return {
 	controller: ['$scope', '$sce', function($scope, $sce){
                 $scope.metricLegend = $sce.trustAsHtml('<li style="background-color:#00ff00; height:10px; width: 10px; border:1px solid;"></li>Description');
 	}]
-}});
+};});
