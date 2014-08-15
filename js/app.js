@@ -1,3 +1,8 @@
+// TODO: 
+// - split file!
+// - instead of the watch function, events might make sense
+// - currently updating is a bit buggy, can probably be fixed by above
+
 //TODO: move those functions into different file
 var MapperFactory = function () {
 
