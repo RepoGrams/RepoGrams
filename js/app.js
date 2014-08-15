@@ -165,6 +165,13 @@ repogramsModule.controller('RepogramsImporter',
 //
 //directives
 //
+repogramsModule.directive('ngRenderBlock', function(){return {
+  restrict: 'E',
+  require: '^style',
+  scope: {},
+  template: '<li class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></li>',
+  };
+});
 
 repogramsModule.directive('ngRendermetric', function(){return {
 	    restrict: 'E',
