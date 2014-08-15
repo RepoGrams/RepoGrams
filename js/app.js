@@ -136,6 +136,7 @@ repogramsModule.service('metricSelectionService', function() {
       if (selectedMetrics.indexOf(metric) === -1) {
         // not in array yet
         selectedMetrics.push(metric);
+        console.log(selectedMetrics[0]);
       }
     },
     removeMetric: function(metric) {
@@ -234,13 +235,19 @@ repogramsModule.directive('ngRendermetric', function(){
                 }, true);
 
                 // user selects a new metric
-                $scope.$watch('metricSelectionService.selectedMetrics', function (newVal, oldVal, scope) {
+                $scope.$watch(function(scope) {return scope.metricSelectionService.getSelectedMetrics();}, function (newVal, oldVal, scope) {
+                    console.log("oo!!!!!");
                   if (newVal !== undefined) {
+                    console.log("!!!!!!!");
+                    var mapper = reposService.getMapper(newVal[0].id);
+                    if (mapper === undefined) {
+                      return;
+                    }
                     for (var i = 0; i < scope.styles.length; i++) {
                       // newVal[0] is the first (and currently only entry in the
-                      // metrics set; TODO: this has to chaneg once multiple
+                      // metrics set; TODO: this has to change once multiple
                       // metrics are allowed
-                      scope.styles[i].color = scope.reposService.mapToColor(newVal[0] ,scope.repo[newVal[0]][i]);
+                      scope.styles[i].color = scope.reposService.mapToColor(newVal[0].id, scope.repo.metricData[newVal[0].id][i]);
                     }
                   } 
                 }, true);
@@ -259,16 +266,12 @@ repogramsModule.directive('ngLegend', function(){ return {
                   '</ul>',
 	controller: ['$scope', 'reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService){
           $scope.reposService = reposService;
-          console.log("!--->");
+          $scope.metricSelectionService = metricSelectionService;
           $scope.selectedMetric = metricSelectionService.getSelectedMetrics()[0].id;
-          console.log($scope.selectedMetric);
-          console.log($scope.reposService.getMapper($scope.selectedMetric));
           $scope.styles = [];
           $scope.$watch('reposService.getMapper(selectedMetric)', function (newVal, oldVal, scope) {
-            console.log(newVal);
             if (newVal !== undefined) {
               var mappingInfo = newVal.getMappingInfo();
-              console.log(mappingInfo);
               for (var i=0; i < mappingInfo.length; i++) {
                 $scope.styles[i] = {
                   color: mappingInfo[i].color,
@@ -279,5 +282,22 @@ repogramsModule.directive('ngLegend', function(){ return {
               }
             }
           }, /*do a deep comparision; TODO: use event??*/true);
+          $scope.$watch(function(scope) {return scope.metricSelectionService.getSelectedMetrics()[0];}, function (newVal, oldVal, scope){
+            if (newVal !== undefined) {
+              var mapper = reposService.getMapper(newVal.id);
+              if (mapper === undefined) {
+                return;
+              }
+              var mappingInfo = mapper.getMappingInfo();
+              for (var i=0; i < mappingInfo.length; i++) {
+                $scope.styles[i] = {
+                  color: mappingInfo[i].color,
+                  width: "10px",
+                  lowerBound: mappingInfo[i].lowerBound,
+                  upperBound: mappingInfo[i].upperBound
+                };
+              }
+            }
+          }, true);
 	}]
 };});
