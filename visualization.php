@@ -31,8 +31,8 @@ require_once('header.php');
                 <div ng-controller="RepogramsConfig">
                         <!-- Dropdown Menu for Metric Selection -->
                         Metrics:
-                        <select  ng-model="metricId" 
-                        ng-options="metric.metricId as metric.name for metric in metrics">
+                        <select  ng-model="currentMetric" ng-change="selectAction()"
+                        ng-options="metric.label for metric in metrics">
                         </select>
                         <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
                 </div>

@@ -118,19 +118,45 @@ repogramsModule.service('reposService',
 				};
 			});
 
+repogramsModule.service('metricSelectionService', function() {
+  var allMetrics = [
+    {id: "commit_modularity", label: "Commit modularity"},
+    {id:"commit_message_length", label: "Commit message length"}
+  ];
+  var selectedMetrics = [allMetrics[0]];
+
+  return{
+    getSelectedMetrics: function() {return selectedMetrics;},
+    addMetric: function(metric) {
+      if (selectedMetrics.indexOf(metric) === -1) {
+        // not in array yet
+        selectedMetrics.push(metric);
+      }
+    },
+    removeMetric: function(metric) {
+      var position = selectedMetrics.indexOf(metric);
+      console.assert(position !== -1, "trying to remove metric which is not contained!");
+      selectedMetrics.splice(position, 1);
+    },
+    getAllMetrics: function() {return allMetrics;},
+    clear: function() {selectedMetrics = [];}
+  };
+});
+
 //
 //controllers
 //
 repogramsModule.controller('RepogramsConfig',
-	['$scope',
-	function ($scope){
+	['$scope', 'metricSelectionService',
+	function ($scope, metricSelectionService){
 		//default metric is 1
-		$scope.metricId = 1;
-		$scope.MetricTitle = "Metric";
-		$scope.metrics = [
-			{ metricId: 1, name : 'Metric A', link: '#'},
-			{ metricId: 2, name : 'Metric B', link: '#'}
-		];  
+                $scope.metricService = metricSelectionService;
+		$scope.metrics = $scope.metricService.getAllMetrics();
+		$scope.currentMetric = $scope.metrics[0];
+                $scope.selectAction = function() {
+                  $scope.metricService.clear();
+                  $scope.metricService.addMetric($scope.currentMetric);
+                };
 	}
 	]);
 
