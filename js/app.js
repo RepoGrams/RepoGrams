@@ -74,40 +74,33 @@ function getBgColor(blen){
 repogramsModule.service('reposService',
 			function(){
 				var RepoArr = [];
-				var size = 0;
-				var pos = 0;
+                                var mapper; // TODO: support one mapper per metric
+                                var maxVal = 0;
 
 				return{
 					getRepoArr : function(){
 						return RepoArr;
 					},
-					getCurrentRepo : function(){
-						return RepoArr[pos];
-					},
-					getCurrentPos : function(){
-						return pos;
-					},
-					advance : function(){
-						if(pos < size){
-							pos++;
-							return true;
-						}else
-							return false;
-					},
-					reset : function(){
-						pos = 0;
-						return 0;
-					},
 					addRepo : function(repoJSON){
-                                                console.log(repoJSON);
-						RepoArr[size] = repoJSON;
-						size++;
-						},
+                                          console.log(repoJSON);
+						RepoArr.push(repoJSON);
+                                                var localMaxVal = Math.max.apply(Math, repoJSON.metricData.msgLengthData); // TODO: support all metrics
+                                                if (localMaxVal > maxVal) {
+                                                  maxVal = localMaxVal;
+                                                  this.mapper = mapperFactory.createMapper(maxVal, "commit_message_length");
+                                                }
+                                        },
 					removeRepo : function(place){
+                                                console.assert(place >= 0, "");
+                                                console.assert(place < RepoArr.length, "");
                                                 RepoArr.splice(place,1);
-						size--;
-						console.log(RepoArr);
-					}
+                                                // TODO: recalculate maxvalue
+					},
+                                        mapToColor: function(metric, value) {
+                                          console.assert(typeof metric === "string", "metric must be the name of a metric");
+                                          console.assert(typeof this.mapper !== "undefined", "mapper is not initialized");
+                                          return this.mapper.map(value);
+                                        }
 				};
 			});
 
@@ -166,9 +159,6 @@ repogramsModule.controller('RepogramsImporter',
 //directives
 //
 repogramsModule.directive('ngRendermetric', function(){
-        // TODO: maxval and mapper ought to move into the service -- this also
-        // enables us to 
-        var maxval = 0;
 
         return {
 	    restrict: 'E',
@@ -180,12 +170,10 @@ repogramsModule.directive('ngRendermetric', function(){
 		//TODO: Add every metricvalue
 		var repo = reposService.getRepoArr()[$scope.$parent.$index];
                 // TODO: replace hardcoded metric with selected one
-                maxval = Math.max(maxval, Math.max.apply(Math, repo.metricData.msgLengthData));
                 $scope.styles = [];
-                var mapper = mapperFactory.createMapper(maxval, "commit_message_length");
 		for( var i = 0; i < repo.metricData.msgLengthData.length; i++){
                   $scope.styles.push({
-                    color: mapper.map(repo.metricData.msgLengthData[i]),
+                    color: reposService.mapToColor("commit_message_length", repo.metricData.msgLengthData[i]),
                     width: "10px"
                   });
 		}
