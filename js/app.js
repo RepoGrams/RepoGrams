@@ -100,6 +100,9 @@ repogramsModule.service('reposService',
                                           console.assert(typeof metric === "string", "metric must be the name of a metric");
                                           console.assert(typeof this.mapper !== "undefined", "mapper is not initialized");
                                           return this.mapper.map(value);
+                                        },
+                                        getMapper: function() {
+                                          return mapper;
                                         }
 				};
 			});
@@ -168,15 +171,25 @@ repogramsModule.directive('ngRendermetric', function(){
   '</ul>',
 	    controller: ['$scope','reposService', '$sce', function($scope, reposService, $sce){
 		//TODO: Add every metricvalue
-		var repo = reposService.getRepoArr()[$scope.$parent.$index];
+                $scope.reposService = reposService;
+		$scope.repo = reposService.getRepoArr()[$scope.$parent.$index];
                 // TODO: replace hardcoded metric with selected one
+                // add the mapper to the scope, so we can watch for changes,
+                // upon which we need to recalculate the colour
                 $scope.styles = [];
-		for( var i = 0; i < repo.metricData.msgLengthData.length; i++){
+		for( var i = 0; i < $scope.repo.metricData.msgLengthData.length; i++){
                   $scope.styles.push({
-                    color: reposService.mapToColor("commit_message_length", repo.metricData.msgLengthData[i]),
+                    color: reposService.mapToColor("commit_message_length", $scope.repo.metricData.msgLengthData[i]),
                     width: "10px"
                   });
 		}
+                $scope.$watch('reposService.mapper', function (newVal, oldVal, scope) {
+                  if (newVal !== undefined) {
+                    for (var i = 0; i < scope.styles.length; i++) {
+                      scope.styles[i].color = newVal.map(scope.repo.metricData.msgLengthData[i]);
+                    }
+                  } 
+                });
 	    }]
 };});
 
