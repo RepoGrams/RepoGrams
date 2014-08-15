@@ -83,40 +83,45 @@ function getBgColor(blen){
 //
 //services
 //
-repogramsModule.service('reposService',
-			function(){
-				var RepoArr = [];
-                                var mapper; // TODO: support one mapper per metric
-                                var maxVal = 0;
+repogramsModule.service('reposService', ["metricSelectionService", function(metricSelectionService){
+  var RepoArr = [];
+  var mappers = {}; // TODO: support one mapper per metric
+  var allMetrics = metricSelectionService.getAllMetrics();
+  for (var i = 0; i < allMetrics.length; i++) {
+    mappers[allMetrics[i].id] = undefined;
+  }
+  var maxVal = 0;
 
-				return{
-					getRepoArr : function(){
-						return RepoArr;
-					},
-					addRepo : function(repoJSON){
-						RepoArr.push(repoJSON);
-                                                var localMaxVal = Math.max.apply(Math, repoJSON.metricData.msgLengthData); // TODO: support all metrics
-                                                if (localMaxVal > maxVal) {
-                                                  maxVal = localMaxVal;
-                                                  this.mapper = mapperFactory.createMapper(maxVal, "commit_message_length");
-                                                }
-                                        },
-					removeRepo : function(place){
-                                                console.assert(place >= 0, "");
-                                                console.assert(place < RepoArr.length, "");
-                                                RepoArr.splice(place,1);
-                                                // TODO: recalculate maxvalue
-					},
-                                        mapToColor: function(metric, value) {
-                                          console.assert(typeof metric === "string", "metric must be the name of a metric");
-                                          console.assert(typeof this.mapper !== "undefined", "mapper is not initialized");
-                                          return this.mapper.map(value);
-                                        },
-                                        getMapper: function() {
-                                          return mapper;
-                                        }
-				};
-			});
+  return{
+    getRepoArr : function(){
+      return RepoArr;
+    },
+  addRepo : function(repoJSON){
+    RepoArr.push(repoJSON);
+    for (var metric in mappers) {
+      var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]); // TODO: support all metrics
+      if (localMaxVal > maxVal) {
+        maxVal = localMaxVal;
+        mappers[metric] = mapperFactory.createMapper(maxVal, metric);
+      }
+    }
+  },
+  removeRepo : function(place){
+    console.assert(place >= 0, "");
+    console.assert(place < RepoArr.length, "");
+    RepoArr.splice(place,1);
+    // TODO: recalculate maxvalue
+  },
+  mapToColor: function(metric, value) {
+    console.assert(typeof metric === "string", "metric must be the name of a metric");
+    console.assert(typeof mappers[metric] !== "undefined", "mapper is not initialized");
+    return mappers[metric].map(value);
+  },
+  getMapper: function(metric) {
+    return mappers[metric];
+  }
+  };
+}]);
 
 repogramsModule.service('metricSelectionService', function() {
   var allMetrics = [
@@ -203,28 +208,44 @@ repogramsModule.directive('ngRendermetric', function(){
 	    template: '<div style="width:auto">' +
 '<div ng-repeat="style in styles" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></div>' +
   '</div>',
-	    controller: ['$scope','reposService', '$sce', function($scope, reposService, $sce){
+	    controller: ['$scope','reposService', 'metricSelectionService', '$sce', function($scope, reposService, metricSelectionService, $sce){
 		//TODO: Add every metricvalue
                 $scope.reposService = reposService;
+                $scope.metricSelectionService = metricSelectionService;
+                $scope.currentMetric = metricSelectionService.getSelectedMetrics()[0].id;
 		$scope.repo = reposService.getRepoArr()[$scope.$parent.$index];
-                // TODO: replace hardcoded metric with selected one
-                // add the mapper to the scope, so we can watch for changes,
-                // upon which we need to recalculate the colour
                 $scope.styles = [];
-		for( var i = 0; i < $scope.repo.metricData.msgLengthData.length; i++){
-                  console.log("blen:" + $scope.repo.metricData.defaultBlen[i]);
+                console.log($scope.currentMetric);
+		for( var i = 0; i < $scope.repo.metricData[$scope.currentMetric].length; i++){
                   $scope.styles.push({
-                    color: reposService.mapToColor("commit_message_length", $scope.repo.metricData.msgLengthData[i]),
+                    color: reposService.mapToColor($scope.currentMetric, $scope.repo.metricData[$scope.currentMetric][i]),
                     width: "" + ($scope.repo.metricData.defaultBlen[i]+1) + "px" 
                   });
 		}
-                $scope.$watch('reposService.mapper', function (newVal, oldVal, scope) {
+
+                // the mapper might change when a new repo is added, and the
+                // maxvalue increases
+                $scope.$watch('reposService.mappers', function (newVal, oldVal, scope) {
                   if (newVal !== undefined) {
                     for (var i = 0; i < scope.styles.length; i++) {
                       scope.styles[i].color = newVal.map(scope.repo.metricData.msgLengthData[i]);
                     }
                   } 
                 });
+
+                // user selects a new metric
+                $scope.$watch('metricSelectionService.selectedMetrics', function (newVal, oldVal, scope) {
+                  if (newVal !== undefined) {
+                    for (var i = 0; i < scope.styles.length; i++) {
+                      // newVal[0] is the first (and currently only entry in the
+                      // metrics set; TODO: this has to chaneg once multiple
+                      // metrics are allowed
+                      scope.styles[i].color = scope.reposService.mapToColor(newVal[0] ,scope.repo[newVal[0]][i]);
+                    }
+                  } 
+                });
+
+
 	    }]
 };});
 
