@@ -173,23 +173,30 @@ repogramsModule.directive('ngRenderBlock', function(){return {
   };
 });
 
-repogramsModule.directive('ngRendermetric', function(){return {
+repogramsModule.directive('ngRendermetric', function(){
+        // TODO: maxval and mapper ought to move into the service -- this also
+        // enables us to 
+        var maxval = 0;
+
+        return {
 	    restrict: 'E',
 	    scope:{},
-	    template: '<ul style="list-style:none;" ng-bind-html="metricValues"></ul>',
+	    template: '<ul style="list-style:none;">' + 
+'<li ng-repeat="style in styles" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></li>' +
+  '</ul>',
 	    controller: ['$scope','reposService', '$sce', function($scope, reposService, $sce){
 		//TODO: Add every metricvalue
-		var list = '';
 		var repo = reposService.getRepoArr()[$scope.$parent.$index];
                 // TODO: replace hardcoded metric with selected one
-                var maxval = Math.max.apply(Math, repo.metricData.msgLengthData);
-                console.log("maxval is " + maxval);
+                maxval = Math.max(maxval, Math.max.apply(Math, repo.metricData.msgLengthData));
+                $scope.styles = [];
                 var mapper = mapperFactory.createMapper(maxval, "commit_message_length");
 		for( var i = 0; i < repo.metricData.msgLengthData.length; i++){
-			list += '<li class="customBlock" style="background-color:'+mapper.map(repo.metricData.msgLengthData[i])+'; height:20px; width:'+10/**repo.blen[i]*/+'px; border:1px solid;">';
-			list += '</li>';
+                  $scope.styles.push({
+                    color: mapper.map(repo.metricData.msgLengthData[i]),
+                    width: "10px"
+                  });
 		}
-		$scope.metricValues = $sce.trustAsHtml(list);
 	    }]
 };});
 
