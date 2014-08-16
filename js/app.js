@@ -239,7 +239,7 @@ repogramsModule.directive('ngRendermetric', function(){
                 // maxvalue increases
                 $scope.$on('mapperChange', function (evnt, metricID, newMapper) {
                   for( var i = 0; i < $scope.repo.metricData[metricID].length; i++){
-                    $scope.styles[metricID].color = newMapper.map($scope.repo.metricData[metricID][i]);
+                    $scope.styles[metricID][i].color = newMapper.map($scope.repo.metricData[metricID][i]);
                   }
                 });
             }]
