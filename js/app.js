@@ -88,7 +88,7 @@ function getBgColor(blen){
 //
 //services
 //
-repogramsModule.service('reposService', ["metricSelectionService", function(metricSelectionService){
+repogramsModule.service('reposService', ["$rootScope", "metricSelectionService", function($rootScope, metricSelectionService){
   var RepoArr = [];
   var mappers = {}; // TODO: support one mapper per metric
   var allMetrics = metricSelectionService.getAllMetrics();
@@ -104,10 +104,11 @@ repogramsModule.service('reposService', ["metricSelectionService", function(metr
   addRepo : function(repoJSON){
     RepoArr.push(repoJSON);
     for (var metric in mappers) {
-      var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]); // TODO: support all metrics
+      var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]);
       if (localMaxVal > maxVal) {
         maxVal = localMaxVal;
         mappers[metric] = mapperFactory.createMapper(maxVal, metric);
+        $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
       }
     }
   },
@@ -266,42 +267,33 @@ repogramsModule.directive('ngLegend', function(){ return {
 	scope: {},
   //TODO: The legend looks funny, but at least it seems to work
 	template: '<h3>Legend:</h3>' +
-                  '<ul>' +
-                  '<li ng-repeat="style in styles">{{style.lowerBound}}-{{style.upperBound}}: <span class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></span></li>' +
-                  '</ul>',
+                  '<div ng-repeat="metric in selectedMetrics"><h4>{{metric.label}}</h4><ul>' +
+                  '<li ng-repeat="style in styles[metric.id]">{{style.lowerBound}}-{{style.upperBound}}: <span class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></span></li>' +
+                  '</ul></div>',
 	controller: ['$scope', 'reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService){
           $scope.reposService = reposService;
           $scope.metricSelectionService = metricSelectionService;
-          $scope.selectedMetric = metricSelectionService.getSelectedMetrics()[0].id;
-          $scope.styles = [];
-          $scope.$watch('reposService.getMapper(selectedMetric)', function (newVal, oldVal, scope) {
-            if (newVal !== undefined) {
-              var mappingInfo = newVal.getMappingInfo();
-              for (var i=0; i < mappingInfo.length; i++) {
-                $scope.styles[i] = {
-                  color: mappingInfo[i].color,
+          $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
+          $scope.styles = {};
+          angular.forEach(metricSelectionService.getAllMetrics(), function(value, index) {
+            $scope.styles[value.id] = [{
+                  color: "red",
                   width: "10px",
-                  lowerBound: mappingInfo[i].lowerBound,
-                  upperBound: mappingInfo[i].upperBound
-                };
-              }
-            }
-          }, /*do a deep comparision; TODO: use event??*/true);
-          $scope.$watch(function(scope) {return scope.metricSelectionService.getSelectedMetrics()[0];}, function (newVal, oldVal, scope){
-            if (newVal !== undefined) {
-              var mapper = reposService.getMapper(newVal.id);
-              if (mapper === undefined) {
-                return;
-              }
-              var mappingInfo = mapper.getMappingInfo();
-              for (var i=0; i < mappingInfo.length; i++) {
-                $scope.styles[i] = {
-                  color: mappingInfo[i].color,
-                  width: "10px",
-                  lowerBound: mappingInfo[i].lowerBound,
-                  upperBound: mappingInfo[i].upperBound
-                };
-              }
+                  lowerBound: 0,
+                  upperBound: 0 
+                }];
+          });
+
+          $scope.$on("mapperChange", function(evnt, metricID, newMapper) {
+            console.assert(angular.isDefined(newMapper), "new mapper is not defined!");
+            var mappingInfo = newMapper.getMappingInfo();
+            for (var i=0; i < mappingInfo.length; i++) {
+              $scope.styles[metricID][i] = {
+                color: mappingInfo[i].color,
+            width: "10px",
+            lowerBound: mappingInfo[i].lowerBound,
+            upperBound: mappingInfo[i].upperBound
+              };
             }
           }, true);
 	}]
