@@ -151,7 +151,7 @@ repogramsModule.service('metricSelectionService', function() {
       selectedMetrics.splice(position, 1);
     },
     getAllMetrics: function() {return allMetrics;},
-    clear: function() {selectedMetrics = [];}
+    clear: function() {selectedMetrics.length = 0;}
   };
 });
 
@@ -276,12 +276,7 @@ repogramsModule.directive('ngLegend', function(){ return {
           $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
           $scope.styles = {};
           angular.forEach(metricSelectionService.getAllMetrics(), function(value, index) {
-            $scope.styles[value.id] = [{
-                  color: "red",
-                  width: "10px",
-                  lowerBound: 0,
-                  upperBound: 0 
-                }];
+            $scope.styles[value.id] = [];
           });
 
           $scope.$on("mapperChange", function(evnt, metricID, newMapper) {
