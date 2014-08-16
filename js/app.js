@@ -212,7 +212,7 @@ repogramsModule.directive('ngRendermetric', function(){
         return {
 	    restrict: 'E',
 	    scope:{},
-	    template: '<div ng-repeat="metric in selectedMetrics"><div style="width:auto">' +
+	    template: '<div ng-repeat="metric in selectedMetrics"><div style="width:auto; overflow: auto; white-space: nowrap;">' +
 '<div ng-repeat="style in styles[metric.id]" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></div>' +
   '</div></div>',
 	    controller: ['$scope','reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService, $sce){
