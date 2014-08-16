@@ -85,6 +85,14 @@ function getBgColor(blen){
  return '#00ff00';
 }
 
+function arrayMax(arr) {
+  var max = arr[0];
+  for (var i=0; i < arr.length; i++) {
+    max = Math.max(max, arr[i]);
+  }
+  return  max;
+}
+
 //
 //services
 //
@@ -94,8 +102,10 @@ repogramsModule.service('reposService', ["$rootScope", "metricSelectionService",
   var allMetrics = metricSelectionService.getAllMetrics();
   var maxVal = {};
   for (var i = 0; i < allMetrics.length; i++) {
-    mappers[allMetrics[i].id] = undefined;
-    maxVal[allMetrics[i].id] = 0;
+    // initialize with dummy mapper
+    var metric = allMetrics[i].id;
+    mappers[metric] = mapperFactory.createMapper(1, metric);
+    maxVal[metric] = -1;
   }
 
   return{
@@ -105,7 +115,8 @@ repogramsModule.service('reposService', ["$rootScope", "metricSelectionService",
   addRepo : function(repoJSON){
     RepoArr.push(repoJSON);
     for (var metric in mappers) {
-      var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]);
+      //var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]);
+      var localMaxVal = arrayMax(repoJSON.metricData[metric]);
       if (localMaxVal > maxVal[metric]) {
         maxVal[metric] = localMaxVal;
         mappers[metric] = mapperFactory.createMapper(localMaxVal, metric);
