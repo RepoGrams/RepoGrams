@@ -212,54 +212,37 @@ repogramsModule.directive('ngRendermetric', function(){
         return {
 	    restrict: 'E',
 	    scope:{},
-	    template: '<div style="width:auto">' +
-'<div ng-repeat="style in styles" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></div>' +
-  '</div>',
-	    controller: ['$scope','reposService', 'metricSelectionService', '$sce', function($scope, reposService, metricSelectionService, $sce){
+	    template: '<div ng-repeat="metric in selectedMetrics"><div style="width:auto">' +
+'<div ng-repeat="style in styles[metric.id]" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></div>' +
+  '</div></div>',
+	    controller: ['$scope','reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService, $sce){
 		//TODO: Add every metricvalue
                 $scope.reposService = reposService;
                 $scope.metricSelectionService = metricSelectionService;
-                $scope.currentMetric = metricSelectionService.getSelectedMetrics()[0].id;
+                $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
 		$scope.repo = reposService.getRepoArr()[$scope.$parent.$index];
-                $scope.styles = [];
+                $scope.styles = {};
                 console.log($scope.currentMetric);
-		for( var i = 0; i < $scope.repo.metricData[$scope.currentMetric].length; i++){
-                  $scope.styles.push({
-                    color: reposService.mapToColor($scope.currentMetric, $scope.repo.metricData[$scope.currentMetric][i]),
-                    width: "" + ($scope.repo.metricData.defaultBlen[i]+1) + "px" 
-                  });
-		}
+                angular.forEach(metricSelectionService.getAllMetrics(), function(value, index) {
+                  $scope.styles[value.id] = [];
 
+                  for( var i = 0; i < $scope.repo.metricData[value.id].length; i++){
+                    var x = {
+                      color: reposService.mapToColor(value.id, $scope.repo.metricData[value.id][i]),
+                      width: "" + ($scope.repo.metricData.defaultBlen[i]+1) + "px" 
+                    };
+                    $scope.styles[value.id].push(x);
+                  }
+
+                });
                 // the mapper might change when a new repo is added, and the
                 // maxvalue increases
-                $scope.$watch('reposService.mappers', function (newVal, oldVal, scope) {
-                  if (newVal !== undefined) {
-                    for (var i = 0; i < scope.styles.length; i++) {
-                      scope.styles[i].color = newVal.map(scope.repo.metricData.msgLengthData[i]);
-                    }
-                  } 
-                }, true);
-
-                // user selects a new metric
-                $scope.$watch(function(scope) {return scope.metricSelectionService.getSelectedMetrics();}, function (newVal, oldVal, scope) {
-                    console.log("oo!!!!!");
-                  if (newVal !== undefined) {
-                    console.log("!!!!!!!");
-                    var mapper = reposService.getMapper(newVal[0].id);
-                    if (mapper === undefined) {
-                      return;
-                    }
-                    for (var i = 0; i < scope.styles.length; i++) {
-                      // newVal[0] is the first (and currently only entry in the
-                      // metrics set; TODO: this has to change once multiple
-                      // metrics are allowed
-                      scope.styles[i].color = scope.reposService.mapToColor(newVal[0].id, scope.repo.metricData[newVal[0].id][i]);
-                    }
-                  } 
-                }, true);
-
-
-	    }]
+                $scope.$on('mapperChange', function (evnt, metricID, newMapper) {
+                  for( var i = 0; i < $scope.repo.metricData[metricID].length; i++){
+                    $scope.styles[metricID].color = newMapper.map($scope.repo.metricData[metricID][i]);
+                  }
+                });
+            }]
 };});
 
 repogramsModule.directive('ngLegend', function(){ return {
