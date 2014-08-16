@@ -92,10 +92,11 @@ repogramsModule.service('reposService', ["$rootScope", "metricSelectionService",
   var RepoArr = [];
   var mappers = {}; // TODO: support one mapper per metric
   var allMetrics = metricSelectionService.getAllMetrics();
+  var maxVal = {};
   for (var i = 0; i < allMetrics.length; i++) {
     mappers[allMetrics[i].id] = undefined;
+    maxVal[allMetrics[i].id] = 0;
   }
-  var maxVal = 0;
 
   return{
     getRepoArr : function(){
@@ -105,9 +106,9 @@ repogramsModule.service('reposService', ["$rootScope", "metricSelectionService",
     RepoArr.push(repoJSON);
     for (var metric in mappers) {
       var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]);
-      if (localMaxVal > maxVal) {
-        maxVal = localMaxVal;
-        mappers[metric] = mapperFactory.createMapper(maxVal, metric);
+      if (localMaxVal > maxVal[metric]) {
+        maxVal[metric] = localMaxVal;
+        mappers[metric] = mapperFactory.createMapper(localMaxVal, metric);
         $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
       }
     }
