@@ -39,36 +39,33 @@ function isValidFile(entry, JSONvalues){
  * Return for a list of changed files an integer containing the number of 
  * changed files.
  */
-function getMetric(fileList) {
-	var mem = new Object();	
+function getMetric(fileList, data) {
+	var mem = {};	
+        var JSONvalues = data;
 
-	var result = jQuery.get("js/metrics/filenames.json", function(data){
-		var JSONvalues = jQuery.parseJSON(data);
-		
-		fileList.forEach(function (entry){
-			if(isValidFile(entry, JSONValues)){
-				entry in mem? mem[entry] +=1 : mem[entry] = 1;
-                        }
-			else {
-				"Other" in mem ? mem["Other"] += 1: mem[entry] = 1;
-			}
-		});
+        fileList.forEach(function (entry){
+          console.log(entry);
+          if(isValidFile(entry, JSONvalues)){
+            entry in mem? mem[entry] +=1 : mem[entry] = 1;
+          }
+          else {
+            "Other" in mem ? mem["Other"] += 1: mem[entry] = 1;
+          }
+        });
 
-		var array = fileList.map(function(obj){
-		var all = obj.split();
-		return all[all.length-1];
-                });
+        var array = fileList.map(function(obj){
+          var all = obj.split();
+          return all[all.length-1];
+        });
 
-                array.forEach(function (entry){
-                  if(isValidEnding(entry, JSONValues)){
-                    entry in mem ? mem[entry] += 1 : mem[entry] = 1;
-                  } else {
-                    "Other" in mem ? mem["Other"] +=1 : mem[entry] = 1;
-                  }
-                });
-		
-	}
-	);
+        array.forEach(function (entry){
+          if(isValidEnding(entry, JSONvalues)){
+            entry in mem ? mem[entry] += 1 : mem[entry] = 1;
+          } else {
+            "Other" in mem ? mem["Other"] +=1 : mem[entry] = 1;
+          }
+        });
+
 	var max = 0;
 	var Mkey = null;
 	for (var key in mem){

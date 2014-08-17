@@ -144,7 +144,8 @@ repogramsModule.service('reposService', ["$rootScope", "metricSelectionService",
 repogramsModule.service('metricSelectionService', function() {
   var allMetrics = [
     {id: "commit_modularity", label: "Commit modularity"},
-    {id:"commit_message_length", label: "Commit message length"}
+    {id:"commit_message_length", label: "Commit message length"},
+    {id:"commit_lang_complexity", label: "Commit message length"}
   ];
   var selectedMetrics = [allMetrics[0]];
 
@@ -212,6 +213,7 @@ repogramsModule.controller('RepogramsImporter',
               "name": $scope.importURL.split("/").pop(),
               "metricData": runMetrics(data),
             });
+            console.log(runMetrics(data));
           });
         };
 }]);

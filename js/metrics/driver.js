@@ -1,3 +1,14 @@
+// TODO: this is still racy; it also causes 
+var fileInfoForMetric1 = [];
+jQuery.get("./js/metrics/filenames.json")
+  .done(function(data){
+   fileInfoForMetric1 = data;
+   console.log("ready");
+})
+  .fail(function(jqXHR, textStatus, errorThrown) {console.log(textStatus);}) 
+;
+
+
 function runMetrics(data) {
   var commit_langcomp_data = [];
   var commit_msglength_data = [];
@@ -5,7 +16,7 @@ function runMetrics(data) {
   var default_blen = [];
   var metric5data = data.map(function(commit_datum) {
     //metric 1
-    commit_langcomp_data.push(getMetric(commit_datum.files));
+    commit_langcomp_data.push(getMetric(commit_datum.files, fileInfoForMetric1));
     // metric 2
     commit_msglength_data.push(commitMsgLength(commit_datum.commitmsg, commit_datum.churn));
     // metric 3
@@ -22,7 +33,7 @@ function runMetrics(data) {
   console.log("alive");
   // WARNING: the member names have to match the names in metricSelectionService
   return {
-    languageComplexityData: commit_langcomp_data,
+    commit_lang_complexity: commit_langcomp_data,
     commit_message_length: commit_msglength_data,
     commit_modularity: commit_modularity_data,
     mostEditFileData:  metric5data,
