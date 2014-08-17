@@ -30,7 +30,6 @@ function runMetrics(data) {
   });
 
   metric5data = mostEditFile(metric5data);
-  console.log("alive");
   // WARNING: the member names have to match the names in metricSelectionService
   return {
     commit_lang_complexity: commit_langcomp_data,

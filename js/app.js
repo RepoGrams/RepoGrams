@@ -145,7 +145,7 @@ repogramsModule.service('metricSelectionService', function() {
   var allMetrics = [
     {id: "commit_modularity", label: "Commit modularity"},
     {id:"commit_message_length", label: "Commit message length"},
-    {id:"commit_lang_complexity", label: "Commit message length"}
+    {id:"commit_lang_complexity", label: "Commit language complexity"}
   ];
   var selectedMetrics = [allMetrics[0]];
 
@@ -155,7 +155,6 @@ repogramsModule.service('metricSelectionService', function() {
       if (selectedMetrics.indexOf(metric) === -1) {
         // not in array yet
         selectedMetrics.push(metric);
-        console.log(selectedMetrics[0]);
       }
     },
     removeMetric: function(metric) {
@@ -213,7 +212,6 @@ repogramsModule.controller('RepogramsImporter',
               "name": $scope.importURL.split("/").pop(),
               "metricData": runMetrics(data),
             });
-            console.log(runMetrics(data));
           });
         };
 }]);
@@ -236,7 +234,6 @@ repogramsModule.directive('ngRendermetric', function(){
                 $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
 		$scope.repo = reposService.getRepoArr()[$scope.$parent.$index];
                 $scope.styles = {};
-                console.log($scope.currentMetric);
                 angular.forEach(metricSelectionService.getAllMetrics(), function(value, index) {
                   $scope.styles[value.id] = [];
 

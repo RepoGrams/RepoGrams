@@ -44,25 +44,13 @@ function getMetric(fileList, data) {
         var JSONvalues = data;
 
         fileList.forEach(function (entry){
-          console.log(entry);
-          if(isValidFile(entry, JSONvalues)){
+          if(isValidFile(entry, JSONvalues) || 
+            /*assign everything after last . to entry and check if it's a valid
+             * extension*/
+            (isValidEnding(entry = entry.split(".").pop(), JSONvalues))){
             entry in mem? mem[entry] +=1 : mem[entry] = 1;
-          }
-          else {
-            "Other" in mem ? mem["Other"] += 1: mem[entry] = 1;
-          }
-        });
-
-        var array = fileList.map(function(obj){
-          var all = obj.split();
-          return all[all.length-1];
-        });
-
-        array.forEach(function (entry){
-          if(isValidEnding(entry, JSONvalues)){
-            entry in mem ? mem[entry] += 1 : mem[entry] = 1;
           } else {
-            "Other" in mem ? mem["Other"] +=1 : mem[entry] = 1;
+            "Other" in mem ? mem["Other"] += 1: mem[entry] = 1;
           }
         });
 
