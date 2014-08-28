@@ -16,7 +16,7 @@ debug = lambda x: None
 
 
 class PriorityQueue:
-    """A priority queue. Returs elements with __lower__ first"""
+    """A priority queue. Returs elements with lower priority first"""
     def __init__(self):
         self._queue = []
         self._index = 0
@@ -27,18 +27,6 @@ class PriorityQueue:
 
     def pop(self):
         return heapq.heappop(self._queue)[-1]
-
-
-def list_children(commit_id):
-    """Returns the ids of all children of a given commit
-    :commit_id: the commit for which you want to obtain the children"""
-    command = """git rev-list --all --not {0}^@ --children""".format(commit_id)
-    pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
-    for line in pipe.stdout:
-        line = line.decode('utf8', 'ignore').strip()
-        if line.startswith(commit_id):
-            return line.split(" ")[1:]
-    return []
 
 
 def get_commit_data(commit_id):
@@ -73,7 +61,6 @@ def get_commit_data(commit_id):
 
 def get_all_commits():
     command = """git rev-list --branches --reverse"""
-    list_children("HEAD")
     pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
     out, err = pipe.communicate()
     all_commits = out.decode('utf8', 'ignore').split("\n")[:-1]
