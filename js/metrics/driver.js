@@ -32,7 +32,6 @@ function runMetrics(data) {
   });
 
   metric5data = mostEditFile(metric5data);
-  console.log(metric5data);
   // WARNING: the member names have to match the names in metricSelectionService
   
   return {
