@@ -48,14 +48,12 @@ function getMetric(fileList, data) {
             /*assign everything after last . to entry and check if it's a valid
              * extension*/
             (isValidEnding(entry = entry.split(".").pop(), JSONvalues));
-        console.log(recognized);
           if(recognized) {
             entry in mem? mem[entry] +=1 : mem[entry] = 1;
           } else {
             "Other" in mem ? mem["Other"] += 1: mem["Other"] = 1;
           }
         });
-        console.log(mem);
         return Object.keys(mem).length;
 
 	var max = 0;
