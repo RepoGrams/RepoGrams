@@ -44,7 +44,7 @@ function getMetric(fileList, data) {
         var JSONvalues = data;
 
         fileList.forEach(function (entry){
-          if(isValidFile(entry, JSONvalues) || 
+          if(isValidFile(entry = entry.split("/").pop(), JSONvalues) ||
             /*assign everything after last . to entry and check if it's a valid
              * extension*/
             (isValidEnding(entry = entry.split(".").pop(), JSONvalues))){
@@ -53,6 +53,8 @@ function getMetric(fileList, data) {
             "Other" in mem ? mem["Other"] += 1: mem[entry] = 1;
           }
         });
+        console.log(mem);
+        return Object.keys(mem).length;
 
 	var max = 0;
 	var Mkey = null;

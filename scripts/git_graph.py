@@ -12,6 +12,9 @@ import json
 import networkx as nx
 
 
+debug = lambda x: None
+
+
 class PriorityQueue:
     """A priority queue. Returs elements with __lower__ first"""
     def __init__(self):
@@ -160,6 +163,7 @@ class GitGraph():
             if commit_node in self.dominators[child]:
                 branch_counter += 1
         branch_counter -= 1  # one child is from the "main" branch
+        assert branch_counter, "A negative number of branches cannot exist"
         return branch_counter
 
     def _ended_branches_count(self, parents):
@@ -182,6 +186,7 @@ class GitGraph():
                 # commit_node is the last commit of the branch
                 ended_counter += 1
         ended_counter -= 1  # one parent is from the "main" branch
+        assert ended_counter >= 0, "commit cannot end negative number of branches"
         return ended_counter
 
 
@@ -190,6 +195,7 @@ class GitGraph():
         result = []
         for commit_node in self.iterate_commits():
             # iterate over commits in order of commit_timestamps
+            debug(commit_node)
             parents = self.graph.predecessors(commit_node)
             children = self.graph.successors(commit_node)
             if parents[0] == self.sentinel:  # first commit of branch
