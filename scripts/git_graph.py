@@ -163,10 +163,17 @@ class GitGraph():
             if commit_node in self.dominators[child]:
                 branch_counter += 1
         branch_counter -= 1  # one child is from the "main" branch
-        assert branch_counter, "A negative number of branches cannot exist"
+        # There are actually commits with multiple children which dominate none
+        # of them, in this case branch_counter becomes negative because of the
+        # last line, adjusting for the "main" branch; therefore we have to reset
+        # branch_counter to zero
+        # An example of such a commit is 738036395d68824933949186603aeeb9c087d10e
+        # of the repograms repository
+        branch_counter = max(branch_counter, 0)
+        assert branch_counter >= 0, "A negative number of branches cannot exist: branch_counter: {}, #children: {}, commit: {}".format(branch_counter, len(children), commit_node)
         return branch_counter
 
-    def _ended_branches_count(self, parents):
+    def _ended_branches_count(self, commit_node, parents):
         if not len(parents) > 1:
             return 0
         """
@@ -186,7 +193,7 @@ class GitGraph():
                 # commit_node is the last commit of the branch
                 ended_counter += 1
         ended_counter -= 1  # one parent is from the "main" branch
-        assert ended_counter >= 0, "commit cannot end negative number of branches"
+        assert ended_counter >= 0, "commit cannot end negative number of branches: branch_counter: {}, #children: {}".format(branch_counter, len(children))
         return ended_counter
 
 
@@ -202,7 +209,7 @@ class GitGraph():
                 branch_counter += 1
             branch_counter += self._created_branches_count(commit_node,
                                                            children)
-            branch_counter -= self._ended_branches_count(parents)
+            branch_counter -= self._ended_branches_count(commit_node, parents)
             result.append((1, branch_counter))
             self.graph.node[commit_node]["bcomplexity"] = branch_counter
         # visited all nodes
