@@ -90,6 +90,7 @@ class GitGraph():
                 "commit_timestamp": commit_timestamp,
                 "file_list": files,
                 "churn": added+removed,
+                "bcomplexity": 0,
             })
             if not parents:
                 self.graph.add_edge(self.sentinel, commit)
@@ -196,7 +197,8 @@ class GitGraph():
             branch_counter += self._created_branches_count(commit_node,
                                                            children)
             branch_counter -= self._ended_branches_count(parents)
-            result.append((1,branch_counter))
+            result.append((1, branch_counter))
+            self.graph.node[commit_node]["bcomplexity"] = branch_counter
         # visited all nodes
         return result
 
@@ -226,6 +228,7 @@ class GitGraph():
                 "churn": self.graph.node[commit]["churn"],
                 "commitmsg": self.graph.node[commit]["commitmsg"],
                 "files": self.graph.node[commit]["file_list"],
+                "bcomplexity": self.graph.node[commit]["bcomplexity"],
             })
         return json.dumps(result, separators=(',', ':'))
 
@@ -239,6 +242,6 @@ if __name__ == "__main__":
     command = "git clone {} .".format(sys.argv[1])
     subprocess.check_call(command.split())
     g = GitGraph()
-    #print(g.metric6())
+    g.metric6()
     exported = g.export_as_json()
     print(exported)

@@ -49,7 +49,7 @@ function mostEditFile(inputList){
 				max = map[pathToFile];
 			}
 		}
-		outputList[i] = [blen, max]
+		outputList[i] = max;
 	}
 	return outputList;
 }

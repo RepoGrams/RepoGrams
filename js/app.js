@@ -42,6 +42,15 @@ var MapperFactory = function () {
       "#ef6548",
       "#d7301f",
       "#990000"
+    ],
+    "most_edit_file": ["#fff7fb",
+      "#ece7f2",
+      "#d0d1e6",
+      "#a6bddb",
+      "#74a9cf",
+      "#3690c0",
+      "#0570b0",
+      "#034e7b"
     ]
   };
   this.chunkNum = 8;
@@ -145,7 +154,9 @@ repogramsModule.service('metricSelectionService', function() {
   var allMetrics = [
     {id: "commit_modularity", label: "Commit modularity"},
     {id:"commit_message_length", label: "Commit message length"},
-    {id:"commit_lang_complexity", label: "Commit language complexity"}
+    {id:"commit_lang_complexity", label: "Commit language complexity"},
+    {id:"most_edit_file", label: "Most edit file"},
+    {id:"branch_complexity", label: "Branch complexity"}
   ];
   var selectedMetrics = [allMetrics[0]];
 
