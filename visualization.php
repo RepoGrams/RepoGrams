@@ -28,7 +28,7 @@ require_once('header.php');
         <div class="container">
                 <!-- First block for the selection box and zoom slider -->
                 <div class="row">
-                <div ng-controller="RepogramsConfig">
+                <div class="configBlock" ng-controller="RepogramsConfig">
                         <!-- Dropdown Menu for Metric Selection -->
                         Metrics:
                         <select  ng-model="currentMetric" ng-change="selectAction()"
@@ -38,7 +38,7 @@ require_once('header.php');
                 </div>
                 </div>
 
-                <!-- Main Block with the Repo name and Metric render -->
+		<!-- Main Block with the Repo name and Metric render -->
                 <div ng-controller="RepogramsRender" class="container-fluid">
                         <div class="row">
                           <div class="col-md-10" style="outline: 1px solid red;">
