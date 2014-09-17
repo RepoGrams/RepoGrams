@@ -99,7 +99,7 @@ class GitGraph():
             self.commit_timestamp[commit_vertex] = commit_timestamp
             self.commit_files[commit_vertex] = files
             self.commit_churn[commit_vertex] = added+removed
-            self.branch_complexity = 0
+            self.branch_complexity[commit_vertex] = 0
             if not parents:
                 self.graph.add_edge(self.sentinel, commit_vertex)
                 continue
@@ -186,7 +186,7 @@ class GitGraph():
                                                            children)
             branch_counter -= self._ended_branches_count(commit_node, parents)
             result.append((1, branch_counter))
-            self.graph.branch_complexity[commit_node] = branch_counter
+            self.branch_complexity[commit_node] = branch_counter
         # visited all nodes
         return result
 
