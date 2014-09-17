@@ -108,7 +108,7 @@ class GitGraph():
         assert gt.topology.is_DAG(self.graph)
 
         # compute dominators
-        self.dominators = self.compute_dominators()
+        self.dominator_tree = self.compute_dominators()
 
     def plot(self):
         import matplotlib.pyplot as plt
@@ -119,10 +119,8 @@ class GitGraph():
         """
         Compute the dominator set from the dominator tree
         """
-        dominators = {}
         domtree = gt.dominator_tree(self.graph, self.sentinel)
-        raise Exception("TODO")
-        return dominators
+        return domtree
 
     def _created_branches_count(self, commit_node, children):
         """
