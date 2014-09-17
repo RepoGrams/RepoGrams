@@ -114,7 +114,7 @@ class GitGraph():
         """
         Compute the dominator set from the dominator tree
         """
-        domtree = gt.dominator_tree(self.graph, self.sentinel)
+        domtree = gt.topology.dominator_tree(self.graph, self.sentinel)
         return domtree
 
     def _created_branches_count(self, commit_node, children):
