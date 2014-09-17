@@ -110,11 +110,6 @@ class GitGraph():
         # compute dominators
         self.dominator_tree = self.compute_dominators()
 
-    def plot(self):
-        import matplotlib.pyplot as plt
-        nx.draw(self.graph)
-        plt.show()
-
     def compute_dominators(self):
         """
         Compute the dominator set from the dominator tree
