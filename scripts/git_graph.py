@@ -177,7 +177,7 @@ class GitGraph():
         for commit_node in self.iterate_commits():
             # iterate over commits in order of commit_timestamps
             debug(commit_node)
-            parents = list(commit_node.in_neighborus())
+            parents = list(commit_node.in_neighbours())
             children = list(commit_node.out_neighbours())
             if parents[0] == self.sentinel:  # first commit of branch
                 assert(len(parents) == 1), "First commit of branch has no predecessor"
