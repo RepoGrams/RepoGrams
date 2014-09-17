@@ -134,7 +134,7 @@ class GitGraph():
             return 0
         branch_counter = 0
         for child in children:
-            if commit_node in self.dominators[child]:
+            if commit_node == self.graph.vertex(self.dominator_tree[child]):
                 branch_counter += 1
         branch_counter -= 1  # one child is from the "main" branch
         # There are actually commits with multiple children which dominate none
