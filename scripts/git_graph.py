@@ -213,10 +213,10 @@ class GitGraph():
         result = []
         for commit in self.iterate_commits():
             result.append({
-                "churn": self.graph.node[commit]["churn"],
-                "commitmsg": self.graph.node[commit]["commitmsg"],
-                "files": self.graph.node[commit]["file_list"],
-                "bcomplexity": self.graph.node[commit]["bcomplexity"],
+                "churn": self.commit_churn[commit],
+                "commitmsg": self.commit_msg[commit],
+                "files": self.files[commit],
+                "bcomplexity": self.branch_complexity[commit],
             })
         return json.dumps(result, separators=(',', ':'))
 
