@@ -104,7 +104,7 @@ class GitGraph():
                 self.graph.add_edge(self.sentinel, commit_vertex)
                 continue
             for parent in parents:
-                self.graph.add_edge(self.hash2vertex[parent], commit)
+                self.graph.add_edge(self.hash2vertex[parent], commit_vertex)
         assert gt.topology.is_DAG(self.graph)
 
         # compute dominators
