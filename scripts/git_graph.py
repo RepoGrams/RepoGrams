@@ -14,7 +14,8 @@ import graph_tool as gt
 import graph_tool.topology
 
 
-debug = lambda x: None
+def debug(*args, **kwargs):
+    pass
 
 
 class PriorityQueue:
@@ -145,6 +146,8 @@ class GitGraph():
         # of the repograms repository
         branch_counter = max(branch_counter, 0)
         assert branch_counter >= 0, "A negative number of branches cannot exist: branch_counter: {}, #children: {}, commit: {}".format(branch_counter, len(children), commit_node)
+        if branch_counter != 0:
+            debug("started:", self.commit_hashsum[commit_node])
         return branch_counter
 
     def _ended_branches_count(self, commit_node, parents):
@@ -168,6 +171,8 @@ class GitGraph():
                 ended_counter += 1
         ended_counter -= 1  # one parent is from the "main" branch
         assert ended_counter >= 0, "commit cannot end negative number of branches: branch_counter: {}, #children: {}".format(branch_counter, len(children))
+        if ended_counter != 0:
+            debug("ended:", self.commit_hashsum[commit_node])
         return ended_counter
 
 
