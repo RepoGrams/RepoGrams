@@ -199,8 +199,8 @@ class GitGraph():
     def iterate_commits(self):
         unvisited_nodes = PriorityQueue()
         already_seen = set()
-        for initial_commit in self.graph.successors_iter(self.sentinel):
-            unvisited_nodes.push(initial_commit, self.graph.node[initial_commit]["commit_timestamp"])
+        for initial_commit in self.sentinel.out_neighbours():
+            unvisited_nodes.push(initial_commit, self.commit_timestamp[initial_commit])
             already_seen.add(initial_commit)
         while(True):
             # iterate over commits in order of commit_timestamps
@@ -209,10 +209,10 @@ class GitGraph():
             except IndexError:
                 raise StopIteration
             yield commit_node
-            children = self.graph.successors(commit_node)
+            children = commit_node.out_neighbours()
             new_nodes = [child for child in children if child not in already_seen]
             for node in new_nodes:
-                unvisited_nodes.push(node, self.graph.node[node]["commit_timestamp"])
+                unvisited_nodes.push(node, self.commit_timestamp[node])
             already_seen |= set(new_nodes)
 
     def export_as_json(self):
