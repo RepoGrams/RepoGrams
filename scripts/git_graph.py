@@ -184,15 +184,16 @@ class GitGraph():
         for commit_node in self.iterate_commits():
             # iterate over commits in order of commit_timestamps
             debug(commit_node)
-            parents = self.graph.predecessors(commit_node)
-            children = self.graph.successors(commit_node)
+            parents = list(commit_node.in_neighborus())
+            children = list(commit_node.out_neighbours())
             if parents[0] == self.sentinel:  # first commit of branch
+                assert(len(parents) == 1), "First commit of branch has no predecessor"
                 branch_counter += 1
             branch_counter += self._created_branches_count(commit_node,
                                                            children)
             branch_counter -= self._ended_branches_count(commit_node, parents)
             result.append((1, branch_counter))
-            self.graph.node[commit_node]["bcomplexity"] = branch_counter
+            self.graph.branch_complexity[commit_node] = branch_counter
         # visited all nodes
         return result
 
