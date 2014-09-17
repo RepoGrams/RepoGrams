@@ -215,7 +215,7 @@ class GitGraph():
             result.append({
                 "churn": self.commit_churn[commit],
                 "commitmsg": self.commit_msg[commit],
-                "files": self.files[commit],
+                "files": self.commit_files[commit],
                 "bcomplexity": self.branch_complexity[commit],
             })
         return json.dumps(result, separators=(',', ':'))
