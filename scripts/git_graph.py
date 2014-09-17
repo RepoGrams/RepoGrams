@@ -10,6 +10,8 @@ import heapq
 import json
 
 import networkx as nx
+import graph_tool as gt
+import graph_tool.topology
 
 
 debug = lambda x: None
@@ -70,24 +72,42 @@ def get_all_commits():
 class GitGraph():
 
     def __init__(self):
-        self.graph = nx.DiGraph()
-        self.sentinel = "SENTINEL"
-        self.graph.add_node(self.sentinel, {"commitmsg": "SENTINEL"})
+        self.graph = gt.Graph()
+        # required to map a nodes hashsum back to the vertex
+        self.hash2vertex = {}
+
+        # properties associated with each commit
+        self.commit_hashsum = self.graph.new_vertex_property("string")
+        self.commit_msg = self.graph.new_vertex_property("string")
+        self.commit_timestamp = self.graph.new_vertex_property("string")
+        self.commit_files = self.graph.new_vertex_property("vector<string>")
+        self.commit_churn = self.graph.new_vertex_property("int")
+        self.branch_complexity = self.graph.new_vertex_property("int")
+
+        # sentinel: required to have a rooted tree
+        self.sentinel = self.graph.add_vertex()
+        self.commit_hashsum[self.sentinel] = "SENTINEL"
+        self.hash2vertex["SENTINEL"] = self.sentinel
+
+        # construct the graph
         for commit in get_all_commits():
             parents, commit_timestamp, commitmsg, added, removed, files = get_commit_data(commit)
-            self.graph.add_node(commit, {
-                "commitmsg": commitmsg,
-                "commit_timestamp": commit_timestamp,
-                "file_list": files,
-                "churn": added+removed,
-                "bcomplexity": 0,
-            })
+            commit_vertex = self.graph.add_vertex()
+            self.hash2vertex[commit] = commit_vertex
+            self.commit_hashsum[commit_vertex] = commit
+            self.commit_msg[commit_vertex] = commitmsg
+            self.commit_timestamp[commit_vertex] = commit_timestamp
+            self.commit_files[commit_vertex] = files
+            self.commit_churn[commit_vertex] = added+removed
+            self.branch_complexity = 0
             if not parents:
-                self.graph.add_edge(self.sentinel, commit)
+                self.graph.add_edge(self.sentinel, commit_vertex)
                 continue
             for parent in parents:
-                self.graph.add_edge(parent, commit)
-        assert nx.is_directed_acyclic_graph(self.graph)
+                self.graph.add_edge(self.hash2vertex[parent], commit)
+        assert gt.topology.is_DAG(self.graph)
+
+        # compute dominators
         self.dominators = self.compute_dominators()
 
     def plot(self):
@@ -97,37 +117,11 @@ class GitGraph():
 
     def compute_dominators(self):
         """
-        Compute the dominators
-
-        dominators(root) = {root}
-        dominators(x) = {x} ∪ (∩ dominators(y) for y ∈ preds(x))
+        Compute the dominator set from the dominator tree
         """
-        # TODO: this is rather slow, one should rather use
-        # Cooper, Keith D.; Harvey, Timothy J; and Kennedy, Ken (2001).
-        # "A Simple, Fast Dominance Algorithm".
-
-        # initialize the dominator sets
-        dominators = collections.defaultdict(set)  # { block : {dominators} }
-        for node in self.graph.nodes_iter():
-            dominators[node] = set(self.graph.nodes())
-
-        # first block is only dominated by itself
-        dominators[self.sentinel] = set([self.sentinel])
-        changed = True
-        while (changed):
-            changed = False
-            for node in self.graph.nodes_iter():
-                if node == self.sentinel:
-                    continue
-                pred_doms = [dominators[pred] for pred
-                             in self.graph.predecessors(node)]
-                new_doms = set([node]) | set.intersection(*(pred_doms or [set()]))
-                if (new_doms != dominators[node]):
-                    dominators[node] = new_doms
-                    changed = True
-
-        # TODO
-
+        dominators = {}
+        domtree = gt.dominator_tree(self.graph, self.sentinel)
+        raise Exception("TODO")
         return dominators
 
     def _created_branches_count(self, commit_node, children):
@@ -237,6 +231,9 @@ if __name__ == "__main__":
     import sys
     import os
     import tempfile
+    if len(sys.argv) < 1:
+        print("missing argument")
+        sys.exit(0)
     dirpath = tempfile.mkdtemp()
     os.chdir(dirpath)
     command = "git clone {} .".format(sys.argv[1])
