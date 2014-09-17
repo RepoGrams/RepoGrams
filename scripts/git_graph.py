@@ -160,7 +160,7 @@ class GitGraph():
         """
         Consider
         A------C--D--F (master)
-            \    /
+          \    /
             \--B-----E  (feature branch)
         In this case, C has multiple parents
         However, it is NOT the end of a branch, as the feature
@@ -170,7 +170,7 @@ class GitGraph():
         """
         ended_counter = 0
         for parent in parents:
-            if len(self.graph.successors(parent)) == 1:
+            if len(parent.out_neighbours()) == 1:
                 # commit_node is the last commit of the branch
                 ended_counter += 1
         ended_counter -= 1  # one parent is from the "main" branch
