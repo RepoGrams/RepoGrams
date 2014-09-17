@@ -163,7 +163,7 @@ class GitGraph():
         """
         ended_counter = 0
         for parent in parents:
-            if len(parent.out_neighbours()) == 1:
+            if sum(1 for _ in parent.out_neighbours()) == 1:
                 # commit_node is the last commit of the branch
                 ended_counter += 1
         ended_counter -= 1  # one parent is from the "main" branch
