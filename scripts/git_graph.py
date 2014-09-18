@@ -66,7 +66,7 @@ def get_commit_data(commit_id):
 
 
 def get_all_commits():
-    command = """git rev-list --branches --reverse"""
+    command = """git rev-list --branches --reverse --topo-order"""
     pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
     out, err = pipe.communicate()
     all_commits = out.decode('utf8', 'ignore').split("\n")[:-1]
