@@ -205,8 +205,13 @@ class GitGraph():
 
     def iterate_commits(self, order=Order.CHRONO):
         if order == Order.TOPO:
-            for commit_index in gt.topology.topological_sort(self.graph):
+            # topological_sort: if edge (u,v) appears in the graph, then v
+            # comes before u in the ordering
+            # we want however the reverse ordering (which is what people in
+            # general understand by topological order)
+            for commit_index in reversed(gt.topology.topological_sort(self.graph)):
                 commit_node = self.graph.vertex(commit_index)
+                debug("Current element", self.commit_hashsum[commit_node])
                 if (commit_node == self.sentinel):
                     # we got the sentinel node, which is not a real commit node
                     continue
