@@ -5,17 +5,20 @@ from __future__ import print_function
 
 import subprocess
 # import itertools
-import collections
 import heapq
 import json
 
-import networkx as nx
 import graph_tool as gt
 import graph_tool.topology
 
 
 def debug(*args, **kwargs):
     pass
+
+
+class Order:
+    TOPO = 1
+    CHRONO = 2
 
 
 class PriorityQueue:
@@ -102,9 +105,11 @@ class GitGraph():
             self.commit_churn[commit_vertex] = added+removed
             self.branch_complexity[commit_vertex] = 0
             if not parents:
+                debug("initial commit detected: {}".format(commit))
                 self.graph.add_edge(self.sentinel, commit_vertex)
                 continue
             for parent in parents:
+                debug("adding edge from {} to {}".format(parent, commit))
                 self.graph.add_edge(self.hash2vertex[parent], commit_vertex)
         assert gt.topology.is_DAG(self.graph)
 
@@ -179,9 +184,9 @@ class GitGraph():
     def metric6(self):
         branch_counter = 0
         result = []
-        for commit_node in self.iterate_commits():
+        for commit_node in self.iterate_commits(Order.TOPO):
             # iterate over commits in order of commit_timestamps
-            debug(commit_node)
+            debug(self.commit_hashsum[commit_node])
             parents = list(commit_node.in_neighbours())
             children = list(commit_node.out_neighbours())
             if parents[0] == self.sentinel:  # first commit of branch
@@ -190,29 +195,40 @@ class GitGraph():
             branch_counter += self._created_branches_count(commit_node,
                                                            children)
             branch_counter -= self._ended_branches_count(commit_node, parents)
+            msg = "There should be at least one branch all the time: branch_counter: {}, commit {}: ".format(branch_counter, self.commit_hashsum[commit_node])
+            assert branch_counter >= 1, msg
             result.append((1, branch_counter))
             self.branch_complexity[commit_node] = branch_counter
         # visited all nodes
         return result
 
-    def iterate_commits(self):
-        unvisited_nodes = PriorityQueue()
-        already_seen = set()
-        for initial_commit in self.sentinel.out_neighbours():
-            unvisited_nodes.push(initial_commit, self.commit_timestamp[initial_commit])
-            already_seen.add(initial_commit)
-        while(True):
-            # iterate over commits in order of commit_timestamps
-            try:
-                commit_node = unvisited_nodes.pop()
-            except IndexError:
-                raise StopIteration
-            yield commit_node
-            children = commit_node.out_neighbours()
-            new_nodes = [child for child in children if child not in already_seen]
-            for node in new_nodes:
-                unvisited_nodes.push(node, self.commit_timestamp[node])
-            already_seen |= set(new_nodes)
+
+    def iterate_commits(self, order=Order.CHRONO):
+        if order == Order.TOPO:
+            for commit_index in gt.topology.topological_sort(self.graph):
+                commit_node = self.graph.vertex(commit_index)
+                if (commit_node == self.sentinel):
+                    # we got the sentinel node, which is not a real commit node
+                    continue
+                yield commit_node
+        elif order == Order.CHRONO:
+            unvisited_nodes = PriorityQueue()
+            already_seen = set()
+            for initial_commit in self.sentinel.out_neighbours():
+                unvisited_nodes.push(initial_commit, self.commit_timestamp[initial_commit])
+                already_seen.add(initial_commit)
+            while(True):
+                # iterate over commits in order of commit_timestamps
+                try:
+                    commit_node = unvisited_nodes.pop()
+                except IndexError:
+                    raise StopIteration
+                yield commit_node
+                children = commit_node.out_neighbours()
+                new_nodes = [child for child in children if child not in already_seen]
+                for node in new_nodes:
+                    unvisited_nodes.push(node, self.commit_timestamp[node])
+                already_seen |= set(new_nodes)
 
     def export_as_json(self):
         result = []
