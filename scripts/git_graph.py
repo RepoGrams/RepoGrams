@@ -10,6 +10,7 @@ import json
 
 import graph_tool as gt
 import graph_tool.topology
+import graph_tool.search
 
 
 def debug(*args, **kwargs):
@@ -20,6 +21,22 @@ class Order:
     TOPO = 1
     CHRONO = 2
 
+
+class PathToAnyVisitor(gt.search.DFSVisitor):
+
+    """:destinies: if any of those were found, the search was successful"""
+    def __init__(self, destinies):
+        self.destinies = destinies
+        self.found = False
+
+    """@overrides gt.search.DFSVisitor.discover_vertex
+    sets self.found to True if and only if u is in destinies
+    In that case, the search is stopped
+    """
+    def discover_vertex(self, u):
+        if u in self.destinies:
+            self.found = True
+            raise gt.search.StopSearch
 
 class PriorityQueue:
     """A priority queue. Returs elements with lower priority first"""
@@ -155,6 +172,7 @@ class GitGraph():
             debug("started:", self.commit_hashsum[commit_node])
         return branch_counter
 
+
     def _ended_branches_count(self, commit_node, parents):
         if not len(parents) > 1:
             return 0
@@ -171,7 +189,18 @@ class GitGraph():
         """
         ended_counter = 0
         for parent in parents:
-            if sum(1 for _ in parent.out_neighbours()) == 1:
+            # TODO: not in parents is not sufficiant
+            # we need to check if is there is a path from child to parents -
+            # parent
+            destinies = set(parents)
+            destinies.remove(parent)
+            parent_counter = 0
+            for child in parent.out_neighbours():
+                pathfinder = PathToAnyVisitor(destinies)
+                gt.search.dfs_search(self.graph, child, pathfinder)
+                if pathfinder.found:
+                    parent_counter += 1
+            if sum(1 for _ in parent.out_neighbours()) - parent_counter  == 1:
                 # commit_node is the last commit of the branch
                 ended_counter += 1
         ended_counter -= 1  # one parent is from the "main" branch
@@ -182,7 +211,15 @@ class GitGraph():
         ended_counter = max(ended_counter, 0)
         assert ended_counter >= 0, "commit cannot end negative number of branches: branch_counter: {}, #parents: {}, commit: {}".format(ended_counter, len(parents), self.commit_hashsum[commit_node])
         if ended_counter != 0:
-            debug("ended:", self.commit_hashsum[commit_node])
+            print("ended:", self.commit_hashsum[commit_node], "number: ", ended_counter, file=sys.stderr)
+        else:
+            print("not ended:", self.commit_hashsum[commit_node], file=sys.stderr)
+            print("parents are", file=sys.stderr)
+            for parent in parents:
+                print("\t",self.commit_hashsum[parent], file=sys.stderr)
+                for child in parent.out_neighbours():
+                    print("\t\tchild: ", self.commit_hashsum[child], file=sys.stderr)
+            print("", file=sys.stderr)
         return ended_counter
 
 
