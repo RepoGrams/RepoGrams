@@ -82,7 +82,7 @@ class GitGraph():
 
         # properties associated with each commit
         self.commit_hashsum = self.graph.new_vertex_property("string")
-        self.commit_msg = self.graph.new_vertex_property("string")
+        self.commit_msg = self.graph.new_vertex_property("object")
         self.commit_timestamp = self.graph.new_vertex_property("string")
         self.commit_files = self.graph.new_vertex_property("vector<string>")
         self.commit_churn = self.graph.new_vertex_property("int")
@@ -175,7 +175,12 @@ class GitGraph():
                 # commit_node is the last commit of the branch
                 ended_counter += 1
         ended_counter -= 1  # one parent is from the "main" branch
-        assert ended_counter >= 0, "commit cannot end negative number of branches: branch_counter: {}, #children: {}".format(branch_counter, len(children))
+        # A merge commit might not end any branch, e.g. commit
+        # 9b0235dd7ca88fa1f5a83552b457bf95b6de6f73
+        # of the bootstrap repository
+        # Therefore we set the counter to 0 if it's negative
+        ended_counter = max(ended_counter, 0)
+        assert ended_counter >= 0, "commit cannot end negative number of branches: branch_counter: {}, #parents: {}, commit: {}".format(ended_counter, len(parents), self.commit_hashsum[commit_node])
         if ended_counter != 0:
             debug("ended:", self.commit_hashsum[commit_node])
         return ended_counter
@@ -183,7 +188,6 @@ class GitGraph():
 
     def metric6(self):
         branch_counter = 0
-        result = []
         for commit_node in self.iterate_commits(Order.TOPO):
             # iterate over commits in order of commit_timestamps
             debug(self.commit_hashsum[commit_node])
@@ -192,15 +196,16 @@ class GitGraph():
             if parents[0] == self.sentinel:  # first commit of branch
                 assert(len(parents) == 1), "First commit of branch has no predecessor"
                 branch_counter += 1
+            branch_counter -= self._ended_branches_count(commit_node, parents)
+            assert branch_counter >= 1, "There should be at least one branch all the time: branch_counter: {}, commit {}: ".format(branch_counter, self.commit_hashsum[commit_node])
+            self.branch_complexity[commit_node] = branch_counter
+            # add the newly created branches AFTERWARDS
+            # the branches diverge at this commit, but the number of branches
+            # is only increased in the children
             branch_counter += self._created_branches_count(commit_node,
                                                            children)
-            branch_counter -= self._ended_branches_count(commit_node, parents)
-            msg = "There should be at least one branch all the time: branch_counter: {}, commit {}: ".format(branch_counter, self.commit_hashsum[commit_node])
-            assert branch_counter >= 1, msg
-            result.append((1, branch_counter))
-            self.branch_complexity[commit_node] = branch_counter
+            assert branch_counter >= 1,"There should be at least one branch all the time: branch_counter: {}, commit {}: ".format(branch_counter, self.commit_hashsum[commit_node])
         # visited all nodes
-        return result
 
 
     def iterate_commits(self, order=Order.CHRONO):
