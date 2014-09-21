@@ -117,6 +117,7 @@ class GitGraph():
         self.commit_files = self.graph.new_vertex_property("vector<string>")
         self.commit_churn = self.graph.new_vertex_property("int")
         self.branch_complexity = self.graph.new_vertex_property("int")
+        self.associated_branch = self.graph.new_vertex_property("int")
 
         # sentinel: required to have a rooted DAG
         self.sentinel = self.graph.add_vertex()
@@ -272,7 +273,24 @@ class GitGraph():
         # visited all nodes
 
     def metric4(self):
-        pass
+        # utility function to get the equivalent of Python 3's tuple unpacking
+        def splitl(head, *tail):
+            return head, tail
+        workqueue = [self.hash2vertex[self.master_sha]]
+        workqueue += (self.hash2vertex[shasum] for shasum in self.branch_heads if shasum != self.master_sha)
+        branch_id = 1
+        while workqueue:
+            current = workqueue.pop(0)
+            # check if the commit was not visited yet (associated_branch is 0)
+            # and if we're not done
+            while (self.associated_branch[current] == 0 and current != self.sentinel):
+                self.associated_branch[current] = branch_id
+                # update current element for next iteration
+                current, todo = splitl(*current.in_neighbours())
+                # add remaining items to workqueue, they are from a different
+                # branch
+                workqueue += todo
+            branch_id += 1
 
 
     def iterate_commits(self, order=Order.CHRONO):
@@ -314,6 +332,7 @@ class GitGraph():
                 "churn": self.commit_churn[commit],
                 "commitmsg": self.commit_msg[commit],
                 "files": list(self.commit_files[commit]),
+                "associated_branch": self.associated_branch[commit],
                 "bcomplexity": self.branch_complexity[commit],
             })
         return json.dumps(result, separators=(',', ':'))
@@ -331,6 +350,7 @@ if __name__ == "__main__":
     command = "git clone {} .".format(sys.argv[1])
     subprocess.check_call(command.split())
     g = GitGraph()
+    g.metric4()
     g.metric6()
     exported = g.export_as_json()
     print(exported)
