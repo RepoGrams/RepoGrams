@@ -8,10 +8,23 @@ import subprocess
 import heapq
 import json
 
+from functools import wraps
+
 import graph_tool as gt
 import graph_tool.topology
 import graph_tool.search
 
+def debug_on(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        global debug
+        old = debug
+        def debug(*args, **kwargs):
+            print(*args, file=sys.stderr, **kwargs)
+        result = func(*args, **kwargs)
+        debug = old
+        return result
+    return wrapper
 
 def debug(*args, **kwargs):
     pass
@@ -22,7 +35,7 @@ class Order:
     CHRONO = 2
 
 
-class PathToAnyVisitor(gt.search.DFSVisitor):
+class PathToAnyVisitor(gt.search.BFSVisitor):
 
     """:destinies: if any of those were found, the search was successful"""
     def __init__(self, destinies):
@@ -104,6 +117,8 @@ class GitGraph():
         self.commit_files = self.graph.new_vertex_property("vector<string>")
         self.commit_churn = self.graph.new_vertex_property("int")
         self.branch_complexity = self.graph.new_vertex_property("int")
+        # property used to enhance search performance
+        self.node_visible = self.graph.new_vertex_property("bool")
 
         # sentinel: required to have a rooted tree
         self.sentinel = self.graph.add_vertex()
@@ -121,6 +136,7 @@ class GitGraph():
             self.commit_files[commit_vertex] = files
             self.commit_churn[commit_vertex] = added+removed
             self.branch_complexity[commit_vertex] = 0
+            self.node_visible[commit_vertex] = True
             if not parents:
                 debug("initial commit detected: {}".format(commit))
                 self.graph.add_edge(self.sentinel, commit_vertex)
@@ -195,14 +211,18 @@ class GitGraph():
             destinies = set(parents)
             destinies.remove(parent)
             parent_counter = 0
+            self.node_visible[parent] = False
+            self.graph.set_vertex_filter(self.node_visible)
             for child in parent.out_neighbours():
                 pathfinder = PathToAnyVisitor(destinies)
-                gt.search.dfs_search(self.graph, child, pathfinder)
+                gt.search.bfs_search(self.graph, child, pathfinder)
                 if pathfinder.found:
                     parent_counter += 1
             if sum(1 for _ in parent.out_neighbours()) - parent_counter  == 1:
                 # commit_node is the last commit of the branch
                 ended_counter += 1
+            self.graph.set_vertex_filter(None)
+            self.node_visible[parent] = True
         ended_counter -= 1  # one parent is from the "main" branch
         # A merge commit might not end any branch, e.g. commit
         # 9b0235dd7ca88fa1f5a83552b457bf95b6de6f73
@@ -210,16 +230,17 @@ class GitGraph():
         # Therefore we set the counter to 0 if it's negative
         ended_counter = max(ended_counter, 0)
         assert ended_counter >= 0, "commit cannot end negative number of branches: branch_counter: {}, #parents: {}, commit: {}".format(ended_counter, len(parents), self.commit_hashsum[commit_node])
-        if ended_counter != 0:
-            print("ended:", self.commit_hashsum[commit_node], "number: ", ended_counter, file=sys.stderr)
-        else:
-            print("not ended:", self.commit_hashsum[commit_node], file=sys.stderr)
-            print("parents are", file=sys.stderr)
-            for parent in parents:
-                print("\t",self.commit_hashsum[parent], file=sys.stderr)
-                for child in parent.out_neighbours():
-                    print("\t\tchild: ", self.commit_hashsum[child], file=sys.stderr)
-            print("", file=sys.stderr)
+        if __debug__:
+            if ended_counter != 0:
+                debug("ended:", self.commit_hashsum[commit_node], "number: ", ended_counter)
+            else:
+                debug("not ended:", self.commit_hashsum[commit_node])
+                debug("parents are")
+                for parent in parents:
+                    debug("\t",self.commit_hashsum[parent])
+                    for child in parent.out_neighbours():
+                        debug("\t\tchild: ", self.commit_hashsum[child])
+                        debug("")
         return ended_counter
 
 
