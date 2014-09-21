@@ -12,7 +12,6 @@ from functools import wraps
 
 import graph_tool as gt
 import graph_tool.topology
-import graph_tool.search
 
 def debug_on(func):
     @wraps(func)
@@ -34,22 +33,6 @@ class Order:
     TOPO = 1
     CHRONO = 2
 
-
-class PathToAnyVisitor(gt.search.BFSVisitor):
-
-    """:destinies: if any of those were found, the search was successful"""
-    def __init__(self, destinies):
-        self.destinies = destinies
-        self.found = False
-
-    """@overrides gt.search.DFSVisitor.discover_vertex
-    sets self.found to True if and only if u is in destinies
-    In that case, the search is stopped
-    """
-    def discover_vertex(self, u):
-        if u in self.destinies:
-            self.found = True
-            raise gt.search.StopSearch
 
 class PriorityQueue:
     """A priority queue. Returs elements with lower priority first"""
@@ -117,10 +100,8 @@ class GitGraph():
         self.commit_files = self.graph.new_vertex_property("vector<string>")
         self.commit_churn = self.graph.new_vertex_property("int")
         self.branch_complexity = self.graph.new_vertex_property("int")
-        # property used to enhance search performance
-        self.node_visible = self.graph.new_vertex_property("bool")
 
-        # sentinel: required to have a rooted tree
+        # sentinel: required to have a rooted DAG
         self.sentinel = self.graph.add_vertex()
         self.commit_hashsum[self.sentinel] = "SENTINEL"
         self.hash2vertex["SENTINEL"] = self.sentinel
@@ -136,7 +117,6 @@ class GitGraph():
             self.commit_files[commit_vertex] = files
             self.commit_churn[commit_vertex] = added+removed
             self.branch_complexity[commit_vertex] = 0
-            self.node_visible[commit_vertex] = True
             if not parents:
                 debug("initial commit detected: {}".format(commit))
                 self.graph.add_edge(self.sentinel, commit_vertex)
@@ -144,6 +124,10 @@ class GitGraph():
             for parent in parents:
                 debug("adding edge from {} to {}".format(parent, commit))
                 self.graph.add_edge(self.hash2vertex[parent], commit_vertex)
+        self.transitive_closure = gt.topology.transitive_closure(self.graph)
+        # make closure also reflexive
+        for vertex in self.transitive_closure.vertices():
+            self.transitive_closure.add_edge(vertex, vertex)
         assert gt.topology.is_DAG(self.graph)
 
         # compute dominators
@@ -192,6 +176,7 @@ class GitGraph():
         return branch_counter
 
 
+    @debug_on
     def _ended_branches_count(self, commit_node, parents):
         if not len(parents) > 1:
             return 0
@@ -214,18 +199,17 @@ class GitGraph():
             destinies = set(parents)
             destinies.remove(parent)
             parent_counter = 0
-            self.node_visible[parent] = False
-            self.graph.set_vertex_filter(self.node_visible)
             for child in parent.out_neighbours():
-                pathfinder = PathToAnyVisitor(destinies)
-                gt.search.bfs_search(self.graph, child, pathfinder)
-                if pathfinder.found:
-                    parent_counter += 1
-            if sum(1 for _ in parent.out_neighbours()) - parent_counter  == 1:
+                if child == commit_node:
+                    continue
+                for destiny in destinies:
+                    path_exists = self.transitive_closure.edge(child, destiny) is not None
+                    if path_exists:
+                        parent_counter += 1
+            child_count = sum(1 for _ in parent.out_neighbours())
+            if child_count - parent_counter  == 1:
                 # commit_node is the last commit of the branch
                 ended_counter += 1
-            self.graph.set_vertex_filter(None)
-            self.node_visible[parent] = True
         ended_counter -= 1  # one parent is from the "main" branch
         # A merge commit might not end any branch, e.g. commit
         # 9b0235dd7ca88fa1f5a83552b457bf95b6de6f73
