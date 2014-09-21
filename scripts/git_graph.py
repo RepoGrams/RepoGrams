@@ -86,6 +86,23 @@ def get_all_commits():
     return all_commits
 
 
+def get_branch_heads():
+    """:returns: a tuple (master branch shasum, list of branch head shasums)"""
+    command = """git show-ref --heads"""
+    pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
+    out, err = pipe.communicate()
+    all_heads_with_name = out.decode('utf8', 'ignore').split("\n")[:-1]
+    all_heads = []
+    master = None
+    for head in all_heads_with_name:
+        # split head into shasum and name, extract shasum afterwardts
+        shasum = head.split()[0]
+        all_heads.append(shasum)
+        if master is None and head.endswith("master"):
+            master = shasum
+    return master, all_heads
+
+
 class GitGraph():
 
     def __init__(self):
@@ -132,6 +149,9 @@ class GitGraph():
 
         # compute dominators
         self.dominator_tree = self.compute_dominators()
+
+        # get the branch heads for metric 4
+        self.master_sha, self.branch_heads = get_branch_heads()
 
     def compute_dominators(self):
         """
@@ -250,6 +270,9 @@ class GitGraph():
                                                            children)
             assert branch_counter >= 1,"There should be at least one branch all the time: branch_counter: {}, commit {}: ".format(branch_counter, self.commit_hashsum[commit_node])
         # visited all nodes
+
+    def metric4(self):
+        pass
 
 
     def iterate_commits(self, order=Order.CHRONO):
