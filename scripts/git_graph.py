@@ -176,7 +176,6 @@ class GitGraph():
         return branch_counter
 
 
-    @debug_on
     def _ended_branches_count(self, commit_node, parents):
         if not len(parents) > 1:
             return 0
