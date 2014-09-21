@@ -96,7 +96,7 @@ def get_commit_data(commit_id):
 
 
 def get_all_commits():
-    command = """git rev-list --branches --reverse --topo-order"""
+    command = """git rev-list --all --remotes --reverse --topo-order"""
     pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
     out, err = pipe.communicate()
     all_commits = out.decode('utf8', 'ignore').split("\n")[:-1]
@@ -184,8 +184,11 @@ class GitGraph():
         # of the repograms repository
         branch_counter = max(branch_counter, 0)
         assert branch_counter >= 0, "A negative number of branches cannot exist: branch_counter: {}, #children: {}, commit: {}".format(branch_counter, len(children), commit_node)
-        if branch_counter != 0:
-            debug("started:", self.commit_hashsum[commit_node])
+        if __debug__:
+            if branch_counter != 0:
+                debug("started:", self.commit_hashsum[commit_node])
+            else:
+                debug("not started:", self.commit_hashsum[commit_node])
         return branch_counter
 
 
