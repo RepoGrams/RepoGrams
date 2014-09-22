@@ -8,7 +8,7 @@ var MapperFactory = function () {
 
   this.branch_use_colors =
   [
-    //"#000000", // used for main branch
+    "#000000",
     "#ffff00",
     "#1ce6ff",
     "#ff34ff",
@@ -33,7 +33,7 @@ var MapperFactory = function () {
     "#4a3b53",
     "#ff2f80",
     "#61615a",
-    "#ba0900",
+    // "#ba0900", // used for main branch
     "#6b7900",
     "#00c2a0",
     "#ffaa92",
@@ -138,6 +138,8 @@ var MapperFactory = function () {
     "#012c58"
   ];
 
+  this.main_branch_color = "#ba0900";
+
   this.metric2color = {
     "branch_complexity": ["#f7fcfd",
       "#e5f5f9",
@@ -215,7 +217,7 @@ var MapperFactory = function () {
   };
 
   var BranchUsageMapper = function(maxValue) {
-    this.colors = ["#000000"]; // color for the main branch
+    this.colors = [outer.main_branch_color]; // color for the main branch
     var i = 1; // 0 is already #000000
     while(i < maxValue) {
       outer.branch_usage_gauge = outer.branch_usage_gauge + 1 % outer.branch_use_colors.length;
