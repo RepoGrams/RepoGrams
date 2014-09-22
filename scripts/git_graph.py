@@ -3,106 +3,12 @@
 
 from __future__ import print_function
 
-import subprocess
-# import itertools
-import heapq
+from utils import debug, PriorityQueue, Order
+import githelpers as gh
 import json
-
-from functools import wraps
 
 import graph_tool as gt
 import graph_tool.topology
-
-def debug_on(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        global debug
-        old = debug
-        def debug(*args, **kwargs):
-            print(*args, file=sys.stderr, **kwargs)
-        result = func(*args, **kwargs)
-        debug = old
-        return result
-    return wrapper
-
-def debug(*args, **kwargs):
-    pass
-
-
-class Order:
-    TOPO = 1
-    CHRONO = 2
-
-
-class PriorityQueue:
-    """A priority queue. Returs elements with lower priority first"""
-    def __init__(self):
-        self._queue = []
-        self._index = 0
-
-    def push(self, item, priority):
-        heapq.heappush(self._queue, (priority, self._index, item))
-        self._index += 1
-
-    def pop(self):
-        return heapq.heappop(self._queue)[-1]
-
-
-def get_commit_data(commit_id):
-    # iterate over commits
-    # --always: handle empty commits
-    # -s: don't show p, we do it later
-    # --root: else the first commit won't work
-    # -r: the commit we want to display
-    # --pretty: format string which prints all we need
-    #   %P: parents   |   %ct: commiter time stamp     | %B commitmsg
-    separator = "\a"
-    command = """git diff-tree --always --root --no-commit-id --numstat --pretty=format:{1}%P{1}%ct{1}%B{1} -r {0}""".format(commit_id, separator)
-    pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
-    out, err = pipe.communicate()
-    filestats, parents, commit_timestamp, commitmsg, _ = out.decode('utf8', 'ignore').split(separator)
-    lines_added = 0
-    lines_removed = 0
-    file_names = []
-    for file_info in filestats.split("\n"):
-        if file_info:
-            added, removed, name = file_info.split("\t")
-            try:
-                lines_added += int(added)
-                lines_removed += int(removed)
-            except ValueError:
-                pass  # binary files don't have those numbers
-            # TODO: deal with renames!
-            file_names.append(name)
-    return (parents.split(), commit_timestamp, commitmsg,
-            lines_added, lines_removed, file_names)
-
-
-def get_all_commits():
-    command = """git rev-list --all --remotes --reverse --topo-order"""
-    pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
-    out, err = pipe.communicate()
-    all_commits = out.decode('utf8', 'ignore').split("\n")[:-1]
-    return all_commits
-
-
-def get_branch_heads():
-    """:returns: a tuple (master branch shasum, list of branch head shasums)"""
-    command = """git ls-remote --heads"""
-    pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
-    out, err = pipe.communicate()
-    all_heads_with_name = out.decode('utf8', 'ignore').split("\n")[:-1]
-    all_heads = []
-    master = None
-    for head in all_heads_with_name:
-        # split head into shasum and name, extract shasum afterwardts
-        shasum = head.split()[0]
-        all_heads.append(shasum)
-        if master is None and head.endswith("master"):
-            master = shasum
-    debug(master)
-    debug(all_heads)
-    return master, all_heads
 
 
 class GitGraph():
@@ -127,8 +33,8 @@ class GitGraph():
         self.hash2vertex["SENTINEL"] = self.sentinel
 
         # construct the graph
-        for commit in get_all_commits():
-            parents, commit_timestamp, commitmsg, added, removed, files = get_commit_data(commit)
+        for commit in gh.get_all_commits():
+            parents, commit_timestamp, commitmsg, added, removed, files = gh.get_commit_data(commit)
             commit_vertex = self.graph.add_vertex()
             self.hash2vertex[commit] = commit_vertex
             self.commit_hashsum[commit_vertex] = commit
@@ -154,7 +60,7 @@ class GitGraph():
         self.dominator_tree = self.compute_dominators()
 
         # get the branch heads for metric 4
-        self.master_sha, self.branch_heads = get_branch_heads()
+        self.master_sha, self.branch_heads = gh.get_branch_heads()
 
     def compute_dominators(self):
         """
@@ -197,7 +103,6 @@ class GitGraph():
             else:
                 debug("not started:", self.commit_hashsum[commit_node])
         return branch_counter
-
 
     def _ended_branches_count(self, commit_node, parents):
         if not len(parents) > 1:
@@ -251,7 +156,6 @@ class GitGraph():
                         debug("\t\tchild: ", self.commit_hashsum[child])
                         debug("")
         return ended_counter
-
 
     def metric6(self):
         branch_counter = 0
@@ -349,6 +253,7 @@ if __name__ == "__main__":
     import sys
     import os
     import tempfile
+    import subprocess
     if len(sys.argv) < 1:
         print("missing argument")
         sys.exit(0)
