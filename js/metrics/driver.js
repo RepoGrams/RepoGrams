@@ -13,6 +13,7 @@ function runMetrics(data) {
   var commit_langcomp_data = [];
   var commit_msglength_data = [];
   var commit_modularity_data = [];
+  var branch_usage_data = [];
   var branch_complexity = [];
   var churn = [];
   var metric5data = data.map(function(commit_datum) {
@@ -23,7 +24,8 @@ function runMetrics(data) {
     // metric 3
     commit_modularity_data.push(getMetrictCommitModularity(commit_datum.files));
     churn.push(commit_datum.churn);
-    // metric 4: TODO: not sure if implementable
+    // metric 4
+    branch_usage_data.push(commit_datum.associated_branch);
     // metric 5 work on all commits
     // metric 6 is computed server side, we just have to assign the value
     branch_complexity.push(commit_datum.bcomplexity);
@@ -38,6 +40,7 @@ function runMetrics(data) {
     commit_lang_complexity: commit_langcomp_data,
     branch_complexity: branch_complexity,
     commit_message_length: commit_msglength_data,
+    branch_usage: branch_usage_data,
     commit_modularity: commit_modularity_data,
     most_edit_file:  metric5data,
     churn: churn,

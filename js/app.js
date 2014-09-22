@@ -6,6 +6,138 @@
 //TODO: move those functions into different file
 var MapperFactory = function () {
 
+  this.branch_use_colors =
+  [
+    //"#000000", // used for main branch
+    "#ffff00",
+    "#1ce6ff",
+    "#ff34ff",
+    "#ff4a46",
+    "#008941",
+    "#006fa6",
+    "#a30059",
+    "#ffdbe5",
+    "#7a4900",
+    "#0000a6",
+    "#63ffac",
+    "#b79762",
+    "#004d43",
+    "#8fb0ff",
+    "#997d87",
+    "#5a0007",
+    "#809693",
+    "#feffe6",
+    "#1b4400",
+    "#4fc601",
+    "#3b5dff",
+    "#4a3b53",
+    "#ff2f80",
+    "#61615a",
+    "#ba0900",
+    "#6b7900",
+    "#00c2a0",
+    "#ffaa92",
+    "#ff90c9",
+    "#b903aa",
+    "#d16100",
+    "#ddefff",
+    "#000035",
+    "#7b4f4b",
+    "#a1c299",
+    "#300018",
+    "#0aa6d8",
+    "#013349",
+    "#00846f",
+    "#372101",
+    "#ffb500",
+    "#c2ffed",
+    "#a079bf",
+    "#cc0744",
+    "#c0b9b2",
+    "#c2ff99",
+    "#001e09",
+    "#00489c",
+    "#6f0062",
+    "#0cbd66",
+    "#eec3ff",
+    "#456d75",
+    "#b77b68",
+    "#7a87a1",
+    "#788d66",
+    "#885578",
+    "#fad09f",
+    "#ff8a9a",
+    "#d157a0",
+    "#bec459",
+    "#456648",
+    "#0086ed",
+    "#886f4c",
+    "#34362d",
+    "#b4a8bd",
+    "#00a6aa",
+    "#452c2c",
+    "#636375",
+    "#a3c8c9",
+    "#ff913f",
+    "#938a81",
+    "#575329",
+    "#00fecf",
+    "#b05b6f",
+    "#8cd0ff",
+    "#3b9700",
+    "#04f757",
+    "#c8a1a1",
+    "#1e6e00",
+    "#7900d7",
+    "#a77500",
+    "#6367a9",
+    "#a05837",
+    "#6b002c",
+    "#772600",
+    "#d790ff",
+    "#9b9700",
+    "#549e79",
+    "#fff69f",
+    "#201625",
+    "#72418f",
+    "#bc23ff",
+    "#99adc0",
+    "#3a2465",
+    "#922329",
+    "#5b4534",
+    "#fde8dc",
+    "#404e55",
+    "#0089a3",
+    "#cb7e98",
+    "#a4e804",
+    "#324e72",
+    "#6a3a4c",
+    "#83ab58",
+    "#001c1e",
+    "#d1f7ce",
+    "#004b28",
+    "#c8d0f6",
+    "#a3a489",
+    "#806c66",
+    "#222800",
+    "#bf5650",
+    "#e83000",
+    "#66796d",
+    "#da007c",
+    "#ff1a59",
+    "#8adbb4",
+    "#1e0200",
+    "#5b4e51",
+    "#c895c5",
+    "#320033",
+    "#ff6832",
+    "#66e1d3",
+    "#cfcdac",
+    "#d0ac94",
+    "#7ed379",
+    "#012c58"
+  ];
+
   this.metric2color = {
     "branch_complexity": ["#f7fcfd",
       "#e5f5f9",
@@ -54,6 +186,8 @@ var MapperFactory = function () {
     ]
   };
   this.chunkNum = 8;
+  // used to index into branch_use_colors
+  this.branch_usage_gauge = 0;
 
   var outer = this;
 
@@ -80,8 +214,36 @@ var MapperFactory = function () {
     };
   };
 
+  var BranchUsageMapper = function(maxValue) {
+    this.colors = ["#000000"]; // color for the main branch
+    var i = 1; // 0 is already #000000
+    while(i < maxValue) {
+      outer.branch_usage_gauge = outer.branch_usage_gauge + 1 % outer.branch_use_colors.length;
+      this.colors.push(outer.branch_use_colors[outer.branch_usage_gauge]);
+      ++i;
+    }
+    this.map = function(value) {
+      return this.colors[value-1]; // values start with 1, arrays with 0
+    };
+    this.getMappingInfo = function() {
+      var mappingInfo = [];
+      for (var i = 0; i < this.colors.length; i++) {
+        mappingInfo.push({
+          lowerBound: i,
+          upperBound: i,
+          color: this.colors[i] 
+        });
+      }
+      return mappingInfo;
+    };
+  };
+
   this.createMapper = function(maxValue, metricName) {
-    return new Mapper(maxValue, metricName);
+    if (metricName === "branch_usage") {
+      return new BranchUsageMapper(maxValue);
+    } else {
+      return new Mapper(maxValue, metricName);
+    }
   };
 };
 
@@ -170,6 +332,7 @@ repogramsModule.service('metricSelectionService', function() {
     {id: "commit_modularity", label: "Commit modularity"},
     {id:"commit_message_length", label: "Commit message length"},
     {id:"commit_lang_complexity", label: "Commit language complexity"},
+    {id:"branch_usage", label: "Branch Usage"},
     {id:"most_edit_file", label: "Most edit file"},
     {id:"branch_complexity", label: "Branch complexity"}
   ];

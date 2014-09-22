@@ -88,7 +88,7 @@ def get_all_commits():
 
 def get_branch_heads():
     """:returns: a tuple (master branch shasum, list of branch head shasums)"""
-    command = """git show-ref --heads"""
+    command = """git ls-remote --heads"""
     pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
     out, err = pipe.communicate()
     all_heads_with_name = out.decode('utf8', 'ignore').split("\n")[:-1]
@@ -100,6 +100,8 @@ def get_branch_heads():
         all_heads.append(shasum)
         if master is None and head.endswith("master"):
             master = shasum
+    debug(master)
+    debug(all_heads)
     return master, all_heads
 
 
@@ -328,6 +330,7 @@ class GitGraph():
     def export_as_json(self):
         result = []
         for commit in self.iterate_commits():
+            assert self.associated_branch[commit] != 0, "{}".format(self.commit_msg[commit])
             result.append({
                 "churn": self.commit_churn[commit],
                 "commitmsg": self.commit_msg[commit],
