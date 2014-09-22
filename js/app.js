@@ -220,11 +220,13 @@ var MapperFactory = function () {
     this.colors = [outer.main_branch_color]; // color for the main branch
     var i = 1; // 0 is already #000000
     while(i < maxValue) {
-      outer.branch_usage_gauge = outer.branch_usage_gauge + 1 % outer.branch_use_colors.length;
+      outer.branch_usage_gauge = (outer.branch_usage_gauge + 1) % outer.branch_use_colors.length;
+      console.assert(outer.branch_use_colors[outer.branch_usage_gauge] !== undefined, "gauge was "+ outer.branch_usage_gauge+ " usable maxvalue: "+ outer.branch_use_colors.length);
       this.colors.push(outer.branch_use_colors[outer.branch_usage_gauge]);
       ++i;
     }
     this.map = function(value) {
+      console.assert(this.colors[value-1] !== undefined, "mapping is broken, value was "+value, "number of colors which we can use: "+this.colors.length);
       return this.colors[value-1]; // values start with 1, arrays with 0
     };
     this.getMappingInfo = function() {
@@ -295,7 +297,7 @@ repogramsModule.service('reposService', ["$rootScope", "metricSelectionService",
       //var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]);
       var localMaxVal = arrayMax(repoJSON.metricData[metric]);
       if (metric === "branch_usage") {
-        assert(false, "Not ready yet");
+        //console.assert(false, "Not ready yet");
         mappers[metric] = mapperFactory.createMapper(localMaxVal, metric);
         continue;
       }
