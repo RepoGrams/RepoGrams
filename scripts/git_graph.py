@@ -205,35 +205,43 @@ class GitGraph():
 
     def iterate_commits(self, order=Order.CHRONO):
         if order == Order.TOPO:
-            # topological_sort: if edge (u,v) appears in the graph, then v
-            # comes before u in the ordering
-            # we want however the reverse ordering (which is what people in
-            # general understand by topological order)
-            for commit_index in reversed(gt.topology.topological_sort(self.graph)):
-                commit_node = self.graph.vertex(commit_index)
-                debug("Current element", self.commit_hashsum[commit_node])
-                if (commit_node == self.sentinel):
-                    # we got the sentinel node, which is not a real commit node
-                    continue
+            for commit_node in self.iterate_topo():
                 yield commit_node
         elif order == Order.CHRONO:
-            unvisited_nodes = PriorityQueue()
-            already_seen = set()
-            for initial_commit in self.sentinel.out_neighbours():
-                unvisited_nodes.push(initial_commit, self.commit_timestamp[initial_commit])
-                already_seen.add(initial_commit)
-            while(True):
-                # iterate over commits in order of commit_timestamps
-                try:
-                    commit_node = unvisited_nodes.pop()
-                except IndexError:
-                    raise StopIteration
+            for commit_node in self.iterate_chrono():
                 yield commit_node
-                children = commit_node.out_neighbours()
-                new_nodes = [child for child in children if child not in already_seen]
-                for node in new_nodes:
-                    unvisited_nodes.push(node, self.commit_timestamp[node])
-                already_seen |= set(new_nodes)
+
+    def iterate_topo(self):
+        # topological_sort: if edge (u,v) appears in the graph, then v
+        # comes before u in the ordering
+        # we want however the reverse ordering (which is what people in
+        # general understand by topological order)
+        for commit_index in reversed(gt.topology.topological_sort(self.graph)):
+            commit_node = self.graph.vertex(commit_index)
+            debug("Current element", self.commit_hashsum[commit_node])
+            if (commit_node == self.sentinel):
+                # we got the sentinel node, which is not a real commit node
+                continue
+            yield commit_node
+
+    def iterate_chrono(self):
+        unvisited_nodes = PriorityQueue()
+        already_seen = set()
+        for initial_commit in self.sentinel.out_neighbours():
+            unvisited_nodes.push(initial_commit, self.commit_timestamp[initial_commit])
+            already_seen.add(initial_commit)
+        while(True):
+            # iterate over commits in order of commit_timestamps
+            try:
+                commit_node = unvisited_nodes.pop()
+            except IndexError:
+                raise StopIteration
+            yield commit_node
+            children = commit_node.out_neighbours()
+            new_nodes = [child for child in children if child not in already_seen]
+            for node in new_nodes:
+                unvisited_nodes.push(node, self.commit_timestamp[node])
+            already_seen |= set(new_nodes)
 
     def export_as_json(self):
         result = []
