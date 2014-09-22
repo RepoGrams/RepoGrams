@@ -259,16 +259,10 @@ class GitGraph():
 
 if __name__ == "__main__":
     import sys
-    import os
-    import tempfile
-    import subprocess
     if len(sys.argv) < 1:
         print("missing argument")
         sys.exit(0)
-    dirpath = tempfile.mkdtemp()
-    os.chdir(dirpath)
-    command = "git clone {} .".format(sys.argv[1])
-    subprocess.check_call(command.split())
+    gh.get_repo(sys.argv[1])
     g = GitGraph()
     g.metric4()
     g.metric6()

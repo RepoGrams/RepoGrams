@@ -1,7 +1,43 @@
 # -!- encoding: utf-8
 
+import os
 import subprocess
+import tempfile
 from utils import debug
+
+
+def update_repo():
+    """
+    Returns true if repository has changed since last clone/pull
+    If so, updates the repo
+    """
+    commad = "git fetch --all"
+    subprocess.check_call(commad.split())
+    commad = "git rev-list HEAD...origin/master --count"
+    if int(subprocess.check_call(commad.split())) == 0:
+        return False
+
+    commad = "git reset --hard FETCH_HEAD"
+    subprocess.check_call(commad.split())
+    return True
+
+def get_repo(repo_url, repo_dir=None):
+    """
+    :repo_url: URL of the repository
+    :repo_dir: directory where the repository is expected to reside
+    :returns: True if the repository has been changed/initially cloned
+    """
+    if repo_dir is not None:
+        try:
+            os.chdir(repo_dir)
+            return update_repo()
+        except OSError:
+            pass
+    dirpath = tempfile.mkdtemp()
+    os.chdir(dirpath)
+    command = "git clone {} .".format(repo_url)
+    subprocess.check_call(command.split())
+    return True
 
 
 def get_commit_data(commit_id):
