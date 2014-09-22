@@ -1,3 +1,4 @@
+"use strict";
 // TODO: 
 // - split file!
 // - instead of the watch function, events might make sense
