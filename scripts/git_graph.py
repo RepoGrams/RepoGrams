@@ -280,6 +280,10 @@ class GitGraph():
             return head, tail
         workqueue = [self.hash2vertex[self.master_sha]]
         workqueue += (self.hash2vertex[shasum] for shasum in self.branch_heads if shasum != self.master_sha)
+        # add all sinks; this seems to be necessary in some special cases
+        for v in self.graph.vertices():
+            if v.out_degree() == 0:
+                workqueue.append(v)
         branch_id = 1
         while workqueue:
             current = workqueue.pop(0)
