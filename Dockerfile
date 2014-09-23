@@ -1,8 +1,15 @@
 FROM ubuntu:14.04
 MAINTAINER Repograms Team <github.com/HeikoBecker/Repograms>
-#first install dependencies, python2, networkx for python2, apache2, php and git
 RUN apt-get update 
-RUN apt-get install -y php5 apache2 git subversion mercurial-git python python-networkx supervisor
+RUN apt-get install -y wget
+#first install dependencies, python2, networkx for python2, apache2, php and git
+RUN echo 'deb http://downloads.skewed.de/apt/trusty trusty universe' >> /etc/apt/sources.list
+RUN echo 'deb-src http://downloads.skewed.de/apt/trusty trusty universe' >> /etc/apt/sources.list
+#RUN wget http://pgp.skewed.de:11371/pks/lookup?op=get&search=0x612DEFB798507F25 --output-document=pubkey
+COPY pubkey pubkey
+RUN apt-key add pubkey
+RUN apt-get update 
+RUN apt-get install -y php5 apache2 git subversion mercurial-git python python-graph-tool supervisor
 #empty the destination folder
 RUN rm -r /var/www/html/* 
 #copy the project to the www folder
