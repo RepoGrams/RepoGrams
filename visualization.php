@@ -32,10 +32,16 @@ require_once('header.php');
                 <div class="row">
                 <div class="configBlock" ng-controller="RepogramsConfig">
                         <!-- Dropdown Menu for Metric Selection -->
-                        Metrics:
-                        <select  ng-model="currentMetric" ng-change="selectAction()"
-                        ng-options="metric.label for metric in metrics">
-                        </select>
+			<small>Metrics</small>
+			<div class="dropdown">
+			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+			    {{currentMetric}}
+			    <span class="caret"></span>
+			  </button>
+                          <select class="dropdown-menu"  ng-model="currentMetric" ng-change="selectAction()"
+                          ng-options="metric.label for metric in metrics">
+			  </select>
+			</div>
                         <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
                         
                         Block length modus:
@@ -65,15 +71,16 @@ require_once('header.php');
                 <div class="container" style="width:100%;>
                   <!-- last block for import box -->
                   <div ng-controller="RepogramsImporter" class="row">
-                    <!-- TODO: the layout is quite bad currently -->
+                    <div class="col-md-6">
                     <div class="input-group">
-                          <input type="text" class="form-control" ng-model="importURL"/>
-			<div class="input-group-btn">
+                        <input type="text" class="form-control" ng-model="importURL"/>
+			<span class="input-group-btn">
 				<button type="button" class="btn btn-danger" ng-click="importURL = null">
-        	                      <span class="glyphicon glyphicon-remove"></span>
+        	                <span class="glyphicon glyphicon-remove"></span>
 				</button>
 			  <button type="button" class="btn btn-primary" ng-click="importRepo()">{{ImportButtonText}}</button>
-			</div>
+			</span>
+		    </div>
                     </div>
                   </div>
                 </div>
