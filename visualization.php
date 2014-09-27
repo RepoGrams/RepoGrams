@@ -66,16 +66,14 @@ require_once('header.php');
                   <!-- last block for import box -->
                   <div ng-controller="RepogramsImporter" class="row">
                     <!-- TODO: the layout is quite bad currently -->
-                    <div class="col-md-6">
+                    <div class="input-group">
                           <input type="text" class="form-control" ng-model="importURL"/>
-                    </div>
-		    <div class="col-md-6">
-			<button type="button" class="btn btn-danger">
-			  <a class="clear" ng-click="importURL = null">
-                              <span class="glyphicon glyphicon-remove"></span>
-			  </a>
-			</button>
-                          <button type="button" class="btn btn-primary" ng-click="importRepo()">{{ImportButtonText}}</button>
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-danger" ng-click="importURL = null">
+        	                      <span class="glyphicon glyphicon-remove"></span>
+				</button>
+			  <button type="button" class="btn btn-primary" ng-click="importRepo()">{{ImportButtonText}}</button>
+			</div>
                     </div>
                   </div>
                 </div>
