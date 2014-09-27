@@ -13,9 +13,10 @@ RUN apt-get install -y php5 apache2 git subversion mercurial-git python python-g
 #empty the destination folder
 RUN rm -r /var/www/html/* 
 #copy the project to the www folder
-RUN git clone https://github.com/HeikoBecker/Repograms.git /var/www/html
+COPY ./ /var/www/html/
+#RUN git clone https://github.com/HeikoBecker/Repograms.git /var/www/html
 #checkout the gui_minimal branch
-RUN cd /var/www/html && git checkout graphtool
+#RUN cd /var/www/html && git checkout graphtool
 RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/supervisor
 #Cope the config file
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf

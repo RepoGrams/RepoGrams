@@ -39,7 +39,7 @@ require_once('header.php');
 			    <span class="caret"></span>
 			  </button>
 			  <ul class="dropdown-menu" role="menu">
-			    <li ng-repeat="metric in metrics" ng-model="selectActio()" ng-change="selectAction()">
+			    <li ng-repeat="metric in metrics"  ng-model="currentMetric" ng-change="selectAction()">
 				{{metric.label}}
 			    </li>
 <!--                          <select class="dropdown-menu"  ng-model="currentMetric" ng-change="selectAction()"
