@@ -35,12 +35,17 @@ require_once('header.php');
 			<small>Metrics</small>
 			<div class="dropdown">
 			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-			    {{currentMetric}}
+			    {{currentMetric.label}}
 			    <span class="caret"></span>
 			  </button>
-                          <select class="dropdown-menu"  ng-model="currentMetric" ng-change="selectAction()"
+			  <ul class="dropdown-menu" role="menu">
+			    <li ng-repeat="metric in metrics" ng-model="selectActio()" ng-change="selectAction()">
+				{{metric.label}}
+			    </li>
+<!--                          <select class="dropdown-menu"  ng-model="currentMetric" ng-change="selectAction()"
                           ng-options="metric.label for metric in metrics">
-			  </select>
+			  </select> -->
+			  </ul>
 			</div>
                         <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
                         
