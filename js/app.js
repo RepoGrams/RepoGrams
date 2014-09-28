@@ -178,20 +178,65 @@ repogramsModule.service('metricSelectionService', function() {
   };
 });
 
+/**
+ * calculates block length for given mode, churn and overall number of commits
+ */
+
+repogramsModule.service('blenService', function(){
+	var getModFunction = {
+			"1_churn": function(churn, noOfCommits){return "" + (churn+1) + "px"},
+			"3_constant": function(churn, noOfCommits){return "20px"},
+			"4_fill": function(churn, noOfCommits){return "" + (Math.round(noOfCommits*churn*100)/10000) + "px"},
+	}	
+	return{
+		getWidth: function(mode, churn, noOfCommits){
+			return getModFunction[mode](churn, noOfCommits)
+			}
+	}
+});
+
+repogramsModule.service('blenSelectionService', function() {
+	  var allBlenMods = [
+	    {id:"1_churn", label: "Churn"},
+	    {id:"3_constant", label: "Constant block length"},
+	    {id:"4_fill", label: "Proportional to horizontal space"}//,
+	    //{id:"5_blanks", label: "Blank Spaces "}
+	    
+	  ];
+	  var selectedBlenMod = allBlenMods[0];
+
+	  return{
+	    getSelectedBlenMod: function() {return selectedBlenMod;},
+	    setBlenMod: function(blen) {
+	    	selectedBlenMod = blen;
+	    },
+	    getAllBlenMods: function() {return allBlenMods;},
+	  };
+});
+
+
 //
 //controllers
 //
 repogramsModule.controller('RepogramsConfig',
-	['$scope', 'metricSelectionService',
-	function ($scope, metricSelectionService){
+	['$scope', 'metricSelectionService', 'blenSelectionService',
+	function ($scope, metricSelectionService, blenSelectionService){
 		//default metric is 1
-                $scope.metricService = metricSelectionService;
+		$scope.metricService = metricSelectionService;
 		$scope.metrics = $scope.metricService.getAllMetrics();
 		$scope.currentMetric = $scope.metrics[0];
-                $scope.selectAction = function() {
-                  $scope.metricService.clear();
-                  $scope.metricService.addMetric($scope.currentMetric);
-                };
+        $scope.selectAction = function() {
+        	$scope.metricService.clear();
+        	$scope.metricService.addMetric($scope.currentMetric);
+        };
+        $scope.blenService = blenSelectionService;
+		$scope.blenMods = $scope.blenService.getAllBlenMods();
+		$scope.currentBlen = $scope.blenMods[0];
+        $scope.selectBlenAction = function() {
+        	console.log($scope.blenService.getSelectedBlenMod());
+        	$scope.blenService.setBlenMod($scope.currentBlen);
+        	console.log($scope.blenService.getSelectedBlenMod());
+        };
 	}
 	]);
 
@@ -231,38 +276,53 @@ repogramsModule.controller('RepogramsImporter',
 //directives
 //
 repogramsModule.directive('ngRendermetric', function(){
-
+	var default_mod = "1_churn";
+	
         return {
 	    restrict: 'E',
 	    scope:{},
 	    template: '<div ng-repeat="metric in selectedMetrics"><div style="width:auto; overflow: auto; white-space: nowrap;">' +
-'<div ng-repeat="style in styles[metric.id]" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></div>' +
+'<div ng-repeat="style in styles[metric.id][selectedBlenMod.id]" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></div>' +
   '</div></div>',
-	    controller: ['$scope','reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService, $sce){
+	    controller: ['$scope','reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', function($scope, reposService, blenService, metricSelectionService, blenSelectionService, $sce){
 		//TODO: Add every metricvalue
                 $scope.reposService = reposService;
+                $scope.blenService = blenService;
                 $scope.metricSelectionService = metricSelectionService;
+                $scope.blenSelectionService = blenSelectionService;
                 $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
-		$scope.repo = reposService.getRepoArr()[$scope.$parent.$index];
+                $scope.selectedBlenMod = blenSelectionService.getSelectedBlenMod();
+                console.log($scope.selectedBlenMod)
+                $scope.repo = reposService.getRepoArr()[$scope.$parent.$index];
                 $scope.styles = {};
-                angular.forEach(metricSelectionService.getAllMetrics(), function(value, index) {
-                  $scope.styles[value.id] = [];
+                angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
+                	$scope.styles[value.id] = [];
+                	currentValueIDStyle = $scope.styles[value.id];
 
-                  for( var i = 0; i < $scope.repo.metricData[value.id].length; i++){
-                    var x = {
-                      color: reposService.mapToColor(value.id, $scope.repo.metricData[value.id][i]),
-                      width: "" + ($scope.repo.metricData.defaultBlen[i]+1) + "px" 
-                    };
-                    $scope.styles[value.id].push(x);
-                  }
-
+                	angular.forEach(blenSelectionService.getAllBlenMods(), function(bValue, bKey) {
+                		currentValueIDStyle[bValue.id] = [];
+                		currentModIDStyle = currentValueIDStyle[bValue.id];
+                		noOfCommits = $scope.repo.metricData[value.id].length
+                		
+	                	for( var i = 0; i < noOfCommits; i++){
+	                		churn = $scope.repo.metricData.churn[i]
+	                		var x = {
+	                				color: reposService.mapToColor(value.id, $scope.repo.metricData[value.id][i]),
+	                				width: (blenService.getWidth(bValue.id, churn, noOfCommits))
+	                		};
+	                		currentModIDStyle.push(x);
+	                	}
+                	});
                 });
                 // the mapper might change when a new repo is added, and the
                 // maxvalue increases
                 $scope.$on('mapperChange', function (evnt, metricID, newMapper) {
-                  for( var i = 0; i < $scope.repo.metricData[metricID].length; i++){
-                    $scope.styles[metricID][i].color = newMapper.map($scope.repo.metricData[metricID][i]);
-                  }
+                	angular.forEach(blenSelectionService.getAllBlenMods(), function(bValue, bKey) {
+                		
+                		for( var i = 0; i < $scope.repo.metricData[metricID].length; i++){
+                			$scope.styles[metricID][bValue.id][i].color = newMapper.map($scope.repo.metricData[metricID][i]);
+                		}
+                	});
                 });
             }]
 };});

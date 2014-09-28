@@ -35,6 +35,11 @@ require_once('header.php');
                         ng-options="metric.label for metric in metrics">
                         </select>
                         <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
+                        
+                        Block length modus:
+                        <select  ng-model="currentBlen" ng-change="selectBlenAction()"
+                        ng-options="blen.label for blen in blenMods">
+                        </select>
                 </div>
                 </div>
 
