@@ -27,11 +27,11 @@ if (!Array.prototype.map)
  * extensions, that has been specified by Ivan.
  */
 function isValidEnding(entry, JSONvalues){
-	return jQuery.inArray(entry, JSONvalues.ENDINGS) != -1;
+	return entry.indexOf(JSONvalues.ENDINGS) != -1;
 }
 
 function isValidFile(entry, JSONvalues){
-	return jQuery.inArray(entry, JSONvalues.NAMES) != -1;
+	return entry.indexOf(JSONvalues.NAMES) != -1;
 }
 
 
