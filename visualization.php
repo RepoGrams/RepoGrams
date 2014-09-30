@@ -30,10 +30,10 @@ require_once('header.php');
 		</div>
                 <!-- First block for the selection box and zoom slider -->
                 <div class="row">
-                <div class="configBlock" ng-controller="RepogramsConfig">
+                <div class="form-group col-lg-4" class="configBlock" ng-controller="RepogramsConfig">
                         <!-- Dropdown Menu for Metric Selection -->
 			<small>Metrics</small>
-                          <select ng-model="currentMetric" ng-change="selectAction()"
+                          <select class="form-control" ng-model="currentMetric" ng-change="selectAction()"
                           ng-options="metric.label for metric in metrics">
 			  </select> 
 			<!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
