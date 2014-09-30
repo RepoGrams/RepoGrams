@@ -41,7 +41,7 @@
                           <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
                   </div>
 
-                  <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
+                  <div class="form-group col-lg-3 col-md-offset-1" class="configBlock" ng-controller="RepogramsConfig">
                         <label for="blockLengthSelect">Block length modus:</label>
                         <select id="blockLengthSelect" class="form-control" ng-model="currentBlen" ng-change="selectBlenAction()"
                         ng-options="blen.label for blen in blenMods">
