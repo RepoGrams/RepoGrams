@@ -46,7 +46,7 @@ require_once('header.php');
                 </div>
 
 		<!-- Main Block with the Repo name and Metric render -->
-                <div ng-controller="RepogramsRender" class="container-fluid" style="width:100%;>
+                <div ng-controller="RepogramsRender" class="container-fluid">
                         <div class="row">
                           <div class="col-md-10">
                             <div class="repo" ng-repeat="repo in repos">
