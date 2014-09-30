@@ -7,6 +7,8 @@
                 <!-- use bootstrap -->
                 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
                 <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+                <!-- include our own style sheets -->
+                <link rel="stylesheet" type="text/css" href="css/custom.css">
                 <!-- include metrics code -->
                 <script type="text/javascript" src="/js/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
                 <script type="text/javascript" src="/js/metrics/branchComp.js"></script>
