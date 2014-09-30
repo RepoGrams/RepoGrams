@@ -32,16 +32,16 @@ require_once('header.php');
                 <div class="row">
                   <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
                           <!-- Dropdown Menu for Metric Selection -->
-                            <label for="metric">Metrics</label>
-                            <select name="metric" class="form-control" ng-model="currentMetric" ng-change="selectAction()"
+                            <label for="metricSelect">Metric:</label>
+                            <select id="metricSelect" class="form-control" ng-model="currentMetric" ng-change="selectAction()"
                             ng-options="metric.label for metric in metrics">
                             </select> 
                           <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
                   </div>
 
                   <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
-                        <label for="blockLength">Block length modus:</label>
-                        <select name="blockLength" class="form-control" ng-model="currentBlen" ng-change="selectBlenAction()"
+                        <label for="blockLengthSelect">Block length modus:</label>
+                        <select id="blockLengthSelect" class="form-control" ng-model="currentBlen" ng-change="selectBlenAction()"
                         ng-options="blen.label for blen in blenMods">
                         </select>
                   </div>
