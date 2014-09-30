@@ -1,13 +1,4 @@
-// TODO: this is still racy; it also causes 
-var fileInfoForMetric1 = [];
-jQuery.get("./js/metrics/filenames.json")
-  .done(function(data){
-   fileInfoForMetric1 = data;
-   console.log("ready");
-})
-  .fail(function(jqXHR, textStatus, errorThrown) {console.log(textStatus);}) 
-;
-
+// requires filenames.json to be included
 
 function runMetrics(data) {
   var commit_langcomp_data = [];
