@@ -1,13 +1,12 @@
-<?php
-require_once('header.php');
-?>
-
 <html ng-app="repogramsModule">
         <head>
                 <!-- include Angular.js -->
                 <script type="text/javascript" src="/js/angular.min.js"></script>
                 <!-- Sanitize Module for HTML injections -->
                 <script type="text/javascript" src="/js/sanitize.js"></script>
+                <!-- use bootstrap -->
+                <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+                <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
                 <!-- include metrics code -->
                 <script type="text/javascript" src="/js/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
                 <script type="text/javascript" src="/js/metrics/branchComp.js"></script>
