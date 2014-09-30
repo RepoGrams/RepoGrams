@@ -30,19 +30,21 @@ require_once('header.php');
 		</div>
                 <!-- First block for the selection box and zoom slider -->
                 <div class="row">
-                <div class="form-group col-lg-4" class="configBlock" ng-controller="RepogramsConfig">
-                        <!-- Dropdown Menu for Metric Selection -->
-			<small>Metrics</small>
-                          <select class="form-control" ng-model="currentMetric" ng-change="selectAction()"
-                          ng-options="metric.label for metric in metrics">
-			  </select> 
-			<!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
-                        
-                        Block length modus:
-                        <select  ng-model="currentBlen" ng-change="selectBlenAction()"
+                  <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
+                          <!-- Dropdown Menu for Metric Selection -->
+                            <label for="metric">Metrics</label>
+                            <select name="metric" class="form-control" ng-model="currentMetric" ng-change="selectAction()"
+                            ng-options="metric.label for metric in metrics">
+                            </select> 
+                          <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
+                  </div>
+
+                  <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
+                        <label for="blockLength">Block length modus:</label>
+                        <select name="blockLength" class="form-control" ng-model="currentBlen" ng-change="selectBlenAction()"
                         ng-options="blen.label for blen in blenMods">
                         </select>
-                </div>
+                  </div>
                 </div>
 
 		<!-- Main Block with the Repo name and Metric render -->
