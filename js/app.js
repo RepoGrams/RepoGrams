@@ -312,7 +312,7 @@ repogramsModule.service('reposService', ["$rootScope", "metricSelectionService",
      * totalChurn is necessary to calculate the proportional size of blocks
      * all churns are summed up and stored per repo
      */
-    totalChurn = 0;
+    var totalChurn = 0;
 
     for( var i = 0; i < repoJSON.metricData.churn.length; i++){
     	totalChurn += repoJSON.metricData.churn[i];
@@ -494,17 +494,17 @@ repogramsModule.directive('ngRendermetric', function(){
                 $scope.styles = {};
                 angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
                 	$scope.styles[value.id] = [];
-                	currentValueIDStyle = $scope.styles[value.id];
+                	var currentValueIDStyle = $scope.styles[value.id];
 
                 	angular.forEach(blenSelectionService.getAllBlenMods(), function(bValue, bKey) {
                 		currentValueIDStyle[bValue.id] = [];
-                		currentModIDStyle = currentValueIDStyle[bValue.id];
+                		var currentModIDStyle = currentValueIDStyle[bValue.id];
                 		
 	                	for( var i = 0; i < $scope.repo.metricData[value.id].length; i++){
-	                		churn = $scope.repo.metricData.churn[i];
+	                		var churn = $scope.repo.metricData.churn[i];
 	                		var x = {
 	                				color: reposService.mapToColor(value.id, $scope.repo.metricData[value.id][i]),
-	                				width: (blenService.getWidth(bValue.id, churn, totalChurn))
+	                				width: (blenService.getWidth(bValue.id, churn, $scope.totalChurn))
 	                		};
 	                		currentModIDStyle.push(x);
 	                	}
