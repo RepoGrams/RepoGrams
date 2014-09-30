@@ -526,11 +526,13 @@ repogramsModule.directive('ngRendermetric', function(){
 repogramsModule.directive('ngLegend', function(){ return {
 	restrict: 'E',
 	scope: {},
-  //TODO: The legend looks funny, but at least it seems to work
-	template: '<h3>Legend:</h3>' +
+	template: '<div class="panel panel-success">' +
+		  '<div class="panel-heading">'+
+		  '<h3 class="panel-title">Legend</h3>'+
+		  '</div>' +
                   '<div ng-repeat="metric in selectedMetrics"><h4>{{metric.label}}</h4><ul>' +
                   '<li ng-repeat="style in styles[metric.id]">{{style.lowerBound}}-{{style.upperBound}}: <span class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></span></li>' +
-                  '</ul></div>',
+                  '</ul></div></div>',
 	controller: ['$scope', 'reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService){
           $scope.reposService = reposService;
           $scope.metricSelectionService = metricSelectionService;
