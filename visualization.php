@@ -44,9 +44,9 @@ require_once('header.php');
                 </div>
 
 		<!-- Main Block with the Repo name and Metric render -->
-                <div ng-controller="RepogramsRender" class="container-fluid">
+                <div ng-controller="RepogramsRender" class="container-fluid" style="width:100%;>
                         <div class="row">
-                          <div class="col-md-10" style="outline: 1px solid red;">
+                          <div class="col-md-10" style="outline: 1px solid red; width:80%;">
                             <div class="repo" ng-repeat="repo in repos">
                               <div class="row">
                                 <div class="col-md-2"><label for="{{'metricBox'+$index}}">{{repo.name}}<label><button ng-click="removeRepo($index)"><span class="glyphicon glyphicon-remove"></span></button> </div>
@@ -54,13 +54,13 @@ require_once('header.php');
                               </div>
                             </div>
                           </div>
-                          <div class="col-md-2" style="outline: 1px solid black;">
+                          <div class="col-md-2" style="outline: 1px solid black; width:20%;">
                             <ng-legend></ng-legend>
                           </div>
                         </div>
                 </div>
                 <br><br>
-                <div class="container-fluid">
+                <div class="container" style="width:100%;>
                   <!-- last block for import box -->
                   <div ng-controller="RepogramsImporter" class="row">
                     <!-- TODO: the layout is quite bad currently -->
