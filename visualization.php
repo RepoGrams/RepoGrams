@@ -67,7 +67,7 @@ require_once('header.php');
                         </div>
                 </div>
                 <br><br>
-                <div class="container" style="width:100%;>
+                <div class="container">
                   <!-- last block for import box -->
 		  <div ng-controller="RepogramsImporter" class="row">
 		    <div class="col-md-6">
