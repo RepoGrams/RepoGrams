@@ -2,7 +2,10 @@
         <head>
                 <!-- include Angular.js -->
                 <script type="text/javascript" src="/js/angular.min.js"></script>
+                <!-- required for popover -->
+                <script type="text/javascript" src="/js/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
                 <!-- Sanitize Module for HTML injections -->
+                <script type="text/javascript" src="/js/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
                 <script type="text/javascript" src="/js/sanitize.js"></script>
                 <!-- use bootstrap -->
                 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
