@@ -248,6 +248,7 @@ class GitGraph():
         for commit in self.iterate_commits():
             assert self.associated_branch[commit] != 0, "{}".format(self.commit_msg[commit])
             result.append({
+                "checksum": self.commit_hashsum[commit],
                 "churn": self.commit_churn[commit],
                 "commitmsg": self.commit_msg[commit],
                 "files": list(self.commit_files[commit]),

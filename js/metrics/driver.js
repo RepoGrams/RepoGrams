@@ -2,12 +2,18 @@
 
 function runMetrics(data) {
   var commit_langcomp_data = [];
+  var checksums = [];
   var commit_msglength_data = [];
   var commit_modularity_data = [];
   var branch_usage_data = [];
   var branch_complexity = [];
+  var commit_msgs = [];
   var churn = [];
   var metric5data = data.map(function(commit_datum) {
+    // we need to display commit message later
+    commit_msgs.push(commit_datum.commitmsg);
+    // as well as the commit id aka hashsum
+    checksums.push(commit_datum.checksum);
     //metric 1
     commit_langcomp_data.push(getMetric(commit_datum.files, fileInfoForMetric1));
     // metric 2
@@ -28,6 +34,7 @@ function runMetrics(data) {
   // WARNING: the member names have to match the names in metricSelectionService
   
   return {
+    commit_msgs: commit_msgs,
     commit_lang_complexity: commit_langcomp_data,
     branch_complexity: branch_complexity,
     commit_message_length: commit_msglength_data,
