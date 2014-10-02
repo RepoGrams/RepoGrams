@@ -27,50 +27,59 @@
         </head>
 	<body>
 	<div class="container">
-		<div class="jumbotron">
+		<div class="row">
 		 <img class="title" src="img/title.png" title="Repograms"></img> 
 		</div>
                 <!-- First block for the selection box and zoom slider -->
-                <div class="row">
+		<div class="row">
+		<div class="panel panel-default">
+		  <div class="panel-heading">Settings</div>
+		  <div class="panel-body">
                   <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
-                          <!-- Dropdown Menu for Metric Selection -->
-                            <label for="metricSelect">Metric:</label>
+			  <!-- Dropdown Menu for Metric Selection -->
+			    <label for="metricSelect">Metric:</label>
                             <select id="metricSelect" class="form-control" ng-model="currentMetric" ng-change="selectAction()"
                             ng-options="metric.label for metric in metrics">
-                            </select> 
+			    </select> 
                           <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
                   </div>
-
-                  <div class="form-group col-lg-3 class="configBlock" ng-controller="RepogramsConfig">
-                        <label for="blockLengthSelect">Block length modus:</label>
+		  <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
+			<label for="blockLengthSelect">Block length modus:</label>
                         <select id="blockLengthSelect" class="form-control" ng-model="currentBlen" ng-change="selectBlenAction()"
                         ng-options="blen.label for blen in blenMods">
-                        </select>
-                  </div>
-                </div>
+			</select>
+			</div>
+		  </div>
 
+		</div>
+		</div>
 		<!-- Main Block with the Repo name and Metric render -->
                 <div ng-controller="RepogramsRender" class="container-fluid">
                         <div class="row">
-                          <div class="col-md-10">
-                            <div class="repo" ng-repeat="repo in repos">
-                              <div class="row">
-				<div class="col-md-3">
-				  <label for="{{'metricBox'+$index}}">
-				    <button type="button" class="btn btn-sm" ng-click="removeRepo($index)"><span class="glyphicon glyphicon-remove"></span></button>
-				    {{repo.name}}
-				  <label> 
+			  <div class="col-md-10">
+			    <div class="panel panel-default">
+			      <div class="panel-heading"> Repositories</div>
+			      <div class="panel-body">
+                              <div class="repo" ng-repeat="repo in repos">
+                                <div class="row">
+				  <div class="col-md-3">
+				    <label for="{{'metricBox'+$index}}">
+				      <button type="button" class="btn btn-sm" ng-click="removeRepo($index)"><span class="glyphicon glyphicon-remove"></span></button>
+				      {{repo.name}}
+				    <label> 
+				  </div>
+				  <div class="col-md-9" id="{{'metricBox'+$index}}"><ng-rendermetric></ng-rendermetric></div>
 				</div>
-                                <div class="col-md-9" id="{{'metricBox'+$index}}"><ng-rendermetric></ng-rendermetric></div>
-                              </div>
+				</div>
+                                </div>
                             </div>
                           </div>
                           <div class="col-md-2">
                             <ng-legend></ng-legend>
                           </div>
                         </div>
-                </div>
-                <br><br>
+		</div>
+		</div>
                 <div class="container">
                   <!-- last block for import box -->
 		  <div ng-controller="RepogramsImporter" class="row">
