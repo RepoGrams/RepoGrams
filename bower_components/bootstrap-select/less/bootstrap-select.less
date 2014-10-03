@@ -1,9 +1,4 @@
-// Variables
-@color-red-error: rgb(185, 74, 72);
-@color-blue-hover: rgb(100, 177, 216);
-@color-grey-arrow: rgb(204, 204, 204);
-
-@width-default: 220px; // 3 960px-grid columns
+@import "variables";
 
 // Mixins
 .cursor-disabled() {
@@ -36,7 +31,7 @@
     width: auto !important;
   }
 
-  &:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+  &:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
     width: @width-default;
   }
 
@@ -52,7 +47,7 @@
   padding: 0;
   border: none;
 
-  &:not([class*="span"]):not([class*="col-"]) {
+  &:not([class*="col-"]) {
     width: 100%;
   }
 }
@@ -60,21 +55,17 @@
 // The selectpicker components
 .bootstrap-select.btn-group {
   &:not(.input-group-btn),
-  &[class*="span"],
   &[class*="col-"] {
     float: none;
     display: inline-block;
-    margin-bottom: 10px;
     margin-left: 0;
   }
 
   // Forces the pull to the right, if necessary
   &,
-  &[class*="span"],
   &[class*="col-"],
-  .row-fluid &[class*="span"],
   .row-fluid &[class*="col-"] {
-    &.pull-right {
+    &.dropdown-menu-right {
       float: right;
     }
   }
@@ -84,6 +75,11 @@
   .form-horizontal &,
   .form-group & {
     margin-bottom: 0;
+  }
+
+  .form-group-lg  &.form-control,
+  .form-group-sm  &.form-control {
+    padding: 0;
   }
 
   // Set the width of the live search (and any other form control within an inline form)
@@ -126,19 +122,14 @@
     }
   }
 
-  &[class*="span"],
-  &[class*="col-"] {
-    .btn {
-      width: 100%;
-    }
+  &[class*="col-"] .btn {
+    width: 100%;
   }
 
   // The selectpicker dropdown
   .dropdown-menu {
     min-width: 100%;
-    z-index: 2000;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
+    z-index: @zindex-select-dropdown;
     box-sizing: border-box;
 
     &.inner {
@@ -146,49 +137,33 @@
       border: 0;
       padding: 0;
       margin: 0;
-      -webkit-border-radius: 0;
-      -moz-border-radius: 0;
       border-radius: 0;
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
       box-shadow: none;
-    }
-
-    dt {
-      display: block;
-      padding: 3px 20px;
-      cursor: default;
     }
 
     li {
       position: relative;
 
-      &:not(.disabled) > a:hover small,
-      &:not(.disabled) > a:focus small,
-      &.active:not(.disabled) > a small {
+      &:not(.disabled) a:hover small,
+      &:not(.disabled) a:focus small,
+      &.active:not(.disabled) a small {
         color: @color-blue-hover;
         color: fade(@color-blue-hover, 40%);
       }
 
-      > dt small {
-        font-weight: normal;
-      }
-
-      &.disabled > a {
+      &.disabled a {
         .cursor-disabled();
       }
 
-      > a{
+      a {
         cursor: pointer;
 
         &.opt {
           position: relative;
-          padding-left: 35px;
+          padding-left: 2.25em;
         }
-      }
 
-      a {
-        i.check-mark {
+        span.check-mark {
           display: none;
         }
         span.text {
@@ -213,14 +188,8 @@
       box-shadow: inset 0 1px 1px fade(rgb(0, 0, 0), 5%);
       pointer-events: none;
       opacity: 0.9;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
       box-sizing: border-box;
     }
-  }
-
-  .div-contain {
-    overflow: hidden;
   }
 
   .no-results {
@@ -240,28 +209,24 @@
       margin-top: -1px;
     }
   }
-}
 
-.bootstrap-select.btn-group.show-tick {
-  .dropdown-menu {
-    li {
-      &.selected a i.check-mark {
-        position: absolute;
-        display: inline-block;
-        right: 15px;
-        margin-top: 2.5px;
-      }
+  &.show-tick .dropdown-menu li {
+    &.selected a span.check-mark {
+      position: absolute;
+      display: inline-block;
+      right: 15px;
+      margin-top: 5px;
+    }
 
-      a span.text {
-        margin-right: 34px;
-      }
+    a span.text {
+      margin-right: 34px;
     }
   }
 }
 
 .bootstrap-select.show-menu-arrow {
   &.open > .btn {
-    z-index: 2051;
+    z-index: @zindex-select-dropdown + 1;
   }
 
   .dropdown-toggle {
@@ -291,38 +256,34 @@
     }
   }
 
-  &.dropup {
-    .dropdown-toggle {
-      &:before {
-        bottom: auto;
-        top: -3px;
-        border-bottom: 0;
-        border-top-width: 7px;
-        border-top-style: solid;
-        border-top-color: @color-grey-arrow;
-        border-top-color: fade(@color-grey-arrow, 20%);
-      }
+  &.dropup .dropdown-toggle {
+    &:before {
+      bottom: auto;
+      top: -3px;
+      border-bottom: 0;
+      border-top-width: 7px;
+      border-top-style: solid;
+      border-top-color: @color-grey-arrow;
+      border-top-color: fade(@color-grey-arrow, 20%);
+    }
 
-      &:after {
-        bottom: auto;
-        top: -3px;
-        border-top: 6px solid white;
-        border-bottom: 0;
-      }
+    &:after {
+      bottom: auto;
+      top: -3px;
+      border-top: 6px solid white;
+      border-bottom: 0;
     }
   }
 
-  &.pull-right {
-    .dropdown-toggle {
-      &:before {
-        right: 12px;
-        left: auto;
-      }
+  &.pull-right .dropdown-toggle {
+    &:before {
+      right: 12px;
+      left: auto;
+    }
 
-      &:after {
-        right: 13px;
-        left: auto;
-      }
+    &:after {
+      right: 13px;
+      left: auto;
     }
   }
 
@@ -334,16 +295,14 @@
   }
 }
 
-.bootstrap-select-searchbox,
-.bootstrap-select .bs-actionsbox {
+.bs-searchbox,
+.bs-actionsbox {
   padding: 4px 8px;
 }
 
-.bootstrap-select .bs-actionsbox {
+.bs-actionsbox {
   float: left;
   width: 100%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
 
   & .btn-group button {
@@ -351,12 +310,12 @@
   }
 }
 
-.bootstrap-select-searchbox {
+.bs-searchbox {
   & + .bs-actionsbox {
     padding: 0 8px 4px;
   }
 
-  & input, & .form-control {
+  & input.form-control {
     margin-bottom: 0;
     width: 100%;
   }
