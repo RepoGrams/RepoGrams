@@ -31,8 +31,8 @@
       <div class="row">
         <img class="center-block" src="img/title.png" title="Repograms"></img>
       </div>
-      <!-- First block for the selection box and zoom slider -->
       <div class="row">
+        <!-- First block for the selection box and zoom slider -->
         <div class="panel panel-default">
           <div class="panel-heading">Settings</div>
           <div class="panel-body">
@@ -54,8 +54,8 @@
         </div>
       </div>
       <!-- Main Block with the Repo name and Metric render -->
-      <div ng-controller="RepogramsRender" class="container-fluid">
-        <div class="row">
+      <div class="row">
+        <div ng-controller="RepogramsRender" class="row">
           <div class="col-md-10">
             <div class="panel panel-default">
               <div class="panel-heading"> Repositories</div>
@@ -86,6 +86,9 @@
       <!-- last block for import box -->
       <div ng-controller="RepogramsImporter">
         <div class="row">
+          <alert ng-repeat="error in errors" type="danger" close="closeAlert($index)">{{error.emessage}}</alert>
+        </div>
+        <div class="row">
           <div class="input-group">
             <input type="text" class="form-control" ng-model="importURL"/>
             <div class="input-group-btn" >
@@ -96,9 +99,6 @@
               <span class="glyphicon glyphicon-ok-circle"></span>
               </button>
             </div>
-          </div>
-          <div class="row">
-            <alert ng-repeat="error in errors" type="danger" close="closeAlert($index)">{{error.emessage}}</alert>
           </div>
         </div>
       </div>
