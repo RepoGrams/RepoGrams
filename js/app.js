@@ -471,6 +471,20 @@ repogramsModule.controller('RepogramsImporter',
 //
 //directives
 //
+
+repogramsModule.directive('ngRenderblock', function(){
+        return {
+          restrict: 'E',
+          scope: {
+                commitMsg: "@commitMsg",
+                bgColor: "@color",
+                width: "=width"
+          },
+  template: '<div class="customBlock" popover="{{commitMsg}}" popover-trigger="mouseenter" style="background-color: {{bgColor}}; height:20px; width: {{width}}; outline:1px solid black;"></div>'
+        };
+});
+
+
 repogramsModule.directive('ngRendermetric', function(){
 	var default_mod = "1_churn";
 	
@@ -479,7 +493,7 @@ repogramsModule.directive('ngRendermetric', function(){
 	    scope:{},
 	    template: '<div ng-repeat="metric in selectedMetrics"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
 	    '<div ng-repeat="blenMod in selectedBlenMods"><div style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
-	    '<div ng-repeat="style in styles[metric.id][blenMod.id]"  popover={{repo.metricData.commit_msgs[$index]}} popover-trigger="mouseenter" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; outline:1px solid black;"></div>' +
+	    '<ng-renderblock ng-repeat="style in styles[metric.id][blenMod.id]"  commit-msg={{repo.metricData.commit_msgs[$index]}} color={{style.color}} width=style.width></ng-renderblock>' +
   '</div></div></div>',
 	    controller: ['$scope','reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', function($scope, reposService, blenService, metricSelectionService, blenSelectionService, $sce){
 		//TODO: Add every metricvalue
