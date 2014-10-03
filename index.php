@@ -1,7 +1,7 @@
 <html ng-app="repogramsModule">
   <head>
     <!-- include Angular.js -->
-    <script type="text/javascript" src="/bower_components/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angularjs/angular.js"></script>
     <!-- required for popover -->
     <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- 'cause it's fancy -->
@@ -23,9 +23,9 @@
     <script type="text/javascript" src="/js/metrics/commitMsgLength.js"></script>
     <script type="text/javascript" src="/js/metrics/mostEditFile.js"></script>
     <script type="text/javascript" src="/js/metrics/filenames.json"></script>
-    <script type="text/javascript" src="/js/metrics/driver.js"></script>
     <!-- include the app controllers -->
     <script type="text/javascript" src="/js/app.js"></script>
+    <script type="text/javascript" src="/js/metrics/driver.js"></script>
     <title>RepoGrams</title>
   </head>
   <body>
