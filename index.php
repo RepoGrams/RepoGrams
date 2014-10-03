@@ -18,8 +18,6 @@
     <link rel="stylesheet" type="text/css" href="css/metrics.css">
     <!-- include metrics code -->
     <script type="text/javascript" src="/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
-    <script type="text/javascript" src="/js/metrics/branchComp.js"></script>
-    <script type="text/javascript" src="/js/metrics/branchUse.js"></script>
     <script type="text/javascript" src="/js/metrics/commitLangCompl.js"></script>
     <script type="text/javascript" src="/js/metrics/commitModul.js"></script>
     <script type="text/javascript" src="/js/metrics/commitMsgLength.js"></script>
