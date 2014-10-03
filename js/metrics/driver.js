@@ -1,4 +1,4 @@
-angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', function(commitModularity) {
+angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 'commitMsgLength', function(commitModularity, commitMsgLength) {
   return {
     runMetrics:  function(data) {
       var commit_langcomp_data = [];
@@ -17,7 +17,7 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
         //metric 1
         commit_langcomp_data.push(getMetric(commit_datum.files, fileInfoForMetric1));
         // metric 2
-        commit_msglength_data.push(commitMsgLength(commit_datum.commitmsg, commit_datum.churn));
+        commit_msglength_data.push(commitMsgLength.run(commit_datum.commitmsg, commit_datum.churn));
         // metric 3
         commit_modularity_data.push(commitModularity.run(commit_datum.files));
         churn.push(commit_datum.churn);
