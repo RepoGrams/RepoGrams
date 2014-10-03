@@ -10,6 +10,8 @@ class GitException(Exception):
     def __init__(self, message):
         self.message = message
 
+def check_output(*args, **kwargs):
+    subprocess.check_output(*args, stderr=subprocess.STDOUT, **kwargs)
 
 def update_repo():
     """
@@ -24,7 +26,7 @@ def update_repo():
             return False
 
         command = "git reset --hard FETCH_HEAD"
-        subprocess.check_call(command.split())
+        check_output(command.split())
     except subprocess.CalledProcessError as e:
         raise GitException("Internal git error. git returned {}".format(e.output))
     return True
@@ -45,7 +47,7 @@ def get_repo(repo_url, repo_dir=None):
     os.chdir(dirpath)
     command = "git clone {} .".format(repo_url)
     try:
-        subprocess.check_call(command.split())
+        check_output(command.split())
     except subprocess.CalledProcessError as e:
         raise GitException("Cloning failed. git returned {}".format(e.output))
     return True
