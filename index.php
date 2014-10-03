@@ -1,7 +1,7 @@
 <html ng-app="repogramsModule">
         <head>
                 <!-- include Angular.js -->
-                <script type="text/javascript" src="/js/angular.min.js"></script>
+                <script type="text/javascript" src="/js/bower_components/angularjs/angular.min.js"></script>
                 <!-- required for popover -->
                 <script type="text/javascript" src="/js/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
                 <!-- Sanitize Module for HTML injections -->
