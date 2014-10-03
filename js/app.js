@@ -447,7 +447,7 @@ repogramsModule.controller('RepogramsRender',
 	]);
 
 repogramsModule.controller('RepogramsImporter',
-	['$scope', '$http', 'reposService', function ($scope, $http, reposService){
+	['$scope', '$http', 'reposService', 'metricsRunner', function ($scope, $http, reposService, metricsRunner){
 	$scope.ImportButtonText = "Add";
 	$scope.importURL = "https://github.com/Inkane/chakra-paste.git";
         $scope.errors = [] ;
@@ -465,7 +465,7 @@ repogramsModule.controller('RepogramsImporter',
           result.success(function(data) {
             reposService.addRepo({
               "name": $scope.importURL.split("/").pop(),
-              "metricData": runMetrics(data),
+              "metricData": metricsRunner.runMetrics(data),
             });
           });
           result.error(function(data) {
