@@ -30,26 +30,26 @@ function mostEditFile(inputList){
 	var outputList = [];
 	
 	// for c in commit
-	for(var i = 0; i < inputList.length(); i++){
+	for(var i = 0; i < inputList.length; i++){
 		max = 0;
 		fileList = inputList[i][1];
 		blen = inputList[i][0];
 		
-		for(var j = 0; j < fileList.length(); j++){
+		for(var j = 0; j < fileList.length; j++){
 			pathToFile = fileList[j];
 			
 			if(pathToFile in map){
 				map[pathToFile] += 1;
 			}
 			else{
-				map[pathToFile] = 1];
+				map[pathToFile] = 1;
 			}
 			
 			if(map[pathToFile] > max){
 				max = map[pathToFile];
 			}
 		}
-		outputList[i] = [blen, max]
+		outputList[i] = max;
 	}
 	return outputList;
 }

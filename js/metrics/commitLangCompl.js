@@ -27,11 +27,11 @@ if (!Array.prototype.map)
  * extensions, that has been specified by Ivan.
  */
 function isValidEnding(entry, JSONvalues){
-	return jQuery.inArray(entry, JSONvalues.ENDINGS) != -1;
+	return entry.indexOf(JSONvalues.ENDINGS) != -1;
 }
 
 function isValidFile(entry, JSONvalues){
-	return jQuery.inArray(entry, JSONvalues.NAMES) != -1;
+	return entry.indexOf(JSONvalues.NAMES) != -1;
 }
 
 
@@ -39,36 +39,23 @@ function isValidFile(entry, JSONvalues){
  * Return for a list of changed files an integer containing the number of 
  * changed files.
  */
-function getMetric(fileList) {
-	var mem = new Object();	
+function getMetric(fileList, data) {
+	var mem = {};	
+        var JSONvalues = data;
 
-	var result = jQuery.get("js/filenames.json", function(data){
-		var JSONvalues = jQuery.parseJSON(data);
-		
-		fileList.forEach(function (entry){
-			if(isValidFile(entry, JSONValues)){
-				entry in mem? mem[entry] +=1 : mem[entry] = 1;
-                        }
-			else {
-				"Other" in mem ? mem["Other"] += 1: mem[entry] = 1;
-			}
-		});
+        fileList.forEach(function (entry){
+          var recognized = isValidFile(entry = entry.split("/").pop(), JSONvalues) ||
+            /*assign everything after last . to entry and check if it's a valid
+             * extension*/
+            (isValidEnding(entry = entry.split(".").pop(), JSONvalues));
+          if(recognized) {
+            entry in mem? mem[entry] +=1 : mem[entry] = 1;
+          } else {
+            "Other" in mem ? mem["Other"] += 1: mem["Other"] = 1;
+          }
+        });
+        return Object.keys(mem).length;
 
-		var array = fileList.map(function(obj){
-		var all = obj.split();
-		return all[all.length-1];
-                });
-
-                array.forEach(function (entry){
-                  if(isValidEnding(entry, JSONValues)){
-                    entry in mem ? mem[entry] += 1 : mem[entry] = 1;
-                  } else {
-                    "Other" in mem ? mem["Other"] +=1 : mem[entry] = 1;
-                  }
-                });
-		
-	}
-	);
 	var max = 0;
 	var Mkey = null;
 	for (var key in mem){

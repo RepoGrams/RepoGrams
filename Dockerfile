@@ -16,9 +16,8 @@ RUN rm -r /var/www/html/*
 ADD ./ /var/www/html/
 #RUN git clone https://github.com/HeikoBecker/Repograms.git /var/www/html
 #checkout the gui_minimal branch
-#RUN cd /var/www/html && git checkout graphtool
 RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/supervisor
 #Cope the config file
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 #Make the container run the apache webserver
 #CMD ["/bin/bash -c 'supervisord -c /etc/supervisor/conf.d/supervisord.conf'"]

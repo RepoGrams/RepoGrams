@@ -1,120 +1,105 @@
-<?php 
-	require_once('./php/utils.php');
-	require_once("./php/language.php");
-	require_once("./php/functions.php");
-	startSessionIfNotStarted();
-	$error = (isset($_SESSION['error_message']) && str_replace(' ','',$_SESSION['error_message']) !== '');
-	if(!isset($_SESSION['init']) || $error){
-		error_log("initializing...");
-		initSession(false);
-		$_SESSION['init'] = true;
-	}
-?>
-<html !DOCTYPE HTML>
-<head>
-	<?php include('header.php'); ?>
-</head>
+<html ng-app="repogramsModule">
+        <head>
+                <!-- include Angular.js -->
+                <script type="text/javascript" src="/js/angular.min.js"></script>
+                <!-- Sanitize Module for HTML injections -->
+                <script type="text/javascript" src="/js/sanitize.js"></script>
+                <!-- use bootstrap -->
+                <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+                <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+                <!-- include our own style sheets -->
+                <link rel="stylesheet" type="text/css" href="css/metrics.css">
+                <!-- include metrics code -->
+                <script type="text/javascript" src="/js/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
+                <script type="text/javascript" src="/js/metrics/branchComp.js"></script>
+                <script type="text/javascript" src="/js/metrics/branchUse.js"></script>
+                <script type="text/javascript" src="/js/metrics/commitLangCompl.js"></script>
+                <script type="text/javascript" src="/js/metrics/commitModul.js"></script>
+                <script type="text/javascript" src="/js/metrics/commitMsgLength.js"></script>
+                <script type="text/javascript" src="/js/metrics/mostEditFile.js"></script>
+                <script type="text/javascript" src="/js/metrics/filenames.json"></script>
+                <script type="text/javascript" src="/js/metrics/driver.js"></script>
+                <!-- include the app controllers -->
+                <script type="text/javascript" src="/js/app.js"></script>
 
-<body>
-	<!-- Warning if javascript is disabled -->
-	<noscript>
-    	<p style="text-align:center; color: white; background-color: red;">
-    		<?php print msg('javascript') ?>
-    	</p>
-	</noscript>
 
-	<!-- Menu in its own container -->
-	<?php include('menu.php'); ?>
-	
-	<!-- Content in root container-->
-	<div id="wrap">
-		<div class="container">
-			<div class="titlecontainer"><a href="index.php"><img class="title" title="Repograms" src="img/title.png"></a></div>
-			<br>
-		  	<!--Input Form  -->
-		  	<div class="row">
-		  		<div class="col-xs-12">
-					<form role="form" action="./loading.php" method="POST">
-						<div class="input-group urlinput <?php if ($error) echo 'has-error';?>">
-							<input class="form-control" id="repourl" name="repourl" type="text" required="required" placeholder="<?php print msg('index-enter'); ?>">
-							<span class="input-group-btn">
-	        					<button class="btn btn-info" data-toggle="modal" data-target="#help" title="<?php print msg('index-help'); ?>" type="button">
-									<span class="glyphicon glyphicon-question-sign"></span>&nbsp;
-								</button>
-	      					</span>
-						</div>
-				  		<!-- Error Handling -->
-				  		<?php 
-							if ($error) {
-								echo '<br>
-					                  <div class="alert-dismissable errormessage">
-			       				  	  	<button type="button" class="close glyphicon glyphicon-remove-sign" style="float:left; right:0px;" data-dismiss="alert" aria-hidden="true"></button>
-			       						<span class="help-block"><strong>&nbsp;&nbsp;'.msg('bug-error').'</strong> '.$_SESSION['error_message'].'</span>
-			      				  	  </div>';
-								unset($_SESSION['error_message']);
-								initSession(true);
-							}
-						?>
-						<br>
-						<!-- Submit&Example Button -->
-						<div class="centerButton">
-							<button class="btn btn-default" type="submit" title="<?php print msg('index-vis'); ?>" style="margin-right:20px;">
-		       					<span class="glyphicon glyphicon-indent-left"></span>&nbsp;<?php print msg('visualize'); ?>
-							</button>
-							<button type="button" class="btn btn-default" onclick="example();">
-								<span class="glyphicon glyphicon-gift"></span>&nbsp;<?php print msg('index-examples'); ?>
-							</button>
-						</div>
-						<br>
-						<!-- Date picker -->
-		    			<div class="datepick">
-			    			<span><?php print msg('index-select'); ?> </span>
-			    			<input type="text" class="input-small hasDatepicker" name="start" id="start" style="width:90px;"/>
-			    			<span> <?php print msg('index-till'); ?> </span>
-			    			<input type="text" class="input-small hasDatepicker" name="end" id="end"  style="width:90px;"/>
-		    			</div>
-					</form>
-		  		</div>
-			</div>
-		  	<br>
-		  	<!-- Examples -->
-			<div class="row">
-		  		<div id="description"></div>
-				<div id="example" class="centerButton">
-					<?php require_once('./php/exampleExplained.php') ?>
-				</div>
-			</div>		
-			<!-- Help dialog -->
-			<?php include('helpdialog.php'); ?>
+                <title>RepoGrams</title>
+        </head>
+	<body>
+	<div class="container">
+		<div class="row">
+		 <img class="title" src="img/title.png" title="Repograms"></img> 
 		</div>
-	</div>
-	
-	<!-- Footer -->	
-	<?php include('footer.php'); ?>
-	
-	<script>
-		//Enabling datepicker for commit range
-		$(function() {
-		 	$( "#start" ).datepicker({
-		 	defaultDate: "+1w",
-		 	changeMonth: true,
-		 	numberOfMonths: 1,
-		 	onClose: function( selectedDate ) {
-		 	$( "#end" ).datepicker( "option", "minDate", selectedDate );}});
-		 	$( "#end" ).datepicker({
-		 	defaultDate: "+1w",
-		 	changeMonth: true,
-		 	numberOfMonths: 1,
-		 	onClose: function( selectedDate ) {
-			$( "#start" ).datepicker( "option", "maxDate", selectedDate );}});
-		});
-		document.getElementById("start").value="01/01/2004";
-		document.getElementById("end").value="<?php date_default_timezone_set ('UTC');echo date('m/d/Y');?>";
+                <!-- First block for the selection box and zoom slider -->
+		<div class="row">
+		<div class="panel panel-default">
+		  <div class="panel-heading">Settings</div>
+		  <div class="panel-body">
+                  <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
+			  <!-- Dropdown Menu for Metric Selection -->
+			    <label for="metricSelect">Metric:</label>
+                            <select id="metricSelect" class="form-control" ng-model="currentMetric" ng-change="selectAction()"
+                            ng-options="metric.label for metric in metrics">
+			    </select> 
+                          <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
+                  </div>
+		  <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
+			<label for="blockLengthSelect">Block length modus:</label>
+                        <select id="blockLengthSelect" class="form-control" ng-model="currentBlen" ng-change="selectBlenAction()"
+                        ng-options="blen.label for blen in blenMods">
+			</select>
+			</div>
+		  </div>
 
-		//Enabling tooltips for example
-		$(function () {
-    		$("[rel='tooltip']").tooltip();
-		});
-	</script>
+		</div>
+		</div>
+		<!-- Main Block with the Repo name and Metric render -->
+                <div ng-controller="RepogramsRender" class="container-fluid">
+                        <div class="row">
+			  <div class="col-md-10">
+			    <div class="panel panel-default">
+			      <div class="panel-heading"> Repositories</div>
+			      <div class="panel-body">
+                              <div class="repo" ng-repeat="repo in repos">
+                                <div class="row">
+				  <div class="col-md-3">
+				    <label for="{{'metricBox'+$index}}">
+				      <button type="button" class="btn btn-sm" ng-click="removeRepo($index)"><span class="glyphicon glyphicon-remove"></span></button>
+				      {{repo.name}}
+				    <label> 
+				  </div>
+				  <div class="col-md-9" id="{{'metricBox'+$index}}"><ng-rendermetric></ng-rendermetric></div>
+				</div>
+				</div>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <ng-legend></ng-legend>
+                          </div>
+                        </div>
+		</div>
+		</div>
+                <div class="container">
+                  <!-- last block for import box -->
+		  <div ng-controller="RepogramsImporter" class="row">
+		    <div class="col-md-6">
+                      <div class="input-group">
+			<input type="text" class="form-control" ng-model="importURL"/>
+			<div class="input-group-btn" >
+			  <button type="button" class="btn btn-primary formbtn" ng-click="importURL = null">
+			    <span class="glyphicon glyphicon-remove-circle"></span>
+			  </button>
+			  <button type="button" class="btn btn-primary formbtn" ng-click="importRepo()">
+			    <span class="glyphicon glyphicon-ok-circle"></span>
+			  </button>
+			</div>
+		      </div>
+		  </div>
+		  </div>
+                </div>
+        </div>
+
+</script>
 </body>
 </html>

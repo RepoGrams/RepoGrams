@@ -28,6 +28,7 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="js/d3.v3.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-select.js"></script>
 <script src="http://code.shutterstock.com/rickshaw/vendor/d3.layout.min.js"></script>
 <script src="http://code.shutterstock.com/rickshaw/rickshaw.js"></script>
 	

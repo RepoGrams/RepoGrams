@@ -1,0 +1,6 @@
+/* Rendered blocks */
+.customBlock:hover { border-color: rgb(102, 175, 233); outline: 0px none; box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6); }
+.customBlock{ background-color:#ffffff; width: 5px; height: 5px; display:inline-block; white-space: nowrap; }
+
+/* to align buttons with the input field TODO: don't use fixed height! */
+.formbtn {height:34px;}
