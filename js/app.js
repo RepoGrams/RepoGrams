@@ -459,7 +459,7 @@ repogramsModule.controller('RepogramsImporter',
                   var url = ($scope.importURL === "") ? "https://github.com/Inkane/chakra-paste.git" : $scope.importURL;
           console.log("fetch " + url);
           var result = $http.post(
-             "php/data.php",
+             "/getGitData",
              {"repourl": url}
           );
           result.success(function(data) {
