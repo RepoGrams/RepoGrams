@@ -1,4 +1,4 @@
-angular.module('repogramsModule').factory('metricsRunner', function() {
+angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', function(commitModularity) {
   return {
     runMetrics:  function(data) {
       var commit_langcomp_data = [];
@@ -19,7 +19,7 @@ angular.module('repogramsModule').factory('metricsRunner', function() {
         // metric 2
         commit_msglength_data.push(commitMsgLength(commit_datum.commitmsg, commit_datum.churn));
         // metric 3
-        commit_modularity_data.push(getMetrictCommitModularity(commit_datum.files));
+        commit_modularity_data.push(commitModularity.run(commit_datum.files));
         churn.push(commit_datum.churn);
         // metric 4
         branch_usage_data.push(commit_datum.associated_branch);
@@ -45,4 +45,4 @@ angular.module('repogramsModule').factory('metricsRunner', function() {
       };
     }
   };
-});
+}]);
