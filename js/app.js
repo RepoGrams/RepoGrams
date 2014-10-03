@@ -465,6 +465,9 @@ repogramsModule.controller('RepogramsImporter',
               "metricData": runMetrics(data),
             });
           });
+          result.error(function(data) {
+            console.log(data);
+          });
         };
 }]);
 
