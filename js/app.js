@@ -255,7 +255,7 @@ var MapperFactory = function () {
 var mapperFactory = new MapperFactory();
 
 
-var repogramsModule = angular.module('repogramsModule',['ngSanitize']);
+var repogramsModule = angular.module('repogramsModule',['ngSanitize', 'ui.bootstrap']);
 
 function getBgColor(blen){
  return '#00ff00';
@@ -479,7 +479,7 @@ repogramsModule.directive('ngRendermetric', function(){
 	    scope:{},
 	    template: '<div ng-repeat="metric in selectedMetrics"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
 	    '<div ng-repeat="blenMod in selectedBlenMods"><div style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
-	    '<div ng-repeat="style in styles[metric.id][blenMod.id]" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; outline:1px solid black;"></div>' +
+	    '<div ng-repeat="style in styles[metric.id][blenMod.id]"  popover={{repo.metricData.commit_msgs[$index]}} popover-trigger="mouseenter" class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; outline:1px solid black;"></div>' +
   '</div></div></div>',
 	    controller: ['$scope','reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', function($scope, reposService, blenService, metricSelectionService, blenSelectionService, $sce){
 		//TODO: Add every metricvalue
