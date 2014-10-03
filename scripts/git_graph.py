@@ -61,6 +61,8 @@ class GitGraph():
 
         # get the branch heads for metric 4
         self.master_sha, self.branch_heads = gh.get_branch_heads()
+        self.metric4()
+        self.metric6()
 
     def compute_dominators(self):
         """
@@ -272,7 +274,5 @@ if __name__ == "__main__":
         print_error(e.message)
         sys.exit(2)
     g = GitGraph()
-    g.metric4()
-    g.metric6()
     exported = g.export_as_json()
     print(exported)
