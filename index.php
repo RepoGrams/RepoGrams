@@ -4,8 +4,14 @@
     <script type="text/javascript" src="/js/bower_components/angularjs/angular.min.js"></script>
     <!-- required for popover -->
     <script type="text/javascript" src="/js/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <!-- Sanitize Module for HTML injections -->
+    <!-- 'cause it's fancy -->
+    <script type="text/javascript" src="/js/bower_components/angular-animate/angular-animate.min.js"></script>
+    <!-- for loading animation -->
+    <script type="text/javascript" src="/js/bower_components/angular-loading-bar/src/loading-bar.js"></script>
+    <link rel="stylesheet" type="text/css" href="/js/bower_components/angular-loading-bar/src/loading-bar.css">
+    <!-- for commit language metric -->
     <script type="text/javascript" src="/js/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
+    <!-- Sanitize Module for HTML injections -->
     <script type="text/javascript" src="/js/sanitize.js"></script>
     <!-- use bootstrap -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">

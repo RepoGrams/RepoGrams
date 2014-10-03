@@ -255,7 +255,7 @@ var MapperFactory = function () {
 var mapperFactory = new MapperFactory();
 
 
-var repogramsModule = angular.module('repogramsModule',['ngSanitize', 'ui.bootstrap']);
+var repogramsModule = angular.module('repogramsModule',['ngSanitize', 'ui.bootstrap', 'ngAnimate', 'angular-loading-bar']);
 
 function getBgColor(blen){
  return '#00ff00';
