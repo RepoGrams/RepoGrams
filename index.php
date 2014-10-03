@@ -18,10 +18,10 @@
     <link rel="stylesheet" type="text/css" href="css/metrics.css">
     <!-- include metrics code -->
     <script type="text/javascript" src="/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
-    <script type="text/javascript" src="/js/metrics/mostEditFile.js"></script>
     <!-- include the app controllers -->
     <script type="text/javascript" src="/js/app.js"></script>
     <script type="text/javascript" src="/js/metrics/filenames.json"></script>
+    <script type="text/javascript" src="/js/metrics/mostEditFile.js"></script>
     <script type="text/javascript" src="/js/metrics/commitLangCompl.js"></script>
     <script type="text/javascript" src="/js/metrics/commitMsgLength.js"></script>
     <script type="text/javascript" src="/js/metrics/commitModul.js"></script>

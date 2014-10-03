@@ -1,4 +1,4 @@
-angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 'commitMsgLength', 'commitLangCompl', function(commitModularity, commitMsgLength, commitLangCompl) {
+angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 'commitMsgLength', 'commitLangCompl', 'mostEditFile', function(commitModularity, commitMsgLength, commitLangCompl, mostEditFile) {
   return {
     runMetrics:  function(data) {
       var commit_langcomp_data = [];
@@ -30,7 +30,7 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
         return [commit_datum.churn, commit_datum.files];
       });
 
-      metric5data = mostEditFile(metric5data);
+      metric5data = mostEditFile.run(metric5data);
       // WARNING: the member names have to match the names in metricSelectionService
 
       return {
