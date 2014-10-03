@@ -12,8 +12,8 @@
     <!-- for commit language metric -->
     <script type="text/javascript" src="/js/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
     <!-- use bootstrap -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="/js/bower_components/bootstrap-css-only/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/js/bower_components/bootstrap-css-only/bootstrap-theme.min.css">
     <!-- include our own style sheets -->
     <link rel="stylesheet" type="text/css" href="css/metrics.css">
     <!-- include metrics code -->
