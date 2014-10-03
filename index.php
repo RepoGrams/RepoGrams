@@ -29,7 +29,7 @@
   <body>
     <div class="container">
       <div class="row">
-        <img class="title" src="img/title.png" title="Repograms"></img> 
+        <img class="center-block" src="img/title.png" title="Repograms"></img>
       </div>
       <!-- First block for the selection box and zoom slider -->
       <div class="row">
