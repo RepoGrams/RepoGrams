@@ -257,13 +257,20 @@ class GitGraph():
             })
         return json.dumps(result, separators=(',', ':'))
 
+def print_error(message):
+    print(json.dumps({"emessage": message}, separators=(',', ':')))
+
 
 if __name__ == "__main__":
     import sys
     if len(sys.argv) < 1:
-        print("missing argument")
-        sys.exit(0)
-    gh.get_repo(sys.argv[1])
+        print_error("missing argument")
+        sys.exit(1)
+    try:
+        gh.get_repo(sys.argv[1])
+    except gh.GitException as e:
+        print_error(e.message)
+        sys.exit(2)
     g = GitGraph()
     g.metric4()
     g.metric6()

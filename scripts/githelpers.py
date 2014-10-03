@@ -6,19 +6,27 @@ import tempfile
 from utils import debug
 
 
+class GitException(Exception):
+    def __init__(self, message):
+        self.message = message
+
+
 def update_repo():
     """
     Returns true if repository has changed since last clone/pull
     If so, updates the repo
     """
-    commad = "git fetch --all"
-    subprocess.check_call(commad.split())
-    commad = "git rev-list HEAD...origin/master --count"
-    if int(subprocess.check_call(commad.split())) == 0:
-        return False
+    command = "git fetch --all"
+    try:
+        subprocess.check_call(command.split())
+        command = "git rev-list HEAD...origin/master --count"
+        if int(subprocess.check_call(command.split())) == 0:
+            return False
 
-    commad = "git reset --hard FETCH_HEAD"
-    subprocess.check_call(commad.split())
+        command = "git reset --hard FETCH_HEAD"
+        subprocess.check_call(command.split())
+    except subprocess.CalledProcessError as e:
+        raise GitException("Internal git error. git returned {}".format(e.output))
     return True
 
 def get_repo(repo_url, repo_dir=None):
@@ -36,7 +44,10 @@ def get_repo(repo_url, repo_dir=None):
     dirpath = tempfile.mkdtemp()
     os.chdir(dirpath)
     command = "git clone {} .".format(repo_url)
-    subprocess.check_call(command.split())
+    try:
+        subprocess.check_call(command.split())
+    except subprocess.CalledProcessError as e:
+        raise GitException("Cloning failed. git returned {}".format(e.output))
     return True
 
 
