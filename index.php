@@ -1,23 +1,23 @@
 <html ng-app="repogramsModule">
   <head>
     <!-- include Angular.js -->
-    <script type="text/javascript" src="/js/bower_components/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angularjs/angular.min.js"></script>
     <!-- required for popover -->
-    <script type="text/javascript" src="/js/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- 'cause it's fancy -->
-    <script type="text/javascript" src="/js/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js"></script>
     <!-- for loading animation -->
-    <script type="text/javascript" src="/js/bower_components/angular-loading-bar/src/loading-bar.js"></script>
-    <link rel="stylesheet" type="text/css" href="/js/bower_components/angular-loading-bar/src/loading-bar.css">
+    <script type="text/javascript" src="/bower_components/angular-loading-bar/src/loading-bar.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bower_components/angular-loading-bar/src/loading-bar.css">
     <!-- for commit language metric -->
-    <script type="text/javascript" src="/js/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
+    <script type="text/javascript" src="/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
     <!-- use bootstrap -->
-    <link rel="stylesheet" type="text/css" href="/js/bower_components/bootstrap-css-only/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/js/bower_components/bootstrap-css-only/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap-css-only/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap-css-only/bootstrap-theme.min.css">
     <!-- include our own style sheets -->
     <link rel="stylesheet" type="text/css" href="css/metrics.css">
     <!-- include metrics code -->
-    <script type="text/javascript" src="/js/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
+    <script type="text/javascript" src="/bower_components/clj-fuzzy/src-js/clj-fuzzy.js"></script>
     <script type="text/javascript" src="/js/metrics/branchComp.js"></script>
     <script type="text/javascript" src="/js/metrics/branchUse.js"></script>
     <script type="text/javascript" src="/js/metrics/commitLangCompl.js"></script>
