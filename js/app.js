@@ -450,8 +450,11 @@ repogramsModule.controller('RepogramsImporter',
 	['$scope', '$http', 'reposService', function ($scope, $http, reposService){
 	$scope.ImportButtonText = "Add";
 	$scope.importURL = "https://github.com/Inkane/chakra-paste.git";
-	$scope.importRepo = 
-	function() {
+        $scope.errors = [] ;
+        $scope.closeAlert = function(index) {
+          $scope.errors.splice(index, 1);
+        };
+	$scope.importRepo = function() {
           // TODO: get random URL
                   var url = ($scope.importURL === "") ? "https://github.com/Inkane/chakra-paste.git" : $scope.importURL;
           console.log("fetch " + url);
@@ -467,8 +470,9 @@ repogramsModule.controller('RepogramsImporter',
           });
           result.error(function(data) {
             console.log(data);
+            $scope.errors.push(data);
           });
-        };
+        }
 }]);
 
 //

@@ -84,8 +84,8 @@
     </div>
     <div class="container">
       <!-- last block for import box -->
-      <div ng-controller="RepogramsImporter" class="row">
-        <div class="col-md-6">
+      <div ng-controller="RepogramsImporter">
+        <div class="row">
           <div class="input-group">
             <input type="text" class="form-control" ng-model="importURL"/>
             <div class="input-group-btn" >
@@ -96,6 +96,9 @@
               <span class="glyphicon glyphicon-ok-circle"></span>
               </button>
             </div>
+          </div>
+          <div class="row">
+            <alert ng-repeat="error in errors" type="danger" close="closeAlert($index)">{{error.emessage}}</alert>
           </div>
         </div>
       </div>
