@@ -245,7 +245,7 @@ class GitGraph():
                 unvisited_nodes.push(node, self.commit_timestamp[node])
             already_seen |= set(new_nodes)
 
-    def export_as_json(self):
+    def export(self):
         result = []
         for commit in self.iterate_commits():
             assert self.associated_branch[commit] != 0, "{}".format(self.commit_msg[commit])
@@ -257,6 +257,10 @@ class GitGraph():
                 "associated_branch": self.associated_branch[commit],
                 "bcomplexity": self.branch_complexity[commit],
             })
+        return result
+
+    def export_as_json(self):
+        result = self.export()
         return json.dumps(result, separators=(',', ':'))
 
 def print_error(message):
