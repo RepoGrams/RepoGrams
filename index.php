@@ -81,8 +81,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="container">
       <!-- last block for import box -->
       <div ng-controller="RepogramsImporter">
         <div class="row">
