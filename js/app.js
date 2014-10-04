@@ -482,7 +482,7 @@ repogramsModule.directive('ngRenderblock', function(){
           },
           template: '<div class="customBlock" tooltip-trigger="click" tooltip-html-unsafe="{{tooltip}}" style="background-color: {{bgColor}}; height:20px; width: {{width}}; outline:1px solid black;"></div>',
           controller: ['$scope', function($scope) {
-            var commitURL = $scope.url.replace(".git", "/commit/"+$scope.commitId);
+            var commitURL = $scope.url.replace(".git", "/commit/"+$scope.commitID);
             $scope.tooltip = '<div><a>' + commitURL + '</a><br/>' + $scope.commitID +'<br/>' + $scope.commitMsg + '</div>';
           }]
         };
