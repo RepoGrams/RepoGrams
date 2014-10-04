@@ -34,6 +34,7 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
       // WARNING: the member names have to match the names in metricSelectionService
 
       return {
+        checksums: checksums,
         commit_msgs: commit_msgs,
         commit_lang_complexity: commit_langcomp_data,
         branch_complexity: branch_complexity,

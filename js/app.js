@@ -469,16 +469,19 @@ repogramsModule.controller('RepogramsImporter',
 //
 //directives
 //
-
 repogramsModule.directive('ngRenderblock', function(){
         return {
           restrict: 'E',
           scope: {
                 commitMsg: "@commitMsg",
+                commitID: "@commitId",
                 bgColor: "@color",
                 width: "=width"
           },
-  template: '<div class="customBlock" popover="{{commitMsg}}" popover-trigger="mouseenter" style="background-color: {{bgColor}}; height:20px; width: {{width}}; outline:1px solid black;"></div>'
+          template: '<div class="customBlock" tooltip-html-unsafe="{{tooltip}}" style="background-color: {{bgColor}}; height:20px; width: {{width}}; outline:1px solid black;"></div>',
+          controller: ['$scope', function($scope) {
+            $scope.tooltip = '<div>' + $scope.commitID +'<br/>' + $scope.commitMsg + '</div>';
+          }]
         };
 });
 
@@ -489,7 +492,7 @@ repogramsModule.directive('ngRendermetric', function(){
 	    scope:{},
 	    template: '<div ng-repeat="metric in selectedMetrics"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
 	    '<div style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
-	    '<ng-renderblock ng-repeat="style in styles[metric.id][blenMod().id]"  commit-msg={{repo.metricData.commit_msgs[$index]}} color={{style.color}} width=style.width></ng-renderblock>' +
+	    '<ng-renderblock ng-repeat="style in styles[metric.id][blenMod().id]"  commit-msg={{repo.metricData.commit_msgs[$index]}} commit-id={{repo.metricData.checksums[$index]}} color={{style.color}} width=style.width></ng-renderblock>' +
   '</div></div>',
 	    controller: ['$scope','reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', function($scope, reposService, blenService, metricSelectionService, blenSelectionService, $sce){
 		//TODO: Add every metricvalue
