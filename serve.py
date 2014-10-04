@@ -12,11 +12,11 @@ class Repograms(object):
         data = cherrypy.request.json
         repourl = data["repourl"]
         try:
-            gh.get_repo(repourl)
+            git_helper = gh.GitHelper(repourl)
         except gh.GitException as e:
             cherrypy.response.status = 300
             return {"emessage": e.message}
-        g = git_graph.GitGraph()
+        g = git_graph.GitGraph(git_helper)
         return g.export()
 
 if __name__ == '__main__':

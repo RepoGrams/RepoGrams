@@ -13,7 +13,8 @@ import graph_tool.topology
 
 class GitGraph():
 
-    def __init__(self):
+    def __init__(self, git_helper):
+        self.git_helper = git_helper
         self.graph = gt.Graph()
         # required to map a nodes hashsum back to the vertex
         self.hash2vertex = {}
@@ -33,7 +34,7 @@ class GitGraph():
         self.hash2vertex["SENTINEL"] = self.sentinel
 
         # construct the graph
-        for commit in gh.get_all_commits():
+        for commit in self.git_helper.get_all_commits():
             parents, commit_timestamp, commitmsg, added, removed, files = gh.get_commit_data(commit)
             commit_vertex = self.graph.add_vertex()
             self.hash2vertex[commit] = commit_vertex
@@ -265,18 +266,3 @@ class GitGraph():
 
 def print_error(message):
     print(json.dumps({"emessage": message}, separators=(',', ':')))
-
-
-if __name__ == "__main__":
-    import sys
-    if len(sys.argv) < 1:
-        print_error("missing argument")
-        sys.exit(1)
-    try:
-        gh.get_repo(sys.argv[1])
-    except gh.GitException as e:
-        print_error(e.message)
-        sys.exit(2)
-    g = GitGraph()
-    exported = g.export_as_json()
-    print(exported)

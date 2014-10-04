@@ -5,10 +5,40 @@ import subprocess
 import tempfile
 from utils import debug
 
+import pygit2
+
 
 class GitException(Exception):
     def __init__(self, message):
         self.message = message
+
+
+class GitHelper(object):
+
+    def __init__(self, repo_url, repo_dir=None):
+        """
+        :repo_url: URL of the repository
+        :repo_dir: directory where the repository is expected to reside
+        """
+        if repo_dir is not None:
+            try:
+                os.chdir(repo_dir)
+                update_repo()
+            except OSError:
+                pass
+        dirpath = tempfile.mkdtemp()
+        os.chdir(dirpath)
+        try:
+            self.repo = pygit2.clone_repository(repo_url, dirpath)
+        except pygit2.GitError as e:
+            raise GitException("Cloning failed. {}".format(e.message))
+
+    def get_all_commits(self):
+        command = """git rev-list --all --remotes --reverse --topo-order"""
+        pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
+        out, err = pipe.communicate()
+        all_commits = out.decode('utf8', 'ignore').split("\n")[:-1]
+        return all_commits
 
 def check_output(*args, **kwargs):
     subprocess.check_output(*args, stderr=subprocess.STDOUT, **kwargs)
@@ -29,27 +59,6 @@ def update_repo():
         check_output(command.split())
     except subprocess.CalledProcessError as e:
         raise GitException("Internal git error. git returned {}".format(e.output))
-    return True
-
-def get_repo(repo_url, repo_dir=None):
-    """
-    :repo_url: URL of the repository
-    :repo_dir: directory where the repository is expected to reside
-    :returns: True if the repository has been changed/initially cloned
-    """
-    if repo_dir is not None:
-        try:
-            os.chdir(repo_dir)
-            return update_repo()
-        except OSError:
-            pass
-    dirpath = tempfile.mkdtemp()
-    os.chdir(dirpath)
-    command = "git clone {} .".format(repo_url)
-    try:
-        check_output(command.split())
-    except subprocess.CalledProcessError as e:
-        raise GitException("Cloning failed. git returned {}".format(e.output))
     return True
 
 
@@ -84,13 +93,6 @@ def get_commit_data(commit_id):
     return (parents.split(), commit_timestamp, commitmsg,
             lines_added, lines_removed, file_names)
 
-
-def get_all_commits():
-    command = """git rev-list --all --remotes --reverse --topo-order"""
-    pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
-    out, err = pipe.communicate()
-    all_commits = out.decode('utf8', 'ignore').split("\n")[:-1]
-    return all_commits
 
 
 def get_branch_heads():
