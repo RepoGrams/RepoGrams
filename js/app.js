@@ -486,7 +486,7 @@ repogramsModule.directive('ngRenderblock', function(){
             $scope.msg = $scope.commitMsg.length > 40 ? $scope.commitMsg.substring(0, 39) + '…'
                                                       : $scope.commitMsg;
             $scope.commitURL = $scope.url.replace(".git", "/commit/"+$scope.commitID);
-            $scope.tooltip = '<div><a href='+$scope.commitURL+'>view on GitHub</a><br/>' + $scope.commitID +'<br/><small><p>' + $scope.msg + '</p></small></div>';
+            $scope.tooltip = '<div></p><a target="blank" href="'+$scope.commitURL+'">'+$scope.commitID+'</a></p>' + '<p>' + $scope.msg + '</p></div>';
           }]
         };
 });
