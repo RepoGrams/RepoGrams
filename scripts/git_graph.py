@@ -38,7 +38,7 @@ class GitGraph():
             parents, commit_timestamp, commitmsg, added, removed, files = self.git_helper.get_commit_data(commit)
             commit_vertex = self.graph.add_vertex()
             self.hash2vertex[str(commit.oid)] = commit_vertex
-            self.commit_hashsum[commit_vertex] = commit
+            self.commit_hashsum[commit_vertex] = str(commit.oid)
             self.commit_msg[commit_vertex] = commitmsg
             self.commit_timestamp[commit_vertex] = commit_timestamp
             self.commit_files[commit_vertex] = files
