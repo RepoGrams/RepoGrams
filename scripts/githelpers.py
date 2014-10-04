@@ -34,11 +34,20 @@ class GitHelper(object):
             raise GitException("Cloning failed. {}".format(e.message))
 
     def get_all_commits(self):
-        command = """git rev-list --all --remotes --reverse --topo-order"""
-        pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
-        out, err = pipe.communicate()
-        all_commits = out.decode('utf8', 'ignore').split("\n")[:-1]
-        return all_commits
+        remote_branch_names = self.repo.listall_branches(pygit2.GIT_BRANCH_REMOTE)
+        remote_branches = map(lambda bname: self.repo.lookup_branch(bname,
+                                                                    pygit2.GIT_BRANCH_REMOTE),
+                              remote_branch_names)
+        head_commits = map(lambda x: x.get_object().oid, remote_branches)
+        walker = self.repo.walk(head_commits[0],
+                                pygit2.GIT_SORT_REVERSE |
+                                pygit2.GIT_SORT_TOPOLOGICAL)
+        for other_head in head_commits[1:]:
+            walker.push(other_head)
+        commits = []
+        for commit in walker:
+            commits.append(str(commit.oid))  # later: don't use str
+        return commits
 
 def check_output(*args, **kwargs):
     subprocess.check_output(*args, stderr=subprocess.STDOUT, **kwargs)
