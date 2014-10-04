@@ -36,6 +36,7 @@ class GitHelper(object):
         :repo_dir: directory where the repository is expected to reside
         """
         self.up2date = False
+        self.repo_url = repo_url
         if whitelist and repo_url not in whitelist:
             raise GitException("Access Error: The repository which you have tried to access is not whitelisted.")
         dirpath = dir_manager.get_repo_dir(repo_url)

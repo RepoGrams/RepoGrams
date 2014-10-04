@@ -10,10 +10,24 @@ import json
 import graph_tool as gt
 import graph_tool.topology
 
+class GitGraphCache(object):
+    def __init__(self):
+        self._cache = {}
 
-class GitGraph():
+    def __setitem__(self, key, value):
+        self._cache[key] = value
 
-    def __init__(self, git_helper):
+    def __getitem__(self, key):
+        return self._cache[key]
+
+    def __contains__(self, key):
+        return key in self._cache
+
+
+class GitGraph(object):
+
+    def __init__(self, git_helper, cache):
+        self.cache = cache
         self.git_helper = git_helper
         self.graph = gt.Graph()
         # required to map a nodes hashsum back to the vertex
@@ -260,6 +274,7 @@ class GitGraph():
                 "associated_branch": self.associated_branch[commit],
                 "bcomplexity": self.branch_complexity[commit],
             })
+            self.cache[self.git_helper.repo_url] = result
         return result
 
     def export_as_json(self):

@@ -8,6 +8,7 @@ class Repograms(object):
 
     def __init__(self):
         self.dirmanager = gh.DirManager()
+        self.cache = git_graph.GitGraphCache()
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
@@ -20,7 +21,10 @@ class Repograms(object):
         except gh.GitException as e:
             cherrypy.response.status = 300
             return {"emessage": e.message}
-        g = git_graph.GitGraph(git_helper)
+        if git_helper.up2date and repourl in self.cache:
+            cherrypy.log("Cache hit")
+            return self.cache[repourl]
+        g = git_graph.GitGraph(git_helper, self.cache)
         return g.export()
 
 if __name__ == '__main__':
