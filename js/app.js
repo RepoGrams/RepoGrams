@@ -372,15 +372,15 @@ repogramsModule.service('metricSelectionService', function() {
 
 repogramsModule.service('blenService', function(){
 	var getModFunction = {
-			"1_churn": function(churn, totalChurn){return "" + (churn+1) + "px"},
-			"3_constant": function(churn, totalChurn){return "20px"},
-			"4_fill": function(churn, totalChurn){return "" + (Math.round(churn*100)/totalChurn) + "%"},
-	}	
+			"1_churn": function(churn, totalChurn){return "" + (churn+1) + "px";},
+			"3_constant": function(churn, totalChurn){return "20px";},
+			"4_fill": function(churn, totalChurn){return "" + (Math.round(churn*100)/totalChurn) + "%";},
+	};
 	return{
 		getWidth: function(mode, churn, totalChurn){
-			return getModFunction[mode](churn, totalChurn)
+			return getModFunction[mode](churn, totalChurn);
 			}
-	}
+	};
 });
 
 repogramsModule.service('blenSelectionService', function() {
@@ -391,22 +391,14 @@ repogramsModule.service('blenSelectionService', function() {
 	    //{id:"5_blanks", label: "Blank Spaces "}
 	    
 	  ];
-	  var selectedBlenMods = [allBlenMods[0]];
+	  this.selectedBlenMod = allBlenMods[0];
+          var outer = this;
 
 	  return{
-	    getSelectedBlenMods: function() {return selectedBlenMods;},
-	    addBlenMod: function(blen) {
-	    	if (selectedBlenMods.indexOf(blen) === -1) {
-		          // not in array yet
-	    		selectedBlenMods.push(blen);
-	    	}
+	    getSelectedBlenMod: function() {return outer.selectedBlenMod;},
+	    setBlenMod: function(blen) {
+              outer.selectedBlenMod = blen;
 	    },
-	    removeMetric: function(blen) {
-	        var position = selectedBlenMods.indexOf(blen);
-	        console.assert(position !== -1, "trying to remove mode which is not contained!");
-	        selectedBlenMods.splice(position, 1);
-	    },
-	    clear: function() {selectedBlenMods.length = 0;},
 	    getAllBlenMods: function() {return allBlenMods;}
 	  };
 });
@@ -428,10 +420,9 @@ repogramsModule.controller('RepogramsConfig',
         };
         $scope.blenService = blenSelectionService;
 		$scope.blenMods = $scope.blenService.getAllBlenMods();
-		$scope.currentBlen = $scope.blenMods[0];
+                $scope.currentBlen = $scope.blenService.getSelectedBlenMod();
         $scope.selectBlenAction = function() {
-        	$scope.blenService.clear();
-        	$scope.blenService.addBlenMod($scope.currentBlen);
+        	$scope.blenService.setBlenMod($scope.currentBlen);
         };
 	}
 	]);
@@ -493,15 +484,13 @@ repogramsModule.directive('ngRenderblock', function(){
 
 
 repogramsModule.directive('ngRendermetric', function(){
-	var default_mod = "1_churn";
-	
         return {
 	    restrict: 'E',
 	    scope:{},
 	    template: '<div ng-repeat="metric in selectedMetrics"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
-	    '<div ng-repeat="blenMod in selectedBlenMods"><div style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
-	    '<ng-renderblock ng-repeat="style in styles[metric.id][blenMod.id]"  commit-msg={{repo.metricData.commit_msgs[$index]}} color={{style.color}} width=style.width></ng-renderblock>' +
-  '</div></div></div>',
+	    '<div style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
+	    '<ng-renderblock ng-repeat="style in styles[metric.id][blenMod().id]"  commit-msg={{repo.metricData.commit_msgs[$index]}} color={{style.color}} width=style.width></ng-renderblock>' +
+  '</div></div>',
 	    controller: ['$scope','reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', function($scope, reposService, blenService, metricSelectionService, blenSelectionService, $sce){
 		//TODO: Add every metricvalue
                 $scope.reposService = reposService;
@@ -509,8 +498,8 @@ repogramsModule.directive('ngRendermetric', function(){
                 $scope.metricSelectionService = metricSelectionService;
                 $scope.blenSelectionService = blenSelectionService;
                 $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
-                $scope.selectedBlenMods = blenSelectionService.getSelectedBlenMods();
                 $scope.repo = reposService.getRepoArr()[$scope.$parent.$index];
+                $scope.blenMod = blenSelectionService.getSelectedBlenMod;
                 $scope.totalChurn = reposService.getTotalChurnArr()[$scope.$parent.$index];
                 $scope.styles = {};
                 angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
