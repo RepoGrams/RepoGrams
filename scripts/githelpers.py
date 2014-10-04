@@ -7,6 +7,21 @@ from utils import debug
 
 import pygit2
 
+class DirManager(object):
+
+    def __init__(self, basedir=None):
+        if basedir is None:
+            basedir = tempfile.mkdtemp()
+        self.basedir = basedir
+        self.url2dir = {}
+
+    def get_repo_dir(self, url):
+        if url in self.url2dir:
+            return self.url2dir[url]
+        dirpath = tempfile.mkdtemp(dir=self.basedir)
+        self.url2dir[url] = dirpath
+        return dirpath
+
 
 class GitException(Exception):
     def __init__(self, message):
@@ -15,23 +30,21 @@ class GitException(Exception):
 
 class GitHelper(object):
 
-    def __init__(self, repo_url, whitelist=None, repo_dir=None):
+    def __init__(self, repo_url, dir_manager, whitelist=None):
         """
         :repo_url: URL of the repository
         :repo_dir: directory where the repository is expected to reside
         """
         if whitelist and repo_url not in whitelist:
             raise GitException("Access Error: The repository which you have tried to access is not whitelisted.")
-        if repo_dir is not None:
-            try:
-                os.chdir(repo_dir)
-                update_repo()
-            except OSError:
-                pass
-        dirpath = tempfile.mkdtemp()
-        os.chdir(dirpath)
+        dirpath = dir_manager.get_repo_dir(repo_url)
         try:
-            self.repo = pygit2.clone_repository(repo_url, dirpath)
+            try:
+                self.repo = pygit2.Repository(pygit2.discover_repository(dirpath))
+                for remote in self.repo.remotes:
+                    remote.fetch()
+            except KeyError:  # no repo in this dir
+                self.repo = pygit2.clone_repository(repo_url, dirpath, bare=True)
         except pygit2.GitError as e:
             raise GitException("Cloning failed. {}".format(e.message))
 
@@ -100,21 +113,3 @@ class GitHelper(object):
 
 def check_output(*args, **kwargs):
     subprocess.check_output(*args, stderr=subprocess.STDOUT, **kwargs)
-
-def update_repo():
-    """
-    Returns true if repository has changed since last clone/pull
-    If so, updates the repo
-    """
-    command = "git fetch --all"
-    try:
-        subprocess.check_call(command.split())
-        command = "git rev-list HEAD...origin/master --count"
-        if int(subprocess.check_call(command.split())) == 0:
-            return False
-
-        command = "git reset --hard FETCH_HEAD"
-        check_output(command.split())
-    except subprocess.CalledProcessError as e:
-        raise GitException("Internal git error. git returned {}".format(e.output))
-    return True

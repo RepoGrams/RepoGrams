@@ -5,6 +5,10 @@ import scripts.git_graph as git_graph
 import scripts.githelpers as gh
 
 class Repograms(object):
+
+    def __init__(self):
+        self.dirmanager = gh.DirManager()
+
     @cherrypy.expose
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
@@ -12,7 +16,7 @@ class Repograms(object):
         data = cherrypy.request.json
         repourl = data["repourl"]
         try:
-            git_helper = gh.GitHelper(repourl)
+            git_helper = gh.GitHelper(repourl, self.dirmanager)
         except gh.GitException as e:
             cherrypy.response.status = 300
             return {"emessage": e.message}
