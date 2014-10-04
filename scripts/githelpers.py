@@ -35,14 +35,17 @@ class GitHelper(object):
         :repo_url: URL of the repository
         :repo_dir: directory where the repository is expected to reside
         """
+        self.up2date = False
         if whitelist and repo_url not in whitelist:
             raise GitException("Access Error: The repository which you have tried to access is not whitelisted.")
         dirpath = dir_manager.get_repo_dir(repo_url)
         try:
             try:
                 self.repo = pygit2.Repository(pygit2.discover_repository(dirpath))
+                self.up2date = True
                 for remote in self.repo.remotes:
-                    remote.fetch()
+                    if remote.fetch().received_objects:
+                        self.up2date = False
             except KeyError:  # no repo in this dir
                 self.repo = pygit2.clone_repository(repo_url, dirpath, bare=True)
         except pygit2.GitError as e:
