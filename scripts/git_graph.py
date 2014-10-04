@@ -61,7 +61,9 @@ class GitGraph():
         self.dominator_tree = self.compute_dominators()
 
         # get the branch heads for metric 4
-        self.master_sha, self.branch_heads = gh.get_branch_heads()
+        master_sha, branch_heads = git_helper.get_branch_heads()
+        self.master_sha = str(master_sha)
+        self.branch_heads = map(str, branch_heads)
         self.metric4()
         self.metric6()
 

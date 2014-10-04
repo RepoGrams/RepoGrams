@@ -33,6 +33,23 @@ class GitHelper(object):
         except pygit2.GitError as e:
             raise GitException("Cloning failed. {}".format(e.message))
 
+    def get_branch_heads(self):
+        """:returns: a tuple ('master' branch, list of branch heads)"""
+        remote_branch_names = self.repo.listall_branches(pygit2.GIT_BRANCH_REMOTE)
+        remote_branches = map(lambda bname: self.repo.lookup_branch(bname,
+                                                                    pygit2.GIT_BRANCH_REMOTE),
+                              remote_branch_names)
+        head_commits = map(lambda x: x.get_object().oid, remote_branches)
+        for (index, branch) in enumerate(remote_branch_names):
+            if branch.endswith("master"):
+                master = head_commits[index]
+                break
+        else: # no branch named with master
+            master = head_commits[0]
+        return (master, head_commits)
+
+
+
     def get_all_commits(self):
         remote_branch_names = self.repo.listall_branches(pygit2.GIT_BRANCH_REMOTE)
         remote_branches = map(lambda bname: self.repo.lookup_branch(bname,
@@ -95,25 +112,3 @@ def update_repo():
     except subprocess.CalledProcessError as e:
         raise GitException("Internal git error. git returned {}".format(e.output))
     return True
-
-
-
-
-
-def get_branch_heads():
-    """:returns: a tuple (master branch shasum, list of branch head shasums)"""
-    command = """git ls-remote --heads"""
-    pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
-    out, err = pipe.communicate()
-    all_heads_with_name = out.decode('utf8', 'ignore').split("\n")[:-1]
-    all_heads = []
-    master = None
-    for head in all_heads_with_name:
-        # split head into shasum and name, extract shasum afterwardts
-        shasum = head.split()[0]
-        all_heads.append(shasum)
-        if master is None and head.endswith("master"):
-            master = shasum
-    debug(master)
-    debug(all_heads)
-    return master, all_heads
