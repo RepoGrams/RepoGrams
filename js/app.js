@@ -464,7 +464,7 @@ repogramsModule.controller('RepogramsImporter',
             console.log(data);
             $scope.errors.push(data);
           });
-        }
+        };
 }]);
 
 //
@@ -482,8 +482,11 @@ repogramsModule.directive('ngRenderblock', function(){
           },
           template: '<div class="customBlock" tooltip-trigger="click" tooltip-html-unsafe="{{tooltip}}" style="background-color: {{bgColor}}; height:20px; width: {{width}}; outline:1px solid black;"></div>',
           controller: ['$scope', function($scope) {
-            var commitURL = $scope.url.replace(".git", "/commit/"+$scope.commitID);
-            $scope.tooltip = '<div><a>' + commitURL + '</a><br/>' + $scope.commitID +'<br/>' + $scope.commitMsg + '</div>';
+            // 40 is the length of commitID
+            $scope.msg = $scope.commitMsg.length > 40 ? $scope.commitMsg.substring(0, 39) + '…'
+                                                      : $scope.commitMsg;
+            $scope.commitURL = $scope.url.replace(".git", "/commit/"+$scope.commitID);
+            $scope.tooltip = '<div><a href='+$scope.commitURL+'>view on GitHub</a><br/>' + $scope.commitID +'<br/><small><p>' + $scope.msg + '</p></small></div>';
           }]
         };
 });
@@ -493,7 +496,7 @@ repogramsModule.directive('ngRendermetric', function(){
         return {
 	    restrict: 'E',
 	    scope:{},
-	    template: '<div ng-repeat="metric in selectedMetrics"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
+	    template: '<div class="renderMetric" ng-repeat="metric in selectedMetrics"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
 	    '<div style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
 	    '<ng-renderblock ng-repeat="style in styles[metric.id][blenMod().id]"  commit-msg={{repo.metricData.commit_msgs[$index]}} commit-id={{repo.metricData.checksums[$index]}} url={{repo.url}} color={{style.color}} width=style.width></ng-renderblock>' +
   '</div></div>',
