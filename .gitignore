@@ -2,3 +2,5 @@ docs/*.aux
 docs/*.log
 docs/*.synctex.gz
 config.inc.php
+.ropeproject
+*.pyc
