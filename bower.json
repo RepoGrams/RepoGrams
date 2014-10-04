@@ -1,0 +1,30 @@
+{
+  "name": "Repograms",
+  "version": "0.0.1",
+  "homepage": "https://github.com/HeikoBecker/Repograms",
+  "authors": [
+    "Fabian Kosmale <fakos@t-online.de>"
+  ],
+  "description": "Git visualization",
+  "keywords": [
+    "git"
+  ],
+  "license": "GPL 2",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "~1.2.26",
+    "angular-bootstrap": "~0.11.2",
+    "angular-loading-bar": "~0.6.0",
+    "angular-ui": "~0.4.0",
+    "angularjs": "~1.2.26",
+    "bootstrap-css-only": "~3.2.0",
+    "clj-fuzzy": "~0.1.8"
+  }
+}
