@@ -77,9 +77,13 @@ class GitHelper(object):
         for parent in parents:
             diffs.append(self.repo.diff(commit, parent, flags=pygit2.GIT_DIFF_REVERSE))
         if diffs:
-            diff = reduce(lambda d1,d2: d1.merge(d2), diffs)
+            diff = diffs[0]
+            for d in diffs[1:]:
+                diff.merge(d)
+            assert diff is not None, parents
         else:
             diff = commit.tree.diff_to_tree(flags=pygit2.GIT_DIFF_REVERSE)
+            assert diff is not None, parents
         patches = [patch for patch in diff]
         # could  be done with reduce...
         added = sum(patch.additions for patch in patches)
