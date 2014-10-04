@@ -15,11 +15,13 @@ class GitException(Exception):
 
 class GitHelper(object):
 
-    def __init__(self, repo_url, repo_dir=None):
+    def __init__(self, repo_url, whitelist=None, repo_dir=None):
         """
         :repo_url: URL of the repository
         :repo_dir: directory where the repository is expected to reside
         """
+        if whitelist and repo_url not in whitelist:
+            raise GitException("Access Error: The repository which you have tried to access is not whitelisted.")
         if repo_dir is not None:
             try:
                 os.chdir(repo_dir)
