@@ -44,10 +44,36 @@ class GitHelper(object):
                                 pygit2.GIT_SORT_TOPOLOGICAL)
         for other_head in head_commits[1:]:
             walker.push(other_head)
-        commits = []
         for commit in walker:
-            commits.append(str(commit.oid))  # later: don't use str
-        return commits
+            yield commit  # later: don't use str
+
+    def get_commit_data(self, commit):
+        # iterate over commits
+        # --always: handle empty commits
+        # -s: don't show p, we do it later
+        # --root: else the first commit won't work
+        # -r: the commit we want to display
+        # --pretty: format string which prints all we need
+        #   %P: parents   |   %ct: commiter time stamp     | %B commitmsg
+        parents = commit.parents
+        diffs = []
+        for parent in parents:
+            diffs.append(self.repo.diff(commit, parent, flags=pygit2.GIT_DIFF_REVERSE))
+        if diffs:
+            diff = reduce(lambda d1,d2: d1.merge(d2), diffs)
+        else:
+            diff = commit.tree.diff_to_tree(flags=pygit2.GIT_DIFF_REVERSE)
+        patches = [patch for patch in diff]
+        # could  be done with reduce...
+        added = sum(patch.additions for patch in patches)
+        removed = sum(patch.deletions for patch in patches)
+        files = set()
+        for patch in patches:
+            files.add(patch.new_file_path)
+        message = commit.message
+        timestamp = commit.commit_time
+        return (parents, timestamp, message, added, removed, files)
+
 
 def check_output(*args, **kwargs):
     subprocess.check_output(*args, stderr=subprocess.STDOUT, **kwargs)
@@ -71,36 +97,6 @@ def update_repo():
     return True
 
 
-def get_commit_data(commit_id):
-    # iterate over commits
-    # --always: handle empty commits
-    # -s: don't show p, we do it later
-    # --root: else the first commit won't work
-    # -r: the commit we want to display
-    # --pretty: format string which prints all we need
-    #   %P: parents   |   %ct: commiter time stamp     | %B commitmsg
-    separator = "\a"
-    command = """git diff-tree --always --root --no-commit-id --numstat --pretty=format:{1}%P{1}%ct{1}%B{1} -r {0}""".format(commit_id, separator)
-    pipe = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
-    out, err = pipe.communicate()
-    filestats, parents, commit_timestamp, commitmsg, _ = out.decode(
-        'utf8', 'ignore'
-    ).split(separator)
-    lines_added = 0
-    lines_removed = 0
-    file_names = []
-    for file_info in filestats.split("\n"):
-        if file_info:
-            added, removed, name = file_info.split("\t")
-            try:
-                lines_added += int(added)
-                lines_removed += int(removed)
-            except ValueError:
-                pass  # binary files don't have those numbers
-            # TODO: deal with renames!
-            file_names.append(name)
-    return (parents.split(), commit_timestamp, commitmsg,
-            lines_added, lines_removed, file_names)
 
 
 

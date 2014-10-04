@@ -35,9 +35,9 @@ class GitGraph():
 
         # construct the graph
         for commit in self.git_helper.get_all_commits():
-            parents, commit_timestamp, commitmsg, added, removed, files = gh.get_commit_data(commit)
+            parents, commit_timestamp, commitmsg, added, removed, files = self.git_helper.get_commit_data(commit)
             commit_vertex = self.graph.add_vertex()
-            self.hash2vertex[commit] = commit_vertex
+            self.hash2vertex[str(commit.oid)] = commit_vertex
             self.commit_hashsum[commit_vertex] = commit
             self.commit_msg[commit_vertex] = commitmsg
             self.commit_timestamp[commit_vertex] = commit_timestamp
@@ -50,7 +50,7 @@ class GitGraph():
                 continue
             for parent in parents:
                 debug("adding edge from {} to {}".format(parent, commit))
-                self.graph.add_edge(self.hash2vertex[parent], commit_vertex)
+                self.graph.add_edge(self.hash2vertex[str(parent.oid)], commit_vertex)
         self.transitive_closure = gt.topology.transitive_closure(self.graph)
         # make closure also reflexive
         for vertex in self.transitive_closure.vertices():
