@@ -19,6 +19,7 @@ RUN rm -r /var/www/html/*
 ADD ./ /var/www/html/
 #add additinoal apache conf
 ADD apache_rg_vhost.conf /etc/apache2/sites-available/
+RUN a2enmod proxy_http
 RUN a2ensite apache_rg_vhost.conf
 #RUN git clone https://github.com/HeikoBecker/Repograms.git /var/www/html
 #checkout the gui_minimal branch
