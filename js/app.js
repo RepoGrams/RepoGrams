@@ -454,10 +454,12 @@ repogramsModule.controller('RepogramsImporter',
              {"repourl": url}
           );
           result.success(function(data) {
-            reposService.addRepo({
-              "name": $scope.importURL.split("/").pop(),
-              "url": $scope.importURL,
-              "metricData": metricsRunner.runMetrics(data),
+            metricsRunner.runMetricsAsync(data, function(metricData) {
+              reposService.addRepo({
+                "name": $scope.importURL.split("/").pop(),
+                "url": $scope.importURL,
+                "metricData": metricData
+              });
             });
           });
           result.error(function(data) {
