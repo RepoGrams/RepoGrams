@@ -8,8 +8,11 @@ RUN echo 'deb-src http://downloads.skewed.de/apt/trusty trusty universe' >> /etc
 #RUN wget http://pgp.skewed.de:11371/pks/lookup?op=get&search=0x612DEFB798507F25 --output-document=pubkey
 COPY pubkey pubkey
 RUN apt-key add pubkey
-RUN apt-get update 
-RUN apt-get install -y php5 apache2 git subversion mercurial-git python python-graph-tool supervisor
+RUN DEBIAN_FRONTEND=noninteractive apt-get update 
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common
+RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:dennis/python
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 git subversion mercurial-git python python-graph-tool supervisor python-cherrypy libgit2 python-pygit2
 #empty the destination folder
 RUN rm -r /var/www/html/* 
 #copy the project to the www folder
