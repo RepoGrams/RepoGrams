@@ -9,7 +9,9 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
           callback(null, data.commit_messages);
         },
         commit_lang_complexity: function(callback) {
-          callback(null, data.files.map(commitLangCompl.run));
+          async.map(data, function(item, transformer) {
+            transformer(/*err=*/null, commitLangCompl.run(item));
+          }, callback);
         },
         branch_complexity: function(callback) {
           callback(null, data.bcomplexities);
