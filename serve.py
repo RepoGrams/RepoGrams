@@ -27,15 +27,8 @@ class Repograms(object):
         g = git_graph.GitGraph(git_helper, self.cache)
         return g.export()
 
-if __name__ == '__main__':
-    staticdir = os.path.abspath(os.getcwd())
-    conf = {
-        '/': {
-            'tools.staticdir.on': True,
-            'tools.staticdir.dir': staticdir,
-            'tools.staticdir.index': 'index.html',
-        }
-    }
-    cherrypy.tree.mount(Repograms(), '/', config=conf)
-    cherrypy.engine.start()
-    cherrypy.engine.block()
+cherrypy.config.update({'server.socket_port': 8090,
+                        'engine.autoreload_on': False,
+                        'log.access_file': './access.log',
+                        'log.error_file': './error.log'})
+cherrypy.quickstart(Repograms())
