@@ -9,7 +9,7 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
           callback(null, data.commit_messages);
         },
         commit_lang_complexity: function(callback) {
-          async.map(data, function(item, transformer) {
+          async.map(data.files, function(item, transformer) {
             transformer(/*err=*/null, commitLangCompl.run(item));
           }, callback);
         },
@@ -17,13 +17,17 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
           callback(null, data.bcomplexities);
         },
         commit_message_length: function(callback) {
-          callback(null,data.commit_messages.map(commitMsgLength.run));
+          async.map(data.commit_messages, function(item, transformer) {
+            transformer(/*err=*/null, commitMsgLength.run(item));
+          }, callback);
         },
         branch_usage: function(callback) {
           callback(null, data.associated_branches);
         },
         commit_modularity: function(callback) {
-          callback(null, data.files.map(commitModularity.run));
+          async.map(data.files, function(item, transformer) {
+            transformer(/*err=*/null, commitModularity.run(item));
+          }, callback);
         },
         most_edit_file: function(callback) {
           callback(null, mostEditFile.run(_.zip(data.churns, data.files)));
