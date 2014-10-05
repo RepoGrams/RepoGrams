@@ -25,6 +25,7 @@
     "angular-ui": "~0.4.0",
     "angularjs": "~1.2.26",
     "bootstrap-css-only": "~3.2.0",
-    "clj-fuzzy": "~0.1.8"
+    "clj-fuzzy": "~0.1.8",
+    "underscore": "~1.7.0"
   }
 }

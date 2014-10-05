@@ -263,18 +263,29 @@ class GitGraph(object):
             already_seen |= set(new_nodes)
 
     def export(self):
-        result = []
+        checksums = []
+        churns = []
+        commit_messages = []
+        files = []
+        associated_branches = []
+        bcomplexities = []
         for commit in self.iterate_commits():
             assert self.associated_branch[commit] != 0, "{}".format(self.commit_msg[commit])
-            result.append({
-                "checksum": self.commit_hashsum[commit],
-                "churn": self.commit_churn[commit],
-                "commitmsg": self.commit_msg[commit],
-                "files": list(self.commit_files[commit]),
-                "associated_branch": self.associated_branch[commit],
-                "bcomplexity": self.branch_complexity[commit],
-            })
-            self.cache[self.git_helper.repo_url] = result
+            checksums.append(self.commit_hashsum[commit])
+            churns.append(self.commit_churn[commit])
+            commit_messages.append(self.commit_msg[commit])
+            files.append(list(self.commit_files[commit]))
+            associated_branches.append(self.associated_branch[commit])
+            bcomplexities.append(self.branch_complexity[commit])
+        result = {
+            "checksums": checksums,
+            "churns": churns,
+            "commit_messages": commit_messages,
+            "files": files,
+            "associated_branches": associated_branches,
+            "bcomplexities": bcomplexities,
+        }
+        self.cache[self.git_helper.repo_url] = result
         return result
 
     def export_as_json(self):
