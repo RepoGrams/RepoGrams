@@ -56,6 +56,5 @@
   },
   "_source": "git://github.com/Yomguithereal/clj-fuzzy.git",
   "_target": "~0.1.8",
-  "_originalSource": "clj-fuzzy",
-  "_direct": true
+  "_originalSource": "clj-fuzzy"
 }

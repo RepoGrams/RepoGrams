@@ -10,6 +10,7 @@ angular.module('repogramsModule').factory('commitModularity', [function() {
       result += splitted[i];
       result += splitter;
     }
+    return result;
   }
 
 
@@ -20,7 +21,11 @@ angular.module('repogramsModule').factory('commitModularity', [function() {
    *  Removes everything after last /
    */
   function getDirPath(path) {
-    return path.substr(path.lastIndexOf("/"));
+    var stop = path.lastIndexOf("/");
+    if (stop === -1) {
+      return "/"; // return / to indicate toplevel
+    }
+    return path.substr(0, stop);
   }
 
   /*
@@ -30,7 +35,7 @@ angular.module('repogramsModule').factory('commitModularity', [function() {
     if (fileList.length === 0) {
       return 0; // TODO: in the Github issue, this was the default value; but maybe we should use 1?
     }
-    if (fileList.length == 1)
+    if (fileList.length === 1)
       return 1;
     else{
       var resultContainer = [];
@@ -49,7 +54,7 @@ angular.module('repogramsModule').factory('commitModularity', [function() {
             string1 = substName(string1, WINSPLIT);
             string2 = substName(string2, WINSPLIT);
           }
-          var res = clj_fuzzy.metrics.jaro_winkler(string1, string2);
+          var res = JaroWinklerDistance(string1, string2);
           resultContainer.push(res); 
         }
       }
