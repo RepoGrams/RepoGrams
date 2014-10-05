@@ -2,10 +2,7 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
   return {
     runMetrics:  function(data) {
       var commit_langcomp_data = data.files.map(commitLangCompl.run);
-      var commit_msglength_data = _.zip(data.commit_messages, data.churns)
-                                   .map(function(e) {
-                                     return commitMsgLength.run(e[0], e[1]);
-                                   });
+      var commit_msglength_data = data.commit_messages.map(commitMsgLength.run);
       var metric5data = mostEditFile.run(_.zip(data.churns, data.files));
       var commit_modularity_data = data.files.map(commitModularity.run);
 
