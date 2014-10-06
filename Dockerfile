@@ -13,12 +13,16 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common
 RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:dennis/python
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 git subversion mercurial-git python python-graph-tool supervisor python-cherrypy3 libgit2 python-pygit2
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nginx
 #empty the destination folder
 RUN rm -r /var/www/html/* 
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+ADD nginx.conf /etc/nginx/conf.d/repograms.conf
 #copy the project to the www folder
 ADD ./ /var/www/html/
 #add additinoal apache conf
 ADD apache_rg_vhost.conf /etc/apache2/sites-available/
+RUN nginx -t
 RUN a2enmod proxy_http
 RUN a2ensite apache_rg_vhost.conf
 #RUN git clone https://github.com/HeikoBecker/Repograms.git /var/www/html
