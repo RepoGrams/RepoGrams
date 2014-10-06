@@ -255,7 +255,7 @@ var MapperFactory = function () {
 var mapperFactory = new MapperFactory();
 
 
-var repogramsModule = angular.module('repogramsModule',['ui.bootstrap', 'ngAnimate', 'angular-loading-bar']);
+var repogramsModule = angular.module('repogramsModule',['ui.bootstrap', 'ngAnimate', 'angular-loading-bar', 'vr.directives.slider']);
 
 function getBgColor(blen){
  return '#00ff00';
@@ -372,14 +372,23 @@ repogramsModule.service('metricSelectionService', function() {
 
 repogramsModule.service('blenService', function(){
 	var getModFunction = {
-			"1_churn": function(churn, totalChurn){return "" + (churn+1) + "px";},
-			"3_constant": function(churn, totalChurn){return "20px";},
-			"4_fill": function(churn, totalChurn){return "" + (Math.round(churn*100)/totalChurn) + "%";},
+		"1_churn": function(churn, totalChurn, zoom){return {value: (churn+1), zoom: zoom.num, unit: "px"}},
+		"3_constant": function(churn, totalChurn, zoom){return {value: (20) , zoom: zoom.num, unit: "px"}},
+		"4_fill": function(churn, totalChurn, zoom){return {value:(Math.round(churn*100)/totalChurn), zoom:1, unit: "%"}}
+	};
+	var calculateWidth = function(width){
+		var widthString = "" + (width.value*width.zoom) + width.unit;
+		width.string = widthString;
+		return width;
 	};
 	return{
-		getWidth: function(mode, churn, totalChurn){
-			return getModFunction[mode](churn, totalChurn);
-			}
+		getWidth: function(mode, churn, totalChurn, zoom){
+			var width = getModFunction[mode](churn, totalChurn, zoom);
+			return calculateWidth(width);
+			},
+		updateString: function(width){
+			return calculateWidth(width);
+		}
 	};
 });
 
@@ -403,13 +412,24 @@ repogramsModule.service('blenSelectionService', function() {
 	  };
 });
 
+repogramsModule.service('zoomService', ["$rootScope", function($rootScope) {
+	var selectedZoom = { num:1 };
+	
+	return{
+		getSelectedZoom: function() {return selectedZoom;},
+		setZoom: function(zoom) {
+			$rootScope.$broadcast("zoomChange", zoom);
+			selectedZoom = zoom;
+		}
+	}
+}]);
 
 //
 //controllers
 //
 repogramsModule.controller('RepogramsConfig',
-	['$scope', 'metricSelectionService', 'blenSelectionService',
-	function ($scope, metricSelectionService, blenSelectionService){
+	['$scope', 'metricSelectionService', 'blenSelectionService', 'zoomService',
+	function ($scope, metricSelectionService, blenSelectionService, zoomService){
 		//default metric is 1
 		$scope.metricService = metricSelectionService;
 		$scope.metrics = $scope.metricService.getAllMetrics();
@@ -424,6 +444,13 @@ repogramsModule.controller('RepogramsConfig',
         $scope.selectBlenAction = function() {
         	$scope.blenService.setBlenMod($scope.currentBlen);
         };
+        
+        $scope.zoomService = zoomService;
+        $scope.currentZoom = $scope.zoomService.getSelectedZoom(); 
+        $scope.changeZoom = function() {
+        	$scope.zoomService.setZoom($scope.currentZoom);
+        }
+        
 	}
 	]);
 
@@ -500,9 +527,9 @@ repogramsModule.directive('ngRendermetric', function(){
 	    scope:{},
 	    template: '<div class="renderMetric" ng-repeat="metric in selectedMetrics"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
 	    '<div style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
-	    '<ng-renderblock ng-repeat="style in styles[metric.id][blenMod().id]"  commit-msg={{repo.metricData.commit_msgs[$index]}} commit-id={{repo.metricData.checksums[$index]}} url={{repo.url}} color={{style.color}} width=style.width></ng-renderblock>' +
+	    '<ng-renderblock ng-repeat="style in styles[metric.id][blenMod().id]"  commit-msg={{repo.metricData.commit_msgs[$index]}} commit-id={{repo.metricData.checksums[$index]}} url={{repo.url}} color={{style.color}} width=style.width.string></ng-renderblock>' +
   '</div></div>',
-	    controller: ['$scope','reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', function($scope, reposService, blenService, metricSelectionService, blenSelectionService, $sce){
+	    controller: ['$scope','reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService', function($scope, reposService, blenService, metricSelectionService, blenSelectionService, zoomService, $sce){
 		//TODO: Add every metricvalue
                 $scope.reposService = reposService;
                 $scope.blenService = blenService;
@@ -510,7 +537,9 @@ repogramsModule.directive('ngRendermetric', function(){
                 $scope.blenSelectionService = blenSelectionService;
                 $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
                 $scope.repo = reposService.getRepoArr()[$scope.$parent.$index];
+                $scope.zoomService = zoomService;
                 $scope.blenMod = blenSelectionService.getSelectedBlenMod;
+                $scope.currentZoom = zoomService.getSelectedZoom();
                 $scope.totalChurn = reposService.getTotalChurnArr()[$scope.$parent.$index];
                 $scope.styles = {};
                 angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
@@ -525,10 +554,24 @@ repogramsModule.directive('ngRendermetric', function(){
 	                		var churn = $scope.repo.metricData.churn[i];
 	                		var x = {
 	                				color: reposService.mapToColor(value.id, $scope.repo.metricData[value.id][i]),
-	                				width: (blenService.getWidth(bValue.id, churn, $scope.totalChurn))
+	                				width: (blenService.getWidth(bValue.id, churn, $scope.totalChurn, $scope.currentZoom))
 	                		};
 	                		currentModIDStyle.push(x);
 	                	}
+                	});
+                });
+                $scope.$on('zoomChange', function (evnt, newZoom){
+                	angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
+                		angular.forEach(blenSelectionService.getAllBlenMods(), function(bValue, bKey) {
+                			if (bValue.id != "4_fill"){
+	                			for( var i = 0; i < $scope.repo.metricData[value.id].length; i++){
+	                				var oldWidth = $scope.styles[value.id][bValue.id][i].width;
+	                				oldWidth.zoom = newZoom.num;
+	                				var newWidth = blenService.updateString(oldWidth);
+	                				$scope.styles[value.id][bValue.id][i].width = newWidth;
+	                			}
+                			}
+                		});
                 	});
                 });
                 // the mapper might change when a new repo is added, and the
@@ -552,7 +595,7 @@ repogramsModule.directive('ngLegend', function(){ return {
 		  '<h3 class="panel-title">Legend</h3>'+
 		  '</div>' +
                   '<div ng-repeat="metric in selectedMetrics"><h4>{{metric.label}}</h4><ul>' +
-                  '<li ng-repeat="style in styles[metric.id]">{{style.lowerBound}}-{{style.upperBound}}: <span class="customBlock" style="background-color: {{style.color}}; height:20px; width: {{style.width}}; border:1px solid;"></span></li>' +
+                  '<li ng-repeat="style in styles[metric.id]">{{style.lowerBound}}-{{style.upperBound}}: <span class="customBlock" style="background-color: {{style.color}}; height:20px; width: 20px; border:1px solid;"></span></li>' +
                   '</ul></div></div>',
 	controller: ['$scope', 'reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService){
           $scope.reposService = reposService;

@@ -31,6 +31,11 @@
     <script type="text/javascript" src="/js/metrics/commitMsgLength.js"></script>
     <script type="text/javascript" src="/js/metrics/commitModul.js"></script>
     <script type="text/javascript" src="/js/metrics/driver.js"></script>
+    <!-- include slider -->
+	<script src="/bower_components/angular-touch/angular-touch.min.js"></script>
+	<script src="/bower_components/angular-slider/build/angular-slider.min.js"></script>
+	<link rel="stylesheet" href="/bower_components/angular-slider/slider.css"/>
+    
     <title>RepoGrams</title>
   </head>
   <body>
@@ -51,6 +56,14 @@
               </select> 
               <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
             </div>
+            <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
+              <!-- Zoom Slider -->
+              <label for="zoomSlider">Zoom:</label>
+              <slider id="zoomSlider" ng-model="currentZoom.num" ng-change="changeZoom()" floor="1" ceiling="20" step="1" stickiness="3">
+              </slider>
+              <!-- https://github.com/Venturocket/angular-slider with CCS provided by voInt https://github.com/Venturocket/angular-slider/issues/51 -->
+            </div>
+            
             <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
               <label for="blockLengthSelect">Block length modus:</label>
               <select id="blockLengthSelect" class="form-control" ng-model="currentBlen" ng-change="selectBlenAction()"
