@@ -94,7 +94,7 @@ class GitHelper(object):
         parents = commit.parents
         diffs = []
         for parent in parents:
-            diffs.append(self.repo.diff(commit, parent, flags=pygit2.GIT_DIFF_REVERSE))
+            diffs.append(commit.tree.diff_to_tree(parent.tree, flags=pygit2.GIT_DIFF_REVERSE))
         if diffs:
             diff = diffs[0]
             for d in diffs[1:]:
