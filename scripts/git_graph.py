@@ -65,10 +65,6 @@ class GitGraph(object):
             for parent in parents:
                 debug("adding edge from {} to {}".format(parent, commit))
                 self.graph.add_edge(self.hash2vertex[str(parent.oid)], commit_vertex)
-        self.transitive_closure = gt.topology.transitive_closure(self.graph)
-        # make closure also reflexive
-        for vertex in self.transitive_closure.vertices():
-            self.transitive_closure.add_edge(vertex, vertex)
         assert gt.topology.is_DAG(self.graph)
 
         # compute dominators
@@ -105,11 +101,11 @@ class GitGraph(object):
             return 0
         branch_counter = 0
         assoc_branch = self.associated_branch[commit_node]
-        # By excluding the child from the same branch, we avoid the issue that it not 
+        # By excluding the child from the same branch, we avoid the issue that it not
         # necessaryly dominated.
         # An example for this is efea0f23f9e0f147c5ff5b5d35249417c32c3a53 from jQuery
         for child in children:
-            if (commit_node == self.graph.vertex(self.dominator_tree[child]) and 
+            if (commit_node == self.graph.vertex(self.dominator_tree[child]) and
                 self.associated_branch[child] != assoc_branch): # exclude child from same branch
                 branch_counter += 1
         # There are actually commits with multiple children which dominate none
@@ -152,10 +148,9 @@ class GitGraph(object):
             for child in parent.out_neighbours():
                 if child == commit_node:
                     continue
-                for destiny in destinies:
-                    path_exists = self.transitive_closure.edge(child, destiny) is not None
-                    if path_exists:
-                        parent_counter += 1
+                parent_counter += sum(1 for destiny in destinies
+                                        if (child == destiny or
+                                            gt.topology.shortest_path(self.graph, child, destiny)[0]))
             child_count = sum(1 for _ in parent.out_neighbours())
             if child_count - parent_counter  == 1:
                 # commit_node is the last commit of the branch
