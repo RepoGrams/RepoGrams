@@ -104,10 +104,14 @@ class GitGraph(object):
         if not len(children) > 1:
             return 0
         branch_counter = 0
+        assoc_branch = self.associated_branch[commit_node]
+        # By excluding the child from the same branch, we avoid the issue that it not 
+        # necessaryly dominated.
+        # An example for this is efea0f23f9e0f147c5ff5b5d35249417c32c3a53 from jQuery
         for child in children:
-            if commit_node == self.graph.vertex(self.dominator_tree[child]):
+            if (commit_node == self.graph.vertex(self.dominator_tree[child]) and 
+                self.associated_branch[child] != assoc_branch): # exclude child from same branch
                 branch_counter += 1
-        branch_counter -= 1  # one child is from the "main" branch
         # There are actually commits with multiple children which dominate none
         # of them, in this case branch_counter becomes negative because of the
         # last line, adjusting for the "main" branch; therefore we have to reset
