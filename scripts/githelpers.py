@@ -45,8 +45,14 @@ class GitHelper(object):
                 self.repo = pygit2.Repository(pygit2.discover_repository(dirpath))
                 self.up2date = True
                 for remote in self.repo.remotes:
-                    if remote.fetch().received_objects:
-                        self.up2date = False
+                    try:
+                        if remote.fetch().received_objects:
+                            self.up2date = False
+                    except AttributeError:
+                        # older versions of pygit2 don't return an object
+                        # but a dictionary, which has no received_objects
+                        pass
+
             except KeyError:  # no repo in this dir
                 self.repo = pygit2.clone_repository(repo_url, dirpath, bare=True)
         except pygit2.GitError as e:
