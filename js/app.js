@@ -255,7 +255,7 @@ var MapperFactory = function () {
 var mapperFactory = new MapperFactory();
 
 
-var repogramsModule = angular.module('repogramsModule',['ui.bootstrap', 'ngAnimate', 'angular-loading-bar', 'vr.directives.slider']);
+var repogramsModule = angular.module('repogramsModule',['ui.bootstrap', 'angular-loading-bar', 'vr.directives.slider']);
 
 function getBgColor(blen){
  return '#00ff00';
@@ -515,7 +515,7 @@ repogramsModule.directive('ngRenderblock', function(){
             $scope.msg = $scope.commitMsg.length > 40 ? $scope.commitMsg.substring(0, 39) + '…'
                                                       : $scope.commitMsg;
             $scope.commitURL = $scope.url.replace(".git", "/commit/"+$scope.commitID);
-            $scope.tooltip = '<div></p><a target="blank" href="'+$scope.commitURL+'">'+$scope.commitID+'</a></p>' + '<p>' + $scope.msg + '</p></div>';
+            $scope.tooltip = '<div><p><a target="blank" href="'+$scope.commitURL+'">'+$scope.commitID+'</a></p>' + '<p>' + $scope.msg + '</p></div>';
           }]
         };
 });
