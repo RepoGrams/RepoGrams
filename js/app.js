@@ -509,7 +509,7 @@ repogramsModule.directive('ngRenderblock', function(){
                 width: "=width",
                 url: "@url"
           },
-          template: '<div class="customBlock" tooltip-trigger="click" tooltip-html-unsafe="{{tooltip}}" style="background-color: {{bgColor}}; height:20px; width: {{width}}; outline:1px solid black;"></div>',
+          template: '<div class="customBlock" tooltip-trigger="click" tooltip-html-unsafe="{{::tooltip}}" style="background-color: {{bgColor}}; height:20px; width: {{width}}; outline:1px solid black;"></div>',
           controller: ['$scope', function($scope) {
             // 40 is the length of commitID
             $scope.msg = $scope.commitMsg.length > 40 ? $scope.commitMsg.substring(0, 39) + '…'
@@ -527,7 +527,7 @@ repogramsModule.directive('ngRendermetric', function(){
 	    scope:{},
 	    template: '<div class="renderMetric" ng-repeat="metric in selectedMetrics"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
 	    '<div style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
-	    '<ng-renderblock ng-repeat="style in styles[metric.id][blenMod().id]"  commit-msg={{repo.metricData.commit_msgs[$index]}} commit-id={{repo.metricData.checksums[$index]}} url={{repo.url}} color={{style.color}} width=style.width.string></ng-renderblock>' +
+	    '<ng-renderblock ng-repeat="style in styles[metric.id][blenMod().id]"  commit-msg={{::repo.metricData.commit_msgs[$index]}} commit-id={{::repo.metricData.checksums[$index]}} url={{::repo.url}} color={{style.color}} width=style.width.string></ng-renderblock>' +
   '</div></div>',
 	    controller: ['$scope','reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService', function($scope, reposService, blenService, metricSelectionService, blenSelectionService, zoomService, $sce){
 		//TODO: Add every metricvalue
