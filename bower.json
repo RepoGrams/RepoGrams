@@ -19,11 +19,11 @@
     "tests"
   ],
   "dependencies": {
-    "angular-animate": "~1.2.26",
+    "angular-animate": "~1.3.0",
     "angular-bootstrap": "~0.11.2",
     "angular-loading-bar": "~0.6.0",
     "angular-ui": "~0.4.0",
-    "angularjs": "~1.2.26",
+    "angularjs": "~1.3.0",
     "bootstrap-css-only": "~3.2.0",
     "clj-fuzzy": "~0.1.8",
     "underscore": "~1.7.0",
