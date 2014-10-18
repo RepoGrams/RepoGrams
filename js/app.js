@@ -489,8 +489,8 @@ repogramsModule.controller('RepogramsImporter',
               });
             });
           });
-          result.error(function(data) {
-            console.log(data);
+          result.error(function(data, status, headers, config) {
+            console.log(status);
             $scope.errors.push(data);
           });
         };
