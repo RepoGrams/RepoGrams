@@ -394,13 +394,13 @@ repogramsModule.service('blenService', function(){
 
 repogramsModule.service('blenSelectionService', function() {
 	  var allBlenMods = [
-	    {id:"1_churn", label: "Churn"},
-	    {id:"3_constant", label: "Constant block length"},
-	    {id:"4_fill", label: "Proportional to horizontal space"}//,
+	    {id:"1_churn", label: "Commit size"},
+	    {id:"3_constant", label: "Fixed width"},
+	    {id:"4_fill", label: "Fit to screen"}//,
 	    //{id:"5_blanks", label: "Blank Spaces "}
 	    
 	  ];
-	  this.selectedBlenMod = allBlenMods[0];
+	  this.selectedBlenMod = allBlenMods[2];
           var outer = this;
 
 	  return{
