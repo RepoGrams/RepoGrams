@@ -40,9 +40,28 @@
   </head>
   <body>
     <div class="container">
-      <div class="row">
+      <div class="row rowpadding">
         <img class="center-block" src="img/title.png" title="Repograms"></img>
       </div>
+      <div class="row rowpadding">
+      	<div ng-controller="RepogramsImporter">
+          <div class="row">
+	    <div class="col-md-12">
+            <div class="input-group">
+              <input type="text" class="form-control" ng-model="importURL"/>
+	      <div class="input-group-btn">
+              <button type="button" class="btn btn-primary formbtn" ng-click="importRepo()">
+              <span class="glyphicon glyphicon-plus"></span>
+              </button>
+	      </div>
+	    </div>
+          </div>
+        </div>
+        <div class="row">
+          <alert ng-repeat="error in errors" type="danger" close="closeAlert($index)">{{error.emessage}}</alert>
+        </div>
+      </div>
+    </div>
       <div class="row">
         <!-- First block for the selection box and zoom slider -->
         <div class="panel panel-default">
@@ -54,7 +73,6 @@
               <select id="metricSelect" class="form-control" ng-model="currentMetric" ng-change="selectAction()"
                 ng-options="metric.label for metric in metrics">
               </select> 
-              <!-- TODO: Add slider maybe: https://prajwalkman.github.io/angular-slider/ -->
             </div>
             <div class="form-group col-lg-3" class="configBlock" ng-controller="RepogramsConfig">
               <!-- Zoom Slider -->
@@ -102,25 +120,7 @@
         </div>
       </div>
       <!-- last block for import box -->
-      <div ng-controller="RepogramsImporter">
-        <div class="row">
-          <alert ng-repeat="error in errors" type="danger" close="closeAlert($index)">{{error.emessage}}</alert>
-        </div>
-        <div class="row">
-          <div class="input-group">
-            <input type="text" class="form-control" ng-model="importURL"/>
-            <div class="input-group-btn" >
-              <button type="button" class="btn btn-primary formbtn" ng-click="importURL = null">
-              <span class="glyphicon glyphicon-remove-circle"></span>
-              </button>
-              <button type="button" class="btn btn-primary formbtn" ng-click="importRepo()">
-              <span class="glyphicon glyphicon-ok-circle"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+   </div>
     </div>
     </script>
   </body>

@@ -6,3 +6,8 @@
 .formbtn {height:34px;}
 
 .renderMetric .tooltip-inner {max-width: 42em; background-color: WhiteSmoke; color: black; border: solid 1px black;}
+
+.rowpadding {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
