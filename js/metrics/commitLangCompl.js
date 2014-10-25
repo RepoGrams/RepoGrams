@@ -28,11 +28,15 @@ angular.module('repogramsModule').factory('commitLangCompl', ['fileInfo', functi
  * extensions, that has been specified by Ivan.
  */
     function isValidEnding(entry){
-      return entry.indexOf(fileInfo.ENDINGS) != -1;
+      "use strict";
+      var pos = fileInfo.ENDINGS.indexOf(entry);
+      return (pos !== -1);
     }
 
     function isValidFile(entry){
-      return entry.indexOf(fileInfo.NAMES) != -1;
+      console.log("val file? " + entry);
+      var pos = fileInfo.NAMES.indexOf(entry);
+      return (pos !== -1);
     }
 
 
@@ -44,12 +48,19 @@ angular.module('repogramsModule').factory('commitLangCompl', ['fileInfo', functi
       var mem = {};	
 
       fileList.forEach(function (entry){
-        var recognized = isValidFile(entry = entry.split("/").pop()) ||
-          /*assign everything after last . to entry and check if it's a valid
-           * extension*/
-          (isValidEnding(entry = entry.split(".").pop()));
+        // remove everything before the last /
+        var realEntry = "";
+        var fileName = entry.split("/").pop();
+        var recognized = isValidFile(fileName);
+        if (recognized) {
+          realEntry = fileName;
+        } else {
+          var fileEnding = fileName.split(".").pop();
+          recognized = isValidEnding(fileEnding);
+          realEntry = fileEnding;
+        }
         if(recognized) {
-          entry in mem? mem[entry] +=1 : mem[entry] = 1;
+          realEntry in mem ? mem[realEntry] +=1 : mem[realEntry] = 1;
         } else {
           "Other" in mem ? mem["Other"] += 1: mem["Other"] = 1;
         }
