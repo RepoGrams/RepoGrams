@@ -55,6 +55,7 @@ repogramsControllers.controller('RepogramsImporter',
           );
           result.success(function(data) {
             metricsRunner.runMetricsAsync(data, function(metricData) {
+              console.log(metricData);
               reposService.addRepo({
                 "name": $scope.importURL.split("/").pop(),
                 "url": $scope.importURL,

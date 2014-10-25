@@ -30,13 +30,13 @@ angular.module('repogramsModule').factory('commitLangCompl', ['fileInfo', functi
     function isValidEnding(entry){
       "use strict";
       var pos = fileInfo.ENDINGS.indexOf(entry);
-      return (pos !== -1);
+      return pos;
     }
 
     function isValidFile(entry){
       console.log("val file? " + entry);
       var pos = fileInfo.NAMES.indexOf(entry);
-      return (pos !== -1);
+      return pos;
     }
 
 
@@ -51,19 +51,19 @@ angular.module('repogramsModule').factory('commitLangCompl', ['fileInfo', functi
         // remove everything before the last /
         var realEntry = "";
         var fileName = entry.split("/").pop();
-        var recognized = isValidFile(fileName);
-        if (recognized) {
-          realEntry = fileName;
+        var position = isValidFile(fileName);
+        if (position !== -1) {
+          realEntry = fileInfo.TYPES[position];
         } else {
           var fileEnding = fileName.split(".").pop();
-          recognized = isValidEnding(fileEnding);
-          realEntry = fileEnding;
+          position = isValidEnding(fileEnding);
+          if (position !== -1) {
+            realEntry = fileInfo.TYPE[position];
+          } else {
+            realEntry = "Other";
+          }
         }
-        if(recognized) {
-          realEntry in mem ? mem[realEntry] +=1 : mem[realEntry] = 1;
-        } else {
-          "Other" in mem ? mem["Other"] += 1: mem["Other"] = 1;
-        }
+        realEntry in mem ? mem[realEntry] +=1 : mem[realEntry] = 1;
       });
       return Object.keys(mem).length;
       }
