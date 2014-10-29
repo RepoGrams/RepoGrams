@@ -49,16 +49,18 @@
       <div class="row rowpadding">
       	<div ng-controller="RepogramsImporter">
           <div class="row">
-	    <div class="col-md-12">
-            <div class="input-group">
-              <input type="text" class="form-control" ng-model="importURL"/>
-	      <div class="input-group-btn">
-              <button type="button" class="btn btn-primary formbtn" ng-click="importRepo()">
-              <span class="glyphicon glyphicon-plus"></span>
-              </button>
-	      </div>
-	    </div>
-          </div>
+            <form id="repogramsAdder" ng-submit="importRepo()">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <input type="text" class="form-control" ng-model="importURL"/>
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-primary formbtn">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+	          </div>
+	        </div>
+              </div>
+	    </form>
         </div>
         <div class="row">
           <alert ng-repeat="error in errors" type="danger" close="closeAlert($index)">{{error.emessage}}</alert>
