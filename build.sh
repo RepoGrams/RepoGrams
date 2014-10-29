@@ -6,7 +6,7 @@ fi
 
 cat ./conf/nginx_A.conf > nginx.conf
 
-if [[ -z "$1" ]]
+if [ -z "$1" ]
 then
 	echo 'No hostname specified. Using localhost.'	
 	echo 'localhost' >> nginx.conf
