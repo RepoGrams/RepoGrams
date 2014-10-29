@@ -42,7 +42,7 @@
     <title>RepoGrams</title>
   </head>
   <body>
-    <div class="container">
+    <div class="container-fluid container-padding-lr">
       <div class="row rowpadding">
         <img class="center-block" src="img/title.png" title="Repograms"></img>
       </div>
@@ -94,10 +94,18 @@
           </div>
         </div>
       </div>
+
+      <!-- Legend -->
+      <div class="row">
+        <div class="col-lg-12">
+          <ng-legend></ng-legend>
+        </div>
+      </div>
+
       <!-- Main Block with the Repo name and Metric render -->
       <div class="row">
         <div ng-controller="RepogramsRender" class="row">
-          <div class="col-md-10">
+          <div class="col-md-12">
             <div class="panel panel-default">
               <div class="panel-heading"> Repositories</div>
               <div class="panel-body">
@@ -116,9 +124,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-2">
-            <ng-legend></ng-legend>
           </div>
         </div>
       </div>
