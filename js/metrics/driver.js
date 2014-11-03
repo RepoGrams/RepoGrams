@@ -29,7 +29,7 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
             transformer(/*err=*/null, commitModularity.run(item));
           }, callback);
         },
-        most_edit_file: function(callback) {
+        most_edited_file: function(callback) {
           callback(null, mostEditFile.run(_.zip(data.churns, data.files)));
         },
         churn: function(callback) {

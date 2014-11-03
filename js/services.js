@@ -67,12 +67,12 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
 
 repogramsServices.service('metricSelectionService', function() {
   var allMetrics = [
-    {id: "commit_modularity", label: "Commit modularity"},
-    {id:"commit_message_length", label: "Commit message length"},
-    {id:"commit_lang_complexity", label: "Commit language complexity"},
+    {id: "commit_modularity", label: "Commit Modularity"},
+    {id:"commit_message_length", label: "Commit Message Length"},
+    {id:"commit_lang_complexity", label: "Commit Language Complexity"},
     {id:"branch_usage", label: "Branch Usage"},
-    {id:"most_edit_file", label: "Most edit file"},
-    {id:"branch_complexity", label: "Branch complexity"}
+    {id:"most_edited_file", label: "Most Edited File"},
+    {id:"branch_complexity", label: "Branch Complexity"}
   ];
   var selectedMetrics = [allMetrics[0]];
 

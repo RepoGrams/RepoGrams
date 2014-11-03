@@ -178,7 +178,7 @@ var MapperFactory = function () {
       "#d7301f",
       "#990000"
     ],
-    "most_edit_file": ["#fff7fb",
+    "most_edited_file": ["#fff7fb",
       "#ece7f2",
       "#d0d1e6",
       "#a6bddb",
