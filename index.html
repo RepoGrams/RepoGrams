@@ -105,9 +105,9 @@
                   <div class="col-md-12">
                     <form id="repogramsAdder" ng-submit="importRepo()">
                       <div class="input-group">
-                        <input type="text" class="form-control" ng-model="importURL"/>
+                        <input type="text" class="form-control" placeholder="GIT clone URL… (http(s) only)" ng-model="importURL" ng-readonly="processing" />
                         <div class="input-group-btn">
-                          <button type="submit" class="btn btn-primary formbtn">
+                          <button type="submit" class="btn btn-primary formbtn" ng-disabled="processing">
                             <span class="glyphicon glyphicon-plus"></span>
                           </button>
                         </div>

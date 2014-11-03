@@ -40,14 +40,14 @@ repogramsControllers.controller('RepogramsRender',
 repogramsControllers.controller('RepogramsImporter',
 	['$scope', '$http', 'reposService', 'metricsRunner', function ($scope, $http, reposService, metricsRunner){
 	$scope.ImportButtonText = "Add";
-	$scope.importURL = "https://github.com/Inkane/chakra-paste.git";
-        $scope.errors = [] ;
+        $scope.errors = [];
+        $scope.processing = false;
         $scope.closeAlert = function(index) {
           $scope.errors.splice(index, 1);
         };
 	$scope.importRepo = function() {
-          // TODO: get random URL
-                  var url = ($scope.importURL === "") ? "https://github.com/Inkane/chakra-paste.git" : $scope.importURL;
+          $scope.processing = true;
+          var url = $scope.importURL;
           console.log("fetch " + url);
           var result = $http.post(
              "/getGitData",
@@ -55,6 +55,7 @@ repogramsControllers.controller('RepogramsImporter',
           );
           result.success(function(data) {
             metricsRunner.runMetricsAsync(data, function(metricData) {
+              $scope.processing = false;
               console.log(metricData);
               reposService.addRepo({
                 "name": $scope.importURL.split("/").pop(),
@@ -64,6 +65,7 @@ repogramsControllers.controller('RepogramsImporter',
             });
           });
           result.error(function(data, status, headers, config) {
+            $scope.processing = false;
             console.log(status);
             $scope.errors.push(data);
           });
