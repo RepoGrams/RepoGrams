@@ -45,8 +45,12 @@ repogramsControllers.controller('RepogramsImporter',
         $scope.closeAlert = function(index) {
           $scope.errors.splice(index, 1);
         };
+        $scope.changeInput = function() {
+          $scope.errors.length = 0;
+        };
 	$scope.importRepo = function() {
           $scope.processing = true;
+          $scope.errors.length = 0;
           var url = $scope.importURL;
           console.log("fetch " + url);
           var result = $http.post(
