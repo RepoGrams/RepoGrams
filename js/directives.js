@@ -15,8 +15,8 @@ repogramsDirectives.directive('ngRenderblock', function(){
             // 40 is the length of commitID
             $scope.msg = $scope.commitMsg.length > 40 ? $scope.commitMsg.substring(0, 39) + '…'
                                                       : $scope.commitMsg;
-            $scope.commitURL = $scope.url.replace(".git", "/commit/"+$scope.commitID);
-            $scope.tooltip = '<div></p><a target="blank" href="'+$scope.commitURL+'">'+$scope.commitID+'</a></p>' + '<p>' + $scope.msg + '</p></div>';
+            $scope.commitURL = $scope.url.replace(/\.git$|$/, "/commit/"+$scope.commitID);
+            $scope.tooltip = '<div><a target="blank" href="'+$scope.commitURL+'">'+$scope.commitID.substring(0, 8)+'</a> <span title="' + $scope.commitMsg + '">' + $scope.msg + '</span></div>';
           }]
         };
 });
