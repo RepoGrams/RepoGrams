@@ -1,3 +1,7 @@
+body {
+	margin: 2em 0;
+}
+
 /* Rendered blocks */
 .customBlock:hover { box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, 0.3), 0px 0px 2px 2px rgba(102, 175, 233, 0.6); outline-color: rgba(102, 175, 233, 0.6); outline-offset: 0px; position: relative; z-index: 1050; }
 .customBlock{ background-color:#ffffff; width: 5px; height: 5px; display:inline-block; white-space: nowrap; outline: 1px solid rgba(0, 0, 0, 0.15); outline-offset: -1px; }
@@ -7,11 +11,29 @@
 
 .renderMetric .tooltip-inner {max-width: 42em; background-color: WhiteSmoke; color: black; border: solid 1px black;}
 
-.rowpadding {
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
 .container-padding-lr {
 	padding-left: 30px;
 	padding-right: 30px;
+}
+
+slider {
+	margin: 0 5px !important;
+}
+
+slider span.bubble {
+	top: 20px !important;
+}
+
+.repo-label {
+	display: inline;
+}
+
+.repo-name {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+form#repogramsAdder {
+	margin-top: 1em;
 }

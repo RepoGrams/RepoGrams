@@ -95,10 +95,10 @@ repogramsDirectives.directive('ngLegend', function(){ return {
 		  '<div class="panel-heading">'+
 		  '<h3 class="panel-title">Legend</h3>'+
 		  '</div>' +
-                  '<div ng-repeat="metric in selectedMetrics">'+
+                  '<div class="panel-body" ng-repeat="metric in selectedMetrics">'+
 		  '<b>{{metric.label}}</b>'+
 		  '<ul class="list-inline">' +
-                  '<li ng-repeat="style in styles[metric.id]">{{style.lowerBound}}-{{style.upperBound}}: <span class="customBlock" style="background-color: {{style.color}}; height:20px; width: 20px; border:1px solid;"></span></li>' +
+                  '<li ng-repeat="style in styles[metric.id]"><span class="customBlock" style="background-color: {{style.color}}; height:20px; width: 20px; border:1px solid;"></span> {{style.lowerBound}}-{{style.upperBound}}</li>' +
                   '</ul></div></div>',
 	controller: ['$scope', 'reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService){
           $scope.reposService = reposService;
