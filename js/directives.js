@@ -96,7 +96,7 @@ repogramsDirectives.directive('ngLegend', function(){ return {
 		  '<h3 class="panel-title">Legend</h3>'+
 		  '</div>' +
                   '<div class="panel-body" ng-repeat="metric in selectedMetrics">'+
-		  '<b>{{metric.label}}</b>'+
+                  '<p><strong>{{metric.label}}</strong> <span>{{metric.description}}</span></p>'+
 		  '<ul class="list-inline">' +
                   '<li ng-repeat="style in styles[metric.id]"><span class="customBlock" style="background-color: {{style.color}}; height:20px; width: 20px; border:1px solid;"></span> {{style.lowerBound}}-{{style.upperBound}}</li>' +
                   '</ul></div></div>',
