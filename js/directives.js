@@ -10,7 +10,7 @@ repogramsDirectives.directive('ngRenderblock', function(){
                 width: "=width",
                 url: "@url"
           },
-          template: '<div class="customBlock" tooltip-trigger="click" tooltip-html-unsafe="{{tooltip}}" style="background-color: {{bgColor}}; height:20px; width: {{width}}; outline:1px solid black;"></div>',
+          template: '<div class="customBlock" tooltip-trigger="click" tooltip-html-unsafe="{{tooltip}}" style="background-color: {{bgColor}}; height:20px; width: {{width}};"></div>',
           controller: ['$scope', function($scope) {
             // 40 is the length of commitID
             $scope.msg = $scope.commitMsg.length > 40 ? $scope.commitMsg.substring(0, 39) + '…'
