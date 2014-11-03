@@ -25,13 +25,13 @@ slider span.bubble {
 }
 
 .repo-label {
-	display: inline;
-}
-
-.repo-name {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.repo-label label {
+	display: inline;
 }
 
 form#repogramsAdder {

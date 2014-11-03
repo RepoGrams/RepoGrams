@@ -90,10 +90,10 @@
               <div class="panel-body">
                 <div class="repo col-md-12" ng-repeat="repo in repos">
                   <div class="row">
-                    <div class="col-lg-2">
-                      <label class="row repo-label" for="{{'metricBox'+$index}}">
-                        <button type="button" class="btn btn-sm col-md-1 col-lg-2" ng-click="removeRepo($index)"><span class="glyphicon glyphicon-remove"></span></button>
-                        <span class="col-md-11 col-lg-10 repo-name">{{repo.name}}</span>
+                    <div class="col-lg-2 repo-label">
+                      <label for="{{'metricBox'+$index}}">
+                        <button type="button" class="btn btn-sm" ng-click="removeRepo($index)"><span class="glyphicon glyphicon-remove"></span></button>
+                        <span title="{{repo.name}}">{{repo.name}}</span>
                       </label> 
                     </div>
                     <div class="col-lg-10" id="{{'metricBox'+$index}}">
