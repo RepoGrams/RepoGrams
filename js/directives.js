@@ -10,7 +10,7 @@ repogramsDirectives.directive('ngRenderblock', function(){
                 width: "=width",
                 url: "@url"
           },
-          template: '<div class="customBlock" tooltip-trigger="click" tooltip-html-unsafe="{{tooltip}}" style="background-color: {{bgColor}}; height:20px; width: {{width}};"></div>',
+          template: '<div class="customBlock" tooltip-trigger="click" tooltip-html-unsafe="{{tooltip}}" style="background-color: {{bgColor}}; width: {{width}};"></div>',
           controller: ['$scope', function($scope) {
             // 40 is the length of commitID
             $scope.msg = $scope.commitMsg.length > 40 ? $scope.commitMsg.substring(0, 39) + '…'
@@ -64,14 +64,12 @@ repogramsDirectives.directive('ngRendermetric', function(){
                 $scope.$on('zoomChange', function (evnt, newZoom){
                 	angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
                 		angular.forEach(blenSelectionService.getAllBlenMods(), function(bValue, bKey) {
-                			if (bValue.id != "4_fill"){
-	                			for( var i = 0; i < $scope.repo.metricData[value.id].length; i++){
-	                				var oldWidth = $scope.styles[value.id][bValue.id][i].width;
-	                				oldWidth.zoom = newZoom.num;
-	                				var newWidth = blenService.updateString(oldWidth);
-	                				$scope.styles[value.id][bValue.id][i].width = newWidth;
-	                			}
-                			}
+	                		for( var i = 0; i < $scope.repo.metricData[value.id].length; i++){
+	                			var oldWidth = $scope.styles[value.id][bValue.id][i].width;
+	                			oldWidth.zoom = newZoom.num;
+	                			var newWidth = blenService.updateString(oldWidth);
+	                			$scope.styles[value.id][bValue.id][i].width = newWidth;
+	                		}
                 		});
                 	});
                 });
@@ -98,7 +96,7 @@ repogramsDirectives.directive('ngLegend', function(){ return {
                   '<div class="panel-body" ng-repeat="metric in selectedMetrics">'+
                   '<p><strong>{{metric.label}}</strong> <span>{{metric.description}}</span></p>'+
 		  '<ul class="list-inline">' +
-                  '<li ng-repeat="style in styles[metric.id]"><span class="customBlock" style="background-color: {{style.color}}; height:20px; width: 20px; border:1px solid;"></span> {{style.lowerBound}}-{{style.upperBound}}</li>' +
+                  '<li ng-repeat="style in styles[metric.id]"><span class="customBlock" style="background-color: {{style.color}};"></span> {{style.lowerBound}}-{{style.upperBound}}</li>' +
                   '</ul></div></div>',
 	controller: ['$scope', 'reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService){
           $scope.reposService = reposService;

@@ -100,9 +100,8 @@ repogramsServices.service('metricSelectionService', function() {
 
 repogramsServices.service('blenService', function(){
 	var getModFunction = {
-		"1_churn": function(churn, totalChurn, zoom){return {value: (churn+1), zoom: zoom.num, unit: "px"}},
-		"3_constant": function(churn, totalChurn, zoom){return {value: (20) , zoom: zoom.num, unit: "px"}},
-		"4_fill": function(churn, totalChurn, zoom){return {value:(Math.round(churn*100)/totalChurn), zoom:1, unit: "%"}}
+		"3_constant": function(churn, totalChurn, zoom){return {value: (5), zoom: zoom.num, unit: "px"}},
+		"4_fill": function(churn, totalChurn, zoom){return {value:(Math.round(churn*100)/totalChurn), zoom:zoom.num, unit: "%"}}
 	};
 	var calculateWidth = function(width){
 		var widthString = "" + (width.value*width.zoom) + width.unit;
@@ -122,13 +121,12 @@ repogramsServices.service('blenService', function(){
 
 repogramsServices.service('blenSelectionService', function() {
 	  var allBlenMods = [
-	    {id:"1_churn", label: "Commit size"},
 	    {id:"3_constant", label: "Fixed width"},
 	    {id:"4_fill", label: "Fit to screen"}//,
 	    //{id:"5_blanks", label: "Blank Spaces "}
 	    
 	  ];
-	  this.selectedBlenMod = allBlenMods[2];
+	  this.selectedBlenMod = allBlenMods[1];
           var outer = this;
 
 	  return{

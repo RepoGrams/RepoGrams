@@ -3,8 +3,28 @@ body {
 }
 
 /* Rendered blocks */
-.customBlock:hover { box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, 0.3), 0px 0px 2px 2px rgba(102, 175, 233, 0.6); outline-color: rgba(102, 175, 233, 0.6); outline-offset: 0px; position: relative; z-index: 1050; }
-.customBlock{ background-color:#ffffff; width: 5px; height: 5px; display:inline-block; white-space: nowrap; outline: 1px solid rgba(0, 0, 0, 0.15); outline-offset: -1px; }
+.customBlock{
+	background-color:#ffffff;
+	height: 20px;
+	display:inline-block;
+	white-space: nowrap;
+	outline: 1px solid rgba(0, 0, 0, 0.15);
+	outline-offset: -1px;
+	transition: width 1s;
+}
+
+.customBlock:hover {
+	box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, 0.3), 0px 0px 2px 2px rgba(102, 175, 233, 0.6);
+	outline-color: rgba(102, 175, 233, 0.6);
+	outline-offset: 0px;
+	position: relative;
+	z-index: 1050;
+}
+
+/* Rendered blocks in the legend */
+.list-inline .customBlock {
+	width: 20px;
+}
 
 /* to align buttons with the input field TODO: don't use fixed height! */
 .formbtn {height:34px;}
