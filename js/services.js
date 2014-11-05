@@ -6,6 +6,9 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
   var mappers = {}; // TODO: support one mapper per metric
   var allMetrics = metricSelectionService.getAllMetrics();
   var maxVal = {};
+  var noOfCommitsArr = [];
+  var maxChurn = 0;
+  var maxCommits = 0;
   for (var i = 0; i < allMetrics.length; i++) {
     // initialize with dummy mapper
     var metric = allMetrics[i].id;
@@ -19,6 +22,9 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
     },
     getTotalChurnArr : function(){
         return totalChurnArr;
+    },
+    getMaxChurn : function() {
+    	return maxChurn;
     },
   addRepo : function(repoJSON){
     RepoArr.push(repoJSON);
@@ -46,13 +52,32 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
     	totalChurn += repoJSON.metricData.churn[i];
     }
     totalChurnArr.push(totalChurn);
+   	maxChurn = arrayMax(totalChurnArr);
+   	$rootScope.$broadcast("divisorChange", "1_churn", maxChurn);
+   	
+    var currentNoOfCommits = repoJSON.metricData.churn.length;
+    noOfCommitsArr.push(currentNoOfCommits);
+   	maxCommits = arrayMax(noOfCommitsArr);
+   	$rootScope.$broadcast("divisorChange", "3_constant", maxCommits);
+
   },
   removeRepo : function(place){
-    console.assert(place >= 0, "");
-    console.assert(place < RepoArr.length, "");
-    RepoArr.splice(place,1);
-    totalChurnArr.splice(place,1);
-    // TODO: recalculate maxvalue
+	    console.assert(place >= 0, "");
+	    console.assert(place < RepoArr.length, "");
+	    RepoArr.splice(place,1);
+	    var totalChurn = totalChurnArr[place];
+	    totalChurnArr.splice(place,1);
+	    if (totalChurn >= maxChurn){
+	    	maxChurn = arrayMax(totalChurnArr);
+	    	$rootScope.$broadcast("divisorChange", "1_churn", maxChurn);
+	    }
+	    var currentNoOfCommits = noOfCommitsArr[place];
+	    noOfCommitsArr.splice(place,1);
+	    if (currentNoOfCommits >= maxCommits){
+	    	maxCommits = arrayMax(noOfCommitsArr);
+	    	$rootScope.$broadcast("divisorChange", "3_constant", maxCommits);
+	    }
+	    // TODO: recalculate maxvalue
   },
   mapToColor: function(metric, value) {
     console.assert(typeof metric === "string", "metric must be the name of a metric");
@@ -100,17 +125,18 @@ repogramsServices.service('metricSelectionService', function() {
 
 repogramsServices.service('blenService', function(){
 	var getModFunction = {
-		"3_constant": function(churn, totalChurn, zoom){return {value: (5), zoom: zoom.num, unit: "px"}},
-		"4_fill": function(churn, totalChurn, zoom){return {value:(Math.round(churn*100)/totalChurn), zoom:zoom.num, unit: "%"}}
+		"1_churn": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value:(churn*100), divisor: maxChurn, zoom:zoom.num, unit: "%"}},
+		"3_constant": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value: (100), divisor: noOfCommits, zoom: zoom.num, unit: "%"}},
+		"4_fill": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value: (churn*100), divisor: totalChurn, zoom:zoom.num, unit: "%"}}
 	};
 	var calculateWidth = function(width){
-		var widthString = "" + (width.value*width.zoom) + width.unit;
+		var widthString = "" + ((width.value/width.divisor)*width.zoom) + width.unit;
 		width.string = widthString;
 		return width;
 	};
 	return{
-		getWidth: function(mode, churn, totalChurn, zoom){
-			var width = getModFunction[mode](churn, totalChurn, zoom);
+		getWidth: function(mode, churn, totalChurn, maxChurn, noOfCommits, zoom){
+			var width = getModFunction[mode](churn, totalChurn, maxChurn, noOfCommits, zoom);
 			return calculateWidth(width);
 			},
 		updateString: function(width){
@@ -121,6 +147,7 @@ repogramsServices.service('blenService', function(){
 
 repogramsServices.service('blenSelectionService', function() {
 	  var allBlenMods = [
+	    {id:"1_churn", label: "Commit size"},
 	    {id:"3_constant", label: "Fixed width"},
 	    {id:"4_fill", label: "Fit to screen"}//,
 	    //{id:"5_blanks", label: "Blank Spaces "}

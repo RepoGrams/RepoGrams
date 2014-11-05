@@ -41,7 +41,9 @@ repogramsDirectives.directive('ngRendermetric', function(){
                 $scope.zoomService = zoomService;
                 $scope.blenMod = blenSelectionService.getSelectedBlenMod;
                 $scope.currentZoom = zoomService.getSelectedZoom();
-                $scope.totalChurn = reposService.getTotalChurnArr()[$scope.$parent.$index];
+                $scope.totalChurn = $scope.reposService.getTotalChurnArr()[$scope.$parent.$index];
+                $scope.maxChurn = $scope.reposService.getMaxChurn();
+                $scope.noOfCommits = $scope.repo.metricData.churn.length;
                 $scope.styles = {};
                 angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
                 	$scope.styles[value.id] = [];
@@ -55,12 +57,23 @@ repogramsDirectives.directive('ngRendermetric', function(){
 	                		var churn = $scope.repo.metricData.churn[i];
 	                		var x = {
 	                				color: reposService.mapToColor(value.id, $scope.repo.metricData[value.id][i]),
-	                				width: (blenService.getWidth(bValue.id, churn, $scope.totalChurn, $scope.currentZoom))
+	                				width: (blenService.getWidth(bValue.id, churn, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom))
 	                		};
 	                		currentModIDStyle.push(x);
 	                	}
                 	});
                 });
+                $scope.$on('divisorChange', function (evnt, bValue, newDivisor){
+                	angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
+                		for( var i = 0; i < $scope.repo.metricData[value.id].length; i++){
+                			var oldWidth = $scope.styles[value.id][bValue][i].width;
+                			oldWidth.divisor = newDivisor;
+                			var newWidth = blenService.updateString(oldWidth);
+                			$scope.styles[value.id][bValue][i].width = newWidth;
+                		}
+                	});
+                });
+                
                 $scope.$on('zoomChange', function (evnt, newZoom){
                 	angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
                 		angular.forEach(blenSelectionService.getAllBlenMods(), function(bValue, bKey) {
