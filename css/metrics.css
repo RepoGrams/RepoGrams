@@ -29,7 +29,24 @@ body {
 /* to align buttons with the input field TODO: don't use fixed height! */
 .formbtn {height:34px;}
 
-.renderMetric .tooltip-inner {max-width: 42em; background-color: WhiteSmoke; color: black; border: solid 1px black;}
+.renderMetric .tooltip-inner {
+	background-color: WhiteSmoke;
+	border: solid 1px black;
+	color: black;
+	max-width: none;
+}
+
+.renderMetric .tooltip-inner p {
+	margin: 0;
+}
+
+.renderMetric .tooltip-inner p.commitMessage {
+	font-size: 14px;
+}
+
+.modal-body.commitDetails a {
+	display: block;
+}
 
 .container-padding-lr {
 	padding-left: 30px;
