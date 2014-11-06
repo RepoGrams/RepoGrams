@@ -1,7 +1,14 @@
 angular.module('repogramsModule').factory('commitMsgLength', [function() {
   function commitMsgLength(commitMsg){ // array of all commit messages, array of number of changes
-    var length = commitMsg.trim().split(" ").length;
-    return length ; // returns all commit messages length with number of changes in this commit
+    var trimmedMsg = commitMsg.trim();
+    var matches = trimmedMsg.match(/\s+/gm);
+    if (matches) {
+      return matches.length + 1;
+    } else if (trimmedMsg) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
   return {
     "run": commitMsgLength

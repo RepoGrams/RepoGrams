@@ -217,6 +217,49 @@ var MapperFactory = function () {
     };
   };
 
+  var CommitMessageLengthMapper = function(maxValue) {
+    var mName = "commit_message_length";
+    this.map = function(value) {
+       var mappingInfo = this.getMappingInfo();
+       for (var i = 0; i < outer.chunkNum; i++) {
+         if (value <= mappingInfo[i].upperBound) {
+           return outer.metric2color[mName][i];
+         }
+       }
+       return outer.metric2color[mName][outer.chunkNum-1];
+    };
+    this.getMappingInfo = function() {
+      var mappingInfo = [];
+      var fibo = function(n) {
+        if (n < 2) return 1;
+        return fibo(n-2) + fibo(n-1);
+      };
+      mappingInfo.push({
+        lowerBound: 0,
+        upperBound: 1,
+        color: outer.metric2color[mName][0]
+      });
+      mappingInfo.push({
+        lowerBound: 2,
+        upperBound: 3,
+        color: outer.metric2color[mName][1]
+      });
+      for (var i = 2; i < outer.chunkNum - 1; i++) {
+        mappingInfo.push({
+          lowerBound: Math.floor(fibo(i+1)+1),
+          upperBound: Math.floor(fibo(i+2)),
+          color: outer.metric2color[mName][i]
+        });
+      }
+      mappingInfo.push({
+        lowerBound: fibo(outer.chunkNum) + 1,
+        upperBound: Number.MAX_VALUE,
+        color: outer.metric2color[mName][outer.chunkNum-1]
+      });
+      return mappingInfo;
+    };
+  };
+
   var BranchUsageMapper = function(maxValue) {
     this.colors = [outer.main_branch_color]; // color for the main branch
     var i = 1; // 0 is already #000000
@@ -246,6 +289,8 @@ var MapperFactory = function () {
   this.createMapper = function(maxValue, metricName) {
     if (metricName === "branch_usage") {
       return new BranchUsageMapper(maxValue);
+    } else if (metricName === "commit_message_length") {
+      return new CommitMessageLengthMapper(maxValue);
     } else {
       return new Mapper(maxValue, metricName);
     }
