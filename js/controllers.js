@@ -52,6 +52,13 @@ repogramsControllers.controller('RepogramsImporter',
           $scope.processing = true;
           $scope.errors.length = 0;
           var url = $scope.importURL;
+          if (undefined === url) {
+            $scope.processing = false;
+            $scope.errors.push({
+              "emessage": "Please enter a repository URL"
+            });
+            return;
+          }
           console.log("fetch " + url);
           var result = $http.post(
              "/getGitData",
