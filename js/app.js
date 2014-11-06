@@ -287,12 +287,13 @@ var MapperFactory = function () {
   };
 
   this.createMapper = function(maxValue, metricName) {
-    if (metricName === "branch_usage") {
-      return new BranchUsageMapper(maxValue);
-    } else if (metricName === "commit_message_length") {
-      return new CommitMessageLengthMapper(maxValue);
-    } else {
-      return new Mapper(maxValue, metricName);
+    switch (metricName) {
+      case "branch_usage":
+        return new BranchUsageMapper(maxValue);
+      case "commit_message_length":
+        return new CommitMessageLengthMapper(maxValue);
+      default:
+        return new Mapper(maxValue, metricName);
     }
   };
 };
