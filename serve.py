@@ -24,7 +24,7 @@ class Repograms(object):
         if git_helper.up2date and repourl in self.cache:
             cherrypy.log("Cache hit")
             return self.cache[repourl]
-        g = git_graph.GitGraph(git_helper, self.cache)
+        g = git_graph.GitGraph(git_helper, self.cache, precompute = True)
         return g.export()
 
 cherrypy.config.update({'server.socket_port': 8090,
