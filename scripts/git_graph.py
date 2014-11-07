@@ -8,9 +8,13 @@ import githelpers as gh
 import json
 import os.path
 import collections
+import itertools
 
 import graph_tool as gt
 import graph_tool.topology
+
+import jellyfish
+import numpy
 
 class GitGraphCache(object):
     def __init__(self):
@@ -266,6 +270,23 @@ class GitGraph(object):
         for commit in self.iterate_commits():
             message = self.commit_msg[commit]
             result.append(len(message.strip().split()))
+        return result
+
+    def commit_modularity(self):
+        """Computes the the number of modules modified by a commit
+        @returns: a list containing the result
+        """
+        result = []
+        for commit in self.iterate_commits():
+            paths = map(os.path.dirname, self.commit_files[commit])
+            if len(paths) <= 1:
+                result.append(len(paths))
+                continue
+            similarity_scores = []
+            for pair_of_files in itertools.combinations(paths, 2):
+                distance = jellyfish.jaro_winkler(*pair_of_files)
+                similarity_scores.append(distance)
+            result.append(numpy.mean(similarity_scores))
         return result
 
     def iterate_commits(self, order=Order.CHRONO):
