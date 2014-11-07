@@ -13,8 +13,9 @@ body {
 	transition: width 1s;
 }
 
-.customBlock:hover {
+.renderMetric .customBlock:hover {
 	box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, 0.3), 0px 0px 2px 2px rgba(102, 175, 233, 0.6);
+	cursor: pointer;
 	outline-color: rgba(102, 175, 233, 0.6);
 	outline-offset: 0px;
 	position: relative;
