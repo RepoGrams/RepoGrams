@@ -352,6 +352,7 @@ class GitGraph(object):
             "files": files,
             "associated_branches": associated_branches,
             "bcomplexities": bcomplexities,
+            "precomputed": self.precompute
         }
         if self.precompute:
             with open("js/metrics/filenames.json") as f:
