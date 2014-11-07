@@ -261,6 +261,13 @@ class GitGraph(object):
             result.append(metric_value)
         return result
 
+    def commit_message_length(self):
+        result = []
+        for commit in self.iterate_commits():
+            message = self.commit_msg[commit]
+            result.append(len(message.strip().split()))
+        return result
+
     def iterate_commits(self, order=Order.CHRONO):
         if order == Order.TOPO:
             for commit_node in self.iterate_topo():
