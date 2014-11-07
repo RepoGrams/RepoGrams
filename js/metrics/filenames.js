@@ -1,5 +1,7 @@
-{
-  "ENDINGS": [
+angular.module('repogramsModule').factory('fileInfo', [function() {
+
+  return {
+    "ENDINGS": [
       "BAT",
       "C",
       "CBL",
@@ -455,4 +457,5 @@
       "make",
       "Maven/XML"
     ]
-  }
+  };
+}]);
