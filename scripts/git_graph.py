@@ -6,6 +6,8 @@ from __future__ import print_function
 from utils import debug, PriorityQueue, Order
 import githelpers as gh
 import json
+import os.path
+import collections
 
 import graph_tool as gt
 import graph_tool.topology
@@ -219,6 +221,30 @@ class GitGraph(object):
                 # branch
                 workqueue += todo
             branch_id += 1
+
+    def computeCommitLangCompl(self, name_mapping, extension_mapping):
+        """Computes the commit language complexity
+           @name_mapping: a  mapping from file names to file types
+           @name_mapping: a  mapping from file extensions to file types
+           @returns: number of different file types of the commits
+                     (in chronological order)
+        """
+        result = []
+        for commit in self.iterate_commits():
+            file_type_counter = collections.Counter()
+            for f in self.commit_files[commit]:
+                filename = os.path.abspath(f)
+                try:
+                    filetype = name_mapping[filename]
+                except KeyError:
+                    try:
+                        fileext = os.path.splitext(f)[1]
+                        filetype = extension_mapping[fileext]
+                    except KeyError:
+                        filetype = "Other"
+                file_type_counter[filetype] += 1
+            result.append(len(file_type_counter))
+        return result
 
 
     def iterate_commits(self, order=Order.CHRONO):
