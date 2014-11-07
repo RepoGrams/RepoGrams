@@ -222,7 +222,7 @@ class GitGraph(object):
                 workqueue += todo
             branch_id += 1
 
-    def computeCommitLangCompl(self, name_mapping, extension_mapping):
+    def commit_lang_compl(self, name_mapping, extension_mapping):
         """Computes the commit language complexity
            @name_mapping: a  mapping from file names to file types
            @name_mapping: a  mapping from file extensions to file types
@@ -246,6 +246,20 @@ class GitGraph(object):
             result.append(len(file_type_counter))
         return result
 
+    def most_edit_file(self):
+        """ Computes number of  edits to the most edited file
+        @returns number of edits to most edited file
+        """
+        result = []
+        file_modified_counter = collections.Counter()
+        for commit in self.iterate_commits():
+            metric_value = 0
+            for f in self.commit_files[commit]:
+                file_modified_counter[f] += 1
+                if file_modified_counter[f] > metric_value:
+                    metric_value = file_modified_counter[f]
+            result.append(metric_value)
+        return result
 
     def iterate_commits(self, order=Order.CHRONO):
         if order == Order.TOPO:
