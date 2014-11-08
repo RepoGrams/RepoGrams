@@ -29,7 +29,7 @@ repogramsDirectives.directive('ngRenderblock', function(){
         };
 });
 
-repogramsDirectives.directive('rgRenderMetric', ['$interpolate' ,'reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService', function($interpolate, reposService, blenService, metricSelectionService, blenSelectionService, zoomService) {
+repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$modal', 'reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService', function($interpolate, $compile, $modal, reposService, blenService, metricSelectionService, blenSelectionService, zoomService) {
   return {
 
     restrict: 'E',
@@ -48,7 +48,8 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate' ,'reposService',
       $scope.currentZoom = zoomService.getSelectedZoom();
 
       // template string for individual blocks
-      var templateBlock = '<div class="customBlock" ng-click="popModal()" tooltip-html-unsafe="{{tooltip}}" tooltip-popup-delay="200" style="background-color: red; width: {{width}};"></div>';
+      $scope.popModal = function() {};
+      var templateBlock = '<div class="customBlock" ng-click="popModal(\'{{commitID}}\', \'{{commitURL}}\', \'{{commitMsg}}\')" tooltip-html-unsafe=\'{{tooltip}}\' tooltip-popup-delay="200" style="background-color: red; width: {{width}};"></div>';
       var templateBlockString = $interpolate(templateBlock);
 
 
@@ -57,11 +58,26 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate' ,'reposService',
       // insert individual commit blocks with the correct size into container
       var currentBlockLengthMode = blenSelectionService.getSelectedBlenMod().id;
       var commitBlocks = "";
+      var repoURL = $scope.repo.url;
       for( var i = 0; i < $scope.repo.metricData[firstSelectedMetric.id].length; i++) {
+       var commitMsg = $scope.repo.metricData.commit_msgs[i];
+       var msg = commitMsg.length > 40 ? commitMsg.substring(0, 39) + '…'
+                                                 : commitMsg;
+       var commitID = $scope.repo.metricData.checksums[i];
+       var commitURL = repoURL.replace(/\.git$|$/, "/commit/" + commitID);
+       var commitHash = commitID.substring(0, 8);
+       var tooltip = '<p class=\"commitMessage\"><code>' + commitHash + '</code> <span>' + msg + '</span></p><p class=\"text-muted\">Click for details</p>';
        var churn = $scope.repo.metricData.churn[i];
-       var context = {width: (blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom).string)};
+       var context = {
+         width: blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom).string,
+         tooltip: tooltip,
+         commitID: commitID,
+         commitURL: commitURL,
+         commitMsg: msg
+       };
        commitBlocks += templateBlockString(context);
       }
+      var content = $compile(commitBlocks)($scope);
       var innerMost =  element.children().children().children();
       innerMost.html(commitBlocks);
 
