@@ -238,12 +238,13 @@ class GitGraph(object):
         for commit in self.iterate_commits():
             file_type_counter = collections.Counter()
             for f in self.commit_files[commit]:
-                filename = os.path.abspath(f)
+                filename = f
                 try:
                     filetype = name_mapping[filename]
                 except KeyError:
                     try:
-                        fileext = os.path.splitext(f)[1]
+                        # [1] is the extension with dot, [1:] removes the dot
+                        fileext = os.path.splitext(f)[1][1:]
                         filetype = extension_mapping[fileext]
                     except KeyError:
                         filetype = "Other"

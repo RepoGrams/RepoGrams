@@ -48,18 +48,17 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
       $scope.currentZoom = zoomService.getSelectedZoom();
 
 
-      $scope.id2msg = {};
-      $scope.popModal = function(commitID, commitURL) {
+      $scope.popModal = function(commitID, commitURL, index) {
         $modal.open({
           scope: $scope,
           template: '<div class="modal-header"><h3 class="modal-title"><code>'+commitID+
                     '</code></h3></div><div class="modal-body commitDetails"><p><a href="'+commitURL+
-                    '">'+ $scope.id2msg[commitID] +'</a></p></div><div class="modal-footer"><button class="btn btn-primary" ng-click="dismiss()">OK</button></div>',
+                    '">'+ $scope.repo.metricData.commit_msgs[index] +'</a></p></div><div class="modal-footer"><button class="btn btn-primary" ng-click="dismiss()">OK</button></div>',
           controller: ['$scope', '$modalInstance', function($scope, $modalInstance) { $scope.dismiss = $modalInstance.dismiss; }]
         });
       };
       // template string for individual blocks
-      var templateBlock = '<div class="customBlock" ng-click="popModal(\'{{commitID}}\', \'{{commitURL}}\')" tooltip-html-unsafe=\'{{tooltip}}\' tooltip-popup-delay="200" style="background-color: red; width: {{width}};"></div>';
+      var templateBlock = '<div class="customBlock" ng-click="popModal(\'{{commitID}}\', \'{{commitURL}}\', {{id}})" tooltip-html-unsafe=\'{{tooltip}}\' tooltip-popup-delay="200" style="background-color: red; width: {{width}};"></div>';
       var templateBlockString = $interpolate(templateBlock);
 
 
@@ -74,7 +73,6 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
        var msg = _.escape(commitMsg.length > 40 ? commitMsg.substring(0, 39) + '…'
                                                  : commitMsg);
        var commitID = $scope.repo.metricData.checksums[i];
-       $scope.id2msg[commitID] = commitMsg;
        var commitURL = repoURL.replace(/\.git$|$/, "/commit/" + commitID);
        var commitHash = commitID.substring(0, 8);
        var tooltip = '<p class=\"commitMessage\"><code>' + commitHash + '</code> <span>' + msg + '</span></p><p class=\"text-muted\">Click for details</p>';
@@ -84,6 +82,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
          tooltip: tooltip,
          commitID: commitID,
          commitURL: commitURL,
+         id: i
        };
        commitBlocks += templateBlockString(context);
       }
