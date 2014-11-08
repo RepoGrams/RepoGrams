@@ -114,18 +114,18 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate' ,'reposService',
         // reasons; this could lead to incorrect results
         // NOTE: the debounce is really important, else we get a terrible
         // performance
-        $scope.$apply(function() {
-          if ($scope.oldZoom !== newZoom.num) {
-            if ($scope.blenSelectionService.getSelectedBlenMod().id === "3_constant") {
-              var scalingFactor = newZoom.num/$scope.oldZoom;
-              $scope.oldZoom = newZoom.num;
-              innerMost.children().css("width", function(index, oldWidth) {
-                // remove unit, multiply with scaling factor and add px again
-                ret = parseInt(oldWidth.slice(0,oldWidth.length-2))*scalingFactor+"px";
-                return ret;
-              });
-            }
-        } });
+        if ($scope.oldZoom !== newZoom.num) {
+          if ($scope.blenSelectionService.getSelectedBlenMod().id === "3_constant") {
+            var scalingFactor = newZoom.num/$scope.oldZoom;
+            $scope.oldZoom = newZoom.num;
+            innerMost.children().css("width", function(index, oldWidth) {
+              // remove unit, multiply with scaling factor and add px again
+              ret = parseInt(oldWidth.slice(0,oldWidth.length-2))*scalingFactor+"px";
+              return ret;
+            });
+            $scope.$apply(); // code above never throws
+          }
+        } 
       }, 1000));
 
       $scope.$watchCollection("metricSelectionService.getSelectedMetrics()", function(newVal) {
