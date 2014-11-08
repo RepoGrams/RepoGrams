@@ -79,7 +79,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
       }
       var content = $compile(commitBlocks)($scope);
       var innerMost =  element.find(".individualMetric");
-      innerMost.html(commitBlocks);
+      innerMost.html(content);
 
 
       /* TODO: create copy of container if needed (more than one metric) (not
