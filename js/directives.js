@@ -33,9 +33,10 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate' ,'reposService',
   return {
 
     restrict: 'E',
-    template: '<div class="renderMetric"><div class="individualMetric" style="width:100%; overflow: auto; white-space: nowrap;">' +
-      '<div style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
-      '</div></div>',
+    scope: {},
+    template: '<div class="renderMetric"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
+      '<div class="individualMetric" style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
+      '</div></div></div>',
     link: function($scope, element, attrs) {
       // set up directive
       $scope.reposService = reposService;
@@ -58,10 +59,11 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate' ,'reposService',
       var commitBlocks = "";
       for( var i = 0; i < $scope.repo.metricData[firstSelectedMetric.id].length; i++) {
        var churn = $scope.repo.metricData.churn[i];
-       var context = {width: (blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom))};
+       var context = {width: (blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom).string)};
        commitBlocks += templateBlockString(context);
       }
-      element.find("#individualMetric").append(commitBlocks);
+      var innerMost =  element.children().children().children();
+      innerMost.html(commitBlocks);
 
 
 
