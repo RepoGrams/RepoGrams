@@ -29,6 +29,51 @@ repogramsDirectives.directive('ngRenderblock', function(){
         };
 });
 
+repogramsDirectives.directive('rgRenderMetric', ['$interpolate' ,'reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService', function($interpolate, reposService, blenService, metricSelectionService, blenSelectionService, zoomService) {
+  return {
+
+    restrict: 'E',
+    template: '<div class="renderMetric"><div class="individualMetric" style="width:100%; overflow: auto; white-space: nowrap;">' +
+      '<div style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
+      '</div></div>',
+    link: function($scope, element, attrs) {
+      // set up directive
+      $scope.reposService = reposService;
+      $scope.repo = reposService.getRepoArr()[$scope.$parent.$index];
+      $scope.totalChurn = reposService.getTotalChurnArr()[$scope.$parent.$index];
+      $scope.blenService = blenService;
+      $scope.metricSelectionService = metricSelectionService;
+      $scope.blenSelectionService = blenSelectionService;
+      $scope.currentZoom = zoomService.getSelectedZoom();
+
+      // template string for individual blocks
+      var templateBlock = '<div class="customBlock" ng-click="popModal()" tooltip-html-unsafe="{{tooltip}}" tooltip-popup-delay="200" style="background-color: red; width: {{width}};"></div>';
+      var templateBlockString = $interpolate(templateBlock);
+
+
+      // get any metric to do the initial setup with it
+      var firstSelectedMetric = metricSelectionService.getAllMetrics()[0];
+      // insert individual commit blocks with the correct size into container
+      var currentBlockLengthMode = blenSelectionService.getSelectedBlenMod().id;
+      var commitBlocks = "";
+      for( var i = 0; i < $scope.repo.metricData[firstSelectedMetric.id].length; i++) {
+       var churn = $scope.repo.metricData.churn[i];
+       var context = {width: (blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom))};
+       commitBlocks += templateBlockString(context);
+      }
+      element.find("#individualMetric").append(commitBlocks);
+
+
+
+      // for each metric that should be displayed
+      angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
+        // create copy of container if needed (more than one metric)
+        // and set colour according to metric values
+    });
+    }
+  };
+}]);
+
 
 repogramsDirectives.directive('ngRendermetric', function(){
         return {
