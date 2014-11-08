@@ -48,7 +48,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
       $scope.currentZoom = zoomService.getSelectedZoom();
 
       // template string for individual blocks
-      $scope.popModal = function() {};
+      $scope.popModal = function() {console.log("hello");};
       var templateBlock = '<div class="customBlock" ng-click="popModal(\'{{commitID}}\', \'{{commitURL}}\', \'{{commitMsg}}\')" tooltip-html-unsafe=\'{{tooltip}}\' tooltip-popup-delay="200" style="background-color: red; width: {{width}};"></div>';
       var templateBlockString = $interpolate(templateBlock);
 
@@ -78,7 +78,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
        commitBlocks += templateBlockString(context);
       }
       var content = $compile(commitBlocks)($scope);
-      var innerMost =  element.children().children().children();
+      var innerMost =  element.find(".individualMetric");
       innerMost.html(commitBlocks);
 
 
