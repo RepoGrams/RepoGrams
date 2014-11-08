@@ -68,9 +68,15 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate' ,'reposService',
 
 
       // for each metric that should be displayed
-      angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
-        // create copy of container if needed (more than one metric)
-        // and set colour according to metric values
+      angular.forEach(metricSelectionService.getSelectedMetrics(), function(value, key) {
+        /* TODO: create copy of container if needed (more than one metric) (not
+         * necessary currently, because there will only ever be one metric
+         * selected; in the advanced version this will change) */
+        // iterate over all commit blocks and
+        innerMost.children().css("background-color", function(index) {
+          // set colour according to metric values
+          return reposService.mapToColor(value.id, $scope.repo.metricData[value.id][index]);
+        });
     });
     }
   };
