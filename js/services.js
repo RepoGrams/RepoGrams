@@ -147,6 +147,6 @@ repogramsServices.service('zoomService', ["$rootScope", function($rootScope) {
 			$rootScope.$broadcast("zoomChange", zoom);
 			selectedZoom = zoom;
 		}
-	}
+	};
 }]);
 
