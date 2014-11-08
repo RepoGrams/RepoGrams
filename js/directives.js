@@ -48,7 +48,15 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
       $scope.currentZoom = zoomService.getSelectedZoom();
 
       // template string for individual blocks
-      $scope.popModal = function() {console.log("hello");};
+      $scope.popModal = function(commitID, commitURL, commitMsg) {
+        $modal.open({
+          scope: $scope,
+          template: '<div class="modal-header"><h3 class="modal-title"><code>'+commitID+
+                    '</code></h3></div><div class="modal-body commitDetails"><p><a href="'+commitURL+
+                    '">'+commitMsg+'</a></p></div><div class="modal-footer"><button class="btn btn-primary" ng-click="dismiss()">OK</button></div>',
+          controller: ['$scope', '$modalInstance', function($scope, $modalInstance) { $scope.dismiss = $modalInstance.dismiss; }]
+        });
+      };
       var templateBlock = '<div class="customBlock" ng-click="popModal(\'{{commitID}}\', \'{{commitURL}}\', \'{{commitMsg}}\')" tooltip-html-unsafe=\'{{tooltip}}\' tooltip-popup-delay="200" style="background-color: red; width: {{width}};"></div>';
       var templateBlockString = $interpolate(templateBlock);
 
