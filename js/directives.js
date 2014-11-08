@@ -66,18 +66,42 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate' ,'reposService',
       innerMost.html(commitBlocks);
 
 
+      /* TODO: create copy of container if needed (more than one metric) (not
+       * necessary currently, because there will only ever be one metric
+       * selected; in the advanced version this will change) */
 
-      // for each metric that should be displayed
-      angular.forEach(metricSelectionService.getSelectedMetrics(), function(value, key) {
-        /* TODO: create copy of container if needed (more than one metric) (not
-         * necessary currently, because there will only ever be one metric
-         * selected; in the advanced version this will change) */
+      function updateColors(metricID) {
         // iterate over all commit blocks and
         innerMost.children().css("background-color", function(index) {
           // set colour according to metric values
-          return reposService.mapToColor(value.id, $scope.repo.metricData[value.id][index]);
+          return reposService.mapToColor(metricID, $scope.repo.metricData[metricID][index]);
         });
-    });
+      }
+
+
+      // set colors for each metric that should be displayed
+      angular.forEach(metricSelectionService.getSelectedMetrics(), function(value, key) {
+        updateColors(value.id);
+      });
+
+      // register watches to trigger recomputations
+
+      // the mapper might change when a new repo is added, and the
+      // maxvalue increases
+      $scope.$on('mapperChange', function (evnt, metricID, newMapper) {
+        // TODO: support multiple metrics
+        if (metricID === metricSelectionService.getSelectedMetrics()[0].id) {
+          // only update visible metrics
+          updateColors(metricID);
+        }
+      });
+
+      $scope.$watchCollection("metricSelectionService.getSelectedMetrics()", function(newVal) {
+        console.log("newval", newVal);
+        angular.forEach(newVal, function(value, key) {
+          updateColors(value.id);
+        });
+      });
     }
   };
 }]);
