@@ -78,6 +78,15 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate' ,'reposService',
         });
       }
 
+      function updateWidth(currentBlockLengthMode) {
+        // iterate over all commit blocks and
+        innerMost.children().css("width", function(index) {
+          // set width according to current mode
+          var churn = $scope.repo.metricData.churn[index];
+          return blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom).string;
+        });
+      }
+
 
       // set colors for each metric that should be displayed
       angular.forEach(metricSelectionService.getSelectedMetrics(), function(value, key) {
@@ -101,6 +110,10 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate' ,'reposService',
         angular.forEach(newVal, function(value, key) {
           updateColors(value.id);
         });
+      });
+
+      $scope.$watch("blenSelectionService.getSelectedBlenMod()", function(newVal) {
+        updateWidth(newVal.id);
       });
     }
   };
