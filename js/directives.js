@@ -104,11 +104,17 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
       }
 
       function updateWidth(currentBlockLengthMode) {
+        // precompute width outside of updating DOM
+        var length = $scope.repo.metricData[firstSelectedMetric.id].length;
+        var newWidths = new Array(length);
+        for( var i = 0; i < length; i++) {
+          var churn = $scope.repo.metricData.churn[i];
+          newWidths[i] = blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom).string;
+        }
         // iterate over all commit blocks and
         innerMost.children().css("width", function(index) {
           // set width according to current mode
-          var churn = $scope.repo.metricData.churn[index];
-          return blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom).string;
+          return newWidths[index];
         });
       }
 
