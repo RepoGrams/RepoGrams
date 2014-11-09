@@ -149,15 +149,14 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
           if ($scope.blenSelectionService.getSelectedBlenMod().id === "3_constant") {
             var scalingFactor = newZoom.num/$scope.oldZoom;
             $scope.oldZoom = newZoom.num;
-            innerMost.children().css("width", function(index, oldWidth) {
-              // remove unit, multiply with scaling factor and add px again
-              ret = parseInt(oldWidth.slice(0,oldWidth.length-2))*scalingFactor+"px";
-              return ret;
-            });
+            var length = $scope.repo.metricData[firstSelectedMetric.id].length;
+            for (var j = 0; j < length; j++) {
+              $scope.individualBlocks[j].style.width = parseInt($scope.individualBlocks[j].style.width) * scalingFactor;
+            }
             $scope.$apply(); // code above never throws
           }
         } 
-      }, 1000));
+      }, 500));
 
       $scope.$watchCollection("metricSelectionService.getSelectedMetrics()", function(newVal) {
         console.log("newval", newVal);
