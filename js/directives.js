@@ -89,6 +89,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
       var content = $compile(commitBlocks)($scope);
       var innerMost =  element.find(".individualMetric");
       innerMost.html(content);
+      $scope.individualBlocks = jQuery.makeArray(innerMost.children());
 
 
       /* TODO: create copy of container if needed (more than one metric) (not
@@ -112,10 +113,9 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
           newWidths[i] = blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom).string;
         }
         // iterate over all commit blocks and
-        innerMost.children().css("width", function(index) {
-          // set width according to current mode
-          return newWidths[index];
-        });
+        for (var j = 0; j < length; j++) {
+          $scope.individualBlocks[j].style.width = newWidths[j];
+        }
       }
 
 
