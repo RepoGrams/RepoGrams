@@ -11,9 +11,9 @@ RUN apt-key add pubkey
 RUN DEBIAN_FRONTEND=noninteractive apt-get update 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common
 RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:dennis/python
-RUN apt-get update
 RUN mkdir -p /var/www/html
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y subversion mercurial-git python python-graph-tool supervisor python-cherrypy3 libgit2 python-pygit2 nginx apache2
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y subversion mercurial-git python python-graph-tool python-pip supervisor python-cherrypy3 libgit2 python-pygit2 nginx apache2
+RUN pip install jellyfish
 #empty the destination folder
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 ADD nginx.conf /etc/nginx/conf.d/repograms.conf
