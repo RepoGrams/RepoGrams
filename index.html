@@ -50,15 +50,15 @@
             <div class="panel-heading">Settings</div>
             <div class="panel-body">
               <!-- Logo -->
-              <img class="col-md-2 center-block" src="img/title.png" title="Repograms"></img>
-              <div class="form-group col-md-4" class="configBlock" ng-controller="RepogramsConfig">
+              <img class="col-md-2 center-block" src="img/title.png" title="Repograms">
+              <div class="form-group col-md-4 configBlock" ng-controller="RepogramsConfig">
                 <!-- Dropdown Menu for Metric Selection -->
                 <label for="metricSelect">Metric:</label>
                 <select id="metricSelect" class="form-control" ng-model="currentMetric" ng-change="selectAction()"
                   ng-options="metric.label for metric in metrics">
                 </select> 
               </div>
-              <div class="form-group col-md-3" class="configBlock" ng-controller="RepogramsConfig">
+              <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
                 <!-- Zoom Slider -->
                 <label for="zoomSlider">Zoom:</label>
                 <slider id="zoomSlider" ng-model="currentZoom.num" ng-change="changeZoom()" floor="1" ceiling="20" step="1" stickiness="3">
@@ -66,7 +66,7 @@
                 <!-- https://github.com/Venturocket/angular-slider with CCS provided by voInt https://github.com/Venturocket/angular-slider/issues/51 -->
               </div>
               
-              <div class="form-group col-md-3" class="configBlock" ng-controller="RepogramsConfig">
+              <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
                 <label for="blockLengthSelect">Block length:</label>
                 <select id="blockLengthSelect" class="form-control" ng-model="currentBlen" ng-change="selectBlenAction()"
                   ng-options="blen.label for blen in blenMods">
@@ -105,7 +105,7 @@
                   <div class="col-md-12">
                     <form id="repogramsAdder" ng-submit="importRepo()">
                       <div class="input-group">
-                        <input type="text" class="form-control" placeholder="GIT clone URL… (http(s) only)" autofocus ng-model="importURL" ng-readonly="processing" ng-change="changeInput()" />
+                        <input type="text" class="form-control" placeholder="GIT clone URL, e.g. https://github.com/githubtraining/hellogitworld.git" autofocus ng-model="importURL" ng-readonly="processing" ng-change="changeInput()" />
                         <div class="input-group-btn">
                           <button type="submit" class="btn btn-primary formbtn" ng-disabled="processing">
                             <span class="glyphicon glyphicon-plus"></span>
@@ -125,7 +125,5 @@
       </div>
       <!-- last block for import box -->
    </div>
-    </div>
-    </script>
   </body>
 </html>
