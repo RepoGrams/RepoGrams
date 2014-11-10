@@ -4,3 +4,4 @@ docs/*.synctex.gz
 config.inc.php
 .ropeproject
 *.pyc
+.idea
