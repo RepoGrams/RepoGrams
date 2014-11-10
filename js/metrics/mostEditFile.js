@@ -55,9 +55,6 @@ angular.module('repogramsModule').factory('mostEditFile', [function() {
     return outputList;
   }
 
-  function test(){
-    console.log();
-  }
   return {
     "run": mostEditFile
   };

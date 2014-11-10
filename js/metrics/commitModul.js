@@ -61,7 +61,6 @@ angular.module('repogramsModule').factory('commitModularity', [function() {
       resultContainer.sort();
 
       var result = resultContainer[Math.floor(resultContainer.length/2)];
-      console.assert(!isNaN(result), "result has to be a number!");
 
       if (resultContainer.length % 2 === 0){
         result += resultContainer[Math.floor(resultContainer.length/2) +1];
