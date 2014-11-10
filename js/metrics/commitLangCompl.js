@@ -34,7 +34,6 @@ angular.module('repogramsModule').factory('commitLangCompl', ['fileInfo', functi
     }
 
     function isValidFile(entry){
-      console.log("val file? " + entry);
       var pos = fileInfo.NAMES.indexOf(entry);
       return pos;
     }

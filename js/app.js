@@ -300,10 +300,6 @@ var MapperFactory = function () {
 
 var mapperFactory = new MapperFactory();
 
-function getBgColor(blen){
- return '#00ff00';
-}
-
 function arrayMax(arr) {
   var max = arr[0];
   for (var i=0; i < arr.length; i++) {
