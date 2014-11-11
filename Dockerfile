@@ -20,10 +20,9 @@ ADD nginx.conf /etc/nginx/conf.d/repograms.conf
 #copy the project to the www folder
 RUN rm -r /var/www/html/*
 ADD ./ /var/www/html/
+RUN sed -i "s/@@@BUILDINFO@@@/`cat /var/www/html/.buildinfo`/g" /var/www/html/index.html
 #add additinoal apache conf
 RUN nginx -t
-#RUN git clone https://github.com/HeikoBecker/Repograms.git /var/www/html
-#checkout the gui_minimal branch
 RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/supervisor
 #Cope the config file
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf

@@ -5,3 +5,4 @@ config.inc.php
 .ropeproject
 *.pyc
 .idea
+.buildinfo
