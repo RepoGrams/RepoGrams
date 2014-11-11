@@ -104,7 +104,7 @@ repogramsDirectives.directive('ngLegend', function(){ return {
                   '<div class="panel-body" ng-repeat="metric in selectedMetrics">'+
                   '<p><strong>{{metric.label}}</strong> <span>{{metric.description}}</span></p>'+
 		  '<ul class="list-inline">' +
-                  '<li ng-repeat="style in styles[metric.id]"><span class="customBlock" style="background-color: {{style.color}};"></span> {{style.lowerBound}}-{{style.upperBound}}</li>' +
+                  '<li ng-repeat="style in styles[metric.id]"><span class="customBlock" style="background-color: {{style.color}};"></span> {{style.legendText}}</li>' +
                   '</ul></div></div>',
 	controller: ['$scope', 'reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService){
           $scope.reposService = reposService;
@@ -121,9 +121,10 @@ repogramsDirectives.directive('ngLegend', function(){ return {
             for (var i=0; i < mappingInfo.length; i++) {
               $scope.styles[metricID][i] = {
                 color: mappingInfo[i].color,
-            width: "10px",
-            lowerBound: mappingInfo[i].lowerBound,
-            upperBound: mappingInfo[i].upperBound
+                width: "10px",
+                lowerBound: mappingInfo[i].lowerBound,
+                upperBound: mappingInfo[i].upperBound,
+                legendText: mappingInfo[i].legendText
               };
             }
           }, true);

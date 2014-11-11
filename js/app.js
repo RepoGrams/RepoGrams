@@ -194,68 +194,123 @@ var MapperFactory = function () {
 
   var outer = this;
 
-  var Mapper = function(maxValue, metricName) {
-    console.assert(outer.chunkNum > 0, outer.chunkNum);
-    var step = maxValue/outer.chunkNum;
-    console.assert(step > 0, "negative number! " + step);
-    var mName = metricName;
+  var EqualRangeMapper = function(maxValue, metricName, exp) {
+
+    this._mappingInfo = null;
+    exp = exp ? exp : 0;
+
     this.map = function(value) {
-       return outer.metric2color[mName][Math.min(outer.chunkNum-1,Math.floor(value/step))];
+      var mappingInfos = this.getMappingInfo();
+      for(var i = 0; i < mappingInfos.length; i++) {
+        if (value <= mappingInfos[i].upperBound) {
+          return mappingInfos[i].color;
+        }
+      }
+      return mappingInfos[mappingInfos.length-1].color;
     };
+
     this.getMappingInfo = function() {
+      if (this._mappingInfo) {
+        return this._mappingInfo;
+      }
+
+      var step = maxValue/outer.chunkNum;
       var boundary = 0;
       var mappingInfo = [];
+
       for (var i = 0; i < outer.chunkNum; i++) {
         mappingInfo.push({
-          lowerBound: Math.floor(boundary),
-          upperBound: Math.floor(boundary+step),
-          color: outer.metric2color[mName][i]
+          lowerBound: Math.ceil10(boundary, exp),
+          upperBound: Math.specialBoundFloor10(boundary+step, exp, maxValue),
+          color: outer.metric2color[metricName][i]
         });
         boundary += step;
       }
-      return mappingInfo;
+      mappingInfo = mappingInfo.filter(function (mi) {
+        return mi.lowerBound <= mi.upperBound;
+      });
+
+      var previousLowerBound = Number.MIN_VALUE;
+      mappingInfo = mappingInfo.filter(function (mi) {
+        if (mi.lowerBound == previousLowerBound) {
+          return false;
+        }
+        previousLowerBound = mi.lowerBound;
+        return true;
+      });
+
+      mappingInfo.map(function(mi) {
+        if (mi.lowerBound == mi.upperBound) {
+          mi.legendText = mi.lowerBound.toFixed(-exp);
+        }
+        else {
+          mi.legendText = mi.lowerBound.toFixed(-exp) + '–' + mi.upperBound.toFixed(-exp);
+        }
+      });
+
+      this._mappingInfo = mappingInfo;
+      return this._mappingInfo;
     };
+
   };
 
-  var CommitMessageLengthMapper = function(maxValue) {
-    var mName = "commit_message_length";
+  var FibonacciRangeMapper = function(maxValue, metricName) {
+
+    this._mappingInfo = null;
+
     this.map = function(value) {
-       var mappingInfo = this.getMappingInfo();
-       for (var i = 0; i < outer.chunkNum; i++) {
-         if (value <= mappingInfo[i].upperBound) {
-           return outer.metric2color[mName][i];
-         }
-       }
-       return outer.metric2color[mName][outer.chunkNum-1];
+      var mappingInfos = this.getMappingInfo();
+      for(var i = 0; i < mappingInfos.length; i++) {
+        if (value <= mappingInfos[i].upperBound) {
+          return mappingInfos[i].color;
+        }
+      }
+      return mappingInfos[mappingInfos.length-1].color;
     };
+
     this.getMappingInfo = function() {
+      if (this._mappingInfo) {
+        return this._mappingInfo;
+      }
+
+      var mName = metricName;
       var mappingInfo = [];
-      var fibo = function(n) {
-        if (n < 2) return 1;
-        return fibo(n-2) + fibo(n-1);
-      };
+
       mappingInfo.push({
         lowerBound: 0,
         upperBound: 1,
         color: outer.metric2color[mName][0]
       });
+
       mappingInfo.push({
         lowerBound: 2,
         upperBound: 3,
         color: outer.metric2color[mName][1]
       });
+
       for (var i = 2; i < outer.chunkNum - 1; i++) {
         mappingInfo.push({
-          lowerBound: Math.floor(fibo(i+1)+1),
-          upperBound: Math.floor(fibo(i+2)),
+          lowerBound: Math.fibo(i+1)+1,
+          upperBound: Math.fibo(i+2),
           color: outer.metric2color[mName][i]
         });
       }
+
       mappingInfo.push({
-        lowerBound: fibo(outer.chunkNum) + 1,
+        lowerBound: Math.fibo(outer.chunkNum) + 1,
         upperBound: Number.MAX_VALUE,
         color: outer.metric2color[mName][outer.chunkNum-1]
       });
+
+      mappingInfo.map(function(val) {
+        if (val.upperBound < Number.MAX_VALUE) {
+          val.legendText = val.lowerBound + '–' + val.upperBound;
+        } else {
+          val.legendText = val.lowerBound + '+';
+        }
+      });
+
+      this._mappingInfo = mappingInfo;
       return mappingInfo;
     };
   };
@@ -291,9 +346,11 @@ var MapperFactory = function () {
       case "branch_usage":
         return new BranchUsageMapper(maxValue);
       case "commit_message_length":
-        return new CommitMessageLengthMapper(maxValue);
+        return new FibonacciRangeMapper(maxValue, metricName);
+      case "commit_modularity":
+        return new EqualRangeMapper(maxValue, metricName, -2);
       default:
-        return new Mapper(maxValue, metricName);
+        return new EqualRangeMapper(maxValue, metricName, 0);
     }
   };
 };
@@ -305,8 +362,70 @@ function arrayMax(arr) {
   for (var i=0; i < arr.length; i++) {
     max = Math.max(max, arr[i]);
   }
-  return  max;
+  return max;
 }
+
+/**
+ * Mozilla's decimal adjustment of a number.
+ *
+ * @param   {String}    type    The type of adjustment.
+ * @param   {Number}    value   The number.
+ * @param   {Number}    exp     The exponent (the 10 logarithm of the adjustment base).
+ * @returns {Number}            The adjusted value.
+ */
+function decimalAdjust(type, value, exp) {
+  // If the exp is undefined or zero...
+  if (typeof exp === 'undefined' || +exp === 0) {
+    return Math[type](value);
+  }
+  value = +value;
+  exp = +exp;
+  // If the value is not a number or the exp is not an integer...
+  if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+    return NaN;
+  }
+  // Shift
+  value = value.toString().split('e');
+  value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+  // Shift back
+  value = value.toString().split('e');
+  return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+}
+
+// Decimal round
+if (!Math.round10) {
+  Math.round10 = function(value, exp) {
+    return decimalAdjust('round', value, exp);
+  };
+}
+// Decimal floor
+if (!Math.floor10) {
+  Math.floor10 = function(value, exp) {
+    return decimalAdjust('floor', value, exp);
+  };
+}
+// Decimal ceil
+if (!Math.ceil10) {
+  Math.ceil10 = function(value, exp) {
+    return decimalAdjust('ceil', value, exp);
+  };
+}
+
+// A special purpose bound floor. This function returns a non-inclusive floor (0.1-->0, 0.5-->0, 0.9-->0, 1-->0,
+// 1.1-->0), unless the number is the maximum, in which case it returns that maximum.
+Math.specialBoundFloor10 = function(value, exp, maxVal) {
+  var result = decimalAdjust('floor', value, exp);
+  if (result == value && result != maxVal) {
+    return value - Math.pow(10, exp);
+  } else {
+    return result;
+  }
+};
+
+Math.fibo = function(n) {
+  if (n < 2) return 1;
+  return Math.fibo(n-2) + Math.fibo(n-1);
+};
 
 var repogramsModule = angular.module('repogramsModule',[
 						'repogramsDirectives',
