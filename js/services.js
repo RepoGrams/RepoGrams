@@ -6,7 +6,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
   var mappers = {}; // TODO: support one mapper per metric
   var allMetrics = metricSelectionService.getAllMetrics();
   var maxVal = {};
-  var noOfCommitsArr = [];
+//  var noOfCommitsArr = [];
   var maxChurn = 0;
   var maxCommits = 0;
   for (var i = 0; i < allMetrics.length; i++) {
@@ -55,10 +55,10 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
    	maxChurn = arrayMax(totalChurnArr);
    	$rootScope.$broadcast("divisorChange", "1_churn", maxChurn);
    	
-    var currentNoOfCommits = repoJSON.metricData.churn.length;
-    noOfCommitsArr.push(currentNoOfCommits);
-   	maxCommits = arrayMax(noOfCommitsArr);
-   	$rootScope.$broadcast("divisorChange", "3_constant", maxCommits);
+//    var currentNoOfCommits = repoJSON.metricData.churn.length;
+//    noOfCommitsArr.push(currentNoOfCommits);
+//   	maxCommits = arrayMax(noOfCommitsArr);
+//   	$rootScope.$broadcast("divisorChange", "3_constant", maxCommits);
 
   },
   removeRepo : function(place){
@@ -71,12 +71,12 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
 	    	maxChurn = arrayMax(totalChurnArr);
 	    	$rootScope.$broadcast("divisorChange", "1_churn", maxChurn);
 	    }
-	    var currentNoOfCommits = noOfCommitsArr[place];
-	    noOfCommitsArr.splice(place,1);
-	    if (currentNoOfCommits >= maxCommits){
-	    	maxCommits = arrayMax(noOfCommitsArr);
-	    	$rootScope.$broadcast("divisorChange", "3_constant", maxCommits);
-	    }
+//	    var currentNoOfCommits = noOfCommitsArr[place];
+//	    noOfCommitsArr.splice(place,1);
+//	    if (currentNoOfCommits >= maxCommits){
+//	    	maxCommits = arrayMax(noOfCommitsArr);
+//	    	$rootScope.$broadcast("divisorChange", "3_constant", maxCommits);
+//	    }
 	    // TODO: recalculate maxvalue
   },
   mapToColor: function(metric, value) {

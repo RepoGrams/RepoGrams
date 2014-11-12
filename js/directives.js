@@ -71,16 +71,16 @@ repogramsDirectives.directive('ngRendermetric', function(){
 	                	}
                 	});
                 });
-                $scope.$on('divisorChange', function (evnt, bValue, newDivisor){
-                	angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
-                		for( var i = 0; i < $scope.repo.metricData[value.id].length; i++){
-                			var oldWidth = $scope.styles[value.id][bValue][i].width;
-                			oldWidth.divisor = newDivisor;
-                			var newWidth = blenService.updateString(oldWidth);
-                			$scope.styles[value.id][bValue][i].width = newWidth;
-                		}
-                	});
-                });
+//                $scope.$on('divisorChange', function (evnt, bValue, newDivisor){
+//                	angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
+//                		for( var i = 0; i < $scope.repo.metricData[value.id].length; i++){
+//                			var oldWidth = $scope.styles[value.id][bValue][i].width;
+//                			oldWidth.divisor = newDivisor;
+//                			var newWidth = blenService.updateString(oldWidth);
+//                			$scope.styles[value.id][bValue][i].width = newWidth;
+//                		}
+//                	});
+//                });
                 
                 $scope.$on('zoomChange', function (evnt, newZoom){
                 	angular.forEach(metricSelectionService.getAllMetrics(), function(value, key) {
