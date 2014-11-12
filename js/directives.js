@@ -97,11 +97,25 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
        * selected; in the advanced version this will change) */
 
       function updateColors(metricID) {
-        // iterate over all commit blocks and
-        innerMost.children().css("background-color", function(index) {
-          // set colour according to metric values
-          return reposService.mapToColor(metricID, $scope.repo.metricData[metricID][index]);
+        // precompute colours outside of updating DOM
+        var length = $scope.repo.metricData[firstSelectedMetric.id].length;
+        var newColours = new Array(length);
+        for( var i = 0; i < length; i++) {
+          newColours[i] = reposService.mapToColor(metricID, $scope.repo.metricData[metricID][i]);
+        }
+        chunkwiseLoop(0, length, /*chunksize=*/100, function(index) {
+          // set colour according to metric
+          $scope.individualBlocks[index].style.backgroundColor = newColours[index];
         });
+      }
+
+      function chunkwiseLoop(start, stop, chunksize, task) {
+        for (var i = 0; i <= chunksize && start + i < stop; ++i) {
+          task(/*current index =*/ start + i);
+        }
+        if (start + i < stop) {
+          setTimeout(chunkwiseLoop, 0, start + i, stop, chunksize, task);
+        }
       }
 
       function updateWidth(currentBlockLengthMode) {
@@ -113,9 +127,9 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
           newWidths[i] = blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom).string;
         }
         // iterate over all commit blocks and
-        for (var j = 0; j < length; j++) {
-          $scope.individualBlocks[j].style.width = newWidths[j];
-        }
+        chunkwiseLoop(0, length, /*chunksize=*/100, function(index) {
+          $scope.individualBlocks[index].style.width = newWidths[index];
+        });
       }
 
 
