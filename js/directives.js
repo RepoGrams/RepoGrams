@@ -77,8 +77,9 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
        var commitHash = commitID.substring(0, 8);
        var tooltip = '<p class=\"commitMessage\"><code>' + commitHash + '</code> <span>' + msg + '</span></p><p class=\"text-muted\">Click for details</p>';
        var churn = $scope.repo.metricData.churn[i];
+       var width = blenService.getWidth(currentBlockLengthMode, churn, $scope.reposService.getMaxChurn(), $scope.totalChurn, /*number of commits =*/$scope.repo.metricData.churn.length,  $scope.currentZoom).string;
        var context = {
-         width: blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom).string,
+         width: width,
          tooltip: tooltip,
          commitID: commitID,
          commitURL: commitURL,
@@ -151,6 +152,10 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
       });
 
       $scope.oldZoom = zoomService.getSelectedZoom().num;
+
+      $scope.$on('divisorChange', function(metric, newDivisor){
+        // what now?
+      });
 
       $scope.$on('zoomChange', _.debounce(function (evnt, newZoom){
         // TODO: this function would be much cleaner if we had oldZoom in the
