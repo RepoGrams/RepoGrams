@@ -5,14 +5,14 @@
     <script src="bower_components/async/lib/async.js"></script>
     <!-- include underscore -->
     <script src="bower_components/underscore/underscore-min.js"></script>
-    <!-- include jQuery for convenience -->
-    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- include Angular.js -->
     <script type="text/javascript" src="/bower_components/angularjs/angular.js"></script>
     <!-- required for popover -->
     <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- 'cause it's fancy -->
     <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js"></script>
+    <!-- to sanitize html -->
+    <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <!-- for loading animation -->
     <script type="text/javascript" src="/bower_components/angular-loading-bar/src/loading-bar.js"></script>
     <link rel="stylesheet" type="text/css" href="/bower_components/angular-loading-bar/src/loading-bar.css">
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="/js/directives.js"></script>
     <script type="text/javascript" src="/js/controllers.js"></script>
     <script type="text/javascript" src="/js/services.js"></script>
-    <script type="text/javascript" src="/js/metrics/filenames.js"></script>
+    <script type="text/javascript" src="/js/metrics/filenames.json"></script>
     <script type="text/javascript" src="/js/metrics/mostEditFile.js"></script>
     <script type="text/javascript" src="/js/metrics/commitLangCompl.js"></script>
     <script type="text/javascript" src="/js/metrics/commitMsgLength.js"></script>
@@ -48,31 +48,31 @@
       <div class="row">
         <!-- First block for the selection box and zoom slider -->
         <div class="col-md-12 col-lg-9">
-          <div class="panel panel-default">
+          <div class="panel panel-default form-inline">
             <div class="panel-heading">Settings</div>
             <div class="panel-body">
               <!-- Logo -->
-              <img class="col-md-2 center-block" src="img/title.png" title="Repograms">
-              <div class="form-group col-md-4 configBlock" ng-controller="RepogramsConfig">
-                <!-- Dropdown Menu for Metric Selection -->
-                <label for="metricSelect">Metric:</label>
-                <select id="metricSelect" class="form-control" ng-model="currentMetric" ng-change="selectAction()"
-                  ng-options="metric.label for metric in metrics">
-                </select> 
-              </div>
+              <img class="col-md-3 center-block" src="img/title.png" title="Repograms">
+
+              <!-- Dropdown Menu for Metric Selection -->
               <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
-                <!-- Zoom Slider -->
-                <label for="zoomSlider">Zoom:</label>
+                <button id="metricSelect" class="form-control pull-right" ng-click="switchMetric()">Switch…</button>
+                <label for="metricSelect">Metric:</label> <em>{{currentMetric.value.label}}</em>
+                <p ng-bind-html="currentMetric.value.description"></p>
+              </div>
+
+              <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
+                <button id="blockLengthSelect" class="form-control pull-right" ng-click="switchBlen()">Switch…</button>
+                <label for="blockLengthSelect">Block length:</label> <em>{{currentBlen.value.label}}</em>
+                <p ng-bind-html="currentBlen.value.description"></p>
+              </div>
+
+              <!-- Zoom Slider -->
+              <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
+                <label for="zoomSlider">Zoom:</label> <em>×{{currentZoom.num}}</em>
                 <slider id="zoomSlider" ng-model="currentZoom.num" ng-change="changeZoom()" floor="1" ceiling="100" step="1" stickiness="3">
                 </slider>
                 <!-- https://github.com/Venturocket/angular-slider with CCS provided by voInt https://github.com/Venturocket/angular-slider/issues/51 -->
-              </div>
-              
-              <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
-                <label for="blockLengthSelect">Block length:</label>
-                <select id="blockLengthSelect" class="form-control" ng-model="currentBlen" ng-change="selectBlenAction()"
-                  ng-options="blen.label for blen in blenMods">
-                </select>
               </div>
             </div>
           </div>
@@ -99,7 +99,7 @@
                       </label> 
                     </div>
                     <div class="col-lg-10" id="{{'metricBox'+$index}}">
-                      <rg-render-metric></rg-render-metric>
+                      <rg-rendermetric></rg-rendermetric>
                     </div>
                   </div>
                 </div>
