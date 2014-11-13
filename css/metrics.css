@@ -27,6 +27,18 @@ body {
 	width: 20px;
 }
 
+.list-inline .huddle-branch-usage {
+	padding-right: 0 !important;
+}
+
+.list-inline .huddle-branch-usage ~ .huddle-branch-usage {
+	padding-left: 0 !important;
+}
+
+.list-inline .huddle-branch-usage:last-of-type {
+	padding-right: 5px !important;
+}
+
 /* to align buttons with the input field TODO: don't use fixed height! */
 .formbtn {height:34px;}
 

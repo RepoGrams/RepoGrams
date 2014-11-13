@@ -25,16 +25,11 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
     for (var metric in mappers) {
       //var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]);
       var localMaxVal = arrayMax(repoJSON.metricData[metric]);
-      if (metric === "branch_usage") {
-        //console.assert(false, "Not ready yet");
-        mappers[metric] = mapperFactory.createMapper(localMaxVal, metric);
-        continue;
-      }
-      if (localMaxVal > maxVal[metric]) {
+      if (metric != "branch_usage" && localMaxVal > maxVal[metric]) {
         maxVal[metric] = localMaxVal;
-        mappers[metric] = mapperFactory.createMapper(localMaxVal, metric);
-        $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
       }
+      mappers[metric] = mapperFactory.createMapper(localMaxVal, metric);
+      $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
     }
     /**
      * totalChurn is necessary to calculate the proportional size of blocks

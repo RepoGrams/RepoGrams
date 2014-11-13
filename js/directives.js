@@ -196,7 +196,7 @@ repogramsDirectives.directive('ngLegend', function(){ return {
                   '<div class="panel-body" ng-repeat="metric in selectedMetrics">'+
                   '<p><strong>{{metric.label}}</strong> <span>{{metric.description}}</span></p>'+
 		  '<ul class="list-inline">' +
-                  '<li ng-repeat="style in styles[metric.id]"><span class="customBlock" style="background-color: {{style.color}};"></span> {{style.legendText}}</li>' +
+            '<li ng-repeat="style in styles[metric.id]" class="{{style.extraLiClasses}}"><span class="customBlock" style="background-color: {{style.color}};"></span> {{style.legendText}}</li>' +
                   '</ul></div></div>',
 	controller: ['$scope', 'reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService){
           $scope.reposService = reposService;
@@ -204,20 +204,45 @@ repogramsDirectives.directive('ngLegend', function(){ return {
           $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
           $scope.styles = {};
           angular.forEach(metricSelectionService.getAllMetrics(), function(value, index) {
-            $scope.styles[value.id] = [];
+            $scope.styles[value.id] = [{
+                color: "#ffffff",
+                width: "10px",
+                legendText: "Add a repository first…"
+            }];
           });
 
           $scope.$on("mapperChange", function(evnt, metricID, newMapper) {
             console.assert(angular.isDefined(newMapper), "new mapper is not defined!");
-            var mappingInfo = newMapper.getMappingInfo();
-            for (var i=0; i < mappingInfo.length; i++) {
-              $scope.styles[metricID][i] = {
-                color: mappingInfo[i].color,
+
+            if (metricID == "branch_usage") {
+              $scope.styles[metricID][0] = {
+                color: mapperFactory.main_branch_color,
                 width: "10px",
-                lowerBound: mappingInfo[i].lowerBound,
-                upperBound: mappingInfo[i].upperBound,
-                legendText: mappingInfo[i].legendText
+                legendText: "master"
               };
+              for (var i = 1; i <= 5; i++) {
+                $scope.styles[metricID][i] = {
+                  color: mapperFactory.branch_use_colors[i],
+                  width: "10px",
+                  legendText: "",
+                  extraLiClasses: "huddle-branch-usage"
+                }
+              }
+              $scope.styles[metricID][6] = {
+                color: mapperFactory.branch_use_colors[6],
+                width: "10px",
+                legendText: "… other branches",
+                extraLiClasses: "huddle-branch-usage"
+              };
+            } else {
+              var mappingInfo = newMapper.getMappingInfo();
+              for (var i = 0; i < mappingInfo.length; i++) {
+                $scope.styles[metricID][i] = {
+                  color: mappingInfo[i].color,
+                  width: "10px",
+                  legendText: mappingInfo[i].legendText
+                };
+              }
             }
           }, true);
 	}]
