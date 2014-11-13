@@ -155,7 +155,14 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
       $scope.oldZoom = zoomService.getSelectedZoom().num;
 
       $scope.$on('divisorChange', function(metric, newDivisor){
-        // what now?
+        console.log("divisorChange!");
+        var curMode = $scope.blenSelectionService.getSelectedBlenMod().id;
+        console.log(curMode);
+        if (curMode === "1_constant") {
+          // nothing todo
+          return;
+        }
+        updateWidth(curMode);
       });
 
       $scope.$on('zoomChange', _.debounce(function (evnt, newZoom){
