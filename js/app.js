@@ -432,6 +432,7 @@ var repogramsModule = angular.module('repogramsModule',[
 						'repogramsControllers',
 						'repogramsServices',
 						'ui.bootstrap', 
-						'ngAnimate', 
+						'ngAnimate',
+						'ngSanitize',
 						'angular-loading-bar', 
 						'vr.directives.slider']);

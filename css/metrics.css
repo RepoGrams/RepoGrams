@@ -54,6 +54,10 @@ body {
 	padding-right: 30px;
 }
 
+.configBlock button {
+	margin-left: 4px;
+}
+
 slider {
 	margin: 0 5px !important;
 }

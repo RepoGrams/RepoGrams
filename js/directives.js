@@ -111,14 +111,13 @@ repogramsDirectives.directive('ngLegend', function(){ return {
 	restrict: 'E',
 	scope: {},
 	template: '<div class="panel panel-success">' +
-		  '<div class="panel-heading">'+
-		  '<h3 class="panel-title">Legend</h3>'+
-		  '</div>' +
-                  '<div class="panel-body" ng-repeat="metric in selectedMetrics">'+
-                  '<p><strong>{{metric.label}}</strong> <span>{{metric.description}}</span></p>'+
-		  '<ul class="list-inline">' +
-                  '<li ng-repeat="style in styles[metric.id]"><span class="customBlock" style="background-color: {{style.color}};"></span> {{style.legendText}}</li>' +
-                  '</ul></div></div>',
+            '<div class="panel-heading">'+
+            '<h3 class="panel-title">Legend</h3>'+
+            '</div>' +
+            '<div class="panel-body" ng-repeat="metric in selectedMetrics">'+
+            '<ul class="list-inline">' +
+            '<li ng-repeat="style in styles[metric.id]"><span class="customBlock" style="background-color: {{style.color}};"></span> {{style.legendText}}</li>' +
+            '</ul></div></div>',
 	controller: ['$scope', 'reposService', 'metricSelectionService', function($scope, reposService, metricSelectionService){
           $scope.reposService = reposService;
           $scope.metricSelectionService = metricSelectionService;

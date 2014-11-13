@@ -53,12 +53,12 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
     }
     totalChurnArr.push(totalChurn);
    	maxChurn = arrayMax(totalChurnArr);
-   	$rootScope.$broadcast("divisorChange", "1_churn", maxChurn);
+   	$rootScope.$broadcast("divisorChange", "2_churn", maxChurn);
    	
 //    var currentNoOfCommits = repoJSON.metricData.churn.length;
 //    noOfCommitsArr.push(currentNoOfCommits);
 //   	maxCommits = arrayMax(noOfCommitsArr);
-//   	$rootScope.$broadcast("divisorChange", "3_constant", maxCommits);
+//   	$rootScope.$broadcast("divisorChange", "1_constant", maxCommits);
 
   },
   removeRepo : function(place){
@@ -69,13 +69,13 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
 	    totalChurnArr.splice(place,1);
 	    if (totalChurn >= maxChurn){
 	    	maxChurn = arrayMax(totalChurnArr);
-	    	$rootScope.$broadcast("divisorChange", "1_churn", maxChurn);
+	    	$rootScope.$broadcast("divisorChange", "2_churn", maxChurn);
 	    }
 //	    var currentNoOfCommits = noOfCommitsArr[place];
 //	    noOfCommitsArr.splice(place,1);
 //	    if (currentNoOfCommits >= maxCommits){
 //	    	maxCommits = arrayMax(noOfCommitsArr);
-//	    	$rootScope.$broadcast("divisorChange", "3_constant", maxCommits);
+//	    	$rootScope.$broadcast("divisorChange", "1_constant", maxCommits);
 //	    }
 	    // TODO: recalculate maxvalue
   },
@@ -125,9 +125,9 @@ repogramsServices.service('metricSelectionService', function() {
 
 repogramsServices.service('blenService', function(){
 	var getModFunction = {
-		"1_churn": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value:(churn*100), divisor: maxChurn, zoom:zoom.num, unit: "%"}},
-		"3_constant": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value: (5), divisor: 1, zoom: zoom.num, unit: "px"}},
-		"4_fill": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value: (churn*100), divisor: totalChurn, zoom:zoom.num, unit: "%"}}
+      "1_constant": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value: (5), divisor: 1, zoom: zoom.num, unit: "px"}},
+      "2_churn": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value:(churn*100), divisor: maxChurn, zoom:zoom.num, unit: "%"}},
+      "3_fill": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value: (churn*100), divisor: totalChurn, zoom:zoom.num, unit: "%"}}
 	};
 	var calculateWidth = function(width){
 		var widthString = "" + ((width.value/width.divisor)*width.zoom) + width.unit;
@@ -147,21 +147,19 @@ repogramsServices.service('blenService', function(){
 
 repogramsServices.service('blenSelectionService', function() {
 	  var allBlenMods = [
-	    {id:"1_churn", label: "Commit size"},
-	    {id:"3_constant", label: "Fixed width"},
-	    {id:"4_fill", label: "Fit to screen"}//,
-	    //{id:"5_blanks", label: "Blank Spaces "}
-	    
-	  ];
-	  this.selectedBlenMod = allBlenMods[1];
-          var outer = this;
+        {id:"1_constant", label: "Constant block width", description: "All blocks have constant width."},
+        {id:"2_churn", label: "Lines changed (comparable btw. projects)", description: "Block width represents number of lines changed in a commit. Project commit histories are scaled <em>uniformly</em> using the same factor (comparable between projects)."},
+        {id:"3_fill", label: "Lines changed (incomparable btw. projects)", description: "Block width represents number of lines changed in a commit. Project commit histories are scaled <em>independently</em> (incomparable between projects)."}
+      ];
+      this.selectedBlenMod = allBlenMods[2];
+      var outer = this;
 
-	  return{
+      return{
 	    getSelectedBlenMod: function() {return outer.selectedBlenMod;},
 	    setBlenMod: function(blen) {
               outer.selectedBlenMod = blen;
-	    },
-	    getAllBlenMods: function() {return allBlenMods;}
+        },
+        getAllBlenMods: function() {return allBlenMods;}
 	  };
 });
 
