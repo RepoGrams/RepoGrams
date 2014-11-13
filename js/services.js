@@ -126,8 +126,8 @@ repogramsServices.service('metricSelectionService', function() {
 repogramsServices.service('blenService', function(){
 	var getModFunction = {
       "1_constant": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value: (5), divisor: 1, zoom: zoom.num, unit: "px"}},
-      "2_churn": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value:(churn*100), divisor: maxChurn, zoom:zoom.num, unit: "%"}},
-      "3_fill": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value: (churn*100), divisor: totalChurn, zoom:zoom.num, unit: "%"}}
+      "2_churn": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value:(churn*100), divisor: totalChurn, zoom:zoom.num, unit: "%"}},
+      "3_fill": function(churn, totalChurn, maxChurn, noOfCommits, zoom){return {value: (churn*100), divisor: maxChurn, zoom:zoom.num, unit: "%"}}
 	};
 	var calculateWidth = function(width){
 		var widthString = "" + ((width.value/width.divisor)*width.zoom) + width.unit;
