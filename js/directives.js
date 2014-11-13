@@ -125,7 +125,8 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
         var newWidths = new Array(length);
         for( var i = 0; i < length; i++) {
           var churn = $scope.repo.metricData.churn[i];
-          newWidths[i] = blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.currentZoom).string;
+          var width = blenService.getWidth(currentBlockLengthMode, churn, $scope.reposService.getMaxChurn(), $scope.totalChurn, /*number of commits =*/$scope.repo.metricData.churn.length,  $scope.currentZoom).string;
+          newWidths[i] = width;
         }
         // iterate over all commit blocks and
         chunkwiseLoop(0, length, /*chunksize=*/100, function(index) {
