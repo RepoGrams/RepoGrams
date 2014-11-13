@@ -173,15 +173,13 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
         // NOTE: the debounce is really important, else we get a terrible
         // performance
         if ($scope.oldZoom !== newZoom.num) {
-          if ($scope.blenSelectionService.getSelectedBlenMod().id === "1_constant") {
-            var scalingFactor = newZoom.num/$scope.oldZoom;
-            $scope.oldZoom = newZoom.num;
-            var length = $scope.repo.metricData[firstSelectedMetric.id].length;
-            for (var j = 0; j < length; j++) {
-              $scope.individualBlocks[j].style.width = parseInt($scope.individualBlocks[j].style.width) * scalingFactor;
-            }
-            $scope.$apply(); // code above never throws
+          var scalingFactor = newZoom.num/$scope.oldZoom;
+          $scope.oldZoom = newZoom.num;
+          var length = $scope.repo.metricData[firstSelectedMetric.id].length;
+          for (var j = 0; j < length; j++) {
+            $scope.individualBlocks[j].style.width = parseInt($scope.individualBlocks[j].style.width) * scalingFactor;
           }
+          $scope.$apply(); // code above never throws
         } 
       }, 500));
 
