@@ -12,27 +12,22 @@ repogramsControllers.controller('RepogramsConfig',
       $scope.switchMetric = function () {
         $modal.open({
           scope: $scope,
-          template: '<form ng-submit="accept()">' +
+          template: '<form>' +
           '<div class="modal-header"><h3 class="modal-title">Select new metric</h3></div>' +
           '<div class="modal-body">' +
           '<div class="form-group" ng-repeat="(i, metric) in metrics">' +
-          '<label for="metric_{{i}}"><input id="metric_{{i}}" type="radio" name="metric" ng-value="metric" ng-model="modalCurrentMetric.value"> {{metric.label}}</label>' +
+          '<label for="metric_{{i}}"><input id="metric_{{i}}" type="radio" name="metric" ng-value="metric" ng-model="currentMetric.value" ng-change="accept()"> {{metric.label}}</label>' +
           '<p ng-bind-html="metric.description"></p>' +
           '<p class="text-muted" ng-if="metric.long_description" ng-bind-html="metric.long_description"></p>' +
           '</div>' +
           '</div>' +
           '<div class="modal-footer">' +
           '<button class="btn btn-default" ng-click="dismiss()">Cancel</button>' +
-          '<button type="submit" class="btn btn-primary">OK</button>' +
           '</div>' +
           '</form>',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-            $scope.modalCurrentMetric = {
-              value: $scope.currentMetric.value
-            };
             $scope.dismiss = $modalInstance.dismiss;
             $scope.accept = function (result) {
-              $scope.currentMetric.value = $scope.modalCurrentMetric.value;
               $scope.metricService.clear();
               $scope.metricService.addMetric($scope.currentMetric.value);
               $modalInstance.close(result);
@@ -50,26 +45,21 @@ repogramsControllers.controller('RepogramsConfig',
         // TODO this is very similar to the metrics modal, consolidate this together
         $modal.open({
           scope: $scope,
-          template: '<form ng-submit="accept()">' +
+          template: '<form>' +
           '<div class="modal-header"><h3 class="modal-title">Select new block length</h3></div>' +
           '<div class="modal-body">' +
           '<div class="form-group" ng-repeat="(i, blen) in blenMods">' +
-          '<label for="blen_{{i}}"><input id="blen_{{i}}" type="radio" name="blen" ng-value="blen" ng-model="modalCurrentBlen.value"> {{blen.label}}</label>' +
+          '<label for="blen_{{i}}"><input id="blen_{{i}}" type="radio" name="blen" ng-value="blen" ng-model="currentBlen.value" ng-change="accept()"> {{blen.label}}</label>' +
           '<p ng-bind-html="blen.description"></p>' +
           '</div>' +
           '</div>' +
           '<div class="modal-footer">' +
           '<button class="btn btn-default" ng-click="dismiss()">Cancel</button>' +
-          '<button type="submit" class="btn btn-primary">OK</button>' +
           '</div>' +
           '</form>',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-            $scope.modalCurrentBlen = {
-              value: $scope.currentBlen.value
-            };
             $scope.dismiss = $modalInstance.dismiss;
             $scope.accept = function (result) {
-              $scope.currentBlen.value = $scope.modalCurrentBlen.value;
               $scope.blenService.setBlenMod($scope.currentBlen.value);
               $modalInstance.close(result);
             };
