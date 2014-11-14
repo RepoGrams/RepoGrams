@@ -1,12 +1,12 @@
-angular.module('repogramsModule').factory('commitModularity', [function() {
-  var UNIXSPLIT ="/";
+angular.module('repogramsModule').factory('commitModularity', [function () {
+  var UNIXSPLIT = "/";
   var WINSPLIT = "\\";
 
-  function substName(stringToSplit, splitter){
+  function substName(stringToSplit, splitter) {
     var result = "";
     var splitted = stringToSplit.split(splitter);
 
-    for(var i = 0; i < splitted.length-1; i++){
+    for (var i = 0; i < splitted.length - 1; i++) {
       result += splitted[i];
       result += splitter;
     }
@@ -31,44 +31,45 @@ angular.module('repogramsModule').factory('commitModularity', [function() {
   /*
    * Compute the modularity of a given commit for the list of the files
    */
-  function getMetrictCommitModularity(fileList){
+  function getMetrictCommitModularity(fileList) {
     if (fileList.length === 0) {
       return 0; // TODO: in the Github issue, this was the default value; but maybe we should use 1?
     }
     if (fileList.length === 1)
       return 1;
-    else{
+    else {
       var resultContainer = [];
-      for (var i = 0; i < fileList.length; i++){
-        for (var j = i+1; j < fileList.length; j++){
+      for (var i = 0; i < fileList.length; i++) {
+        for (var j = i + 1; j < fileList.length; j++) {
           var string1 = getDirPath(fileList[i]);
           var string2 = getDirPath(fileList[j]);
 
           //Windows filenames can't contain a /, check 
           //first if we have unix filepaths
           if (string1.indexOf(UNIXSPLIT) > -1 ||
-              string2.indexOf(UNIXSPLIT) > -1){
+            string2.indexOf(UNIXSPLIT) > -1) {
             string1 = substName(string1, UNIXSPLIT);
-          string2 = substName(string2, UNIXSPLIT);
-          }else{
+            string2 = substName(string2, UNIXSPLIT);
+          } else {
             string1 = substName(string1, WINSPLIT);
             string2 = substName(string2, WINSPLIT);
           }
           var res = JaroWinklerDistance(string1, string2);
-          resultContainer.push(res); 
+          resultContainer.push(res);
         }
       }
       resultContainer.sort();
 
-      var result = resultContainer[Math.floor(resultContainer.length/2)];
+      var result = resultContainer[Math.floor(resultContainer.length / 2)];
 
-      if (resultContainer.length % 2 === 0){
-        result += resultContainer[Math.floor(resultContainer.length/2) +1];
+      if (resultContainer.length % 2 === 0) {
+        result += resultContainer[Math.floor(resultContainer.length / 2) + 1];
         result /= 2;
       }
       return result;
     }
   }
+
   return {
     run: getMetrictCommitModularity
   };

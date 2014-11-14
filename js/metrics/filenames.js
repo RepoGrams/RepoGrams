@@ -1,4 +1,4 @@
-angular.module('repogramsModule').factory('fileInfo', [function() {
+angular.module('repogramsModule').factory('fileInfo', [function () {
 
   return {
     "ENDINGS": [

@@ -22,6 +22,7 @@
     "angular-animate": "~1.2.26",
     "angular-bootstrap": "~0.11.2",
     "angular-loading-bar": "~0.6.0",
+    "angular-sanitize": "~1.2.26",
     "angular-ui": "~0.4.0",
     "angularjs": "~1.2.26",
     "bootstrap-css-only": "~3.2.0",

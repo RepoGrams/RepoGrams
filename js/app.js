@@ -8,136 +8,136 @@
 var MapperFactory = function () {
 
   this.branch_use_colors =
-  [
-    "#000000",
-    "#ffff00",
-    "#1ce6ff",
-    "#ff34ff",
-    "#ff4a46",
-    "#008941",
-    "#006fa6",
-    "#a30059",
-    "#ffdbe5",
-    "#7a4900",
-    "#0000a6",
-    "#63ffac",
-    "#b79762",
-    "#004d43",
-    "#8fb0ff",
-    "#997d87",
-    "#5a0007",
-    "#809693",
-    "#feffe6",
-    "#1b4400",
-    "#4fc601",
-    "#3b5dff",
-    "#4a3b53",
-    "#ff2f80",
-    "#61615a",
-    // "#ba0900", // used for main branch
-    "#6b7900",
-    "#00c2a0",
-    "#ffaa92",
-    "#ff90c9",
-    "#b903aa",
-    "#d16100",
-    "#ddefff",
-    "#000035",
-    "#7b4f4b",
-    "#a1c299",
-    "#300018",
-    "#0aa6d8",
-    "#013349",
-    "#00846f",
-    "#372101",
-    "#ffb500",
-    "#c2ffed",
-    "#a079bf",
-    "#cc0744",
-    "#c0b9b2",
-    "#c2ff99",
-    "#001e09",
-    "#00489c",
-    "#6f0062",
-    "#0cbd66",
-    "#eec3ff",
-    "#456d75",
-    "#b77b68",
-    "#7a87a1",
-    "#788d66",
-    "#885578",
-    "#fad09f",
-    "#ff8a9a",
-    "#d157a0",
-    "#bec459",
-    "#456648",
-    "#0086ed",
-    "#886f4c",
-    "#34362d",
-    "#b4a8bd",
-    "#00a6aa",
-    "#452c2c",
-    "#636375",
-    "#a3c8c9",
-    "#ff913f",
-    "#938a81",
-    "#575329",
-    "#00fecf",
-    "#b05b6f",
-    "#8cd0ff",
-    "#3b9700",
-    "#04f757",
-    "#c8a1a1",
-    "#1e6e00",
-    "#7900d7",
-    "#a77500",
-    "#6367a9",
-    "#a05837",
-    "#6b002c",
-    "#772600",
-    "#d790ff",
-    "#9b9700",
-    "#549e79",
-    "#fff69f",
-    "#201625",
-    "#72418f",
-    "#bc23ff",
-    "#99adc0",
-    "#3a2465",
-    "#922329",
-    "#5b4534",
-    "#fde8dc",
-    "#404e55",
-    "#0089a3",
-    "#cb7e98",
-    "#a4e804",
-    "#324e72",
-    "#6a3a4c",
-    "#83ab58",
-    "#001c1e",
-    "#d1f7ce",
-    "#004b28",
-    "#c8d0f6",
-    "#a3a489",
-    "#806c66",
-    "#222800",
-    "#bf5650",
-    "#e83000",
-    "#66796d",
-    "#da007c",
-    "#ff1a59",
-    "#8adbb4",
-    "#1e0200",
-    "#5b4e51",
-    "#c895c5",
-    "#320033",
-    "#ff6832",
-    "#66e1d3",
-    "#cfcdac",
-    "#d0ac94",
-    "#7ed379",
-    "#012c58"
-  ];
+    [
+      "#000000",
+      "#ffff00",
+      "#1ce6ff",
+      "#ff34ff",
+      "#ff4a46",
+      "#008941",
+      "#006fa6",
+      "#a30059",
+      "#ffdbe5",
+      "#7a4900",
+      "#0000a6",
+      "#63ffac",
+      "#b79762",
+      "#004d43",
+      "#8fb0ff",
+      "#997d87",
+      "#5a0007",
+      "#809693",
+      "#feffe6",
+      "#1b4400",
+      "#4fc601",
+      "#3b5dff",
+      "#4a3b53",
+      "#ff2f80",
+      "#61615a",
+      // "#ba0900", // used for main branch
+      "#6b7900",
+      "#00c2a0",
+      "#ffaa92",
+      "#ff90c9",
+      "#b903aa",
+      "#d16100",
+      "#ddefff",
+      "#000035",
+      "#7b4f4b",
+      "#a1c299",
+      "#300018",
+      "#0aa6d8",
+      "#013349",
+      "#00846f",
+      "#372101",
+      "#ffb500",
+      "#c2ffed",
+      "#a079bf",
+      "#cc0744",
+      "#c0b9b2",
+      "#c2ff99",
+      "#001e09",
+      "#00489c",
+      "#6f0062",
+      "#0cbd66",
+      "#eec3ff",
+      "#456d75",
+      "#b77b68",
+      "#7a87a1",
+      "#788d66",
+      "#885578",
+      "#fad09f",
+      "#ff8a9a",
+      "#d157a0",
+      "#bec459",
+      "#456648",
+      "#0086ed",
+      "#886f4c",
+      "#34362d",
+      "#b4a8bd",
+      "#00a6aa",
+      "#452c2c",
+      "#636375",
+      "#a3c8c9",
+      "#ff913f",
+      "#938a81",
+      "#575329",
+      "#00fecf",
+      "#b05b6f",
+      "#8cd0ff",
+      "#3b9700",
+      "#04f757",
+      "#c8a1a1",
+      "#1e6e00",
+      "#7900d7",
+      "#a77500",
+      "#6367a9",
+      "#a05837",
+      "#6b002c",
+      "#772600",
+      "#d790ff",
+      "#9b9700",
+      "#549e79",
+      "#fff69f",
+      "#201625",
+      "#72418f",
+      "#bc23ff",
+      "#99adc0",
+      "#3a2465",
+      "#922329",
+      "#5b4534",
+      "#fde8dc",
+      "#404e55",
+      "#0089a3",
+      "#cb7e98",
+      "#a4e804",
+      "#324e72",
+      "#6a3a4c",
+      "#83ab58",
+      "#001c1e",
+      "#d1f7ce",
+      "#004b28",
+      "#c8d0f6",
+      "#a3a489",
+      "#806c66",
+      "#222800",
+      "#bf5650",
+      "#e83000",
+      "#66796d",
+      "#da007c",
+      "#ff1a59",
+      "#8adbb4",
+      "#1e0200",
+      "#5b4e51",
+      "#c895c5",
+      "#320033",
+      "#ff6832",
+      "#66e1d3",
+      "#cfcdac",
+      "#d0ac94",
+      "#7ed379",
+      "#012c58"
+    ];
 
   this.main_branch_color = "#ba0900";
 
@@ -194,34 +194,34 @@ var MapperFactory = function () {
 
   var outer = this;
 
-  var EqualRangeMapper = function(maxValue, metricName, exp) {
+  var EqualRangeMapper = function (maxValue, metricName, exp) {
 
     this._mappingInfo = null;
     exp = exp ? exp : 0;
 
-    this.map = function(value) {
+    this.map = function (value) {
       var mappingInfos = this.getMappingInfo();
-      for(var i = 0; i < mappingInfos.length; i++) {
+      for (var i = 0; i < mappingInfos.length; i++) {
         if (value <= mappingInfos[i].upperBound) {
           return mappingInfos[i].color;
         }
       }
-      return mappingInfos[mappingInfos.length-1].color;
+      return mappingInfos[mappingInfos.length - 1].color;
     };
 
-    this.getMappingInfo = function() {
+    this.getMappingInfo = function () {
       if (this._mappingInfo) {
         return this._mappingInfo;
       }
 
-      var step = maxValue/outer.chunkNum;
+      var step = maxValue / outer.chunkNum;
       var boundary = 0;
       var mappingInfo = [];
 
       for (var i = 0; i < outer.chunkNum; i++) {
         mappingInfo.push({
           lowerBound: Math.ceil10(boundary, exp),
-          upperBound: Math.specialBoundFloor10(boundary+step, exp, maxValue),
+          upperBound: Math.specialBoundFloor10(boundary + step, exp, maxValue),
           color: outer.metric2color[metricName][i]
         });
         boundary += step;
@@ -239,7 +239,7 @@ var MapperFactory = function () {
         return true;
       });
 
-      mappingInfo.map(function(mi) {
+      mappingInfo.map(function (mi) {
         if (mi.lowerBound == mi.upperBound) {
           mi.legendText = mi.lowerBound.toFixed(-exp);
         }
@@ -254,21 +254,21 @@ var MapperFactory = function () {
 
   };
 
-  var FibonacciRangeMapper = function(maxValue, metricName) {
+  var FibonacciRangeMapper = function (maxValue, metricName) {
 
     this._mappingInfo = null;
 
-    this.map = function(value) {
+    this.map = function (value) {
       var mappingInfos = this.getMappingInfo();
-      for(var i = 0; i < mappingInfos.length; i++) {
+      for (var i = 0; i < mappingInfos.length; i++) {
         if (value <= mappingInfos[i].upperBound) {
           return mappingInfos[i].color;
         }
       }
-      return mappingInfos[mappingInfos.length-1].color;
+      return mappingInfos[mappingInfos.length - 1].color;
     };
 
-    this.getMappingInfo = function() {
+    this.getMappingInfo = function () {
       if (this._mappingInfo) {
         return this._mappingInfo;
       }
@@ -290,8 +290,8 @@ var MapperFactory = function () {
 
       for (var i = 2; i < outer.chunkNum - 1; i++) {
         mappingInfo.push({
-          lowerBound: Math.fibo(i+1)+1,
-          upperBound: Math.fibo(i+2),
+          lowerBound: Math.fibo(i + 1) + 1,
+          upperBound: Math.fibo(i + 2),
           color: outer.metric2color[mName][i]
         });
       }
@@ -299,10 +299,10 @@ var MapperFactory = function () {
       mappingInfo.push({
         lowerBound: Math.fibo(outer.chunkNum) + 1,
         upperBound: Number.MAX_VALUE,
-        color: outer.metric2color[mName][outer.chunkNum-1]
+        color: outer.metric2color[mName][outer.chunkNum - 1]
       });
 
-      mappingInfo.map(function(val) {
+      mappingInfo.map(function (val) {
         if (val.upperBound < Number.MAX_VALUE) {
           val.legendText = val.lowerBound + '–' + val.upperBound;
         } else {
@@ -315,33 +315,33 @@ var MapperFactory = function () {
     };
   };
 
-  var BranchUsageMapper = function(maxValue) {
+  var BranchUsageMapper = function (maxValue) {
     this.colors = [outer.main_branch_color]; // color for the main branch
     var i = 1; // 0 is already #000000
-    while(i < maxValue) {
+    while (i < maxValue) {
       outer.branch_usage_gauge = (outer.branch_usage_gauge + 1) % outer.branch_use_colors.length;
-      console.assert(outer.branch_use_colors[outer.branch_usage_gauge] !== undefined, "gauge was "+ outer.branch_usage_gauge+ " usable maxvalue: "+ outer.branch_use_colors.length);
+      console.assert(outer.branch_use_colors[outer.branch_usage_gauge] !== undefined, "gauge was " + outer.branch_usage_gauge + " usable maxvalue: " + outer.branch_use_colors.length);
       this.colors.push(outer.branch_use_colors[outer.branch_usage_gauge]);
       ++i;
     }
-    this.map = function(value) {
-      console.assert(this.colors[value-1] !== undefined, "mapping is broken, value was "+value, "number of colors which we can use: "+this.colors.length);
-      return this.colors[value-1]; // values start with 1, arrays with 0
+    this.map = function (value) {
+      console.assert(this.colors[value - 1] !== undefined, "mapping is broken, value was " + value, "number of colors which we can use: " + this.colors.length);
+      return this.colors[value - 1]; // values start with 1, arrays with 0
     };
-    this.getMappingInfo = function() {
+    this.getMappingInfo = function () {
       var mappingInfo = [];
       for (var i = 0; i < this.colors.length; i++) {
         mappingInfo.push({
           lowerBound: i,
           upperBound: i,
-          color: this.colors[i] 
+          color: this.colors[i]
         });
       }
       return mappingInfo;
     };
   };
 
-  this.createMapper = function(maxValue, metricName) {
+  this.createMapper = function (maxValue, metricName) {
     switch (metricName) {
       case "branch_usage":
         return new BranchUsageMapper(maxValue);
@@ -359,7 +359,7 @@ var mapperFactory = new MapperFactory();
 
 function arrayMax(arr) {
   var max = arr[0];
-  for (var i=0; i < arr.length; i++) {
+  for (var i = 0; i < arr.length; i++) {
     max = Math.max(max, arr[i]);
   }
   return max;
@@ -394,26 +394,26 @@ function decimalAdjust(type, value, exp) {
 
 // Decimal round
 if (!Math.round10) {
-  Math.round10 = function(value, exp) {
+  Math.round10 = function (value, exp) {
     return decimalAdjust('round', value, exp);
   };
 }
 // Decimal floor
 if (!Math.floor10) {
-  Math.floor10 = function(value, exp) {
+  Math.floor10 = function (value, exp) {
     return decimalAdjust('floor', value, exp);
   };
 }
 // Decimal ceil
 if (!Math.ceil10) {
-  Math.ceil10 = function(value, exp) {
+  Math.ceil10 = function (value, exp) {
     return decimalAdjust('ceil', value, exp);
   };
 }
 
 // A special purpose bound floor. This function returns a non-inclusive floor (0.1-->0, 0.5-->0, 0.9-->0, 1-->0,
 // 1.1-->0), unless the number is the maximum, in which case it returns that maximum.
-Math.specialBoundFloor10 = function(value, exp, maxVal) {
+Math.specialBoundFloor10 = function (value, exp, maxVal) {
   var result = decimalAdjust('floor', value, exp);
   if (result == value && result != maxVal) {
     return value - Math.pow(10, exp);
@@ -422,16 +422,17 @@ Math.specialBoundFloor10 = function(value, exp, maxVal) {
   }
 };
 
-Math.fibo = function(n) {
+Math.fibo = function (n) {
   if (n < 2) return 1;
-  return Math.fibo(n-2) + Math.fibo(n-1);
+  return Math.fibo(n - 2) + Math.fibo(n - 1);
 };
 
-var repogramsModule = angular.module('repogramsModule',[
-						'repogramsDirectives',
-						'repogramsControllers',
-						'repogramsServices',
-						'ui.bootstrap', 
-						'ngAnimate', 
-						'angular-loading-bar', 
-						'vr.directives.slider']);
+var repogramsModule = angular.module('repogramsModule', [
+  'repogramsDirectives',
+  'repogramsControllers',
+  'repogramsServices',
+  'ui.bootstrap',
+  'ngAnimate',
+  'ngSanitize',
+  'angular-loading-bar',
+  'vr.directives.slider']);
