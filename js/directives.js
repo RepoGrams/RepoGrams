@@ -1,36 +1,5 @@
 var repogramsDirectives = angular.module('repogramsDirectives', []);
 
-repogramsDirectives.directive('ngRenderblock', function () {
-  return {
-    restrict: 'E',
-    scope: {
-      commitMsg: "@commitMsg",
-      commitID: "@commitId",
-      bgColor: "@color",
-      width: "=width",
-      url: "@url"
-    },
-    template: '<div class="customBlock" ng-click="popModal()" tooltip-html-unsafe="{{tooltip}}" tooltip-popup-delay="200" style="background-color: {{bgColor}}; width: {{width}};"></div>',
-    controller: ['$scope', '$modal', function ($scope, $modal) {
-      // 40 is the length of commitID
-      $scope.msg = $scope.commitMsg.length > 40 ? $scope.commitMsg.substring(0, 39) + '…'
-        : $scope.commitMsg;
-      $scope.commitURL = $scope.url.replace(/\.git$|$/, "/commit/" + $scope.commitID);
-      $scope.commitHash = $scope.commitID.substring(0, 8);
-      $scope.tooltip = '<p class="commitMessage"><code>' + $scope.commitHash + '</code> <span>' + $scope.msg + '</span></p><p class="text-muted">Click for details</p>';
-      $scope.popModal = function () {
-        $modal.open({
-          scope: $scope,
-          template: '<div class="modal-header"><h3 class="modal-title"><code>{{commitID}}</code></h3></div><div class="modal-body commitDetails"><p><a href="{{commitURL}}">{{commitMsg}}</a></p></div><div class="modal-footer"><button class="btn btn-primary" ng-click="dismiss()">OK</button></div>',
-          controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-            $scope.dismiss = $modalInstance.dismiss;
-          }]
-        });
-      };
-    }]
-  };
-});
-
 repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$modal', 'reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService', function ($interpolate, $compile, $modal, reposService, blenService, metricSelectionService, blenSelectionService, zoomService) {
   return {
 
