@@ -81,7 +81,10 @@ repogramsControllers.controller('RepogramsConfig',
       $scope.changeZoom = function () {
         $scope.zoomService.setZoom($scope.currentZoom);
       };
-
+      
+      $scope.translateZoom = function (value) {
+    	  return "x" + value;
+      };
 
     }
   ]);
