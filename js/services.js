@@ -78,32 +78,38 @@ repogramsServices.service('metricSelectionService', function () {
     {
       id: "commit_modularity",
       label: "Commit Modularity",
-      description: "A score of the number of unique modules (directories) modified by a commit."
+      description: "A score of the number of unique modules (directories) modified by a commit.",
+      long_description: "A commit has a metric value of 1 when all the edited files are located in a single directory. A commit has a metric value of 0 when files across *all* the project directories were edited in the commit. Values between 0 and 1 represent the fraction of a project's directories containing files edited in the commit."
     },
     {
       id: "commit_message_length",
       label: "Commit Message Length",
-      description: "The number of words in a commit log message."
+      description: "The number of words in a commit log message.",
+      long_description: null
     },
     {
       id: "commit_lang_complexity",
       label: "Commit Language Complexity",
-      description: "The number of unique programming languages used in a commit based on filenames."
+      description: "The number of unique programming languages used in a commit based on filenames.",
+      long_description: null
     },
     {
       id: "branch_usage",
       label: "Branch Usage",
-      description: "Each branch is associated with a unique color. A commit is colored according to the branch it belongs to."
+      description: "Each branch is associated with a unique color. A commit is colored according to the branch it belongs to.",
+      long_description: null
     },
     {
       id: "most_edited_file",
       label: "Most Edited File",
-      description: "The number of times that the most edited file in a commit has been previously modified."
+      description: "The number of times that the most edited file in a commit has been previously modified.",
+      long_description: null
     },
     {
       id: "branch_complexity",
       label: "Branch Complexity",
-      description: "The number of branches that are concurrently active at a commit point."
+      description: "The number of branches that are concurrently active at a commit point.",
+      long_description: null
     }
   ];
   var selectedMetrics = [allMetrics[0]];

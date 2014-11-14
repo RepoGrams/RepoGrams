@@ -10,7 +10,7 @@ repogramsControllers.controller('RepogramsConfig',
         value: $scope.metrics[0]
       };
       $scope.switchMetric = function () {
-        var modalInstance = $modal.open({
+        $modal.open({
           scope: $scope,
           template: '<form ng-submit="accept()">' +
           '<div class="modal-header"><h3 class="modal-title">Select new metric</h3></div>' +
@@ -18,6 +18,7 @@ repogramsControllers.controller('RepogramsConfig',
           '<div class="form-group" ng-repeat="(i, metric) in metrics">' +
           '<label for="metric_{{i}}"><input id="metric_{{i}}" type="radio" name="metric" ng-value="metric" ng-model="modalCurrentMetric.value"> {{metric.label}}</label>' +
           '<p ng-bind-html="metric.description"></p>' +
+          '<p class="text-muted" ng-if="metric.long_description" ng-bind-html="metric.long_description"></p>' +
           '</div>' +
           '</div>' +
           '<div class="modal-footer">' +
@@ -28,7 +29,7 @@ repogramsControllers.controller('RepogramsConfig',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.modalCurrentMetric = {
               value: $scope.currentMetric.value
-            }
+            };
             $scope.dismiss = $modalInstance.dismiss;
             $scope.accept = function (result) {
               $scope.currentMetric.value = $scope.modalCurrentMetric.value;
@@ -46,8 +47,8 @@ repogramsControllers.controller('RepogramsConfig',
         value: $scope.blenService.getSelectedBlenMod()
       };
       $scope.switchBlen = function () {
-        // TODO this is very similar to the metrics modal, consolidate this togeyher
-        var modalInstance = $modal.open({
+        // TODO this is very similar to the metrics modal, consolidate this together
+        $modal.open({
           scope: $scope,
           template: '<form ng-submit="accept()">' +
           '<div class="modal-header"><h3 class="modal-title">Select new block length</h3></div>' +
@@ -65,7 +66,7 @@ repogramsControllers.controller('RepogramsConfig',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.modalCurrentBlen = {
               value: $scope.currentBlen.value
-            }
+            };
             $scope.dismiss = $modalInstance.dismiss;
             $scope.accept = function (result) {
               $scope.currentBlen.value = $scope.modalCurrentBlen.value;
@@ -98,6 +99,7 @@ repogramsControllers.controller('RepogramsRender',
 
 repogramsControllers.controller('RepogramsImporter',
   ['$scope', '$http', 'reposService', 'metricsRunner', function ($scope, $http, reposService, metricsRunner) {
+    $scope.importURL = null;
     $scope.ImportButtonText = "Add";
     $scope.errors = [];
     $scope.processing = false;
@@ -111,7 +113,7 @@ repogramsControllers.controller('RepogramsImporter',
       $scope.processing = true;
       $scope.errors.length = 0;
       var url = $scope.importURL;
-      if (undefined === url) {
+      if (!url) {
         $scope.processing = false;
         $scope.errors.push({
           "emessage": "Please enter a repository URL"
