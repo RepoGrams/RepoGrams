@@ -71,7 +71,7 @@
 
               <!-- Zoom Slider -->
               <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
-                <label for="zoomSlider">Zoom:</label>
+                <label for="zoomSlider">Zoom:</label> <em>{{translateZoom(currentZoom.num)}}</em>
                 <slider id="zoomSlider" ng-model="currentZoom.num" ng-change="changeZoom()" floor="1" ceiling="100" step="1" stickiness="3" translate-fn="translateZoom">
                 </slider>
                 <!-- https://github.com/Venturocket/angular-slider with CCS provided by voInt https://github.com/Venturocket/angular-slider/issues/51 -->

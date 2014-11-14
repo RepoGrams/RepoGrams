@@ -74,7 +74,7 @@ repogramsControllers.controller('RepogramsConfig',
       };
       
       $scope.translateZoom = function (value) {
-    	  return "x" + value;
+        return "×" + value;
       };
 
     }
