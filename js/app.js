@@ -9,7 +9,7 @@ var MapperFactory = function () {
 
   this.branch_use_colors =
     [
-      "#000000",
+      "#ba0900",
       "#ffff00",
       "#1ce6ff",
       "#ff34ff",
@@ -34,7 +34,6 @@ var MapperFactory = function () {
       "#4a3b53",
       "#ff2f80",
       "#61615a",
-      // "#ba0900", // used for main branch
       "#6b7900",
       "#00c2a0",
       "#ffaa92",
@@ -189,8 +188,6 @@ var MapperFactory = function () {
     ]
   };
   this.chunkNum = 8;
-  // used to index into branch_use_colors
-  this.branch_usage_gauge = 0;
 
   var outer = this;
 
@@ -315,36 +312,16 @@ var MapperFactory = function () {
     };
   };
 
-  var BranchUsageMapper = function (maxValue) {
-    this.colors = [outer.main_branch_color]; // color for the main branch
-    var i = 1; // 0 is already #000000
-    while (i < maxValue) {
-      outer.branch_usage_gauge = (outer.branch_usage_gauge + 1) % outer.branch_use_colors.length;
-      console.assert(outer.branch_use_colors[outer.branch_usage_gauge] !== undefined, "gauge was " + outer.branch_usage_gauge + " usable maxvalue: " + outer.branch_use_colors.length);
-      this.colors.push(outer.branch_use_colors[outer.branch_usage_gauge]);
-      ++i;
-    }
+  var BranchUsageMapper = function () {
     this.map = function (value) {
-      console.assert(this.colors[value - 1] !== undefined, "mapping is broken, value was " + value, "number of colors which we can use: " + this.colors.length);
-      return this.colors[value - 1]; // values start with 1, arrays with 0
-    };
-    this.getMappingInfo = function () {
-      var mappingInfo = [];
-      for (var i = 0; i < this.colors.length; i++) {
-        mappingInfo.push({
-          lowerBound: i,
-          upperBound: i,
-          color: this.colors[i]
-        });
-      }
-      return mappingInfo;
+      return outer.branch_use_colors[value - 1]; // values start with 1, arrays with 0
     };
   };
 
   this.createMapper = function (maxValue, metricName) {
     switch (metricName) {
       case "branch_usage":
-        return new BranchUsageMapper(maxValue);
+        return new BranchUsageMapper();
       case "commit_message_length":
         return new FibonacciRangeMapper(maxValue, metricName);
       case "commit_modularity":

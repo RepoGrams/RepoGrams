@@ -31,7 +31,10 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
       for (var metric in mappers) {
         //var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]);
         var localMaxVal = arrayMax(repoJSON.metricData[metric]);
-        if (metric != "branch_usage" && localMaxVal > maxVal[metric]) {
+        if (metric == "branch_usage") {
+          mappers[metric] = mapperFactory.createMapper(null, metric);
+          $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
+        } else if(localMaxVal > maxVal[metric]) {
           maxVal[metric] = localMaxVal;
           mappers[metric] = mapperFactory.createMapper(maxVal[metric], metric);
           $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
