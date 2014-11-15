@@ -16,7 +16,7 @@ repogramsControllers.controller('RepogramsConfig',
           '<div class="modal-header"><h3 class="modal-title">Select new metric</h3></div>' +
           '<div class="modal-body">' +
           '<div class="form-group" ng-repeat="(i, metric) in metrics">' +
-          '<label for="metric_{{i}}"><input id="metric_{{i}}" type="radio" name="metric" ng-value="metric" ng-model="currentMetric.value" ng-change="accept()"> {{metric.label}}</label>' +
+          '<label for="metric_{{i}}"><input id="metric_{{i}}" type="radio" name="metric" ng-value="metric" ng-model="currentMetric.value" ng-change="accept()"> <i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</label>' +
           '<p ng-bind-html="metric.description"></p>' +
           '<p class="text-muted" ng-if="metric.long_description" ng-bind-html="metric.long_description"></p>' +
           '</div>' +
@@ -49,7 +49,7 @@ repogramsControllers.controller('RepogramsConfig',
           '<div class="modal-header"><h3 class="modal-title">Select new block length</h3></div>' +
           '<div class="modal-body">' +
           '<div class="form-group" ng-repeat="(i, blen) in blenMods">' +
-          '<label for="blen_{{i}}"><input id="blen_{{i}}" type="radio" name="blen" ng-value="blen" ng-model="currentBlen.value" ng-change="accept()"> {{blen.label}}</label>' +
+          '<label for="blen_{{i}}"><input id="blen_{{i}}" type="radio" name="blen" ng-value="blen" ng-model="currentBlen.value" ng-change="accept()"> <i class="fa fa-{{blen.icon}}"></i> {{blen.label}}</label>' +
           '<p ng-bind-html="blen.description"></p>' +
           '</div>' +
           '</div>' +

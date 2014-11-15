@@ -34,7 +34,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
         if (metric == "branch_usage") {
           mappers[metric] = mapperFactory.createMapper(null, metric);
           $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
-        } else if(localMaxVal > maxVal[metric]) {
+        } else if (localMaxVal > maxVal[metric]) {
           maxVal[metric] = localMaxVal;
           mappers[metric] = mapperFactory.createMapper(maxVal[metric], metric);
           $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
@@ -81,36 +81,42 @@ repogramsServices.service('metricSelectionService', function () {
     {
       id: "commit_modularity",
       label: "Commit Modularity",
+      icon: "plus-square",
       description: "A score of the number of unique modules (directories) modified by a commit.",
       long_description: "A commit has a metric value of 1 when all the edited files are located in a single directory. A commit has a metric value of 0 when files across *all* the project directories were edited in the commit. Values between 0 and 1 represent the fraction of a project's directories containing files edited in the commit."
     },
     {
       id: "commit_message_length",
       label: "Commit Message Length",
+      icon: "circle",
       description: "The number of words in a commit log message.",
       long_description: null
     },
     {
       id: "commit_lang_complexity",
       label: "Commit Language Complexity",
+      icon: "certificate",
       description: "The number of unique programming languages used in a commit based on filenames.",
       long_description: null
     },
     {
       id: "branch_usage",
       label: "Branch Usage",
+      icon: "plus-circle",
       description: "Each branch is associated with a unique color. A commit is colored according to the branch it belongs to.",
       long_description: null
     },
     {
       id: "most_edited_file",
       label: "Most Edited File",
+      icon: "dot-circle-o",
       description: "The number of times that the most edited file in a commit has been previously modified.",
       long_description: null
     },
     {
       id: "branch_complexity",
       label: "Branch Complexity",
+      icon: "cog",
       description: "The number of branches that are concurrently active at a commit point.",
       long_description: null
     }
@@ -175,15 +181,22 @@ repogramsServices.service('blenService', function () {
 
 repogramsServices.service('blenSelectionService', function () {
   var allBlenMods = [
-    {id: "1_constant", label: "Constant block width", description: "All blocks have constant width."},
+    {
+      id: "1_constant",
+      label: "Constant block width",
+      icon: "th",
+      description: "All blocks have constant width."
+    },
     {
       id: "2_churn",
       label: "Lines changed (comparable btw. projects)",
+      icon: "align-left",
       description: "Block width represents number of lines changed in a commit. Project commit histories are scaled <em>uniformly</em> using the same factor (comparable between projects)."
     },
     {
       id: "3_fill",
       label: "Lines changed (incomparable btw. projects)",
+      icon: "align-justify",
       description: "Block width represents number of lines changed in a commit. Project commit histories are scaled <em>independently</em> (incomparable between projects)."
     }
   ];

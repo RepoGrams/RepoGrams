@@ -23,6 +23,8 @@
     <!-- use bootstrap -->
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap-css-only/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap-css-only/css/bootstrap-theme.min.css">
+    <!-- use fontawesome -->
+    <link rel="stylesheet" type="text/css" href="/bower_components/fontawesome/css/font-awesome.min.css">
     <!-- include our own style sheets -->
     <link rel="stylesheet" type="text/css" href="css/metrics.css">
     <!-- include metrics code -->
@@ -59,13 +61,13 @@
               <!-- Dropdown Menu for Metric Selection -->
               <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
                 <button id="metricSelect" class="form-control pull-right" ng-click="switchMetric()">Switch…</button>
-                <label for="metricSelect">Metric:</label> <em>{{currentMetric.value.label}}</em>
+                <label for="metricSelect">Metric:</label> <i class="fa fa-{{currentMetric.value.icon}}"></i> <em>{{currentMetric.value.label}}</em>
                 <p ng-bind-html="currentMetric.value.description"></p>
               </div>
 
               <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
                 <button id="blockLengthSelect" class="form-control pull-right" ng-click="switchBlen()">Switch…</button>
-                <label for="blockLengthSelect">Block length:</label> <em>{{currentBlen.value.label}}</em>
+                <label for="blockLengthSelect">Block length:</label> <i class="fa fa-{{currentBlen.value.icon}}"></i> <em>{{currentBlen.value.label}}</em>
                 <p ng-bind-html="currentBlen.value.description"></p>
               </div>
 
