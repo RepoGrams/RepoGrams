@@ -69,7 +69,7 @@ repogramsControllers.controller('RepogramsImporter',
               $scope.processing = false;
               console.log(metricData);
               reposService.addRepo({
-                "name": $scope.importURL.split("/").pop(),
+                "name": url.split("/").pop(),
                 "url": $scope.importURL,
                 "metricData": metricData
               });
