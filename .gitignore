@@ -6,3 +6,7 @@ config.inc.php
 *.pyc
 .idea
 .buildinfo
+/nginx.conf
+/deploy.sh
+/repos-cache-list.txt
+/repos-prepopulate-list.json
