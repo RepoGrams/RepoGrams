@@ -102,7 +102,7 @@ repogramsControllers.controller('RepogramsImporter',
     $scope.changeInput = function () {
       $scope.errors.length = 0;
     };
-    $scope.importRepo = function () {
+    $scope.importRepo = function (onSuccess) {
       $scope.processing = true;
       $scope.errors.length = 0;
       var url = $scope.importURL;
@@ -127,6 +127,9 @@ repogramsControllers.controller('RepogramsImporter',
             "url": $scope.importURL,
             "metricData": metricData
           });
+          if (onSuccess) {
+            onSuccess();
+          }
         });
       });
       result.error(function (data, status, headers, config) {
@@ -134,19 +137,16 @@ repogramsControllers.controller('RepogramsImporter',
         console.log(status);
         $scope.errors.push(data);
       });
-      $scope.prepare = function() {
-        $scope.importURL = "https://github.com/sqlitebrowser/sqlitebrowser" 
-        $scope.importRepo();
-        $scope.importURL = "https://github.com/coolwanglu/vim.js"
-        $scope.importRepo();
-        $scope.importURL = "https://github.com/mattgallagher/AudioStreamer"
-        $scope.importRepo();
-        $scope.importURL =  "https://github.com/LightTable/LightTable"
-        $scope.importRepo();
-        $scope.importURL = "https://github.com/jch/html-pipeline"
-        $scope.importRepo();
-      };
-      $scope.prepare();
     };
+
+    $scope.prepareList = [];
+    /*@@@PREPARE_LIST@@@*/
+    $scope.prepare = function() {
+      $scope.importURL = $scope.prepareList.shift();
+      if ($scope.importURL) {
+        $scope.importRepo($scope.prepare);
+      }
+    };
+    $scope.prepare();
   }]);
 
