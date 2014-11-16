@@ -81,5 +81,18 @@ repogramsControllers.controller('RepogramsImporter',
             $scope.errors.push(data);
           });
         };
+	$scope.prepare = function(){
+		$scope.importURL = "https://github.com/sqlitebrowser/sqlitebrowser" 
+		$scope.importRepo();
+		$scope.importURL = "https://github.com/coolwanglu/vim.js"
+		$scope.importRepo();
+		$scope.importURL = "https://github.com/mattgallagher/AudioStreamer"
+		$scope.importRepo();
+		$scope.importURL =  "https://github.com/LightTable/LightTable"
+		$scope.importRepo();
+		$scope.importURL = "https://github.com/jch/html-pipeline"
+		$scope.importRepo();
+	}
+	$scope.prepare();
 }]);
 

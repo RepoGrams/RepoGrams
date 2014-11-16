@@ -15,5 +15,6 @@ fi
 echo "Running image at port $PORT."
 docker run -p $PORT:80 -p 8090:8090 repograms supervisord &
 
+sleep 10
 echo "Running pre-caching of repositories. This may take a minute."
 ./scripts/prebuild.sh
