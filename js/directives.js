@@ -165,7 +165,7 @@ repogramsDirectives.directive('ngLegend', function () {
     '<h3 class="panel-title">Color Legend</h3>' +
     '</div>' +
     '<div class="panel-body" ng-repeat="metric in selectedMetrics">' +
-    '<p>A block represents a commit. A block\'s color represents the commit metric value</p>' +
+    '<p>A block represents a commit. A block\'s color represents the commit metric value.</p>' +
     '<ul class="list-inline">' +
     '<li ng-repeat="style in styles[metric.id]" class="{{style.extraLiClasses}}"><span class="customBlock" style="background-color: {{style.color}};"></span> {{style.legendText}}</li>' +
     '</ul></div></div>',
