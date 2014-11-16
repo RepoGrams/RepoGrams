@@ -80,10 +80,10 @@ repogramsServices.service('metricSelectionService', function () {
   var allMetrics = [
     {
       id: "commit_modularity",
-      label: "Commit Modularity",
-      icon: "plus-square",
-      description: "A score of the number of unique modules (directories) modified by a commit.",
-      long_description: "A commit has a metric value of 1 when all the edited files are located in a single directory. A commit has a metric value of 0 when files across *all* the project directories were edited in the commit. Values between 0 and 1 represent the fraction of a project's directories containing files edited in the commit."
+      label: "Commit Localization",
+      icon: "sun-o",
+      description: "Fraction of the number of unique project directories containing files modified by the commit.",
+      long_description: "Metric value of 1 means that all the modified files in a commit are in a single directory. Metric value of 0 means <em>all</em> the project directories contain a file modified by the commit."
     },
     {
       id: "commit_message_length",
@@ -94,14 +94,14 @@ repogramsServices.service('metricSelectionService', function () {
     },
     {
       id: "commit_lang_complexity",
-      label: "Commit Language Complexity",
+      label: "Languages in a Commit",
       icon: "certificate",
       description: "The number of unique programming languages used in a commit based on filenames.",
       long_description: null
     },
     {
       id: "branch_usage",
-      label: "Branch Usage",
+      label: "Branches Used",
       icon: "plus-circle",
       description: "Each branch is associated with a unique color. A commit is colored according to the branch it belongs to.",
       long_description: null
@@ -115,7 +115,7 @@ repogramsServices.service('metricSelectionService', function () {
     },
     {
       id: "branch_complexity",
-      label: "Branch Complexity",
+      label: "Number of Branches",
       icon: "cog",
       description: "The number of branches that are concurrently active at a commit point.",
       long_description: null
@@ -183,7 +183,7 @@ repogramsServices.service('blenSelectionService', function () {
   var allBlenMods = [
     {
       id: "1_constant",
-      label: "Constant block width",
+      label: "Fixed",
       icon: "th",
       description: "All blocks have constant width."
     },
