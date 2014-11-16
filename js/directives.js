@@ -162,7 +162,7 @@ repogramsDirectives.directive('ngLegend', function () {
     scope: {},
     template: '<div class="panel panel-success">' +
     '<div class="panel-heading">' +
-    '<h3 class="panel-title">Legend</h3>' +
+    '<h3 class="panel-title">Color Legend</h3>' +
     '</div>' +
     '<div class="panel-body" ng-repeat="metric in selectedMetrics">' +
     '<ul class="list-inline">' +
