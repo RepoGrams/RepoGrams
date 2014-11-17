@@ -99,6 +99,14 @@ slider span.bubble {
 	top: 20px !important;
 }
 
+.label-earliest-commits {
+	padding-left: 2em;
+}
+
+.label-latest-commits {
+	padding-right: 2em;
+}
+
 .repo-label {
 	white-space: nowrap;
 	overflow: hidden;
