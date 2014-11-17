@@ -2,6 +2,10 @@ body {
 	margin: 2em 0;
 }
 
+img.logo {
+	margin-bottom: 1em;
+}
+
 /* Rendered blocks */
 .customBlock{
 	background-color:#ffffff;

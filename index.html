@@ -50,29 +50,31 @@
   <body>
     <div class="container-fluid container-padding-lr">
       <div class="row">
+        <!-- Logo -->
+        <div class="col-md-12 col-lg-2 col-lg-push-10 center-block">
+          <img class="center-block img-responsive logo" src="img/title.png" title="RepoGrams">
+        </div>
+
         <!-- First block for the selection box and zoom slider -->
-        <div class="col-md-12 col-lg-9">
+        <div class="col-md-12 col-lg-7 col-lg-pull-2">
           <div class="panel panel-default form-inline">
             <div class="panel-heading">Settings</div>
             <div class="panel-body">
-              <!-- Logo -->
-              <img class="col-md-3 center-block" src="img/title.png" title="Repograms">
-
               <!-- Dropdown Menu for Metric Selection -->
-              <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
+              <div class="form-group col-md-4 col-sm-12 configBlock" ng-controller="RepogramsConfig">
                 <button id="metricSelect" class="form-control pull-right" ng-click="switchMetric()">Switch…</button>
                 <label for="metricSelect">Metric (block color):</label> <i class="fa fa-{{currentMetric.value.icon}}"></i> <em>{{currentMetric.value.label}}</em>
-                <p ng-bind-html="currentMetric.value.description"></p>
+                <p class="text-muted" ng-bind-html="currentMetric.value.description"></p>
               </div>
 
-              <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
+              <div class="form-group col-md-4 col-sm-12 configBlock" ng-controller="RepogramsConfig">
                 <button id="blockLengthSelect" class="form-control pull-right" ng-click="switchBlen()">Switch…</button>
                 <label for="blockLengthSelect">Block length:</label> <i class="fa fa-{{currentBlen.value.icon}}"></i> <em>{{currentBlen.value.label}}</em>
-                <p ng-bind-html="currentBlen.value.description"></p>
+                <p class="text-muted" ng-bind-html="currentBlen.value.description"></p>
               </div>
 
               <!-- Zoom Slider -->
-              <div class="form-group col-md-3 configBlock" ng-controller="RepogramsConfig">
+              <div class="form-group col-md-4 col-sm-12 configBlock" ng-controller="RepogramsConfig">
                 <label for="zoomSlider">Zoom:</label> <em>{{translateZoom(currentZoom.num)}}</em>
                 <slider id="zoomSlider" ng-model="currentZoom.num" ng-change="changeZoom()" floor="1" ceiling="100" step="1" stickiness="3" translate-fn="translateZoom">
                 </slider>
@@ -82,7 +84,7 @@
           </div>
         </div>
 
-        <div class="col-md-12 col-lg-3">
+        <div class="col-md-12 col-lg-3 col-lg-pull-2">
           <ng-legend></ng-legend>
         </div>
       </div>
