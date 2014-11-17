@@ -27,16 +27,37 @@ body {
 	width: 20px;
 }
 
-.list-inline .huddle-branch-usage {
-	padding-right: 0 !important;
+.list-inline .branchUsageRainbow {
+	display: inline-block;
+	width: 60px;
 }
 
-.list-inline .huddle-branch-usage ~ .huddle-branch-usage {
-	padding-left: 0 !important;
+.list-inline .branchUsageRainbow .customBlock {
+	width: 16.66%;
 }
 
-.list-inline .huddle-branch-usage:last-of-type {
-	padding-right: 5px !important;
+.list-inline .branchUsageRainbow .customBlock:nth-child(1) {
+	background-color: #ffff00;
+}
+
+.list-inline .branchUsageRainbow .customBlock:nth-child(2) {
+	background-color: #1ce6ff;
+}
+
+.list-inline .branchUsageRainbow .customBlock:nth-child(3) {
+	background-color: #ff34ff;
+}
+
+.list-inline .branchUsageRainbow .customBlock:nth-child(4) {
+	background-color: #ff4a46;
+}
+
+.list-inline .branchUsageRainbow .customBlock:nth-child(5) {
+	background-color: #008941;
+}
+
+.list-inline .branchUsageRainbow .customBlock:nth-child(6) {
+	background-color: #006fa6;
 }
 
 /* to align buttons with the input field TODO: don't use fixed height! */
