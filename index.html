@@ -92,7 +92,13 @@
         <div ng-controller="RepogramsRender">
           <div class="col-md-12">
             <div class="panel panel-default">
-              <div class="panel-heading">Repositories</div>
+              <div class="panel-heading">
+                <div class="row">
+                  <span class="col-xs-12 col-lg-2">Repositories</span>
+                  <span class="col-xs-6 col-lg-5 text-muted">…Earliest</span>
+                  <span class="col-xs-6 col-lg-5 text-muted text-right">Latest…</span>
+                </div>
+              </div>
               <div class="panel-body">
                 <div class="repo col-md-12" ng-repeat="repo in repos">
                   <div class="row">
