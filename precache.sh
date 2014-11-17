@@ -1,9 +1,9 @@
 #!/bin/sh
 echo "Running pre-caching of repositories. This may take a minute."
 
-if [ -z "$1" ] || [ -z "$2" ]
+if [ -z "$1" ]
 then
-	echo "Usage: `basename $0` [deployed-host-name] [list-of-repository-urls-file]"
+	echo "Usage: `basename $0` [list-of-repository-urls-file]"
 	exit 1
 fi
 
@@ -13,9 +13,9 @@ do
 	if [ -n "$REPO" ]
 	then
 		echo "| Precaching $REPO"
-		RESULT=`curl -X POST http://$1:8090/getGitData -d "{\"repourl\":\"$REPO\"}" -H "Content-Type: application/json" --silent --show-error`
+		RESULT=`curl -X POST http://localhost:8090/getGitData -d "{\"repourl\":\"$REPO\"}" -H "Content-Type: application/json" --silent --show-error`
 		echo "+-- $RESULT" | head -c 80
 		echo " "
 	fi
-done < $2
+done < $1
 echo "Done pre-caching of repositories."
