@@ -127,6 +127,7 @@ repogramsControllers.controller('RepogramsImporter',
             "url": $scope.importURL,
             "metricData": metricData
           });
+          $scope.importURL = "";
           if (onSuccess) {
             onSuccess();
           }
