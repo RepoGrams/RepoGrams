@@ -1,8 +1,8 @@
 var repogramsControllers = angular.module('repogramsControllers', ['ngSanitize']);
 
 repogramsControllers.controller('RepogramsConfig',
-  ['$scope', '$modal', 'metricSelectionService', 'blenSelectionService', 'zoomService',
-    function ($scope, $modal, metricSelectionService, blenSelectionService, zoomService) {
+  ['$scope', '$modal', 'metricSelectionService', 'blenSelectionService', 'zoomService', 'scrollService',
+    function ($scope, $modal, metricSelectionService, blenSelectionService, zoomService, scrollService) {
       //default metric is 1
       $scope.metricService = metricSelectionService;
       $scope.metrics = $scope.metricService.getAllMetrics();
@@ -76,6 +76,16 @@ repogramsControllers.controller('RepogramsConfig',
       $scope.translateZoom = function (value) {
         return "×" + value;
       };
+      
+      $scope.scrollService = scrollService;
+      $scope.currentScrollPos = $scope.scrollService.getSelectedScrollPos(); 
+      $scope.changeScrollPos = function() {
+    	  $scope.scrollService.setScrollPos($scope.currentScrollPos);
+      };
+      
+      $scope.translateScrollValues = function(value) {
+      	return value + "%";
+      };
 
     }
   ]);
@@ -126,6 +136,7 @@ repogramsControllers.controller('RepogramsImporter',
             "name": url.split("/").pop(),
             "url": $scope.importURL,
             "metricData": metricData
+
           });
           $scope.importURL = "";
           if (onSuccess) {

@@ -230,3 +230,19 @@ repogramsServices.service('zoomService', ["$rootScope", function ($rootScope) {
   };
 }]);
 
+repogramsServices.service('scrollService', ["$rootScope", function($rootScope) {
+	var selectedScrollPos = { num:0 };
+	var currentScrollPos = { num:0 };
+	
+	return{
+		getSelectedScrollPos: function() {return selectedScrollPos;},
+		setScrollPos: function(newScrollPos) {
+			newPos = newScrollPos.num;
+			currPos = currentScrollPos.num;
+			scroll = newPos - currPos;
+			$rootScope.$broadcast("scrollChange", scroll);
+			currentScrollPos = { num:newPos };
+		}
+	}
+}]);
+

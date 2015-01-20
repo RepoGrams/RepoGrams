@@ -112,7 +112,19 @@
                       </label> 
                     </div>
                     <div class="col-lg-10" id="{{'metricBox'+$index}}">
-                      <rg-render-metric></rg-render-metric>
+                      <rg-render-metric repoid=" {{'repoDiv'+$index}}"></rg-render-metric>
+                    </div>
+                  </div>
+                </div>
+                <div class="repo col-md-12">
+                  <div class="row">
+                    <div class="col-lg-2 repo-label">
+                      <label for="scroll-slider">
+                        <span title="Scroll all Repos">Scroll all Repos</span>
+                      </label> 
+                    </div>
+                    <div class="col-lg-10" id="scroll-slider2" ng-controller="RepogramsConfig">
+                      <slider id="scroll-slider" ng-model="currentScrollPos.num" ng-change="changeScrollPos()" floor="0" ceiling="100" step="1" stickiness="3" translate-fn="translateScrollValues"></slider>
                     </div>
                   </div>
                 </div>

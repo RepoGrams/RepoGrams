@@ -1,11 +1,13 @@
 var repogramsDirectives = angular.module('repogramsDirectives', []);
 
-repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$modal', 'reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService', function ($interpolate, $compile, $modal, reposService, blenService, metricSelectionService, blenSelectionService, zoomService) {
+repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$modal', 'reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService', 'scrollService', function ($interpolate, $compile, $modal, reposService, blenService, metricSelectionService, blenSelectionService, zoomService, scrollService) {
   return {
 
     restrict: 'E',
-    scope: {},
-    template: '<div class="renderMetric"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
+    scope: {
+    	repoid: '@'
+    },
+    template: '<div class="renderMetric"><div id={{repoid}} style="width:100%; overflow: auto; white-space: nowrap;">' +
     '<div class="individualMetric" style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
     '</div></div></div>',
     link: function ($scope, element, attrs) {
@@ -141,7 +143,23 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
       $scope.$on('zoomChange', _.debounce(function (evnt, newZoom) {
         updateWidth(blenSelectionService.getSelectedBlenMod().id);
       }, 200));
-
+      
+      $scope.$on('scrollChange', function (evnt, scroll){
+      	i = $scope.$parent.$index;
+  		var id = 'repoDiv'+i;
+  		var elem = document.getElementById(id);
+  		currentPos = elem.scrollLeft;
+  		maxScrollLeft = elem.scrollWidth - elem.clientWidth;
+  		maxScrollWidth = elem.scrollWidth;
+  		maxRectWidth = elem.getBoundingClientRect().width;
+  		
+  		// TODO: fix rounding error
+  		
+  		maxWidth = maxScrollLeft;
+  		percentualScroll = (scroll * maxWidth) / 100;
+  		elem.scrollLeft += percentualScroll;
+      });
+      
       $scope.$watchCollection("metricSelectionService.getSelectedMetrics()", function (newVal) {
         console.log("newval", newVal);
         angular.forEach(newVal, function (value, key) {
