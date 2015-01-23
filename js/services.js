@@ -126,17 +126,29 @@ repogramsServices.service('metricSelectionService', function () {
       if (selectedMetrics.indexOf(metric) === -1) {
         // not in array yet
         selectedMetrics.push(metric);
+      console.log("Add "+metric);
       }
     };
   var removeMetricFun = function(metric){
       var position = selectedMetrics.indexOf(metric);
       console.assert(position !== -1, "trying to remove metric which is not contained!");
       selectedMetrics.splice(position, 1);
+      console.log("Remove "+metric);
     };
 
   return {
     getSelectedMetrics: function () {
       return selectedMetrics;
+    },
+    getMetricsMap: function() {
+      var obj = [];
+      for(var i = 0; i < allMetrics.length; i++){
+        var pos = selectedMetrics.indexOf(allMetrics[i]);
+        var cond = (pos !== -1);
+        obj[i] = { metric : allMetrics[i],
+                    contained : cond};
+      }
+     return obj; 
     },
     addMetric: addMetricFun,
     removeMetric: removeMetricFun ,

@@ -6,9 +6,8 @@ repogramsControllers.controller('RepogramsConfig',
       //default metric is 1
       $scope.metricService = metricSelectionService;
       $scope.metrics = $scope.metricService.getAllMetrics();
-      $scope.currentMetric = {
-        value: $scope.metrics[0]
-      };
+      $scope.currentMetrics = $scope.metricService.getMetricsMap();
+
       $scope.switchMetric = function () {
         $modal.open({
           scope: $scope,
@@ -16,7 +15,7 @@ repogramsControllers.controller('RepogramsConfig',
           '<div class="modal-header"><h3 class="modal-title">Select new metric</h3></div>' +
           '<div class="modal-body">' +
           '<div class="form-group" ng-repeat="(i, metric) in metrics">' +
-          '<label for="metric_{{i}}"><input id="metric_{{i}}" type="checkbox" name="metric" ng-value="metric" ng-model="currentMetric.value" ng-change="accept()"> <i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</label>' +
+          '<label for="metric_{{i}}"><input id="metric_{{i}}" type="checkbox" name="metric" ng-value="metric" ng-model="currentMetrics[i].contained" ng-change="accept(currentMetrics[{{i}}].metric)"> <i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</label>' +
           '<p ng-bind-html="metric.description"></p>' +
           '<p class="text-muted" ng-if="metric.long_description" ng-bind-html="metric.long_description"></p>' +
           '</div>' +
@@ -27,8 +26,8 @@ repogramsControllers.controller('RepogramsConfig',
           '</form>',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.dismiss = $modalInstance.dismiss;
-            $scope.accept = function (result) {
-              $scope.metricService.swapMetric($scope.currentMetric.value);
+            $scope.accept = function (metric) {
+              $scope.metricService.swapMetric(metric);
             };
           }]
         });
