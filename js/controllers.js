@@ -148,3 +148,7 @@ repogramsControllers.controller('RepogramsImporter',
     $scope.prepare();
   }]);
 
+repogramsControllers.controller('RepogramsDisplayCtrl',
+  ['$scope','metricSelectionService', function ($scope, metricSelectionService){
+    $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
+  }]);

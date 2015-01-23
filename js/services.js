@@ -121,7 +121,7 @@ repogramsServices.service('metricSelectionService', function () {
       long_description: null
     }
   ];
-  var selectedMetrics = [allMetrics[0]];
+  var selectedMetrics = [];
   var addMetricFun = function (metric) {
       if (selectedMetrics.indexOf(metric) === -1) {
         // not in array yet

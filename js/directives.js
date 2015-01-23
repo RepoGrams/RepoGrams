@@ -1,10 +1,11 @@
 var repogramsDirectives = angular.module('repogramsDirectives', []);
 
-repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$modal', 'reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService', function ($interpolate, $compile, $modal, reposService, blenService, metricSelectionService, blenSelectionService, zoomService) {
+repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$modal', 'reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService', 
+function ($interpolate, $compile, $modal, reposService, blenService, metricSelectionService, blenSelectionService, zoomService) {
   return {
 
     restrict: 'E',
-    scope: {},
+    scope: {currentId : "=current" },
     template: '<div class="renderMetric"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
     '<div class="individualMetric" style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
     '</div></div></div>',
@@ -117,9 +118,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
 
 
       // set colors for each metric that should be displayed
-      angular.forEach(metricSelectionService.getSelectedMetrics(), function (value, key) {
-        updateColors(value.id);
-      });
+      updateColors($scope.currentId);
 
       // register watches to trigger recomputations
 
@@ -141,13 +140,6 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
       $scope.$on('zoomChange', _.debounce(function (evnt, newZoom) {
         updateWidth(blenSelectionService.getSelectedBlenMod().id);
       }, 200));
-
-      $scope.$watchCollection("metricSelectionService.getSelectedMetrics()", function (newVal) {
-        console.log("newval", newVal);
-        angular.forEach(newVal, function (value, key) {
-          updateColors(value.id);
-        });
-      });
 
       $scope.$watch("blenSelectionService.getSelectedBlenMod()", function (newVal) {
         updateWidth(newVal.id);
