@@ -122,21 +122,30 @@ repogramsServices.service('metricSelectionService', function () {
     }
   ];
   var selectedMetrics = [allMetrics[0]];
+  var addMetricFun = function (metric) {
+      if (selectedMetrics.indexOf(metric) === -1) {
+        // not in array yet
+        selectedMetrics.push(metric);
+      }
+    };
+  var removeMetricFun = function(metric){
+      var position = selectedMetrics.indexOf(metric);
+      console.assert(position !== -1, "trying to remove metric which is not contained!");
+      selectedMetrics.splice(position, 1);
+    };
 
   return {
     getSelectedMetrics: function () {
       return selectedMetrics;
     },
-    addMetric: function (metric) {
-      if (selectedMetrics.indexOf(metric) === -1) {
-        // not in array yet
-        selectedMetrics.push(metric);
-      }
-    },
-    removeMetric: function (metric) {
+    addMetric: addMetricFun,
+    removeMetric: removeMetricFun ,
+    swapMetric: function (metric) {
       var position = selectedMetrics.indexOf(metric);
-      console.assert(position !== -1, "trying to remove metric which is not contained!");
-      selectedMetrics.splice(position, 1);
+      if(position == -1)
+         addMetricFun(metric);
+      else
+         removeMetricFun(metric); 
     },
     getAllMetrics: function () {
       return allMetrics;

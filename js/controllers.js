@@ -16,7 +16,7 @@ repogramsControllers.controller('RepogramsConfig',
           '<div class="modal-header"><h3 class="modal-title">Select new metric</h3></div>' +
           '<div class="modal-body">' +
           '<div class="form-group" ng-repeat="(i, metric) in metrics">' +
-          '<label for="metric_{{i}}"><input id="metric_{{i}}" type="radio" name="metric" ng-value="metric" ng-model="currentMetric.value" ng-change="accept()"> <i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</label>' +
+          '<label for="metric_{{i}}"><input id="metric_{{i}}" type="checkbox" name="metric" ng-value="metric" ng-model="currentMetric.value" ng-change="accept()"> <i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</label>' +
           '<p ng-bind-html="metric.description"></p>' +
           '<p class="text-muted" ng-if="metric.long_description" ng-bind-html="metric.long_description"></p>' +
           '</div>' +
@@ -28,9 +28,7 @@ repogramsControllers.controller('RepogramsConfig',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.dismiss = $modalInstance.dismiss;
             $scope.accept = function (result) {
-              $scope.metricService.clear();
-              $scope.metricService.addMetric($scope.currentMetric.value);
-              $modalInstance.close(result);
+              $scope.metricService.swapMetric($scope.currentMetric.value);
             };
           }]
         });
