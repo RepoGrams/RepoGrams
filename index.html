@@ -91,49 +91,50 @@
       </div>
 
       <!-- Main Block with the Repo name and Metric render -->
-      <div ng-controller="RepogramsDisplayCtrl">
-        <div ng-repeat="metric in selectedMetrics">
-          <div class="row">
-            <div ng-controller="RepogramsRender">
-              <div class="col-md-12">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <div class="row">
-                      <span class="col-xs-12 col-lg-2">
-                        {{metric.label}}
-                      </span>
-                      <span class="col-xs-6 col-lg-5 text-muted label-earliest-commits">
-                        Earliest commits
-                      </span>
-                      <span class="col-xs-6 col-lg-5 text-muted text-right label-latest-commits">
-                        Latest commits
-                      </span>
-                    </div><!-- row close -->
-                  </div> <!-- panel heading close -->
-                  <div class="panel-body">
-                    <div class="repo col-md-12" ng-repeat="repo in repos">
-                      <div class="row">
-                        <div class="col-lg-2 repo-label">
-                          <label for="{{'metricBox'+$index}}">
-                            <button type="button" class="btn btn-sm" ng-click="removeRepo($index)">
-                              <span class="glyphicon glyphicon-remove"></span>
-                            </button>
-                            <span title="{{repo.name}}">
-                              {{repo.name}}
-                            </span>
-                          </label> 
-                        </div> <!-- col-lg-2 close -->
-                        <div class="col-lg-10" id="{{'metricBox'+$index}}">
-                          <rg-render-metric current=metric.id></rg-render-metric>
-                        </div> <!-- col-lg-10 close -->
-                      </div> <!-- row close -->
-                    </div> <!-- end ng-repeat repos -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                  <span class="col-xs-12 col-lg-2">
+                    Repositories
+                  </span>
+                  <span class="col-xs-6 col-lg-5 text-muted label-earliest-commits">
+                    Earliest commits
+                  </span>
+                  <span class="col-xs-6 col-lg-5 text-muted text-right label-latest-commits">
+                    Latest commits
+                  </span>
+                </div><!-- row close -->
+              </div> <!-- panel heading close -->
+              <div class="panel-body">
+                <div ng-controller="RepogramsDisplayCtrl">
+                  <div ng-repeat="metric in selectedMetrics">
+                    <h4>{{metric.label}}</h4>
+                    <div ng-controller="RepogramsRender">
+                      <div class="repo col-md-12" ng-repeat="repo in repos">
+                        <div class="row">
+                          <div class="col-lg-2 repo-label">
+                            <label for="{{'metricBox'+$index}}">
+                              <button type="button" class="btn btn-sm" ng-click="removeRepo($index)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                              </button>
+                              <span title="{{repo.name}}">
+                                {{repo.name}}
+                              </span>
+                            </label> 
+                          </div> <!-- col-lg-2 close -->
+                          <div class="col-lg-10" id="{{'metricBox'+$index}}">
+                            <rg-render-metric current=metric.id></rg-render-metric>
+                          </div> <!-- col-lg-10 close -->
+                        </div> <!-- row close -->
+                      </div> <!-- end ng-repeat repos -->
+                    </div> <!-- end ng-repeat metrics -->
                   </div> <!-- panel body close -->
                 </div> <!-- panel close -->
               </div> <!-- col-md-12 close -->
-            </div> <!-- End of Scope for Repograms Render -->
-          </div> <!-- End of Row -->
-        </div> <!-- End of ng-repeat for metrics -->
+            </div> <!-- repograms render end of scope -->
+        </div> <!-- row close -->
       </div> <!-- End of Scope for DisplayController -->
 
       <!-- Import Field -->
