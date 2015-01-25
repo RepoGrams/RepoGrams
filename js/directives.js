@@ -151,16 +151,11 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
 repogramsDirectives.directive('ngLegend', function () {
   return {
     restrict: 'E',
-    scope: {},
-    template: '<div class="panel panel-success">' +
-    '<div class="panel-heading">' +
-    '<h3 class="panel-title">Color Legend</h3>' +
-    '</div>' +
-    '<div class="panel-body" ng-repeat="metric in selectedMetrics">' +
-    '<p>A block represents a commit. A block\'s color represents the commit metric value.</p>' +
-    '<ul class="list-inline">' +
-    '<li ng-repeat="style in styles[metric.id]"><span class="customBlock" style="background-color: {{style.color}};" ng-if="style.color"></span> <span ng-bind-html="style.legendText"></span></li>' +
-    '</ul></div></div>',
+    scope: { currentMetric :"=current"},
+    template: '<p class="text-right"><b>Legend</b>' +
+    '<ul class="list-inline ">' +
+    '<li ng-repeat="style in styles[currentMetric.id]"><span class="customBlock" style="background-color: {{style.color}};" ng-if="style.color"></span> <span ng-bind-html="style.legendText"></span></li>' +
+    '</ul></p>',
     controller: ['$scope', 'reposService', 'metricSelectionService', function ($scope, reposService, metricSelectionService) {
       $scope.reposService = reposService;
       $scope.metricSelectionService = metricSelectionService;
