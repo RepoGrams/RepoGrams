@@ -4,6 +4,7 @@ docs/*.synctex.gz
 config.inc.php
 .ropeproject
 *.pyc
+*.log
 .idea
 .buildinfo
 /nginx.conf

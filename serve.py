@@ -4,6 +4,18 @@ import cherrypy
 import scripts.git_graph as git_graph
 import scripts.githelpers as gh
 
+INSTANCE_CONFIG_DEFAULT = None
+INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING = {'/': {
+    'tools.staticdir.on': True,
+    'tools.staticdir.dir': os.path.abspath(os.path.dirname(__file__)),
+    'tools.staticdir.index': 'index.html'
+}}
+
+# Choose one of the above for your instance config
+INSTANCE_CONFIG = INSTANCE_CONFIG_DEFAULT
+
+
+
 class Repograms(object):
 
     def __init__(self):
@@ -27,9 +39,10 @@ class Repograms(object):
         g = git_graph.GitGraph(git_helper, self.cache, precompute = True)
         return g.export()
 
+
 cherrypy.config.update({'server.socket_port': 8090,
                         'server.socket_host': "0.0.0.0",
                         'engine.autoreload_on': False,
                         'log.access_file': './access.log',
                         'log.error_file': './error.log'})
-cherrypy.quickstart(Repograms())
+cherrypy.quickstart(Repograms(), '/', config=INSTANCE_CONFIG)
