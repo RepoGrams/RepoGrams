@@ -307,7 +307,8 @@ class GitGraph(object):
         # we want however the reverse ordering (which is what people in
         # general understand by topological order)
         version_where_topological_sort_behaves_as_expected = LooseVersion('2.2.36')
-        if gt.__version__ < version_where_topological_sort_behaves_as_expected:
+        our_version = LooseVersion(gt.__version__.split()[0])
+        if our_version >= version_where_topological_sort_behaves_as_expected:
             commits = gt.topology.topological_sort(self.graph)
         else:
             commits = reversed(gt.topology.topological_sort(self.graph))
