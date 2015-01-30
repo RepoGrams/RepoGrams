@@ -16,6 +16,8 @@ import graph_tool.topology
 import jellyfish
 import numpy
 
+from distutils.version import LooseVersion
+
 class GitGraphCache(object):
     def __init__(self):
         self._cache = {}
@@ -304,7 +306,12 @@ class GitGraph(object):
         # comes before u in the ordering
         # we want however the reverse ordering (which is what people in
         # general understand by topological order)
-        for commit_index in reversed(gt.topology.topological_sort(self.graph)):
+        version_where_topological_sort_behaves_as_expected = LooseVersion('2.2.36')
+        if gt.__version__ < version_where_topological_sort_behaves_as_expected:
+            commits = gt.topology.topological_sort(self.graph)
+        else:
+            commits = reversed(gt.topology.topological_sort(self.graph))
+        for commit_index in commits:
             commit_node = self.graph.vertex(commit_index)
             debug("Current element", self.commit_hashsum[commit_node])
             if (commit_node == self.sentinel):
