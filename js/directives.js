@@ -5,7 +5,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
 
     restrict: 'E',
     scope: {},
-    template: '<div class="renderMetric"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
+    template: '<div class="renderMetric"><div style="width:100%; overflow: visible; white-space: nowrap;">' +
     '<div class="individualMetric" style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
     '</div></div></div>',
     link: function ($scope, element, attrs) {
