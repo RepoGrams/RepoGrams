@@ -293,6 +293,17 @@ class GitGraph(object):
             result.append(numpy.mean(similarity_scores))
         return result
 
+    def pom_files(self):
+        """Computes the number of pom.xml files that were modified in a commit
+        @:returns: a list containing the result
+        """
+
+        result = []
+        for commit in self.iterate_commits():
+            pom_files_changed = sum(1 for f in self.commit_files[commit] if os.path.basename(f) == 'pom.xml')
+            result.append(pom_files_changed)
+        return result
+
     def iterate_commits(self, order=Order.CHRONO):
         if order == Order.TOPO:
             for commit_node in self.iterate_topo():
@@ -372,6 +383,7 @@ class GitGraph(object):
             result["most_edit_file"] = self.most_edit_file()
             result["commit_message_length"] = self.commit_message_length()
             result["commit_modularity"] = self.commit_modularity()
+            result["pom_files"] = self.pom_files()
         self.cache[self.git_helper.repo_url] = result
         return result
 

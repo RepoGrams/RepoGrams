@@ -119,6 +119,13 @@ repogramsServices.service('metricSelectionService', function () {
       icon: "cog",
       description: "The number of branches that are concurrently active at a commit point.",
       long_description: null
+    },
+    {
+      id: "pom_files",
+      label: "POM files",
+      icon: "cog", // TODO change icon
+      description: "The number of POM files changed in every commit.",
+      long_description: null
     }
   ];
   var selectedMetrics = [];
