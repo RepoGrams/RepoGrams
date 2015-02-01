@@ -87,6 +87,15 @@ repogramsControllers.controller('RepogramsRender',
       $scope.removeRepo = function (pos) {
         reposService.removeRepo(pos);
       };
+    $scope.moveUp = function(index){
+      console.log("Moving up "+index);
+      reposService.moveRepoUp(index);
+    };
+    $scope.moveDown = function(index){
+      console.log("Moving down "+index);
+      reposService.moveRepoDown(index);
+    };
+
     }
   ]);
 
