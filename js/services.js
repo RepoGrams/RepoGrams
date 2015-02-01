@@ -65,6 +65,24 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
       }
       // TODO: recalculate maxvalue
     },
+    moveRepoUp: function (place) {
+      if(place == 0)
+       return;
+      var tmp = RepoArr[place];
+      RepoArr[place] = RepoArr[place-1];
+      RepoArr[place-1] = tmp;
+      console.log("Moving from "+place+ " to "+(place-1));
+      return;
+    },
+    moveRepoDown: function(place){
+      if (place == RepoArr.length-1)
+        return;
+      var tmp = RepoArr[place];
+      RepoArr[place] = RepoArr[place+1];
+      RepoArr[place+1] = tmp;
+      console.log("Moving from "+place+ " to "+(place+1));
+      return;
+    },
     mapToColor: function (metric, value) {
       console.assert(typeof metric === "string", "metric must be the name of a metric");
       console.assert(typeof mappers[metric] !== "undefined", "mapper is not initialized");
