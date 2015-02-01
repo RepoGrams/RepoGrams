@@ -152,32 +152,35 @@ repogramsServices.service('metricSelectionService', function () {
  */
 
 repogramsServices.service('blenService', function () {
-  var getModFunction = {
-    "1_constant": function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
-      return {value: (5), divisor: 1, zoom: zoom.num, unit: "px"}
-    },
-    "2_churn": function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
-      return {value: (churn * 100), divisor: maxChurn, zoom: zoom.num, unit: "%"}
-    },
-    "3_fill": function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
-      return {value: (churn * 100), divisor: totalChurn, zoom: zoom.num, unit: "%"}
-    }
-  };
-  var calculateWidth = function (width) {
-    var widthString = "" + ((width.value / width.divisor) * width.zoom) + width.unit;
-    width.string = widthString;
-    return width;
-  };
-  return {
-    getWidth: function (mode, churn, totalChurn, maxChurn, noOfCommits, zoom) {
-      var width = getModFunction[mode](churn, totalChurn, maxChurn, noOfCommits, zoom);
-      return calculateWidth(width);
-    },
-    updateString: function (width) {
-      return calculateWidth(width);
-    }
-  };
-});
+	  var getModFunction = {
+	    "1_constant": function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
+	      return {value: (5), divisor: 1, width: Math.round(500/100), zoom: zoom.num, unit: "px"}
+	    },
+	    "2_churn": function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
+	      return {value: (churn * 100), divisor: maxChurn, width: Math.round(churn * 100/maxChurn*100), zoom: zoom.num, unit: "%"}
+	    },
+	    "3_fill": function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
+	      return {value: (churn * 100), divisor: totalChurn, width: Math.round(churn * 100/totalChurn*100), zoom: zoom.num, unit: "%"}
+	    }
+	  };
+	  var calculateWidth = function (width) {
+	    var widthString = "" + (width.width * width.zoom)/100 + width.unit;
+	    width.string = widthString;
+	    return width;
+	  };
+	  return {
+	    getWidth: function (mode, churn, totalChurn, maxChurn, noOfCommits, zoom) {
+	      var width = getModFunction[mode](churn, totalChurn, maxChurn, noOfCommits, zoom);
+	      return calculateWidth(width);
+	    },
+	    updateString: function (width) {
+	      return calculateWidth(width);
+	    },
+	    updateFinalWidth: function (width, offset) {
+	    	width.width = width.width + offset;
+	    }
+	  };
+	});
 
 repogramsServices.service('blenSelectionService', function () {
   var allBlenMods = [

@@ -102,14 +102,26 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
       }
 
       function updateWidth(currentBlockLengthMode) {
-        // precompute width outside of updating DOM
-        var length = $scope.repo.metricData[firstSelectedMetric.id].length;
-        var newWidths = new Array(length);
-        for (var i = 0; i < length; i++) {
-          var churn = $scope.repo.metricData.churn[i];
-          newWidths[i] = blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string;
-        }
-        // iterate over all commit blocks and
+          // precompute width outside of updating DOM
+          var length = $scope.repo.metricData[firstSelectedMetric.id].length;
+          var newWidths = new Array(length);
+          var overallWidth = 0;
+          for (var i = 0; i < length; i++) {
+            var churn = $scope.repo.metricData.churn[i];
+            newWidths[i] = blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom);
+            overallWidth = (overallWidth + newWidths[i].width);
+          }
+          if (currentBlockLengthMode == "3_fill"){
+          	
+          	gap = (10000 - overallWidth);
+  		    for (var i = 0; i <= gap; i++){
+  		    	
+  		    	var currentWidth = newWidths[i];
+  		    	currentWidth.width = (currentWidth.width + 1);
+  		    	currentWidth.string = "" + (currentWidth.width * currentWidth.zoom)/100 + currentWidth.unit;
+  		    }
+          }
+          // iterate over all commit blocks and
         chunkwiseLoop(0, length, /*chunksize=*/100, function (index) {
           $scope.individualBlocks[index].style.width = newWidths[index];
         });
