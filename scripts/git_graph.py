@@ -43,12 +43,14 @@ class GitGraph(object):
         self.hash2vertex = {}
 
         # properties associated with each commit
+        self.vertex2commit = self.graph.new_vertex_property("object")
         self.commit_hashsum = self.graph.new_vertex_property("string")
         self.commit_msg = self.graph.new_vertex_property("object")
         self.commit_timestamp = self.graph.new_vertex_property("string")
         self.commit_files = self.graph.new_vertex_property("vector<string>")
         self.commit_churn = self.graph.new_vertex_property("int")
         self.branch_complexity = self.graph.new_vertex_property("int")
+        self.commit_author = self.graph.new_vertex_property("int")
         self.associated_branch = self.graph.new_vertex_property("int")
 
         # sentinel: required to have a rooted DAG
@@ -60,6 +62,7 @@ class GitGraph(object):
         for commit in self.git_helper.get_all_commits():
             parents, commit_timestamp, commitmsg, added, removed, files = self.git_helper.get_commit_data(commit)
             commit_vertex = self.graph.add_vertex()
+            self.vertex2commit[commit_vertex] = commit
             self.hash2vertex[str(commit.oid)] = commit_vertex
             self.commit_hashsum[commit_vertex] = str(commit.oid)
             self.commit_msg[commit_vertex] = commitmsg
@@ -67,6 +70,7 @@ class GitGraph(object):
             self.commit_files[commit_vertex] = files
             self.commit_churn[commit_vertex] = added+removed
             self.branch_complexity[commit_vertex] = 0
+            self.commit_author[commit_vertex] = 0
             if not parents:
                 debug("initial commit detected: {}".format(commit))
                 self.graph.add_edge(self.sentinel, commit_vertex)
@@ -85,6 +89,7 @@ class GitGraph(object):
         self.branch_heads = map(str, branch_heads)
         self.metric4()
         self.metric6()
+        self.metric_commit_author()
 
     def compute_dominators(self):
         """
@@ -229,6 +234,16 @@ class GitGraph(object):
                 workqueue += todo
             branch_id += 1
 
+    def metric_commit_author(self):
+        """Computes a unique numeric ID for each commit author, based on email address."""
+
+        authors = []
+        for commit_vertex in self.iterate_commits():
+            author_email = self.vertex2commit[commit_vertex].author.email
+            if author_email not in authors:
+                authors.append(author_email)
+            self.commit_author[commit_vertex] = authors.index(author_email)
+
     def commit_lang_compl(self, name_mapping, extension_mapping):
         """Computes the commit language complexity
            @name_mapping: a  mapping from file names to file types
@@ -356,6 +371,7 @@ class GitGraph(object):
         commit_messages = []
         files = []
         associated_branches = []
+        commit_author = []
         bcomplexities = []
         for commit in self.iterate_commits():
             assert self.associated_branch[commit] != 0, "{}".format(self.commit_msg[commit])
@@ -364,6 +380,7 @@ class GitGraph(object):
             commit_messages.append(self.commit_msg[commit])
             files.append(list(self.commit_files[commit]))
             associated_branches.append(self.associated_branch[commit])
+            commit_author.append(self.commit_author[commit])
             bcomplexities.append(self.branch_complexity[commit])
         result = {
             "checksums": checksums,
@@ -371,6 +388,7 @@ class GitGraph(object):
             "commit_messages": commit_messages,
             "files": files,
             "associated_branches": associated_branches,
+            "commit_author": commit_author,
             "bcomplexities": bcomplexities,
             "precomputed": self.precompute
         }

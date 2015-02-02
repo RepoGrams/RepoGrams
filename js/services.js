@@ -31,7 +31,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
       for (var metric in mappers) {
         //var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]);
         var localMaxVal = arrayMax(repoJSON.metricData[metric]);
-        if (metric == "branch_usage") {
+        if (metric == "branch_usage" || metric == "commit_author") {
           mappers[metric] = mapperFactory.createMapper(null, metric);
           $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
         } else if (localMaxVal > maxVal[metric]) {
@@ -126,7 +126,14 @@ repogramsServices.service('metricSelectionService', function () {
       icon: "cog", // TODO change icon
       description: "The number of POM files changed in every commit.",
       long_description: null
-    }
+    },
+    {
+      id: "commit_author",
+      label: "Commit Author",
+      icon: "pencil-square", // TODO change icon
+      description: "Each commit author is associated wih a unique color. A commit block is colored according to its author.",
+      long_description: null
+    },
   ];
   var selectedMetrics = [];
   var addMetricFun = function (metric) {

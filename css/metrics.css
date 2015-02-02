@@ -64,6 +64,39 @@ img.logo {
 	background-color: #006fa6;
 }
 
+.list-inline .commitAuthorRainbow {
+	display: inline-block;
+	width: 60px;
+}
+
+.list-inline .commitAuthorRainbow .customBlock {
+	width: 16.66%;
+}
+
+.list-inline .commitAuthorRainbow .customBlock:nth-child(1) {
+	background-color: #ffff00;
+}
+
+.list-inline .commitAuthorRainbow .customBlock:nth-child(2) {
+	background-color: #1ce6ff;
+}
+
+.list-inline .commitAuthorRainbow .customBlock:nth-child(3) {
+	background-color: #ff34ff;
+}
+
+.list-inline .commitAuthorRainbow .customBlock:nth-child(4) {
+	background-color: #ff4a46;
+}
+
+.list-inline .commitAuthorRainbow .customBlock:nth-child(5) {
+	background-color: #008941;
+}
+
+.list-inline .commitAuthorRainbow .customBlock:nth-child(6) {
+	background-color: #006fa6;
+}
+
 /* to align buttons with the input field TODO: don't use fixed height! */
 .formbtn {height:34px;}
 

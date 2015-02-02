@@ -138,6 +138,9 @@ var MapperFactory = function () {
       "#012c58"
     ];
 
+  // TODO this is the same color scheme as branch usage, only in reverse order
+  this.commit_author = this.branch_use_colors.reverse();
+
   this.main_branch_color = "#ba0900";
 
   this.metric2color = {
@@ -327,10 +330,18 @@ var MapperFactory = function () {
     };
   };
 
+  var CommitAuthorMapper = function () {
+    this.map = function (value) {
+      return outer.commit_author[value];
+    };
+  };
+
   this.createMapper = function (maxValue, metricName) {
     switch (metricName) {
       case "branch_usage":
         return new BranchUsageMapper();
+      case "commit_author":
+        return new CommitAuthorMapper();
       case "commit_message_length":
         return new FibonacciRangeMapper(maxValue, metricName);
       case "commit_modularity":
