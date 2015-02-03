@@ -21,7 +21,7 @@ repogramsControllers.controller('RepogramsConfig',
           '</div>' +
           '</div>' +
           '<div class="modal-footer">' +
-          '<button class="btn btn-default" ng-click="dismiss()">Cancel</button>' +
+          '<button class="btn btn-default" ng-click="dismiss()">Apply</button>' +
           '</div>' +
           '</form>',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
