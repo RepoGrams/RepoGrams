@@ -52,6 +52,7 @@ class GitGraph(object):
         self.branch_complexity = self.graph.new_vertex_property("int")
         self.commit_author = self.graph.new_vertex_property("int")
         self.associated_branch = self.graph.new_vertex_property("int")
+        self.commit_age = self.graph.new_vertex_property("int")
 
         # sentinel: required to have a rooted DAG
         self.sentinel = self.graph.add_vertex()
@@ -71,6 +72,7 @@ class GitGraph(object):
             self.commit_churn[commit_vertex] = added+removed
             self.branch_complexity[commit_vertex] = 0
             self.commit_author[commit_vertex] = 0
+            self.commit_age[commit_vertex] = 0
             if not parents:
                 debug("initial commit detected: {}".format(commit))
                 self.graph.add_edge(self.sentinel, commit_vertex)
@@ -90,6 +92,7 @@ class GitGraph(object):
         self.metric4()
         self.metric6()
         self.metric_commit_author()
+        self.metric_commit_age()
 
     def compute_dominators(self):
         """
@@ -244,6 +247,16 @@ class GitGraph(object):
                 authors.append(author_email)
             self.commit_author[commit_vertex] = authors.index(author_email)
 
+    def metric_commit_age(self):
+        """Computes the age of the commit, based on the lowest time difference between the commit and any of its
+        parents."""
+
+        for commit_vertex in self.iterate_commits():
+            commit = self.vertex2commit[commit_vertex]
+            parent_distances = [commit.commit_time - parent.commit_time for parent in commit.parents]
+            self.commit_age[commit_vertex] = min(parent_distances) if parent_distances else 0
+
+
     def commit_lang_compl(self, name_mapping, extension_mapping):
         """Computes the commit language complexity
            @name_mapping: a  mapping from file names to file types
@@ -373,6 +386,7 @@ class GitGraph(object):
         associated_branches = []
         commit_author = []
         bcomplexities = []
+        commit_age = []
         for commit in self.iterate_commits():
             assert self.associated_branch[commit] != 0, "{}".format(self.commit_msg[commit])
             checksums.append(self.commit_hashsum[commit])
@@ -382,6 +396,7 @@ class GitGraph(object):
             associated_branches.append(self.associated_branch[commit])
             commit_author.append(self.commit_author[commit])
             bcomplexities.append(self.branch_complexity[commit])
+            commit_age.append(self.commit_age[commit])
         result = {
             "checksums": checksums,
             "churns": churns,
@@ -390,6 +405,7 @@ class GitGraph(object):
             "associated_branches": associated_branches,
             "commit_author": commit_author,
             "bcomplexities": bcomplexities,
+            "commit_age": commit_age,
             "precomputed": self.precompute
         }
         if self.precompute:

@@ -66,6 +66,14 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
                 // TODO do we want to implement a client-side version? Or are we skipping client-side from now on?
                 callback("Error: The Commit Author metric does not support client-side computation.");
             }
+        },
+        commit_age: function (callback) {
+            if (data.precomputed === true) {
+                callback(null, data.commit_age);
+            } else {
+                // TODO do we want to implement a client-side version? Or are we skipping client-side from now on?
+                callback("Error: The Commit Age metric does not support client-side computation.");
+            }
         }
       }, function (err, results) {
         onComplete(results);

@@ -134,6 +134,13 @@ repogramsServices.service('metricSelectionService', function () {
       description: "Each commit author is associated wih a unique color. A commit block is colored according to its author.",
       long_description: null
     },
+    {
+      id: "commit_age",
+      label: "Commit Age",
+      icon: "clock-o",
+      description: "How long it took for each commit, compared to its (youngest) parent commit.",
+      long_description: null
+    }
   ];
   var selectedMetrics = [];
   var addMetricFun = function (metric) {

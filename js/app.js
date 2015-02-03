@@ -197,7 +197,16 @@ var MapperFactory = function () {
       "#3690c0",
       "#0570b0",
       "#034e7b"
-    ]
+    ],
+    "commit_age": ["#f7fcf0", // TODO change the color scheme
+      "#e0f3db",
+      "#ccebc5",
+      "#a8ddb5",
+      "#7bccc4",
+      "#4eb3d3",
+      "#2b8cbe",
+      "#08589e"
+    ],
   };
   this.chunkNum = 8;
 
@@ -324,6 +333,85 @@ var MapperFactory = function () {
     };
   };
 
+  var TimesRangeMapper = function (maxValue, metricName) {
+    this._mappingInfo = null;
+
+    this.map = function (value) {
+      var mappingInfos = this.getMappingInfo();
+      for (var i = 0; i < mappingInfos.length; i++) {
+        if (value <= mappingInfos[i].upperBound) {
+          return mappingInfos[i].color;
+        }
+      }
+      return mappingInfos[mappingInfos.length - 1].color;
+    };
+
+    this.getMappingInfo = function () {
+      if (this._mappingInfo) {
+        return this._mappingInfo;
+      }
+
+      var mName = metricName;
+      var mappingInfo = [];
+
+      mappingInfo.push({
+        lowerBound: 0,
+        upperBound: 59,
+        legendText: "Less than 1 minute"
+      });
+
+      mappingInfo.push({
+        lowerBound: 60,
+        upperBound: 3599,
+        legendText: "1–59 minutes"
+      });
+
+      mappingInfo.push({
+        lowerBound: 3600,
+        upperBound: 7199,
+        legendText: "1–2 hours"
+      });
+
+      mappingInfo.push({
+        lowerBound: 7200,
+        upperBound: 43199,
+        legendText: "2–12 hours"
+      });
+
+      mappingInfo.push({
+        lowerBound: 43200,
+        upperBound: 86399,
+        legendText: "12–24 hours"
+      });
+
+      mappingInfo.push({
+        lowerBound: 86400,
+        upperBound: 172799,
+        legendText: "1–2 days"
+      });
+
+      mappingInfo.push({
+        lowerBound: 172800,
+        upperBound: 604799,
+        legendText: "2–7 days"
+      });
+
+      mappingInfo.push({
+        lowerBound: 604800,
+        upperBound: Number.MAX_VALUE,
+        legendText: "More than 7 days"
+      });
+
+      var i = 0;
+      mappingInfo.map(function (val) {
+        val.color = outer.metric2color[mName][i++];
+      });
+
+      this._mappingInfo = mappingInfo;
+      return mappingInfo;
+    };
+  }
+
   var BranchUsageMapper = function () {
     this.map = function (value) {
       return outer.branch_use_colors[value - 1]; // values start with 1, arrays with 0
@@ -344,6 +432,8 @@ var MapperFactory = function () {
         return new CommitAuthorMapper();
       case "commit_message_length":
         return new FibonacciRangeMapper(maxValue, metricName);
+      case "commit_age":
+        return new TimesRangeMapper(maxValue, metricName);
       case "commit_modularity":
         return new EqualRangeMapper(maxValue, metricName, -2);
       default:
