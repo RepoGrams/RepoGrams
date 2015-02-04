@@ -189,14 +189,14 @@ var MapperFactory = function () {
       "#0570b0",
       "#034e7b"
     ],
-    "pom_files": ["#fff7fb", // TODO change the color scheme
-      "#ece7f2",
-      "#d0d1e6",
-      "#a6bddb",
-      "#74a9cf",
-      "#3690c0",
-      "#0570b0",
-      "#034e7b"
+    "pom_files": ["#ffffff",
+      "#fcbba1",
+      "#fc9272",
+      "#fb6a4a",
+      "#ef3b2c",
+      "#cb181d",
+      "#a50f15",
+      "#67000d"
     ],
     "commit_age": ["#f7fcf0", // TODO change the color scheme
       "#e0f3db",
@@ -212,10 +212,11 @@ var MapperFactory = function () {
 
   var outer = this;
 
-  var EqualRangeMapper = function (maxValue, metricName, exp) {
+  var EqualRangeMapper = function (maxValue, metricName, exp, separateZero) {
 
     this._mappingInfo = null;
     exp = exp ? exp : 0;
+    separateZero = Boolean(separateZero);
 
     this.map = function (value) {
       var mappingInfos = this.getMappingInfo();
@@ -232,11 +233,26 @@ var MapperFactory = function () {
         return this._mappingInfo;
       }
 
-      var step = maxValue / outer.chunkNum;
-      var boundary = 0;
       var mappingInfo = [];
+      var step, boundary, i;
+      if (!separateZero) {
+        step = maxValue / outer.chunkNum;
+        boundary = 0;
+        i = 0;
+      } else {
+        mappingInfo.push({
+          lowerBound: 0,
+          upperBound: 0,
+          color: outer.metric2color[metricName][0]
+        });
 
-      for (var i = 0; i < outer.chunkNum; i++) {
+        step = (maxValue - 1) / (outer.chunkNum - 1);
+        boundary = 1;
+        i = 1;
+      }
+
+
+      for (i; i < outer.chunkNum; i++) {
         mappingInfo.push({
           lowerBound: Math.ceil10(boundary, exp),
           upperBound: Math.specialBoundFloor10(boundary + step, exp, maxValue),
@@ -434,6 +450,8 @@ var MapperFactory = function () {
         return new FibonacciRangeMapper(maxValue, metricName);
       case "commit_age":
         return new TimesRangeMapper(maxValue, metricName);
+      case "pom_files":
+        return new EqualRangeMapper(maxValue, metricName, 0, true);
       case "commit_modularity":
         return new EqualRangeMapper(maxValue, metricName, -2);
       default:
