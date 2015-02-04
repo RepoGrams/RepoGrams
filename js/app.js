@@ -171,14 +171,14 @@ var MapperFactory = function () {
       "#2b8cbe",
       "#08589e"
     ],
-    "commit_modularity": ["#fff7ec",
-      "#fee8c8",
-      "#fdd49e",
-      "#fdbb84",
-      "#fc8d59",
-      "#ef6548",
+    "commit_modularity": ["#990000",
       "#d7301f",
-      "#990000"
+      "#ef6548",
+      "#fc8d59",
+      "#fdbb84",
+      "#fdd49e",
+      "#fee8c8",
+      "#fff7ec"
     ],
     "most_edited_file": ["#fff7fb",
       "#ece7f2",
