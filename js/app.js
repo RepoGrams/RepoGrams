@@ -139,7 +139,7 @@ var MapperFactory = function () {
     ];
 
   // TODO this is the same color scheme as branch usage, only in reverse order
-  this.commit_author = this.branch_use_colors.reverse();
+  this.commit_author = this.branch_use_colors.slice().reverse();
 
   this.main_branch_color = "#ba0900";
 
