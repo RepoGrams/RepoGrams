@@ -125,10 +125,15 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       // the mapper might change when a new repo is added, and the
       // maxvalue increases
       $scope.$on('mapperChange', function (evnt, metricID, newMapper) {
-        // TODO: support multiple metrics
-        if (metricID === metricSelectionService.getSelectedMetrics()[0].id) {
+        if (metricID == $scope.currentId) {
+          var selectedMetrics = metricSelectionService.getSelectedMetrics();
           // only update visible metrics
-          updateColors(metricID);
+          for (var i = 0; i < selectedMetrics.length; i++) {
+            if (metricID === selectedMetrics[i].id) {
+              updateColors(metricID);
+              break;
+            }
+          }
         }
       });
 
