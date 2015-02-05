@@ -28,6 +28,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
     },
     addRepo: function (repoJSON) {
       RepoArr.push(repoJSON);
+      $rootScope.$broadcast("reposChange", RepoArr);
       for (var metric in mappers) {
         //var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]);
         var localMaxVal = arrayMax(repoJSON.metricData[metric]);
@@ -57,6 +58,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
       console.assert(place >= 0, "");
       console.assert(place < RepoArr.length, "");
       RepoArr.splice(place, 1);
+      $rootScope.$broadcast("reposChange", RepoArr);
       var totalChurn = totalChurnArr[place];
       totalChurnArr.splice(place, 1);
       if (totalChurn >= maxChurn) {
@@ -71,8 +73,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
       var tmp = RepoArr[place];
       RepoArr[place] = RepoArr[place-1];
       RepoArr[place-1] = tmp;
-      console.log("Moving from "+place+ " to "+(place-1));
-      return;
+      $rootScope.$broadcast("reposChange", RepoArr);
     },
     moveRepoDown: function(place){
       if (place == RepoArr.length-1)
@@ -80,8 +81,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
       var tmp = RepoArr[place];
       RepoArr[place] = RepoArr[place+1];
       RepoArr[place+1] = tmp;
-      console.log("Moving from "+place+ " to "+(place+1));
-      return;
+      $rootScope.$broadcast("reposChange", RepoArr);
     },
     mapToColor: function (metric, value) {
       console.assert(typeof metric === "string", "metric must be the name of a metric");

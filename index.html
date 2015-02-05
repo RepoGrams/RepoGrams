@@ -64,14 +64,14 @@
               <!-- Dropdown Menu for Metric Selection -->
               <div class="form-group col-md-4 col-sm-12 configBlock" ng-controller="RepogramsConfig">
                 <button id="metricSelect" class="form-control pull-right" ng-click="switchMetric()">Switch…</button>
-                <label for="metricSelect">Metric (block color):</label> <i class="fa fa-{{currentMetric.value.icon}}"></i> <em>{{currentMetric.value.label}}</em>
-                <p class="text-muted" ng-bind-html="currentMetric.value.description"></p>
+                <label for="metricSelect">Metric (block color):</label>
+                <span ng-repeat="metric in selectedMetrics"><i class="fa fa-{{metric.icon}}"></i> <em>{{metric.label}}<span ng-if="!$last">, </span></em></span>
+                <span ng-if="selectedMetrics.length == 0" class="text-muted">None selected yet…</span>
               </div>
 
               <div class="form-group col-md-4 col-sm-12 configBlock" ng-controller="RepogramsConfig">
                 <button id="blockLengthSelect" class="form-control pull-right" ng-click="switchBlen()">Switch…</button>
                 <label for="blockLengthSelect">Block length:</label> <i class="fa fa-{{currentBlen.value.icon}}"></i> <em>{{currentBlen.value.label}}</em>
-                <p class="text-muted" ng-bind-html="currentBlen.value.description"></p>
               </div>
 
               <!-- Zoom Slider -->
@@ -104,10 +104,16 @@
                 </div><!-- row close -->
               </div> <!-- panel heading close -->
               <div class="panel-body">
-                <div ng-controller="RepogramsDisplayCtrl">
+                <div class="metrics-display" ng-controller="RepogramsDisplayCtrl">
                   <div ng-repeat="metric in selectedMetrics">
-                    <h4>{{metric.label}}</h4>                  
-                    <ng-legend current=metric></ng-legend>
+                    <div class="col-md-12">
+                      <h3 class="metric-title">
+                        <i class="fa fa-{{metric.icon}}"></i>
+                        {{metric.label}}
+                        <i class="fa fa-question-circle" tooltip-html-unsafe="{{helpTooltip(metric)}}" tooltip-popup-delay="200"></i>
+                      </h3>
+                      <ng-legend current="metric" ng-show="numSelectedRepos > 0" class="legend"></ng-legend>
+                    </div>
                     <div ng-controller="RepogramsRender">
                       <div class="repo col-md-12" ng-repeat="repo in repos">
                         <div class="row">
@@ -132,15 +138,24 @@
                           </div> <!-- col-lg-10 close -->
                         </div> <!-- row close -->
                       </div> <!-- end ng-repeat repos -->
+                      <div class="col-md-12 alert alert-info" ng-if="repos.length == 0">
+                        <a ng-click="focusOnUrlImporter()">Add projects</a> to display.
+                      </div>
                     </div> <!-- close Render controller -->
                   </div> <!-- end ng-repeat metrics -->
+                  <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos == 0">
+                    <a ng-click="focusOnUrlImporter()">Add projects</a> and <a ng-click="openSelectMetricsModal()">select metrics</a> to display.
+                  </div>
+                  <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos > 0">
+                    <ng-pluralize count="numSelectedRepos" when="{'1': '1 repository has', 'other': '{} repositories have'}"></ng-pluralize> been added. <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
+                  </div>
                     <!-- Import Field -->
                 <div ng-controller="RepogramsImporter">
                   <div class="row">
                     <div class="col-md-12">
                       <form id="repogramsAdder" ng-submit="importRepo()">
                            <div class="input-group">
-                             <input type="text" class="form-control" placeholder="GIT clone URL, e.g. https://github.com/githubtraining/hellogitworld.git" autofocus ng-model="importURL" ng-readonly="processing" ng-change="changeInput()" />
+                             <input id="importUrlId" type="text" class="form-control" placeholder="GIT clone URL, e.g. https://github.com/githubtraining/hellogitworld.git" autofocus ng-model="importURL" ng-readonly="processing" ng-change="changeInput()" />
                                <div class="input-group-btn">
                                <button type="submit" class="btn btn-primary formbtn" ng-disabled="processing">
                                    <span class="glyphicon glyphicon-plus">

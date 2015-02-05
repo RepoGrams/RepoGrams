@@ -6,6 +6,39 @@ img.logo {
 	margin-bottom: 1em;
 }
 
+h3.metric-title {
+    display: inline;
+    margin-right: 4em;
+}
+
+h3.metric-title i.fa-question-circle {
+    color: #ccccff;
+    cursor: help;
+}
+
+div.metric-description {
+    text-align: left;
+}
+
+div.metric-long-description {
+    text-align: left;
+    margin-top: 1em;
+    color: #ccccff;
+}
+
+div.metrics-display div.alert-info {
+    margin: 1em 0;
+}
+
+div.metrics-display div.alert-info a {
+    cursor: pointer;
+}
+
+.legend {
+    display: inline;
+    float: right;
+}
+
 /* Rendered blocks */
 .customBlock{
 	background-color:#ffffff;

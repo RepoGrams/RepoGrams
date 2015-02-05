@@ -157,20 +157,17 @@ repogramsDirectives.directive('ngLegend', function () {
   return {
     restrict: 'E',
     scope: { currentMetric :"=current"},
-    template: '<p class="text-right"><b>Legend</b>' +
-    '<ul class="list-inline ">' +
-    '<li ng-repeat="style in styles[currentMetric.id]"><span class="customBlock" style="background-color: {{style.color}};" ng-if="style.color"></span> <span ng-bind-html="style.legendText"></span></li>' +
-    '</ul></p>',
-    controller: ['$scope', 'reposService', 'metricSelectionService', function ($scope, reposService, metricSelectionService) {
+    template: '<ul class="list-inline">' +
+      '<li><strong>Legend</strong>: </li>' +
+      '<li ng-repeat="style in styles[currentMetric.id]"><span class="customBlock" style="background-color: {{style.color}};" ng-if="style.color"></span> <span ng-bind-html="style.legendText"></span></li>' +
+      '</ul>',
+    controller: ['$rootScope', '$scope', 'reposService', 'metricSelectionService', function ($rootScope, $scope, reposService, metricSelectionService) {
       $scope.reposService = reposService;
       $scope.metricSelectionService = metricSelectionService;
       $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
       $scope.styles = {};
       angular.forEach(metricSelectionService.getAllMetrics(), function (value, index) {
-        $scope.styles[value.id] = [{
-          color: "#ffffff",
-          legendText: "Add a repository first…"
-        }];
+        $scope.styles[value.id] = [];
       });
 
       function setBranchUsageLegend(metricID) {
@@ -210,6 +207,8 @@ repogramsDirectives.directive('ngLegend', function () {
           setStandardMetricLegend(newMapper, metricID);
         }
       }, true);
+
+      $rootScope.$broadcast("mapperChange", $scope.currentMetric.id, reposService.getMapper($scope.currentMetric.id));
     }]
   };
 });

@@ -7,6 +7,7 @@ repogramsControllers.controller('RepogramsConfig',
       $scope.metricService = metricSelectionService;
       $scope.metrics = $scope.metricService.getAllMetrics();
       $scope.currentMetrics = $scope.metricService.getMetricsMap();
+      $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
 
       $scope.switchMetric = function () {
         $modal.open({
@@ -158,6 +159,30 @@ repogramsControllers.controller('RepogramsImporter',
   }]);
 
 repogramsControllers.controller('RepogramsDisplayCtrl',
-  ['$scope','metricSelectionService', function ($scope, metricSelectionService){
+  ['$scope','metricSelectionService', 'reposService', function ($scope, metricSelectionService, reposService){
     $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
+    $scope.numSelectedRepos = reposService.getRepoArr().length;
+
+    $scope.helpTooltip = function(metric) {
+      var tooltip = '<div class="metric-description">' + metric.description + '</div>';
+      if (metric.long_description) {
+        tooltip += '\n<div class="metric-long-description">' + metric.long_description + '</div>';
+      }
+      return tooltip;
+    };
+
+    $scope.focusOnUrlImporter = function($event) {
+      document.getElementById('importUrlId').focus();
+    };
+
+    $scope.openSelectMetricsModal = function($event) {
+      window.setTimeout(function() {
+        document.getElementById('metricSelect').click();
+      }, 0);
+
+    }
+
+    $scope.$on('reposChange', function (evnt, newRepoArr) {
+      $scope.numSelectedRepos = newRepoArr.length;
+    });
   }]);
