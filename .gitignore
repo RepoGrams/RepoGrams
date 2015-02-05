@@ -3,7 +3,7 @@ docs/*.log
 docs/*.synctex.gz
 config.inc.php
 .ropeproject
-*.pyc
+*.py[cod]
 *.log
 .idea
 .buildinfo
