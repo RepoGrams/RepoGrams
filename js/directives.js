@@ -208,6 +208,7 @@ repogramsDirectives.directive('ngLegend', function () {
 
       $scope.$on("mapperChange", function (evnt, metricID, newMapper) {
         console.assert(angular.isDefined(newMapper), "new mapper is not defined!");
+        $scope.styles[metricID] = [];
 
         switch (metricID) {
           case "branch_usage":

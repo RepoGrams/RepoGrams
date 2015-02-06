@@ -3,18 +3,34 @@ var repogramsServices = angular.module('repogramsServices', []);
 repogramsServices.service('reposService', ["$rootScope", "metricSelectionService", function ($rootScope, metricSelectionService) {
   var RepoArr = [];
   var totalChurnArr = [];
-  var mappers = {}; // TODO: support one mapper per metric
+  var mappers = {};
   var allMetrics = metricSelectionService.getAllMetrics();
   var maxVal = {};
-//  var noOfCommitsArr = [];
   var maxChurn = 0;
-  var maxCommits = 0;
-  for (var i = 0; i < allMetrics.length; i++) {
-    // initialize with dummy mapper
-    var metric = allMetrics[i].id;
-    mappers[metric] = mapperFactory.createMapper(1, metric);
-    maxVal[metric] = -1;
-  }
+
+  var initializeMappers = function() {
+    for (var i = 0; i < allMetrics.length; i++) {
+      // initialize with dummy mapper
+      var metric = allMetrics[i].id;
+      mappers[metric] = mapperFactory.createMapper(0, metric);
+      maxVal[metric] = -1;
+    }
+  };
+  initializeMappers();
+
+  /**
+   * Update the max value per metrix, if needed.
+   */
+  var updateMetricMax = function(metric, metricMaxVal, forceUpdate) {
+    if (metric == "branch_usage" || metric == "commit_author") {
+      mappers[metric] = mapperFactory.createMapper(null, metric);
+      $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
+    } else if (metricMaxVal > maxVal[metric] || forceUpdate) {
+      maxVal[metric] = metricMaxVal;
+      mappers[metric] = mapperFactory.createMapper(maxVal[metric], metric);
+      $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
+    }
+  };
 
   return {
     getRepoArr: function () {
@@ -30,17 +46,10 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
       RepoArr.push(repoJSON);
       $rootScope.$broadcast("reposChange", RepoArr);
       for (var metric in mappers) {
-        //var localMaxVal = Math.max.apply(Math, repoJSON.metricData[metric]);
-        var localMaxVal = arrayMax(repoJSON.metricData[metric]);
-        if (metric == "branch_usage" || metric == "commit_author") {
-          mappers[metric] = mapperFactory.createMapper(null, metric);
-          $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
-        } else if (localMaxVal > maxVal[metric]) {
-          maxVal[metric] = localMaxVal;
-          mappers[metric] = mapperFactory.createMapper(maxVal[metric], metric);
-          $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
-        }
+        var metricMaxVal = arrayMax(repoJSON.metricData[metric]);
+        updateMetricMax(metric, metricMaxVal, false);
       }
+
       /**
        * totalChurn is necessary to calculate the proportional size of blocks
        * all churns are summed up and stored per repo
@@ -59,13 +68,28 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
       console.assert(place < RepoArr.length, "");
       RepoArr.splice(place, 1);
       $rootScope.$broadcast("reposChange", RepoArr);
+
       var totalChurn = totalChurnArr[place];
       totalChurnArr.splice(place, 1);
       if (totalChurn >= maxChurn) {
         maxChurn = arrayMax(totalChurnArr);
         $rootScope.$broadcast("maxChurnChange", maxChurn);
       }
-      // TODO: recalculate maxvalue
+
+      if (RepoArr.length == 0) {
+        initializeMappers();
+        return;
+      }
+
+      for (var metric in mappers) {
+        var metricMaxVals = [];
+        for (var repoIndex = 0; repoIndex < RepoArr.length; repoIndex++) {
+          var repoJSON = RepoArr[repoIndex];
+          metricMaxVals.push(arrayMax(repoJSON.metricData[metric]));
+        }
+        var metricMaxVal = arrayMax(metricMaxVals);
+        updateMetricMax(metric, metricMaxVal, true);
+      }
     },
     moveRepoUp: function (place) {
       if(place == 0)
