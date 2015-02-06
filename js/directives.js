@@ -75,11 +75,6 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       innerMost.html(content);
       $scope.individualBlocks = jQuery.makeArray(innerMost.children());
 
-
-      /* TODO: create copy of container if needed (more than one metric) (not
-       * necessary currently, because there will only ever be one metric
-       * selected; in the advanced version this will change) */
-
       function updateColors(metricID) {
         // precompute colours outside of updating DOM
         var length = $scope.repo.metricData[firstSelectedMetric.id].length;
