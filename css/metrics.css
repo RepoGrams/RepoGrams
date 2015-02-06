@@ -156,6 +156,19 @@ slider span.bubble {
 	display: inline;
 }
 
+.repo-label .repo-label-actions {
+    display: none;
+    float: right;
+}
+
+.repo-label:hover .repo-label-actions {
+    display: inline-block;
+}
+
+.repo-label .repo-label-actions button {
+    padding-bottom: 2px;
+}
+
 form#repogramsAdder {
 	margin-top: 1em;
 }
