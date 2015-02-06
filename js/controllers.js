@@ -172,7 +172,7 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
     };
 
     $scope.focusOnUrlImporter = function($event) {
-      document.getElementById('importUrlId').focus();
+      jQuery('#importUrlId').focus().fadeTo('fast', 0.5).fadeTo('fast', 1);
     };
 
     $scope.openSelectMetricsModal = function($event) {
