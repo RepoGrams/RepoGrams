@@ -115,9 +115,10 @@
                       <ng-legend current="metric" ng-show="numSelectedRepos > 0" class="legend"></ng-legend>
                     </div>
                     <div ng-controller="RepogramsRender">
-                      <div class="repo col-md-12" ng-repeat="repo in repos">
+                    <div class="row">
+                      <div class="repo col-md-2 row" >
                         <div class="row">
-                          <div class="col-lg-2 repo-label">
+                          <div class="col-lg-11 repo-label" ng-repeat="repo in repos">
                             <label for="{{'metricBox'+$index}}">
                               <div class="repo-label-actions">
                                 <button type="button" class="btn btn-xs btn-primary" ng-click="moveUp($index)">
@@ -135,7 +136,11 @@
                               </span>
                             </label> 
                           </div> <!-- col-lg-2 close -->
-                          <div class="col-lg-10" id="{{'metricBox'+$index}}">
+                        </div> <!-- row close -->
+                      </div> <!-- end ng-repeat repos -->
+					  <div class="repo col-md-10 row repo-collection" style="overflow: auto;">
+                        <div class="row">
+                          <div class="col-sm-12" id="{{'metricBox'+$index}}" ng-repeat="repo in repos" style="overflow: visible">
                             <rg-render-metric current=metric.id></rg-render-metric>
                           </div> <!-- col-lg-10 close -->
                         </div> <!-- row close -->
@@ -144,6 +149,7 @@
                         <a ng-click="focusOnUrlImporter()">Add projects</a> to display.
                       </div>
                     </div> <!-- close Render controller -->
+                    </div>
                   </div> <!-- end ng-repeat metrics -->
                   <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos == 0">
                     <a ng-click="focusOnUrlImporter()">Add projects</a> and <a ng-click="openSelectMetricsModal()">select metrics</a> to display.

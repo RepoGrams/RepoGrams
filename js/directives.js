@@ -6,7 +6,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
 
     restrict: 'E',
     scope: {currentId : "=current" },
-    template: '<div class="renderMetric"><div style="width:100%; overflow: auto; white-space: nowrap;">' +
+    template: '<div class="renderMetric"><div style="width:100%; overflow: visible; white-space: nowrap;">' +
     '<div class="individualMetric" style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
     '</div></div></div>',
     link: function ($scope, element, attrs) {
@@ -131,7 +131,11 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
           }
         }
       });
-
+      
+      $('.repo-collection').on('scroll', function () {
+    	    $('.repo-collection').scrollLeft($(this).scrollLeft());
+    	});
+      
       $scope.$on('maxChurnChange', function (evnt, newMaxChurn) {
         $scope.maxChurn = newMaxChurn;
         updateWidth(blenSelectionService.getSelectedBlenMod().id);
