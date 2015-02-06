@@ -183,6 +183,19 @@ repogramsDirectives.directive('ngLegend', function () {
         };
       }
 
+      function setCommitAuthorLegend(metricID) {
+        $scope.styles[metricID][0] = {
+          legendText: '<span class="commitAuthorRainbow">' +
+                      '<span class="customBlock"></span>' +
+                      '<span class="customBlock"></span>' +
+                      '<span class="customBlock"></span>' +
+                      '<span class="customBlock"></span>' +
+                      '<span class="customBlock"></span>' +
+                      '<span class="customBlock"></span>' +
+                      '</span> … unique authors'
+        };
+      }
+
       function setStandardMetricLegend(newMapper, metricID) {
         var mappingInfo = newMapper.getMappingInfo();
         for (var i = 0; i < mappingInfo.length; i++) {
@@ -196,10 +209,18 @@ repogramsDirectives.directive('ngLegend', function () {
       $scope.$on("mapperChange", function (evnt, metricID, newMapper) {
         console.assert(angular.isDefined(newMapper), "new mapper is not defined!");
 
-        if (metricID == "branch_usage") {
-          setBranchUsageLegend(metricID);
-        } else {
-          setStandardMetricLegend(newMapper, metricID);
+        switch (metricID) {
+          case "branch_usage":
+            setBranchUsageLegend(metricID);
+            break;
+
+          case "commit_author":
+            setCommitAuthorLegend(metricID);
+            break;
+
+          default:
+            setStandardMetricLegend(newMapper, metricID);
+            break;
         }
       }, true);
 

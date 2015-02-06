@@ -138,6 +138,9 @@ var MapperFactory = function () {
       "#012c58"
     ];
 
+  // TODO this is the same color scheme as branch usage, only in reverse order
+  this.commit_author = this.branch_use_colors.slice().reverse();
+
   this.main_branch_color = "#ba0900";
 
   this.metric2color = {
@@ -168,14 +171,14 @@ var MapperFactory = function () {
       "#2b8cbe",
       "#08589e"
     ],
-    "commit_modularity": ["#fff7ec",
-      "#fee8c8",
-      "#fdd49e",
-      "#fdbb84",
-      "#fc8d59",
-      "#ef6548",
+    "commit_modularity": ["#990000",
       "#d7301f",
-      "#990000"
+      "#ef6548",
+      "#fc8d59",
+      "#fdbb84",
+      "#fdd49e",
+      "#fee8c8",
+      "#fff7ec"
     ],
     "most_edited_file": ["#fff7fb",
       "#ece7f2",
@@ -185,16 +188,35 @@ var MapperFactory = function () {
       "#3690c0",
       "#0570b0",
       "#034e7b"
-    ]
+    ],
+    "pom_files": ["#ffffff",
+      "#fcbba1",
+      "#fc9272",
+      "#fb6a4a",
+      "#ef3b2c",
+      "#cb181d",
+      "#a50f15",
+      "#67000d"
+    ],
+    "commit_age": ["#f7fcf0", // TODO change the color scheme
+      "#e0f3db",
+      "#ccebc5",
+      "#a8ddb5",
+      "#7bccc4",
+      "#4eb3d3",
+      "#2b8cbe",
+      "#08589e"
+    ],
   };
   this.chunkNum = 8;
 
   var outer = this;
 
-  var EqualRangeMapper = function (maxValue, metricName, exp) {
+  var EqualRangeMapper = function (maxValue, metricName, exp, separateZero) {
 
     this._mappingInfo = null;
     exp = exp ? exp : 0;
+    separateZero = Boolean(separateZero);
 
     this.map = function (value) {
       var mappingInfos = this.getMappingInfo();
@@ -211,11 +233,26 @@ var MapperFactory = function () {
         return this._mappingInfo;
       }
 
-      var step = maxValue / outer.chunkNum;
-      var boundary = 0;
       var mappingInfo = [];
+      var step, boundary, i;
+      if (!separateZero) {
+        step = maxValue / outer.chunkNum;
+        boundary = 0;
+        i = 0;
+      } else {
+        mappingInfo.push({
+          lowerBound: 0,
+          upperBound: 0,
+          color: outer.metric2color[metricName][0]
+        });
 
-      for (var i = 0; i < outer.chunkNum; i++) {
+        step = (maxValue - 1) / (outer.chunkNum - 1);
+        boundary = 1;
+        i = 1;
+      }
+
+
+      for (i; i < outer.chunkNum; i++) {
         mappingInfo.push({
           lowerBound: Math.ceil10(boundary, exp),
           upperBound: Math.specialBoundFloor10(boundary + step, exp, maxValue),
@@ -312,9 +349,94 @@ var MapperFactory = function () {
     };
   };
 
+  var TimesRangeMapper = function (maxValue, metricName) {
+    this._mappingInfo = null;
+
+    this.map = function (value) {
+      var mappingInfos = this.getMappingInfo();
+      for (var i = 0; i < mappingInfos.length; i++) {
+        if (value <= mappingInfos[i].upperBound) {
+          return mappingInfos[i].color;
+        }
+      }
+      return mappingInfos[mappingInfos.length - 1].color;
+    };
+
+    this.getMappingInfo = function () {
+      if (this._mappingInfo) {
+        return this._mappingInfo;
+      }
+
+      var mName = metricName;
+      var mappingInfo = [];
+
+      mappingInfo.push({
+        lowerBound: 0,
+        upperBound: 59,
+        legendText: "Less than 1 minute"
+      });
+
+      mappingInfo.push({
+        lowerBound: 60,
+        upperBound: 3599,
+        legendText: "1–59 minutes"
+      });
+
+      mappingInfo.push({
+        lowerBound: 3600,
+        upperBound: 7199,
+        legendText: "1–2 hours"
+      });
+
+      mappingInfo.push({
+        lowerBound: 7200,
+        upperBound: 43199,
+        legendText: "2–12 hours"
+      });
+
+      mappingInfo.push({
+        lowerBound: 43200,
+        upperBound: 86399,
+        legendText: "12–24 hours"
+      });
+
+      mappingInfo.push({
+        lowerBound: 86400,
+        upperBound: 172799,
+        legendText: "1–2 days"
+      });
+
+      mappingInfo.push({
+        lowerBound: 172800,
+        upperBound: 604799,
+        legendText: "2–7 days"
+      });
+
+      mappingInfo.push({
+        lowerBound: 604800,
+        upperBound: Number.MAX_VALUE,
+        legendText: "More than 7 days"
+      });
+
+      var i = 0;
+      mappingInfo.map(function (val) {
+        val.color = outer.metric2color[mName][i++];
+      });
+
+      this._mappingInfo = mappingInfo;
+      return mappingInfo;
+    };
+  }
+
   var BranchUsageMapper = function () {
     this.map = function (value) {
       return outer.branch_use_colors[value - 1]; // values start with 1, arrays with 0
+    };
+  };
+
+  var CommitAuthorMapper = function () {
+    this.map = function (value) {
+      return outer.commit_author[value];
     };
   };
 
@@ -322,8 +444,14 @@ var MapperFactory = function () {
     switch (metricName) {
       case "branch_usage":
         return new BranchUsageMapper();
+      case "commit_author":
+        return new CommitAuthorMapper();
       case "commit_message_length":
         return new FibonacciRangeMapper(maxValue, metricName);
+      case "commit_age":
+        return new TimesRangeMapper(maxValue, metricName);
+      case "pom_files":
+        return new EqualRangeMapper(maxValue, metricName, 0, true);
       case "commit_modularity":
         return new EqualRangeMapper(maxValue, metricName, -2);
       default:

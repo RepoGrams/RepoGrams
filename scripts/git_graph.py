@@ -43,13 +43,16 @@ class GitGraph(object):
         self.hash2vertex = {}
 
         # properties associated with each commit
+        self.vertex2commit = self.graph.new_vertex_property("object")
         self.commit_hashsum = self.graph.new_vertex_property("string")
         self.commit_msg = self.graph.new_vertex_property("object")
         self.commit_timestamp = self.graph.new_vertex_property("string")
         self.commit_files = self.graph.new_vertex_property("vector<string>")
         self.commit_churn = self.graph.new_vertex_property("int")
         self.branch_complexity = self.graph.new_vertex_property("int")
+        self.commit_author = self.graph.new_vertex_property("int")
         self.associated_branch = self.graph.new_vertex_property("int")
+        self.commit_age = self.graph.new_vertex_property("int")
 
         # sentinel: required to have a rooted DAG
         self.sentinel = self.graph.add_vertex()
@@ -60,6 +63,7 @@ class GitGraph(object):
         for commit in self.git_helper.get_all_commits():
             parents, commit_timestamp, commitmsg, added, removed, files = self.git_helper.get_commit_data(commit)
             commit_vertex = self.graph.add_vertex()
+            self.vertex2commit[commit_vertex] = commit
             self.hash2vertex[str(commit.oid)] = commit_vertex
             self.commit_hashsum[commit_vertex] = str(commit.oid)
             self.commit_msg[commit_vertex] = commitmsg
@@ -67,6 +71,8 @@ class GitGraph(object):
             self.commit_files[commit_vertex] = files
             self.commit_churn[commit_vertex] = added+removed
             self.branch_complexity[commit_vertex] = 0
+            self.commit_author[commit_vertex] = 0
+            self.commit_age[commit_vertex] = 0
             if not parents:
                 debug("initial commit detected: {}".format(commit))
                 self.graph.add_edge(self.sentinel, commit_vertex)
@@ -85,6 +91,8 @@ class GitGraph(object):
         self.branch_heads = map(str, branch_heads)
         self.metric4()
         self.metric6()
+        self.metric_commit_author()
+        self.metric_commit_age()
 
     def compute_dominators(self):
         """
@@ -229,6 +237,26 @@ class GitGraph(object):
                 workqueue += todo
             branch_id += 1
 
+    def metric_commit_author(self):
+        """Computes a unique numeric ID for each commit author, based on email address."""
+
+        authors = []
+        for commit_vertex in self.iterate_commits():
+            author_email = self.vertex2commit[commit_vertex].author.email
+            if author_email not in authors:
+                authors.append(author_email)
+            self.commit_author[commit_vertex] = authors.index(author_email)
+
+    def metric_commit_age(self):
+        """Computes the age of the commit, based on the lowest time difference between the commit and any of its
+        parents."""
+
+        for commit_vertex in self.iterate_commits():
+            commit = self.vertex2commit[commit_vertex]
+            parent_distances = [commit.commit_time - parent.commit_time for parent in commit.parents]
+            self.commit_age[commit_vertex] = min(parent_distances) if parent_distances else 0
+
+
     def commit_lang_compl(self, name_mapping, extension_mapping):
         """Computes the commit language complexity
            @name_mapping: a  mapping from file names to file types
@@ -293,6 +321,17 @@ class GitGraph(object):
             result.append(numpy.mean(similarity_scores))
         return result
 
+    def pom_files(self):
+        """Computes the number of pom.xml files that were modified in a commit
+        @:returns: a list containing the result
+        """
+
+        result = []
+        for commit in self.iterate_commits():
+            pom_files_changed = sum(1 for f in self.commit_files[commit] if os.path.basename(f) == 'pom.xml')
+            result.append(pom_files_changed)
+        return result
+
     def iterate_commits(self, order=Order.CHRONO):
         if order == Order.TOPO:
             for commit_node in self.iterate_topo():
@@ -345,7 +384,9 @@ class GitGraph(object):
         commit_messages = []
         files = []
         associated_branches = []
+        commit_author = []
         bcomplexities = []
+        commit_age = []
         for commit in self.iterate_commits():
             assert self.associated_branch[commit] != 0, "{}".format(self.commit_msg[commit])
             checksums.append(self.commit_hashsum[commit])
@@ -353,14 +394,18 @@ class GitGraph(object):
             commit_messages.append(self.commit_msg[commit])
             files.append(list(self.commit_files[commit]))
             associated_branches.append(self.associated_branch[commit])
+            commit_author.append(self.commit_author[commit])
             bcomplexities.append(self.branch_complexity[commit])
+            commit_age.append(self.commit_age[commit])
         result = {
             "checksums": checksums,
             "churns": churns,
             "commit_messages": commit_messages,
             "files": files,
             "associated_branches": associated_branches,
+            "commit_author": commit_author,
             "bcomplexities": bcomplexities,
+            "commit_age": commit_age,
             "precomputed": self.precompute
         }
         if self.precompute:
@@ -372,6 +417,7 @@ class GitGraph(object):
             result["most_edit_file"] = self.most_edit_file()
             result["commit_message_length"] = self.commit_message_length()
             result["commit_modularity"] = self.commit_modularity()
+            result["pom_files"] = self.pom_files()
         self.cache[self.git_helper.repo_url] = result
         return result
 
