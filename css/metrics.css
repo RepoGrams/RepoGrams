@@ -50,6 +50,14 @@ div.metrics-display div.alert-info a {
 	transition: width 1s;
 }
 
+.metrics-repo-container {
+    margin-bottom: 2em;
+}
+
+.renderMetric {
+    margin-bottom: 3px;
+}
+
 .renderMetric .customBlock:hover {
 	box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, 0.3), 0px 0px 2px 2px rgba(102, 175, 233, 0.6);
 	cursor: pointer;
@@ -170,36 +178,44 @@ slider span.bubble {
 }
 
 .label-earliest-commits {
-	padding-left: 2em;
-}
-
-.label-latest-commits {
-	padding-right: 2em;
+	padding-left: 0em;
 }
 
 .repo-label {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	margin-bottom: 1px;
-	margin-top: 1px;
+    margin-bottom: 3px;
+    margin-top: 2px;
 }
 
 .repo-label label {
-	display: inline;
+    display: flex;
+    margin-bottom: 0;
 }
 
 .repo-label .repo-label-actions {
-    display: none;
-    float: right;
+    display: inline-block;
+    opacity: 0.1;
+    margin-right: 8px;
 }
 
 .repo-label:hover .repo-label-actions {
-    display: inline-block;
+    opacity: 1;
 }
 
 .repo-label .repo-label-actions button {
-    padding-bottom: 2px;
+    padding: 1px 2px 2px;
+}
+
+.repo-label .repo-label-name {
+    flex: auto;
+    margin-top: -1px;
+    border-bottom: 1px dotted #c0c0c0;
+}
+
+.repo-collection {
+    overflow: auto;
 }
 
 form#repogramsAdder {

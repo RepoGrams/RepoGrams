@@ -165,14 +165,14 @@ repogramsServices.service('metricSelectionService', function () {
     {
       id: "pom_files",
       label: "POM files",
-      icon: "cog", // TODO change icon
+      icon: "codepen",
       description: "The number of POM files changed in every commit.",
       long_description: null
     },
     {
       id: "commit_author",
       label: "Commit Author",
-      icon: "pencil-square", // TODO change icon
+      icon: "user",
       description: "Each commit author is associated wih a unique color. A commit block is colored according to its author.",
       long_description: null
     },
@@ -180,8 +180,8 @@ repogramsServices.service('metricSelectionService', function () {
       id: "commit_age",
       label: "Commit Age",
       icon: "clock-o",
-      description: "How long it took for each commit, compared to its (youngest) parent commit.",
-      long_description: null
+      description: "Elapsed time between a commit and its parent commit.",
+      long_description: "For merge commits we consider the elapsed time between a commit and its youngest parent commit."
     }
   ];
   var selectedMetrics = [];

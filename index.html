@@ -92,20 +92,14 @@
           <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
-                  <span class="col-xs-12 col-lg-2">
-                    Repositories
-                  </span>
-                  <span class="col-xs-6 col-lg-5 text-muted label-earliest-commits">
-                    Earliest commits
-                  </span>
-                  <span class="col-xs-6 col-lg-5 text-muted text-right label-latest-commits">
-                    Latest commits
-                  </span>
+                  <span class="col-xs-12 col-lg-2">Repositories</span>
+                  <span class="col-xs-6 col-lg-5 text-muted label-earliest-commits">Earliest commits</span>
+                  <span class="col-xs-6 col-lg-5 text-muted text-right">Latest commits</span>
                 </div><!-- row close -->
               </div> <!-- panel heading close -->
               <div class="panel-body">
                 <div class="metrics-display" ng-controller="RepogramsDisplayCtrl">
-                  <div ng-repeat="metric in selectedMetrics">
+                  <div calss="metrics-repo-container" ng-repeat="metric in selectedMetrics">
                     <div class="col-md-12">
                       <h3 class="metric-title">
                         <i class="fa fa-{{metric.icon}}"></i>
@@ -115,40 +109,38 @@
                       <ng-legend current="metric" ng-show="numSelectedRepos > 0" class="legend"></ng-legend>
                     </div>
                     <div ng-controller="RepogramsRender">
-                    <div class="row">
-                      <div class="repo col-md-2 row" >
-                        <div class="row">
-                          <div class="col-lg-11 repo-label" ng-repeat="repo in repos">
-                            <label for="{{'metricBox'+$index}}">
-                              <div class="repo-label-actions">
-                                <button type="button" class="btn btn-xs btn-primary" ng-click="moveUp($index)">
-                                  <span class="glyphicon glyphicon-arrow-up"></span>
-                                </button>
-                                <button type="button" class="btn btn-xs btn-primary" ng-click="moveDown($index)">
-                                  <span class="glyphicon glyphicon-arrow-down"></span>
-                                </button>
-                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeRepo($index)">
-                                  <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                              </div>
-                              <span title="{{repo.name}}">
-                                {{repo.name}}
-                              </span>
-                            </label> 
-                          </div> <!-- col-lg-2 close -->
-                        </div> <!-- row close -->
-                      </div> <!-- end ng-repeat repos -->
-					  <div class="repo col-md-10 row repo-collection" style="overflow: auto;">
-                        <div class="row">
-                          <div class="col-sm-12" id="{{'metricBox'+$index}}" ng-repeat="repo in repos" style="overflow: visible">
-                            <rg-render-metric current=metric.id></rg-render-metric>
-                          </div> <!-- col-lg-10 close -->
-                        </div> <!-- row close -->
-                      </div> <!-- end ng-repeat repos -->
-                      <div class="col-md-12 alert alert-info" ng-if="repos.length == 0">
-                        <a ng-click="focusOnUrlImporter()">Add projects</a> to display.
-                      </div>
-                    </div> <!-- close Render controller -->
+                      <div class="row">
+                        <div class="repo col-md-2">
+                          <div class="row">
+                            <div class="col-lg-12 repo-label" ng-repeat="repo in repos">
+                              <label for="{{'metricBox'+$index}}">
+                                <div class="repo-label-actions">
+                                  <button type="button" class="btn btn-xs btn-danger" ng-click="removeRepo($index)">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                  </button>
+                                  <button type="button" class="btn btn-xs" ng-class="{'disabled': $first, 'btn-primary': !$first}" ng-click="moveUp($index)">
+                                    <span class="glyphicon glyphicon-arrow-up"></span>
+                                  </button>
+                                  <button type="button" class="btn btn-xs" ng-class="{'disabled': $last, 'btn-primary': !$last}" ng-click="moveDown($index)">
+                                    <span class="glyphicon glyphicon-arrow-down"></span>
+                                  </button>
+                                </div>
+                                <span class="repo-label-name" title="{{repo.name}}">{{repo.name}}</span>
+                              </label>
+                            </div> <!-- col-lg-2 close -->
+                          </div> <!-- row close -->
+                        </div> <!-- end ng-repeat repos -->
+                        <div class="repo col-md-10 row repo-collection">
+                          <div class="row">
+                            <div class="col-sm-12" id="{{'metricBox'+$index}}" ng-repeat="repo in repos" style="overflow: visible">
+                              <rg-render-metric current=metric.id></rg-render-metric>
+                            </div> <!-- col-lg-10 close -->
+                          </div> <!-- row close -->
+                        </div> <!-- end ng-repeat repos -->
+                        <div class="col-md-12 alert alert-info" ng-if="repos.length == 0">
+                          <a ng-click="focusOnUrlImporter()">Add projects</a> to display.
+                        </div>
+                      </div> <!-- close Render controller -->
                     </div>
                   </div> <!-- end ng-repeat metrics -->
                   <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos == 0">
