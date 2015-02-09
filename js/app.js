@@ -180,7 +180,7 @@ var MapperFactory = function () {
       "#fee8c8",
       "#fff7ec"
     ],
-    "most_edited_file": ["#fff7fb",
+    "most_edited_file": ["#ffffff",
       "#ece7f2",
       "#d0d1e6",
       "#a6bddb",
@@ -450,6 +450,7 @@ var MapperFactory = function () {
         return new FibonacciRangeMapper(maxValue, metricName);
       case "commit_age":
         return new TimesRangeMapper(maxValue, metricName);
+      case "most_edited_file":
       case "pom_files":
         return new EqualRangeMapper(maxValue, metricName, 0, true);
       case "commit_modularity":
