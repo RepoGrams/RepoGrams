@@ -74,6 +74,7 @@ div.metrics-display div.alert-info a {
 
 .list-inline .branchUsageRainbow {
 	display: inline-block;
+    margin-left: 75px;
 	width: 60px;
 }
 
