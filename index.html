@@ -99,7 +99,8 @@
               </div> <!-- panel heading close -->
               <div class="panel-body">
                 <div class="metrics-display" ng-controller="RepogramsDisplayCtrl">
-                  <div class="metrics-repo-container" ng-repeat="metric in selectedMetrics">
+                  <div class="metrics-repo-container" ng-repeat="metric in metrics">
+                  <div  ng-show="show(metric)">
                     <div class="col-md-12">
                       <h3 class="metric-title">
                         <i class="fa fa-{{metric.icon}}"></i>
@@ -142,6 +143,7 @@
                         </div>
                       </div> <!-- close Render controller -->
                     </div>
+                  </div>
                   </div> <!-- end ng-repeat metrics -->
                   <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos == 0">
                     <a ng-click="focusOnUrlImporter()">Add projects</a> and <a ng-click="openSelectMetricsModal()">select metrics</a> to display.
