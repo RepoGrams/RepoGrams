@@ -2,12 +2,13 @@ var repogramsDirectives = angular.module('repogramsDirectives', []);
 
 repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$modal', 'reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService', 
 function ($interpolate, $compile, $modal, reposService, blenService, metricSelectionService, blenSelectionService, zoomService) {
+  var repo2skeleton = {};
   return {
 
     restrict: 'E',
     scope: {currentId : "=current" },
     template: '<div class="renderMetric"><div style="width:100%; overflow: visible; white-space: nowrap;">' +
-    '<div class="individualMetric" style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
+    '<div class="individualMetric" ng-click="popModal($event)"  style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
     '</div></div></div>',
     link: function ($scope, element, attrs) {
       // set up directive
@@ -20,7 +21,11 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       $scope.maxChurn = $scope.reposService.getMaxChurn();
       $scope.noOfCommits = $scope.repo.metricData.churn.length;
 
-      $scope.popModal = function (commitID, commitURL, index) {
+      $scope.popModal = function (event) {
+        /*commitID, commitURL, index*/
+        commitID = $(event.target).attr("data-commitID");
+        commitURL = $(event.target).attr("data-commitURL");
+        index = $(event.target).attr("data-index");
         $modal.open({
           scope: $scope,
           template: '<div class="modal-header">' +
@@ -42,7 +47,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       };
 
       // template string for individual blocks
-      var templateBlock = '<div class="customBlock" ng-click="popModal(\'{{commitID}}\', \'{{commitURL}}\', {{id}})" tooltip-html-unsafe=\'{{tooltip}}\' tooltip-popup-delay="200" style="background-color: red; width: {{width}};"></div>';
+      var templateBlock = '<div class="customBlock" data-commitID="\'{{commitID}}\'" data-commitURL="{{commitURL}}" data-index="{{id}}"  tooltip-html-unsafe=\'{{tooltip}}\' tooltip-popup-delay="200" style="background-color: red; width: {{width}};"></div>';
       var templateBlockString = $interpolate(templateBlock);
 
 
@@ -52,25 +57,31 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       var currentBlockLengthMode = blenSelectionService.getSelectedBlenMod().id;
       var commitBlocks = "";
       var repoURL = $scope.repo.url;
-      for (var i = 0; i < $scope.repo.metricData[firstSelectedMetric.id].length; i++) {
-        var commitMsg = $scope.repo.metricData.commit_msgs[i];
-        var msg = _.escape(commitMsg.length > 40 ? commitMsg.substring(0, 39) + '…'
-          : commitMsg);
-        var commitID = $scope.repo.metricData.checksums[i];
-        var commitURL = repoURL.replace(/\.git$|$/, "/commit/" + commitID);
-        var commitHash = commitID.substring(0, 8);
-        var tooltip = '<p class=\"commitMessage\"><code>' + commitHash + '</code> <span>' + msg + '</span></p><p class=\"text-muted\">Click for details</p>';
-        var churn = $scope.repo.metricData.churn[i];
-        var context = {
-          width: blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string,
-          tooltip: tooltip,
-          commitID: commitID,
-          commitURL: commitURL,
-          id: i
-        };
-        commitBlocks += templateBlockString(context);
+      var content;
+      if ($scope.repo.url in repo2skeleton) {
+        content = repo2skeleton[$scope.repo.url];
+      } else {
+        for (var i = 0; i < $scope.repo.metricData[firstSelectedMetric.id].length; i++) {
+          var commitMsg = $scope.repo.metricData.commit_msgs[i];
+          var msg = _.escape(commitMsg.length > 40 ? commitMsg.substring(0, 39) + '…'
+            : commitMsg);
+            var commitID = $scope.repo.metricData.checksums[i];
+            var commitURL = repoURL.replace(/\.git$|$/, "/commit/" + commitID);
+            var commitHash = commitID.substring(0, 8);
+            var tooltip = '<p class=\"commitMessage\"><code>' + commitHash + '</code> <span>' + msg + '</span></p><p class=\"text-muted\">Click for details</p>';
+            var churn = $scope.repo.metricData.churn[i];
+            var context = {
+              width: blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string,
+              tooltip: tooltip,
+              commitID: commitID,
+              commitURL: commitURL,
+              id: i
+            };
+            commitBlocks += templateBlockString(context);
+        }
+        content = $compile(commitBlocks)($scope);
+        repo2skeleton[$scope.repo] = content;
       }
-      var content = $compile(commitBlocks)($scope);
       var innerMost = element.find(".individualMetric");
       innerMost.html(content);
       $scope.individualBlocks = jQuery.makeArray(innerMost.children());
