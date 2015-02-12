@@ -116,27 +116,27 @@ div.metrics-display div.alert-info a {
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(1) {
-	background-color: #ffff00;
+	background-color: #fcfd0c;
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(2) {
-	background-color: #1ce6ff;
+	background-color: #fca4fa;
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(3) {
-	background-color: #ff34ff;
+	background-color: #09dafc;
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(4) {
-	background-color: #ff4a46;
+	background-color: #d86606;
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(5) {
-	background-color: #008941;
+	background-color: #03883f;
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(6) {
-	background-color: #006fa6;
+	background-color: #153cfd;
 }
 
 /* to align buttons with the input field TODO: don't use fixed height! */
