@@ -124,7 +124,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
 
 
       // set colors for each metric that should be displayed
-      updateColors($scope.currentId);
+      setTimeout(updateColors, 0, $scope.currentId);
 
       // register watches to trigger recomputations
 
