@@ -81,6 +81,9 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
         }
         repo2skeleton[$scope.repo.url] = commitBlocks;
       }
+      /* Avoid blocking the UI for too long by using $evalAsync
+       * Blocking is dominated by compile, but at least not everything blocks*/
+      var postponed = function($scope) {
       var content = $compile(commitBlocks)($scope);
       var innerMost = element.find(".individualMetric");
       innerMost.html(content);
@@ -176,6 +179,8 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
           setTimeout(updateWidth, 0, $scope.last_currentBlockLengthMode);
         }
       });
+      };
+      $scope.$evalAsync(postponed);
     }
   };
 }]);
