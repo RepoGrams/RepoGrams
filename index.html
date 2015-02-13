@@ -134,7 +134,7 @@
                         <div class="repo col-md-10 row repo-collection">
                           <div class="row">
                             <div class="col-sm-12" id="{{'metricBox'+$index}}" ng-repeat="repo in repos" style="overflow: visible">
-                              <rg-render-metric current=metric.id></rg-render-metric>
+                              <rg-render-metric current=metric.id visible=show(metric)></rg-render-metric>
                             </div> <!-- col-lg-10 close -->
                           </div> <!-- row close -->
                         </div> <!-- end ng-repeat repos -->

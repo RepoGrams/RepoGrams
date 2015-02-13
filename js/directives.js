@@ -6,12 +6,13 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
   return {
 
     restrict: 'E',
-    scope: {currentId : "=current" },
+    scope: {currentId_f : "&current", visible: "&visible" },
     template: '<div class="renderMetric"><div style="width:100%; overflow: visible; white-space: nowrap;">' +
     '<div class="individualMetric" ng-click="popModal($event)"  style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
     '</div></div></div>',
     link: function ($scope, element, attrs) {
       // set up directive
+      $scope.currentId = $scope.currentId_f();
       $scope.reposService = reposService;
       $scope.metricSelectionService = metricSelectionService;
       $scope.blenSelectionService = blenSelectionService;
@@ -84,8 +85,14 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       var innerMost = element.find(".individualMetric");
       innerMost.html(content);
       $scope.individualBlocks = jQuery.makeArray(innerMost.children());
+      $scope.last_metricID = $scope.curentId;
+      $scope.last_currentBlockLengthMode = undefined;
 
       function updateColors(metricID) {
+        if (!$scope.visible()) {
+          $scope.last_metricID = metricID;
+          return;
+        }
         // precompute colours outside of updating DOM
         var length = $scope.repo.metricData[firstSelectedMetric.id].length;
         var newColours = new Array(length);
@@ -108,6 +115,10 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       }
 
       function updateWidth(currentBlockLengthMode) {
+        if (!$scope.visible()) {
+          $scope.last_currentBlockLengthMode = currentBlockLengthMode;
+          return;
+        }
         // precompute width outside of updating DOM
         var length = $scope.repo.metricData[firstSelectedMetric.id].length;
         var newWidths = new Array(length);
@@ -157,6 +168,13 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
 
       $scope.$watch("blenSelectionService.getSelectedBlenMod()", function (newVal) {
         updateWidth(newVal.id);
+      });
+
+      $scope.$watch("visible()", function(newVal) {
+        if (newVal) {
+          setTimeout(updateColors, 0, $scope.last_metricID);
+          setTimeout(updateWidth, 0, $scope.last_currentBlockLengthMode);
+        }
       });
     }
   };
