@@ -170,7 +170,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
         updateWidth(newVal.id);
       });
 
-      $scope.$watch("visible()", function(newVal) {
+      $scope.$watch($scope.visible, function(newVal) {
         if (newVal && $scope.last_metricID !== undefined && $scope.last_currentBlockLengthMode !== undefined) {
           setTimeout(updateColors, 0, $scope.last_metricID);
           setTimeout(updateWidth, 0, $scope.last_currentBlockLengthMode);
