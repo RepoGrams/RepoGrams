@@ -59,7 +59,10 @@
         <!-- First block for the selection box and zoom slider -->
         <div class="col-md-12 col-lg-10 col-lg-pull-2">
           <div class="panel panel-default form-inline">
-            <div class="panel-heading">Settings</div>
+            <div class="panel-heading" ng-controller="RepogramsConfig">
+              <span>Settings</span>
+              <span class="pull-right btn btn-link btn-xs" ng-click="loadExamples()" ng-if="hasExamples">Load examples</span>
+            </div>
             <div class="panel-body">
               <!-- Dropdown Menu for Metric Selection -->
               <div class="form-group col-md-4 col-sm-12 configBlock" ng-controller="RepogramsConfig">
@@ -71,7 +74,7 @@
 
               <div class="form-group col-md-4 col-sm-12 configBlock" ng-controller="RepogramsConfig">
                 <button id="blockLengthSelect" class="form-control pull-right" ng-click="switchBlen()">Switch…</button>
-                <label for="blockLengthSelect">Block length:</label> <i class="fa fa-{{currentBlen.value.icon}}"></i> <em>{{currentBlen.value.label}}</em>
+                <label for="blockLengthSelect">Block length:</label> <i class="fa fa-{{selectedBlenMod.icon}}"></i> <em>{{selectedBlenMod.label}}</em>
               </div>
 
               <!-- Zoom Slider -->

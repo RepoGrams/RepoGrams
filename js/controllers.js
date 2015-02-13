@@ -1,12 +1,75 @@
 var repogramsControllers = angular.module('repogramsControllers', ['ngSanitize']);
 
 repogramsControllers.controller('RepogramsConfig',
-  ['$scope', '$modal', 'metricSelectionService', 'blenSelectionService', 'zoomService',
-    function ($scope, $modal, metricSelectionService, blenSelectionService, zoomService) {
-      //default metric is 1
-      $scope.metricService = metricSelectionService;
-      $scope.metrics = $scope.metricService.getAllMetrics();
-      $scope.currentMetrics = $scope.metricService.getMetricsMap();
+  ['$rootScope', '$scope', '$modal', 'metricSelectionService', 'blenSelectionService', 'zoomService', 'reposService',
+    function ($rootScope, $scope, $modal, metricSelectionService, blenSelectionService, zoomService, reposService) {
+
+      // Services and controllers
+      $scope.metricSelectionService = metricSelectionService;
+      $scope.blenSelectionService = blenSelectionService;
+      $scope.zoomService = zoomService;
+      $scope.reposService = reposService;
+
+      // Examples
+      $scope.examples = [];
+      /*@@@EXAMPLES_PLACEHOLDER@@@*/
+      $scope.hasExamples = Boolean($scope.examples.length);
+
+      $scope.loadExamples = function () {
+        $modal.open({
+          scope: $scope,
+          template: '<form>' +
+          '<div class="modal-header"><h3 class="modal-title">Select an example to load</h3></div>' +
+          '<div class="modal-body">' +
+          '<div class="form-group" ng-repeat="(i, example) in examples">' +
+          '<label for="example_{{i}}"><button id="example_{{i}}" class="btn btn-sm btn-primary" type="checkbox" ng-value="example" ng-click="accept(example)">Load</button> {{example.name}}</label>' +
+          '</div>' +
+          '</div>' +
+          '<div class="modal-footer">' +
+          '<button class="btn btn-default" ng-click="dismiss()">Cancel</button>' +
+          '</div>' +
+          '</form>',
+          controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+            $scope.dismiss = $modalInstance.dismiss;
+            $scope.accept = function (example) {
+              while (reposService.getRepoArr().length) {
+                $scope.reposService.removeRepo(0);
+              }
+
+              $scope.metricSelectionService.clear();
+              var allMetrics = $scope.metricSelectionService.getAllMetrics();
+              for (var i = 0; i < example.metrics.length; i++) {
+                for (var j = 0; j < allMetrics.length; j++) {
+                  var exampleMetricId = example.metrics[i];
+                  var metric = allMetrics[j];
+                  if (metric.id == exampleMetricId) {
+                    $scope.metricSelectionService.addMetric(metric);
+                    break;
+                  }
+                }
+              }
+
+              var allBlensMods = $scope.blenSelectionService.getAllBlenMods();
+              for (var i = 0; i < allBlensMods.length; i++) {
+                var blenMod = allBlensMods[i];
+                if (blenMod.id == example.blen) {
+                  $scope.blenSelectionService.setBlenMod(blenMod);
+                  break;
+                }
+              }
+
+              $scope.currentZoom.num = example.zoom;
+              $scope.changeZoom();
+
+              $rootScope.$broadcast('loadExampleRepos', example.repositories);
+
+              $modalInstance.close();
+            };
+          }]
+        });
+      };
+
+      $scope.metrics = $scope.metricSelectionService.getAllMetrics();
       $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
 
       $scope.switchMetric = function () {
@@ -16,7 +79,7 @@ repogramsControllers.controller('RepogramsConfig',
           '<div class="modal-header"><h3 class="modal-title">Select new metric</h3></div>' +
           '<div class="modal-body">' +
           '<div class="form-group" ng-repeat="(i, metric) in metrics">' +
-          '<label for="metric_{{i}}"><input id="metric_{{i}}" type="checkbox" name="metric" ng-value="metric" ng-model="currentMetrics[i].contained" ng-change="accept(currentMetrics[{{i}}].metric)"> <i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</label>' +
+          '<label for="metric_{{i}}"><input id="metric_{{i}}" type="checkbox" name="metric" ng-model="metric.selected" ng-click="swap(metric)"> <i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</label>' +
           '<p ng-bind-html="metric.description"></p>' +
           '<p class="text-muted" ng-if="metric.long_description" ng-bind-html="metric.long_description"></p>' +
           '</div>' +
@@ -27,18 +90,19 @@ repogramsControllers.controller('RepogramsConfig',
           '</form>',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.dismiss = $modalInstance.dismiss;
-            $scope.accept = function (metric) {
-              $scope.metricService.swapMetric(metric);
+            $scope.swap = function (metric) {
+              $scope.metricSelectionService.swapMetric(metric);
             };
           }]
         });
       };
 
-      $scope.blenService = blenSelectionService;
-      $scope.blenMods = $scope.blenService.getAllBlenMods();
-      $scope.currentBlen = {
-        value: $scope.blenService.getSelectedBlenMod()
-      };
+      $scope.blenMods = $scope.blenSelectionService.getAllBlenMods();
+      $scope.selectedBlenMod = $scope.blenSelectionService.getSelectedBlenMod();
+      $scope.$on('blenModChange', function() {
+        $scope.selectedBlenMod = $scope.blenSelectionService.getSelectedBlenMod();
+      });
+
       $scope.switchBlen = function () {
         // TODO this is very similar to the metrics modal, consolidate this together
         $modal.open({
@@ -47,7 +111,7 @@ repogramsControllers.controller('RepogramsConfig',
           '<div class="modal-header"><h3 class="modal-title">Select new block length</h3></div>' +
           '<div class="modal-body">' +
           '<div class="form-group" ng-repeat="(i, blen) in blenMods">' +
-          '<label for="blen_{{i}}"><input id="blen_{{i}}" type="radio" name="blen" ng-value="blen" ng-model="currentBlen.value" ng-change="accept()"> <i class="fa fa-{{blen.icon}}"></i> {{blen.label}}</label>' +
+          '<label for="blen_{{i}}"><input id="blen_{{i}}" type="radio" name="blen" ng-model="blen.selected" ng-click="swap(blen)"> <i class="fa fa-{{blen.icon}}"></i> {{blen.label}}</label>' +
           '<p ng-bind-html="blen.description"></p>' +
           '</div>' +
           '</div>' +
@@ -57,20 +121,19 @@ repogramsControllers.controller('RepogramsConfig',
           '</form>',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.dismiss = $modalInstance.dismiss;
-            $scope.accept = function (result) {
-              $scope.blenService.setBlenMod($scope.currentBlen.value);
-              $modalInstance.close(result);
+            $scope.swap = function (blen) {
+              $scope.blenSelectionService.setBlenMod(blen);
+              $modalInstance.close();
             };
           }]
         });
       };
 
-      $scope.zoomService = zoomService;
       $scope.currentZoom = $scope.zoomService.getSelectedZoom();
       $scope.changeZoom = function () {
         $scope.zoomService.setZoom($scope.currentZoom);
       };
-      
+
       $scope.translateZoom = function (value) {
         return "×" + value;
       };
@@ -136,7 +199,7 @@ repogramsControllers.controller('RepogramsImporter',
           });
           $scope.importURL = "";
           if (onSuccess) {
-            onSuccess();
+            window.setTimeout(onSuccess, 1000);
           }
         });
       });
@@ -147,15 +210,18 @@ repogramsControllers.controller('RepogramsImporter',
       });
     };
 
-    $scope.prepareList = [];
-    /*@@@PREPARE_LIST@@@*/
-    $scope.prepare = function() {
-      $scope.importURL = $scope.prepareList.shift();
+    $scope.reposToLoadAsExample = [];
+    $scope.loadNextExampleRepo = function() {
+      $scope.importURL = $scope.reposToLoadAsExample.shift();
       if ($scope.importURL) {
-        $scope.importRepo($scope.prepare);
+        $scope.importRepo($scope.loadNextExampleRepo);
       }
     };
-    $scope.prepare();
+    $scope.$on('loadExampleRepos', function(event, repositories) {
+      $scope.reposToLoadAsExample = repositories.slice();
+      $scope.loadNextExampleRepo();
+    });
+
   }]);
 
 repogramsControllers.controller('RepogramsDisplayCtrl',

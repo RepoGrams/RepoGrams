@@ -10,4 +10,4 @@ config.inc.php
 /nginx.conf
 /deploy.sh
 /repos-cache-list.txt
-/repos-prepopulate-list.json
+/examples.json

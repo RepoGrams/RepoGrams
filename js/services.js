@@ -187,31 +187,20 @@ repogramsServices.service('metricSelectionService', function () {
   var selectedMetrics = [];
   var addMetricFun = function (metric) {
       if (selectedMetrics.indexOf(metric) === -1) {
-        // not in array yet
         selectedMetrics.push(metric);
-      console.log("Add "+metric);
+        metric.selected = true;
       }
     };
   var removeMetricFun = function(metric){
       var position = selectedMetrics.indexOf(metric);
       console.assert(position !== -1, "trying to remove metric which is not contained!");
       selectedMetrics.splice(position, 1);
-      console.log("Remove "+metric);
+      metric.selected = false;
     };
 
   return {
     getSelectedMetrics: function () {
       return selectedMetrics;
-    },
-    getMetricsMap: function() {
-      var obj = [];
-      for(var i = 0; i < allMetrics.length; i++){
-        var pos = selectedMetrics.indexOf(allMetrics[i]);
-        var cond = (pos !== -1);
-        obj[i] = { metric : allMetrics[i],
-                    contained : cond};
-      }
-     return obj; 
     },
     addMetric: addMetricFun,
     removeMetric: removeMetricFun ,
@@ -226,6 +215,9 @@ repogramsServices.service('metricSelectionService', function () {
       return allMetrics;
     },
     clear: function () {
+      for (var i = 0; i < selectedMetrics.length; i++) {
+        selectedMetrics[i].selected = false;
+      }
       selectedMetrics.length = 0;
     }
   };
@@ -263,7 +255,7 @@ repogramsServices.service('blenService', function () {
   };
 });
 
-repogramsServices.service('blenSelectionService', function () {
+repogramsServices.service('blenSelectionService', ["$rootScope", function ($rootScope) {
   var allBlenMods = [
     {
       id: "1_constant",
@@ -285,6 +277,7 @@ repogramsServices.service('blenSelectionService', function () {
     }
   ];
   this.selectedBlenMod = allBlenMods[2];
+  this.selectedBlenMod.selected = true;
   var outer = this;
 
   return {
@@ -292,13 +285,19 @@ repogramsServices.service('blenSelectionService', function () {
       return outer.selectedBlenMod;
     },
     setBlenMod: function (blen) {
+      for (var i = 0; i < allBlenMods.length; i++) {
+        if (allBlenMods[i] != blen) {
+          allBlenMods[i].selected = false;
+        }
+      }
       outer.selectedBlenMod = blen;
+      $rootScope.$broadcast('blenModChange');
     },
     getAllBlenMods: function () {
       return allBlenMods;
     }
   };
-});
+}]);
 
 repogramsServices.service('zoomService', ["$rootScope", function ($rootScope) {
   var selectedZoom = {num: 1};

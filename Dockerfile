@@ -21,7 +21,7 @@ ADD nginx.conf /etc/nginx/conf.d/repograms.conf
 RUN rm -r /var/www/html/*
 ADD ./ /var/www/html/
 RUN sed -i "s/@@@BUILDINFO@@@/`cat /var/www/html/.buildinfo`/g" /var/www/html/index.html
-RUN if [ -f /var/www/html/repos-prepopulate-list.json ]; then sed -i -e '/@@@PREPARE_LIST@@@/{r /var/www/html/repos-prepopulate-list.json' -e 'd}' /var/www/html/js/controllers.js; fi
+RUN if [ -f /var/www/html/examples.json ]; then sed -i -e '/@@@EXAMPLES_PLACEHOLDER@@@/{r /var/www/html/examples.json' -e 'd}' /var/www/html/js/controllers.js; fi
 #add additinoal apache conf
 RUN nginx -t
 RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/supervisor
