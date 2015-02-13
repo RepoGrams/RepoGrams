@@ -57,9 +57,8 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       var currentBlockLengthMode = blenSelectionService.getSelectedBlenMod().id;
       var commitBlocks = "";
       var repoURL = $scope.repo.url;
-      var content;
       if ($scope.repo.url in repo2skeleton) {
-        content = repo2skeleton[$scope.repo.url];
+        commitBlocks = repo2skeleton[$scope.repo.url];
       } else {
         for (var i = 0; i < $scope.repo.metricData[firstSelectedMetric.id].length; i++) {
           var commitMsg = $scope.repo.metricData.commit_msgs[i];
@@ -79,9 +78,9 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
             };
             commitBlocks += templateBlockString(context);
         }
-        content = $compile(commitBlocks)($scope);
-        repo2skeleton[$scope.repo] = content;
+        repo2skeleton[$scope.repo.url] = commitBlocks;
       }
+      var content = $compile(commitBlocks)($scope);
       var innerMost = element.find(".individualMetric");
       innerMost.html(content);
       $scope.individualBlocks = jQuery.makeArray(innerMost.children());
