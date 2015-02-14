@@ -48,7 +48,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       };
 
       // template string for individual blocks
-      var templateBlock = '<div class="customBlock" data-commitID="\'{{commitID}}\'" data-commitURL="{{commitURL}}" data-index="{{id}}"  data-tips=\'{{tooltip}}\' class="bottom-tips"  style="background-color: red; width: {{width}};"></div>';
+      var templateBlock = '<div class="customBlock" data-commitID="\'{{commitID}}\'" data-commitURL="{{commitURL}}" data-index="{{id}}"  class="bottom-tips"  style="background-color: red; width: {{width}};"></div>';
       var templateBlockString = $interpolate(templateBlock);
 
 
@@ -68,7 +68,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
             var commitID = $scope.repo.metricData.checksums[i];
             var commitURL = repoURL.replace(/\.git$|$/, "/commit/" + commitID);
             var commitHash = commitID.substring(0, 8);
-            var tooltip = commitHash + ' (Click for details)';
+            var tooltip = msg + '\u000A(Click for details)';
             var churn = $scope.repo.metricData.churn[i];
             var context = {
               width: blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string,
