@@ -84,9 +84,8 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       /* Avoid blocking the UI for too long by using $evalAsync
        * Blocking is dominated by compile, but at least not everything blocks*/
       var postponed = function($scope) {
-      var content = $compile(commitBlocks)($scope);
       var innerMost = element.find(".individualMetric");
-      innerMost.html(content);
+      innerMost.html(commitBlocks);
       $scope.individualBlocks = jQuery.makeArray(innerMost.children());
       $scope.last_metricID = $scope.curentId;
       $scope.last_currentBlockLengthMode = undefined;
