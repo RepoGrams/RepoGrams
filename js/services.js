@@ -118,7 +118,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
   };
 }]);
 
-repogramsServices.service('metricSelectionService', function () {
+repogramsServices.service('metricSelectionService', ['$rootScope', function ($rootScope) {
   var allMetrics = [
     {
       id: "commit_modularity",
@@ -186,17 +186,18 @@ repogramsServices.service('metricSelectionService', function () {
   ];
   var selectedMetrics = [];
   var addMetricFun = function (metric) {
-      if (selectedMetrics.indexOf(metric) === -1) {
-        selectedMetrics.push(metric);
-        metric.selected = true;
-      }
-    };
+    if (selectedMetrics.indexOf(metric) === -1) {
+      selectedMetrics.push(metric);
+      metric.selected = true;
+    }
+  };
   var removeMetricFun = function(metric){
-      var position = selectedMetrics.indexOf(metric);
-      console.assert(position !== -1, "trying to remove metric which is not contained!");
-      selectedMetrics.splice(position, 1);
-      metric.selected = false;
-    };
+    var position = selectedMetrics.indexOf(metric);
+    console.assert(position !== -1, "trying to remove metric which is not contained!");
+    selectedMetrics.splice(position, 1);
+    metric.selected = false;
+  };
+  var isMetricsFirst = true;
 
   return {
     getSelectedMetrics: function () {
@@ -219,9 +220,16 @@ repogramsServices.service('metricSelectionService', function () {
         selectedMetrics[i].selected = false;
       }
       selectedMetrics.length = 0;
+    },
+    isMetricsFirst: function () {
+      return isMetricsFirst;
+    },
+    setIsMetricsFirst: function (value) {
+      isMetricsFirst = value;
+      $rootScope.$broadcast('multiMetricModeChange');
     }
   };
-});
+}]);
 
 /**
  * calculates block length for given mode and churn

@@ -5,7 +5,10 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
   return {
 
     restrict: 'E',
-    scope: {currentId : "=current" },
+    scope: {
+      metricId: "=metricId",
+      repoIndex: "=repoIndex"
+    },
     template: '<div class="renderMetric"><div style="width:100%; overflow: visible; white-space: nowrap;">' +
     '<div class="individualMetric" style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
     '</div></div></div>',
@@ -14,9 +17,9 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       $scope.reposService = reposService;
       $scope.metricSelectionService = metricSelectionService;
       $scope.blenSelectionService = blenSelectionService;
-      $scope.repo = reposService.getRepoArr()[$scope.$parent.$index];
+      $scope.repo = reposService.getRepoArr()[$scope.repoIndex];
       $scope.currentZoom = zoomService.getSelectedZoom();
-      $scope.totalChurn = $scope.reposService.getTotalChurnArr()[$scope.$parent.$index];
+      $scope.totalChurn = $scope.reposService.getTotalChurnArr()[$scope.repoIndex];
       $scope.maxChurn = $scope.reposService.getMaxChurn();
       $scope.noOfCommits = $scope.repo.metricData.churn.length;
 
@@ -113,14 +116,14 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
 
 
       // set colors for each metric that should be displayed
-      updateColors($scope.currentId);
+      updateColors($scope.metricId);
 
       // register watches to trigger recomputations
 
       // the mapper might change when a new repo is added, and the
       // maxvalue increases
       $scope.$on('mapperChange', function (evnt, metricID, newMapper) {
-        if (metricID == $scope.currentId) {
+        if (metricID == $scope.metricId) {
           var selectedMetrics = metricSelectionService.getSelectedMetrics();
           // only update visible metrics
           for (var i = 0; i < selectedMetrics.length; i++) {
@@ -132,8 +135,8 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
         }
       });
       
-      $('.repo-collection').on('scroll', function () {
-    	    $('.repo-collection').scrollLeft($(this).scrollLeft());
+      $('.multi-metrics-metrics-first .repo-collection').on('scroll', function () {
+    	    $('.multi-metrics-metrics-first .repo-collection').scrollLeft($(this).scrollLeft());
     	});
       
       $scope.$on('maxChurnChange', function (evnt, newMaxChurn) {

@@ -58,27 +58,32 @@
 
         <!-- First block for the selection box and zoom slider -->
         <div class="col-md-12 col-lg-10 col-lg-pull-2">
-          <div class="panel panel-default form-inline">
-            <div class="panel-heading" ng-controller="RepogramsConfig">
+          <div class="panel panel-default form-inline" ng-controller="RepogramsConfig">
+            <div class="panel-heading" >
               <span>Settings</span>
               <span class="pull-right btn btn-link btn-xs" ng-click="loadExamples()" ng-if="hasExamples">Load examples</span>
             </div>
             <div class="panel-body">
+              <div class="form-group col-md-2 col-sm-12 configBlock" ng-init="isMetricsFirst=true">
+                <label><input type="radio" name="multiMetricMode" ng-model="isMetricsFirst" ng-value="true" /> Metrics first</label>
+                <label><input type="radio" name="multiMetricMode" ng-model="isMetricsFirst" ng-value="false" /> Repositories first</label>
+              </div>
+
               <!-- Dropdown Menu for Metric Selection -->
-              <div class="form-group col-md-4 col-sm-12 configBlock" ng-controller="RepogramsConfig">
+              <div class="form-group col-md-4 col-sm-12 configBlock">
                 <button id="metricSelect" class="form-control pull-right" ng-click="switchMetric()">Switch…</button>
                 <label for="metricSelect">Metric (block color):</label>
                 <span ng-repeat="metric in selectedMetrics"><i class="fa fa-{{metric.icon}}"></i> <em>{{metric.label}}<span ng-if="!$last">, </span></em></span>
                 <span ng-if="selectedMetrics.length == 0" class="text-muted">None selected yet…</span>
               </div>
 
-              <div class="form-group col-md-4 col-sm-12 configBlock" ng-controller="RepogramsConfig">
+              <div class="form-group col-md-4 col-sm-12 configBlock">
                 <button id="blockLengthSelect" class="form-control pull-right" ng-click="switchBlen()">Switch…</button>
                 <label for="blockLengthSelect">Block length:</label> <i class="fa fa-{{selectedBlenMod.icon}}"></i> <em>{{selectedBlenMod.label}}</em>
               </div>
 
               <!-- Zoom Slider -->
-              <div class="form-group col-md-4 col-sm-12 configBlock" ng-controller="RepogramsConfig">
+              <div class="form-group col-md-2 col-sm-12 configBlock">
                 <label for="zoomSlider">Zoom:</label> <em>{{translateZoom(currentZoom.num)}}</em>
                 <slider id="zoomSlider" ng-model="currentZoom.num" ng-change="changeZoom()" floor="1" ceiling="100" step="1" stickiness="3" translate-fn="translateZoom">
                 </slider>
@@ -94,15 +99,16 @@
         <div class="col-md-12">
           <div class="panel panel-default">
             <div class="panel-heading">
-                <div class="row">
-                  <span class="col-xs-12 col-lg-2">Repositories</span>
-                  <span class="col-xs-6 col-lg-5 text-muted label-earliest-commits">Earliest commits</span>
-                  <span class="col-xs-6 col-lg-5 text-muted text-right">Latest commits</span>
-                </div><!-- row close -->
-              </div> <!-- panel heading close -->
-              <div class="panel-body">
-                <div class="metrics-display" ng-controller="RepogramsDisplayCtrl">
-                  <div class="metrics-repo-container" ng-repeat="metric in selectedMetrics">
+              <div class="row">
+                <span class="col-xs-12 col-lg-2">Repositories</span>
+                <span class="col-xs-6 col-lg-5 text-muted label-earliest-commits">Earliest commits</span>
+                <span class="col-xs-6 col-lg-5 text-muted text-right">Latest commits</span>
+              </div><!-- row close -->
+            </div> <!-- panel heading close -->
+            <div class="panel-body">
+              <div class="metrics-display" ng-controller="RepogramsDisplayCtrl">
+                <div ng-if="isMetricsFirst" class="multi-metrics-metrics-first">
+                  <div ng-repeat="metric in selectedMetrics">
                     <div class="col-md-12">
                       <h3 class="metric-title">
                         <i class="fa fa-{{metric.icon}}"></i>
@@ -111,12 +117,12 @@
                       </h3>
                       <ng-legend current="metric" ng-show="numSelectedRepos > 0" class="legend"></ng-legend>
                     </div>
-                    <div ng-controller="RepogramsRender">
-                      <div class="row">
+                    <div class="col-md-12">
+                      <div class="row metrics-repo-container">
                         <div class="repo col-md-2">
                           <div class="row">
                             <div class="col-lg-12 repo-label" ng-repeat="repo in repos">
-                              <label for="{{'metricBox'+$index}}">
+                              <div class="repo-label-label">
                                 <div class="repo-label-actions">
                                   <button type="button" class="btn btn-xs btn-danger" ng-click="removeRepo($index)">
                                     <span class="glyphicon glyphicon-remove"></span>
@@ -129,14 +135,14 @@
                                   </button>
                                 </div>
                                 <span class="repo-label-name" title="{{repo.name}}">{{repo.name}}</span>
-                              </label>
+                              </div>
                             </div> <!-- col-lg-2 close -->
                           </div> <!-- row close -->
                         </div> <!-- end ng-repeat repos -->
                         <div class="repo col-md-10 row repo-collection">
                           <div class="row">
-                            <div class="col-sm-12" id="{{'metricBox'+$index}}" ng-repeat="repo in repos" style="overflow: visible">
-                              <rg-render-metric current=metric.id></rg-render-metric>
+                            <div class="col-sm-12" ng-repeat="repo in repos" style="overflow: visible">
+                              <rg-render-metric metric-id="metric.id" repo-index="$index"></rg-render-metric>
                             </div> <!-- col-lg-10 close -->
                           </div> <!-- row close -->
                         </div> <!-- end ng-repeat repos -->
@@ -146,40 +152,103 @@
                       </div> <!-- close Render controller -->
                     </div>
                   </div> <!-- end ng-repeat metrics -->
-                  <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos == 0">
-                    <a ng-click="focusOnUrlImporter()">Add projects</a> and <a ng-click="openSelectMetricsModal()">select metrics</a> to display.
+                </div>
+
+                <div ng-if="!isMetricsFirst" class="multi-metrics-repos-first">
+                  <div ng-if="repos.length > 0">
+                    <h3 class="col-md-12 repo-label">
+                      <span class="repo-label-name">Legends</span>
+                    </h3>
+
+                    <div class="repo col-md-12 row repo-collection legends" ng-if="selectedMetrics.length > 0">
+                      <div class="col-md-12 row">
+                        <div class="repo-label" ng-repeat="metric in selectedMetrics">
+                          <span class="repo-label-name col-md-2" title="{{metric.label}}"><i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</span>
+                          <ng-legend current="metric" ng-show="numSelectedRepos > 0" class="col-md-10"></ng-legend>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0">
+                      <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
+                    </div>
                   </div>
-                  <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos > 0">
-                    <ng-pluralize count="numSelectedRepos" when="{'1': '1 repository has', 'other': '{} repositories have'}"></ng-pluralize> been added. <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
+                  <div ng-repeat="repo in repos">
+                    <h3 class="col-md-12 repo-label">
+                      <div class="repo-label-actions">
+                        <button type="button" class="btn btn-xs btn-danger" ng-click="removeRepo($index)">
+                          <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <button type="button" class="btn btn-xs" ng-class="{'disabled': $first, 'btn-primary': !$first}" ng-click="moveUp($index)">
+                          <span class="glyphicon glyphicon-arrow-up"></span>
+                        </button>
+                        <button type="button" class="btn btn-xs" ng-class="{'disabled': $last, 'btn-primary': !$last}" ng-click="moveDown($index)">
+                          <span class="glyphicon glyphicon-arrow-down"></span>
+                        </button>
+                      </div>
+                      <span class="repo-label-name">{{repo.name}}</span>
+                    </h3>
+
+                    <div class="col-md-12 row metrics-repo-container">
+                      <div class="repo col-md-2" ng-if="selectedMetrics.length > 0">
+                        <div class="row">
+                          <div class="col-lg-12 repo-label" ng-repeat="metric in selectedMetrics">
+                            <div class="repo-label-label">
+                              <span class="repo-label-name" title="{{metric.label}}"><i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="repo col-md-10 row repo-collection" ng-if="selectedMetrics.length > 0">
+                        <div class="row">
+                          <div class="col-sm-12" ng-repeat="metric in selectedMetrics" style="overflow: visible">
+                            <rg-render-metric metric-id="metric.id" repo-index="$parent.$index"></rg-render-metric>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0">
+                        <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
+                      </div>
+                    </div>
                   </div>
-                    <!-- Import Field -->
+                  <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length > 0 && numSelectedRepos == 0">
+                    <ng-pluralize count="selectedMetrics.length" when="{'1': '1 metric has', 'other': '{} metrics have'}"></ng-pluralize> been selected. <a ng-click="focusOnUrlImporter()">Add projects</a> to display.
+                  </div>
+                </div>
+
+                <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos == 0">
+                  <a ng-click="focusOnUrlImporter()">Add projects</a> and <a ng-click="openSelectMetricsModal()">select metrics</a> to display.
+                </div>
+                <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos > 0 && isMetricsFirst">
+                  <ng-pluralize count="numSelectedRepos" when="{'1': '1 repository has', 'other': '{} repositories have'}"></ng-pluralize> been added. <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
+                </div>
+                <!-- Import Field -->
                 <div ng-controller="RepogramsImporter">
                   <div class="row">
                     <div class="col-md-12">
                       <form id="repogramsAdder" ng-submit="importRepo()">
-                           <div class="input-group">
-                             <input id="importUrlId" type="text" class="form-control" placeholder="GIT clone URL, e.g. https://github.com/githubtraining/hellogitworld.git" autofocus ng-model="importURL" ng-readonly="processing" ng-change="changeInput()" />
-                               <div class="input-group-btn">
-                               <button type="submit" class="btn btn-primary formbtn" ng-disabled="processing">
-                                   <span class="glyphicon glyphicon-plus">
-                                   </span>
-                                 </button>
-                               </div> <!-- Input Group Btn Close -->
-                            </div> <!-- Input Group Close -->
-                           </form>
-                         </div> <!-- close col-md-12 -->
-                       </div> <!-- close row -->
-                       <div class="row">
-                       <div class="col-md-12">
-                         <alert ng-repeat="error in errors" type="danger" close="closeAlert($index)">{{error.emessage}}</alert>
-                      </div> <!-- Close col-md-12 -->
-                    </div> <!-- Close row -->
-                  </div> <!-- close Controller RepogramsImporter -->
+                        <div class="input-group">
+                          <input id="importUrlId" type="text" class="form-control" placeholder="GIT clone URL, e.g. https://github.com/githubtraining/hellogitworld.git" autofocus ng-model="importURL" ng-readonly="processing" ng-change="changeInput()" />
+                          <div class="input-group-btn">
+                            <button type="submit" class="btn btn-primary formbtn" ng-disabled="processing">
+                              <span class="glyphicon glyphicon-plus">
+                              </span>
+                            </button>
+                          </div> <!-- Input Group Btn Close -->
+                        </div> <!-- Input Group Close -->
+                      </form>
+                    </div> <!-- close col-md-12 -->
+                  </div> <!-- close row -->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <alert ng-repeat="error in errors" type="danger" close="closeAlert($index)">{{error.emessage}}</alert>
+                    </div> <!-- Close col-md-12 -->
+                  </div> <!-- Close row -->
+                </div> <!-- close Controller RepogramsImporter -->
               </div> <!-- col-md-12 close -->
             </div> <!-- repograms render end of scope -->
-        </div> <!-- row close -->
-      </div> <!-- End of Scope for DisplayController -->
-    </div> <!-- Close container -->
+          </div> <!-- row close -->
+        </div> <!-- End of Scope for DisplayController -->
+      </div> <!-- Close container -->
    <footer>@@@BUILDINFO@@@</footer>
   </body>
 </html>
