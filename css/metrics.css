@@ -193,6 +193,7 @@ slider span.bubble {
 .repo-label-label {
     display: flex;
     margin-bottom: 0;
+    font-weight: bold;
 }
 
 .repo-label .repo-label-actions {
