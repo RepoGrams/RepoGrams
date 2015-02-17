@@ -37,6 +37,8 @@ repogramsControllers.controller('RepogramsConfig',
               }
 
               $scope.metricSelectionService.clear();
+              $scope.setIsMetricsFirst(example.metricsFirst);
+
               var allMetrics = $scope.metricSelectionService.getAllMetrics();
               for (var i = 0; i < example.metrics.length; i++) {
                 for (var j = 0; j < allMetrics.length; j++) {
@@ -67,6 +69,10 @@ repogramsControllers.controller('RepogramsConfig',
             };
           }]
         });
+      };
+
+      $scope.setIsMetricsFirst = function (value) {
+        $scope.isMetricsFirst = value;
       };
 
       $scope.$watch('isMetricsFirst', function (value) {
