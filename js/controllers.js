@@ -227,7 +227,12 @@ repogramsControllers.controller('RepogramsImporter',
 repogramsControllers.controller('RepogramsDisplayCtrl',
   ['$scope','metricSelectionService', 'reposService', function ($scope, metricSelectionService, reposService){
     $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
+    $scope.metrics = metricSelectionService.getAllMetrics();
     $scope.numSelectedRepos = reposService.getRepoArr().length;
+
+    $scope.show = function(metric) {
+      return $scope.selectedMetrics.indexOf(metric) != -1;
+    };
 
     $scope.helpTooltip = function(metric) {
       var tooltip = '<div class="metric-description">' + metric.description + '</div>';
@@ -246,7 +251,7 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
         document.getElementById('metricSelect').click();
       }, 0);
 
-    }
+    };
 
     $scope.$on('reposChange', function (evnt, newRepoArr) {
       $scope.numSelectedRepos = newRepoArr.length;

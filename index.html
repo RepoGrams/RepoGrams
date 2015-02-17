@@ -24,6 +24,8 @@
     <!-- use bootstrap -->
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap-css-only/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap-css-only/css/bootstrap-theme.min.css">
+    <!-- for tooltips -->
+    <link rel="stylesheet" type="text/css" href="/bower_components/hint.css/hint.min.css">
     <!-- use fontawesome -->
     <link rel="stylesheet" type="text/css" href="/bower_components/fontawesome/css/font-awesome.min.css">
     <!-- include our own style sheets -->
@@ -102,7 +104,8 @@
               </div> <!-- panel heading close -->
               <div class="panel-body">
                 <div class="metrics-display" ng-controller="RepogramsDisplayCtrl">
-                  <div class="metrics-repo-container" ng-repeat="metric in selectedMetrics">
+                  <div class="metrics-repo-container" ng-repeat="metric in metrics track by metric.id">
+                  <div  ng-show="show(metric)">
                     <div class="col-md-12">
                       <h3 class="metric-title">
                         <i class="fa fa-{{metric.icon}}"></i>
@@ -136,7 +139,7 @@
                         <div class="repo col-md-10 row repo-collection">
                           <div class="row">
                             <div class="col-sm-12" id="{{'metricBox'+$index}}" ng-repeat="repo in repos" style="overflow: visible">
-                              <rg-render-metric current=metric.id></rg-render-metric>
+                              <rg-render-metric current=metric.id visible=show(metric)></rg-render-metric>
                             </div> <!-- col-lg-10 close -->
                           </div> <!-- row close -->
                         </div> <!-- end ng-repeat repos -->
@@ -145,6 +148,7 @@
                         </div>
                       </div> <!-- close Render controller -->
                     </div>
+                  </div>
                   </div> <!-- end ng-repeat metrics -->
                   <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos == 0">
                     <a ng-click="focusOnUrlImporter()">Add projects</a> and <a ng-click="openSelectMetricsModal()">select metrics</a> to display.
