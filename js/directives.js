@@ -6,19 +6,22 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
   return {
 
     restrict: 'E',
-    scope: {currentId_f : "&current", visible: "&visible" },
+    scope: {
+      metricId: "=metricId",
+      repoIndex: "=repoIndex",
+      visible: "&visible"
+    },
     template: '<div class="renderMetric"><div style="width:100%; overflow: visible; white-space: nowrap;">' +
-    '<div class="individualMetric" ng-click="popModal($event)"  style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
+    '<div class="individualMetric" ng-click="popModal($event)" style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
     '</div></div></div>',
     link: function ($scope, element, attrs) {
       // set up directive
-      $scope.currentId = $scope.currentId_f();
       $scope.reposService = reposService;
       $scope.metricSelectionService = metricSelectionService;
       $scope.blenSelectionService = blenSelectionService;
-      $scope.repo = reposService.getRepoArr()[$scope.$parent.$index];
+      $scope.repo = reposService.getRepoArr()[$scope.repoIndex];
       $scope.currentZoom = zoomService.getSelectedZoom();
-      $scope.totalChurn = $scope.reposService.getTotalChurnArr()[$scope.$parent.$index];
+      $scope.totalChurn = $scope.reposService.getTotalChurnArr()[$scope.repoIndex];
       $scope.maxChurn = $scope.reposService.getMaxChurn();
       $scope.noOfCommits = $scope.repo.metricData.churn.length;
 
@@ -48,7 +51,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       };
 
       // template string for individual blocks
-      var templateBlock = '<div class="customBlock" data-commitID="\'{{commitID}}\'" data-commitURL="{{commitURL}}" data-index="{{id}}"  class="bottom-tips"  style="background-color: red; width: {{width}};"></div>';
+      var templateBlock = '<div class="customBlock" data-commitID="\'{{commitID}}\'" data-commitURL="{{commitURL}}" data-index="{{id}}"  class="bottom-tips" style="background-color: red; width: {{width}};"></div>';
       var templateBlockString = $interpolate(templateBlock);
 
 
@@ -84,100 +87,100 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       /* Avoid blocking the UI for too long by using $evalAsync
        * Blocking is dominated by compile, but at least not everything blocks*/
       var postponed = function($scope) {
-      var innerMost = element.find(".individualMetric");
-      innerMost.html(commitBlocks);
-      $scope.individualBlocks = jQuery.makeArray(innerMost.children());
-      $scope.last_metricID = $scope.curentId;
-      $scope.last_currentBlockLengthMode = undefined;
+        var innerMost = element.find(".individualMetric");
+        innerMost.html(commitBlocks);
+        $scope.individualBlocks = jQuery.makeArray(innerMost.children());
+        $scope.last_metricID = $scope.curentId;
+        $scope.last_currentBlockLengthMode = undefined;
 
-      function updateColors(metricID) {
-        if (!$scope.visible()) {
-          $scope.last_metricID = metricID;
-          return;
+        function updateColors(metricID) {
+          if (!$scope.visible()) {
+            $scope.last_metricID = metricID;
+            return;
+          }
+          // precompute colours outside of updating DOM
+          var length = $scope.repo.metricData[firstSelectedMetric.id].length;
+          var newColours = new Array(length);
+          for (var i = 0; i < length; i++) {
+            newColours[i] = reposService.mapToColor(metricID, $scope.repo.metricData[metricID][i]);
+          }
+          chunkwiseLoop(0, length, /*chunksize=*/100, function (index) {
+            // set colour according to metric
+            $scope.individualBlocks[index].style.backgroundColor = newColours[index];
+          });
         }
-        // precompute colours outside of updating DOM
-        var length = $scope.repo.metricData[firstSelectedMetric.id].length;
-        var newColours = new Array(length);
-        for (var i = 0; i < length; i++) {
-          newColours[i] = reposService.mapToColor(metricID, $scope.repo.metricData[metricID][i]);
-        }
-        chunkwiseLoop(0, length, /*chunksize=*/100, function (index) {
-          // set colour according to metric
-          $scope.individualBlocks[index].style.backgroundColor = newColours[index];
-        });
-      }
 
-      function chunkwiseLoop(start, stop, chunksize, task) {
-        for (var i = 0; i <= chunksize && start + i < stop; ++i) {
-          task(/*current index =*/ start + i);
-        }
-        if (start + i < stop) {
-          setTimeout(chunkwiseLoop, 0, start + i, stop, chunksize, task);
-        }
-      }
-
-      function updateWidth(currentBlockLengthMode) {
-        if (!$scope.visible()) {
-          $scope.last_currentBlockLengthMode = currentBlockLengthMode;
-          return;
-        }
-        // precompute width outside of updating DOM
-        var length = $scope.repo.metricData[firstSelectedMetric.id].length;
-        var newWidths = new Array(length);
-        for (var i = 0; i < length; i++) {
-          var churn = $scope.repo.metricData.churn[i];
-          newWidths[i] = blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string;
-        }
-        // iterate over all commit blocks and
-        chunkwiseLoop(0, length, /*chunksize=*/100, function (index) {
-          $scope.individualBlocks[index].style.width = newWidths[index];
-        });
-      }
-
-
-      // set colors for each metric that should be displayed
-      setTimeout(updateColors, 0, $scope.currentId);
-
-      // register watches to trigger recomputations
-
-      // the mapper might change when a new repo is added, and the
-      // maxvalue increases
-      $scope.$on('mapperChange', function (evnt, metricID, newMapper) {
-        if (metricID == $scope.currentId) {
-          var selectedMetrics = metricSelectionService.getSelectedMetrics();
-          // only update visible metrics
-          for (var i = 0; i < selectedMetrics.length; i++) {
-            if (metricID === selectedMetrics[i].id) {
-              updateColors(metricID);
-              break;
-            }
+        function chunkwiseLoop(start, stop, chunksize, task) {
+          for (var i = 0; i <= chunksize && start + i < stop; ++i) {
+            task(/*current index =*/ start + i);
+          }
+          if (start + i < stop) {
+            setTimeout(chunkwiseLoop, 0, start + i, stop, chunksize, task);
           }
         }
-      });
-      
-      $('.repo-collection').on('scroll', function () {
-    	    $('.repo-collection').scrollLeft($(this).scrollLeft());
-    	});
-      
-      $scope.$on('maxChurnChange', function (evnt, newMaxChurn) {
-        $scope.maxChurn = newMaxChurn;
-        updateWidth(blenSelectionService.getSelectedBlenMod().id);
-      });
 
-      $scope.$on('zoomChange', _.debounce(function (evnt, newZoom) {
-        updateWidth(blenSelectionService.getSelectedBlenMod().id);
-      }, 200));
-
-      $scope.$watch("blenSelectionService.getSelectedBlenMod()", function (newVal) {
-        updateWidth(newVal.id);
-      });
-
-      $scope.$watch($scope.visible, function(newVal) {
-        if (newVal && $scope.last_metricID !== undefined && $scope.last_currentBlockLengthMode !== undefined) {
-          setTimeout(updateColors, 0, $scope.last_metricID);
-          setTimeout(updateWidth, 0, $scope.last_currentBlockLengthMode);
+        function updateWidth(currentBlockLengthMode) {
+          if (!$scope.visible()) {
+            $scope.last_currentBlockLengthMode = currentBlockLengthMode;
+            return;
+          }
+          // precompute width outside of updating DOM
+          var length = $scope.repo.metricData[firstSelectedMetric.id].length;
+          var newWidths = new Array(length);
+          for (var i = 0; i < length; i++) {
+            var churn = $scope.repo.metricData.churn[i];
+            newWidths[i] = blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string;
+          }
+          // iterate over all commit blocks and
+          chunkwiseLoop(0, length, /*chunksize=*/100, function (index) {
+            $scope.individualBlocks[index].style.width = newWidths[index];
+          });
         }
-      });
+
+
+        // set colors for each metric that should be displayed
+        setTimeout(updateColors, 0, $scope.metricId);
+
+        // register watches to trigger recomputations
+
+        // the mapper might change when a new repo is added, and the
+        // maxvalue increases
+        $scope.$on('mapperChange', function (evnt, metricID, newMapper) {
+          if (metricID == $scope.metricId) {
+            var selectedMetrics = metricSelectionService.getSelectedMetrics();
+            // only update visible metrics
+            for (var i = 0; i < selectedMetrics.length; i++) {
+              if (metricID === selectedMetrics[i].id) {
+                updateColors(metricID);
+                break;
+              }
+            }
+          }
+        });
+
+        $('.multi-metrics-metrics-first .repo-collection').on('scroll', function () {
+            $('.multi-metrics-metrics-first .repo-collection').scrollLeft($(this).scrollLeft());
+        });
+
+        $scope.$on('maxChurnChange', function (evnt, newMaxChurn) {
+          $scope.maxChurn = newMaxChurn;
+          updateWidth(blenSelectionService.getSelectedBlenMod().id);
+        });
+
+        $scope.$on('zoomChange', _.debounce(function (evnt, newZoom) {
+          updateWidth(blenSelectionService.getSelectedBlenMod().id);
+        }, 200));
+
+        $scope.$watch("blenSelectionService.getSelectedBlenMod()", function (newVal) {
+          updateWidth(newVal.id);
+        });
+
+        $scope.$watch($scope.visible, function(newVal) {
+          if (newVal && $scope.last_metricID !== undefined && $scope.last_currentBlockLengthMode !== undefined) {
+            setTimeout(updateColors, 0, $scope.last_metricID);
+            setTimeout(updateWidth, 0, $scope.last_currentBlockLengthMode);
+          }
+        });
       };
       $scope.$evalAsync(postponed);
     }

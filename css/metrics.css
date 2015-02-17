@@ -190,9 +190,10 @@ slider span.bubble {
     margin-top: 2px;
 }
 
-.repo-label label {
+.repo-label-label {
     display: flex;
     margin-bottom: 0;
+    font-weight: bold;
 }
 
 .repo-label .repo-label-actions {
@@ -213,6 +214,11 @@ slider span.bubble {
     flex: auto;
     margin-top: -1px;
     border-bottom: 1px dotted #c0c0c0;
+}
+
+.legends .repo-label .repo-label-name {
+    font-weight: bold;
+    padding-top: 5px;
 }
 
 .repo-collection {
