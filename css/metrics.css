@@ -186,13 +186,12 @@ slider span.bubble {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-    margin-bottom: 3px;
-    margin-top: 2px;
 }
 
 .repo-label-label {
     display: flex;
-    margin-bottom: 0;
+    margin-bottom: 3px;
+    margin-top: 2px;
     font-weight: bold;
 }
 
