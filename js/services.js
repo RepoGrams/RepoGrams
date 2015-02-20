@@ -294,9 +294,7 @@ repogramsServices.service('blenSelectionService', ["$rootScope", function ($root
     },
     setBlenMod: function (blen) {
       for (var i = 0; i < allBlenMods.length; i++) {
-        if (allBlenMods[i] != blen) {
-          allBlenMods[i].selected = false;
-        }
+        allBlenMods[i].selected = allBlenMods[i] == blen;
       }
       outer.selectedBlenMod = blen;
       $rootScope.$broadcast('blenModChange');

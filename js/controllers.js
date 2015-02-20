@@ -114,14 +114,13 @@ repogramsControllers.controller('RepogramsConfig',
       });
 
       $scope.switchBlen = function () {
-        // TODO this is very similar to the metrics modal, consolidate this together
         $modal.open({
           scope: $scope,
           template: '<form>' +
           '<div class="modal-header"><h3 class="modal-title">Select new block length</h3></div>' +
           '<div class="modal-body">' +
           '<div class="form-group" ng-repeat="(i, blen) in blenMods">' +
-          '<label for="blen_{{i}}"><input id="blen_{{i}}" type="radio" name="blen" ng-model="blen.selected" ng-click="swap(blen)"> <i class="fa fa-{{blen.icon}}"></i> {{blen.label}}</label>' +
+          '<label for="blen_{{i}}"><input id="blen_{{i}}" type="radio" name="blen" ng-checked="blen.selected" ng-click="swap(blen)"> <i class="fa fa-{{blen.icon}}"></i> {{blen.label}}</label>' +
           '<p ng-bind-html="blen.description"></p>' +
           '</div>' +
           '</div>' +
