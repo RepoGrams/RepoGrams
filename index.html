@@ -166,7 +166,7 @@
 
                     <div class="repo col-md-12 row repo-collection legends" ng-if="selectedMetrics.length > 0">
                       <div class="col-md-12 row">
-                        <div class="repo-label" ng-repeat="metric in metrics track by metric.id">
+                        <div class="repo-label" ng-repeat="metric in metrics | orderBy:insertionOrder track by metric.id">
                           <div ng-show="show(metric)">
                             <span class="repo-label-name col-md-2" title="{{metric.label}}"><i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</span>
                             <ng-legend current="metric" ng-show="numSelectedRepos > 0" class="col-md-10"></ng-legend>
@@ -198,7 +198,7 @@
                     <div class="col-md-12 row metrics-repo-container">
                       <div class="repo col-md-2" ng-if="selectedMetrics.length > 0">
                         <div class="row">
-                          <div class="col-lg-12 repo-label" ng-repeat="metric in metrics track by metric.id">
+                          <div class="col-lg-12 repo-label" ng-repeat="metric in metrics | orderBy:insertionOrder track by metric.id">
                             <div class="repo-label-label" ng-show="show(metric)">
                               <span class="repo-label-name" title="{{metric.label}}"><i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</span>
                             </div>
@@ -207,7 +207,7 @@
                       </div>
                       <div class="repo col-md-10 row repo-collection" ng-if="selectedMetrics.length > 0">
                         <div class="row">
-                          <div class="col-sm-12" ng-repeat="metric in metrics track by metric.id" style="overflow: visible">
+                          <div class="col-sm-12" ng-repeat="metric in metrics | orderBy:insertionOrder track by metric.id" style="overflow: visible">
                             <rg-render-metric ng-show="show(metric)" visible="show(metric)" metric-id="metric.id" repo-index="$parent.$index"></rg-render-metric>
                           </div>
                         </div>
