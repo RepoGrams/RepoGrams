@@ -1193,6 +1193,43 @@ var MapperFactory = function () {
 
 var mapperFactory = new MapperFactory();
 
+
+var readableValueMapper = function(metricId, value) {
+  switch (metricId) {
+    case "commit_modularity":
+      return Math.round(value * 100) + "% localized files in the commit";
+
+    case "commit_message_length":
+      return (value == 1) ? "1 word" : value + " words";
+
+    case "commit_lang_complexity":
+      return (value == 1) ? "1 language" : value + " languages";
+
+    case "branch_usage":
+      return "Branch number: " + value;
+
+    case "most_edited_file":
+      return "Edited " + ((value == 1) ? "once" : value + " times") + " before";
+
+    case "branch_complexity":
+      return (value == 1) ? "1 concurrent branch" : value + " concurrent branches";
+
+    case "pom_files":
+       return value + " POM " + ((value == 1) ? "file" : "files") + " changed";
+
+    case "commit_author":
+      return "Author number: " + value;
+
+    case "commit_age":
+      return value + " seconds"; // TODO changed to smart time
+
+    default:
+      return value;
+  }
+};
+
+
+
 function arrayMax(arr) {
   var max = arr[0];
   for (var i = 0; i < arr.length; i++) {

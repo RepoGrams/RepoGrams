@@ -26,10 +26,9 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       $scope.noOfCommits = $scope.repo.metricData.churn.length;
 
       $scope.popModal = function (event) {
-        /*commitID, commitURL, index*/
-        commitID = $(event.target).attr("data-commitID");
-        commitURL = $(event.target).attr("data-commitURL");
-        index = $(event.target).attr("data-index");
+        var commitID = $(event.target).attr("data-commitID");
+        var commitURL = $(event.target).attr("data-commitURL");
+        var index = $(event.target).attr("data-index");
         $modal.open({
           scope: $scope,
           template: '<div class="modal-header">' +
@@ -51,7 +50,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
       };
 
       // template string for individual blocks
-      var templateBlock = '<div class="customBlock" data-commitID="\'{{commitID}}\'" data-commitURL="{{commitURL}}" data-index="{{id}}"  class="bottom-tips" style="background-color: red; width: {{width}};"></div>';
+      var templateBlock = '<div class="customBlock" data-commitID="{{commitID}}" data-commitURL="{{commitURL}}" data-index="{{id}}" style="background-color: red; width: {{width}};"></div>';
       var templateBlockString = $interpolate(templateBlock);
 
 
@@ -93,7 +92,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
         $scope.last_metricID = $scope.curentId;
         $scope.last_currentBlockLengthMode = undefined;
 
-        function updateColors(metricID) {
+        function updateCommitBlockVisualization(metricID) {
           if (!$scope.visible()) {
             $scope.last_metricID = metricID;
             return;
@@ -101,12 +100,21 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
           // precompute colours outside of updating DOM
           var length = $scope.repo.metricData[firstSelectedMetric.id].length;
           var newColours = new Array(length);
+          var newTitles = new Array(length);
           for (var i = 0; i < length; i++) {
-            newColours[i] = reposService.mapToColor(metricID, $scope.repo.metricData[metricID][i]);
+            var metricValue = $scope.repo.metricData[metricID][i];
+            var metricReadableValue = readableValueMapper(metricID, metricValue);
+            var commitMessage = $scope.repo.metricData['commit_msgs'][i];
+            var commitMessage = _.escape(commitMessage.length > 40 ? commitMessage.substring(0, 39) + '…' : commitMessage);
+            var commitHash = $scope.repo.metricData['checksums'][i].substr(0, 8);
+
+            newColours[i] = reposService.mapToColor(metricID, metricValue);
+            newTitles[i] = metricReadableValue + "\n\nCommit " + commitHash + ": " + commitMessage;
           }
           chunkwiseLoop(0, length, /*chunksize=*/100, function (index) {
             // set colour according to metric
             $scope.individualBlocks[index].style.backgroundColor = newColours[index];
+            $scope.individualBlocks[index].title = newTitles[index];
           });
         }
 
@@ -139,7 +147,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
 
 
         // set colors for each metric that should be displayed
-        setTimeout(updateColors, 0, $scope.metricId);
+        setTimeout(updateCommitBlockVisualization, 0, $scope.metricId);
 
         // register watches to trigger recomputations
 
@@ -151,7 +159,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
             // only update visible metrics
             for (var i = 0; i < selectedMetrics.length; i++) {
               if (metricID === selectedMetrics[i].id) {
-                updateColors(metricID);
+                updateCommitBlockVisualization(metricID);
                 break;
               }
             }
@@ -160,6 +168,14 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
 
         $('.multi-metrics-metrics-first .repo-collection').on('scroll', function () {
             $('.multi-metrics-metrics-first .repo-collection').scrollLeft($(this).scrollLeft());
+        });
+
+        console.log('1');
+        $('.renderMetric .customBlock').hover(function() {
+          var commitId = $(this).attr('data-commitid');
+          $('.renderMetric .customBlock[data-commitid="' + commitId + '"]').addClass('hover');
+        }, function() {
+          $('.renderMetric .customBlock.hover').removeClass('hover');
         });
 
         $scope.$on('maxChurnChange', function (evnt, newMaxChurn) {
@@ -177,7 +193,7 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
 
         $scope.$watch($scope.visible, function(newVal) {
           if (newVal && $scope.last_metricID !== undefined && $scope.last_currentBlockLengthMode !== undefined) {
-            setTimeout(updateColors, 0, $scope.last_metricID);
+            setTimeout(updateCommitBlockVisualization, 0, $scope.last_metricID);
             setTimeout(updateWidth, 0, $scope.last_currentBlockLengthMode);
           }
         });
