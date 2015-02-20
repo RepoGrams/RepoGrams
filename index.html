@@ -173,6 +173,7 @@
                           </div>
                         </div>
                       </div>
+                      <p class="col-md-12 text-muted" ng-if="selectedMetrics.length > 1">Values are incomparable between different metrics, regardless of color similarities</p>
                     </div>
                     <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0">
                       <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
