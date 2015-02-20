@@ -110,7 +110,7 @@
             <div class="panel-body">
               <div class="metrics-display" ng-controller="RepogramsDisplayCtrl">
                 <div ng-if="isMetricsFirst" class="multi-metrics-metrics-first">
-                  <div ng-repeat="metric in metrics track by metric.id">
+                  <div ng-repeat="metric in metrics | orderBy:insertionOrder track by metric.id">
                     <div ng-show="show(metric)">
                       <div class="col-md-12">
                         <h3 class="metric-title">

@@ -225,6 +225,10 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
       return $scope.selectedMetrics.indexOf(metric) != -1;
     };
 
+    $scope.insertionOrder = function(metric) {
+      return $scope.selectedMetrics.indexOf(metric);
+    };
+
     $scope.helpTooltip = function(metric) {
       var tooltip = '<div class="metric-description">' + metric.description + '</div>';
       if (metric.long_description) {
