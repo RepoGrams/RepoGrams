@@ -110,6 +110,7 @@
             <div class="panel-body">
               <div class="metrics-display" ng-controller="RepogramsDisplayCtrl">
                 <div ng-if="isMetricsFirst" class="multi-metrics-metrics-first">
+                  <p class="col-md-12 text-muted" ng-if="showIncomparableWarning">Colors for unique branches and unique authors metric are incomparable between projects.</p>
                   <div ng-repeat="metric in metrics | orderBy:insertionOrder track by metric.id">
                     <div ng-show="show(metric)">
                       <div class="col-md-12">
@@ -173,7 +174,7 @@
                           </div>
                         </div>
                       </div>
-                      <p class="col-md-12 text-muted" ng-if="selectedMetrics.length > 1">Values are incomparable between different metrics, regardless of color similarities</p>
+                      <p class="col-md-12 text-muted" ng-if="showIncomparableWarning">Colors for unique branches and unique authors metric are incomparable between projects.</p>
                     </div>
                     <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0">
                       <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.

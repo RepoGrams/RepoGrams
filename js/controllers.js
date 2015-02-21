@@ -45,7 +45,7 @@ repogramsControllers.controller('RepogramsConfig',
                   var exampleMetricId = example.metrics[i];
                   var metric = allMetrics[j];
                   if (metric.id == exampleMetricId) {
-                    $scope.metricSelectionService.addMetric(metric);
+                    $scope.metricSelectionService.swapMetric(metric);
                     break;
                   }
                 }
@@ -220,6 +220,7 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
     $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
     $scope.metrics = metricSelectionService.getAllMetrics();
     $scope.numSelectedRepos = reposService.getRepoArr().length;
+    $scope.showIncomparableWarning = false;
 
     $scope.show = function(metric) {
       return $scope.selectedMetrics.indexOf(metric) != -1;
@@ -254,6 +255,21 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
 
     $scope.$on('multiMetricModeChange', function () {
       $scope.isMetricsFirst = metricSelectionService.isMetricsFirst();
+    });
+
+    $scope.$on('selectedMetricsChange', function () {
+      var selectedMetrics = metricSelectionService.getSelectedMetrics();
+
+      var idsOfIncomparableMetrics = ['branch_usage', 'commit_author'];
+      for (var i = 0; i < selectedMetrics.length; i++) {
+        for (var j = 0; j < idsOfIncomparableMetrics.length; j++) {
+          if (selectedMetrics[i].id == idsOfIncomparableMetrics[j]) {
+            $scope.showIncomparableWarning = true;
+            return;
+          }
+        }
+      }
+      $scope.showIncomparableWarning = false;
     });
 
     $scope.repos = reposService.getRepoArr();

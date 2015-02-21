@@ -185,32 +185,22 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
     }
   ];
   var selectedMetrics = [];
-  var addMetricFun = function (metric) {
-    if (selectedMetrics.indexOf(metric) === -1) {
-      selectedMetrics.push(metric);
-      metric.selected = true;
-    }
-  };
-  var removeMetricFun = function(metric){
-    var position = selectedMetrics.indexOf(metric);
-    console.assert(position !== -1, "trying to remove metric which is not contained!");
-    selectedMetrics.splice(position, 1);
-    metric.selected = false;
-  };
   var isMetricsFirst = true;
 
   return {
     getSelectedMetrics: function () {
       return selectedMetrics;
     },
-    addMetric: addMetricFun,
-    removeMetric: removeMetricFun ,
     swapMetric: function (metric) {
       var position = selectedMetrics.indexOf(metric);
-      if(position == -1)
-         addMetricFun(metric);
-      else
-         removeMetricFun(metric); 
+      if (position == -1) {
+        metric.selected = true;
+        selectedMetrics.push(metric);
+      } else {
+        metric.selected = false;
+        selectedMetrics.splice(position, 1);
+      }
+      $rootScope.$broadcast('selectedMetricsChange');
     },
     getAllMetrics: function () {
       return allMetrics;
@@ -220,6 +210,7 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
         selectedMetrics[i].selected = false;
       }
       selectedMetrics.length = 0;
+      $rootScope.$broadcast('selectedMetricsChange');
     },
     isMetricsFirst: function () {
       return isMetricsFirst;
