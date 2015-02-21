@@ -170,7 +170,6 @@ function ($interpolate, $compile, $modal, reposService, blenService, metricSelec
             $('.multi-metrics-metrics-first .repo-collection').scrollLeft($(this).scrollLeft());
         });
 
-        console.log('1');
         $('.renderMetric .customBlock').hover(function() {
           var commitId = $(this).attr('data-commitid');
           $('.renderMetric .customBlock[data-commitid="' + commitId + '"]').addClass('hover');
