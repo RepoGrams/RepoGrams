@@ -110,7 +110,6 @@
             <div class="panel-body">
               <div class="metrics-display" ng-controller="RepogramsDisplayCtrl">
                 <div ng-if="isMetricsFirst" class="multi-metrics-metrics-first">
-                  <p class="col-md-12 text-muted" ng-if="showIncomparableWarning">Colors for unique branches and unique authors metric are incomparable between projects.</p>
                   <div ng-repeat="metric in metrics | orderBy:insertionOrder track by metric.id">
                     <div ng-show="show(metric)">
                       <div class="col-md-12">
@@ -120,6 +119,9 @@
                           <i class="fa fa-question-circle" tooltip-html-unsafe="{{helpTooltip(metric)}}" tooltip-popup-delay="200"></i>
                         </h3>
                         <ng-legend current="metric" ng-show="numSelectedRepos > 0" class="legend"></ng-legend>
+                        <p class="col-md-12 text-muted text-right" ng-if="metric.id == 'branch_usage' || metric.id == 'commit_author'">
+                          Colors for unique branches and unique authors metric are incomparable between projects.
+                        </p>
                       </div>
                       <div class="col-md-12">
                         <div class="row metrics-repo-container">
