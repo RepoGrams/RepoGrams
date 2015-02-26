@@ -1209,7 +1209,16 @@ var readableValueMapper = function(metricId, value) {
       return "Branch number: " + value;
 
     case "most_edited_file":
-      return "Edited " + ((value == 1) ? "once" : value + " times") + " before";
+      switch (value) {
+        case 0:
+          return "Edited for the first time";
+
+        case 1:
+          return "Edited once before";
+
+        default:
+          return "Edited " + value + " times before";
+      }
 
     case "branch_complexity":
       return (value == 1) ? "1 concurrent branch" : value + " concurrent branches";

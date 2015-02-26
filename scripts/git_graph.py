@@ -294,7 +294,7 @@ class GitGraph(object):
                 file_modified_counter[f] += 1
                 if file_modified_counter[f] > metric_value:
                     metric_value = file_modified_counter[f]
-            result.append(metric_value)
+            result.append(max(0, metric_value-1))
         return result
 
     def commit_message_length(self):
