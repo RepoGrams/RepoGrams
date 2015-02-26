@@ -12,7 +12,7 @@ repogramsControllers.controller('RepogramsConfig',
 
       // Examples
       $scope.examples = [];
-      /*@@@EXAMPLES_PLAC-EHOLDER@@@*/
+      /*@@@EXAMPLES_PLACEHOLDER@@@*/
       $scope.hasExamples = Boolean($scope.examples.length);
 
       $scope.loadExamples = function () {
