@@ -332,6 +332,16 @@ class GitGraph(object):
             result.append(pom_files_changed)
         return result
 
+    def files_modified(self):
+        """Computes the number of files modifed in a particular commit
+        @:returns: a list containg an integer pertaining to the number of files modifid in a commit
+        """
+        result = []
+        for commit in self.iterate_commits():
+            files_modified_in_commit = sum(1 for f in self.commit_files[commit])
+            result.append(files_modified_in_commit)
+        return result
+
     def iterate_commits(self, order=Order.CHRONO):
         if order == Order.TOPO:
             for commit_node in self.iterate_topo():
@@ -418,6 +428,7 @@ class GitGraph(object):
             result["commit_message_length"] = self.commit_message_length()
             result["commit_modularity"] = self.commit_modularity()
             result["pom_files"] = self.pom_files()
+            result["files_modified"] = self.files_modified()
         self.cache[self.git_helper.repo_url] = result
         return result
 

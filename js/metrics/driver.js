@@ -59,6 +59,13 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
                 callback("Error: The POM files metric does not support client-side computation.");
             }
         },
+        files_modified: function (callback){
+		if(data.precomputed === true) {
+			callback(null, data.files_modified);
+		} else {
+			callback("Error: The Files Modified metric does not support client-side computation.");
+		}
+	},
         commit_author: function (callback) {
             if (data.precomputed === true) {
                 callback(null, data.commit_author);
