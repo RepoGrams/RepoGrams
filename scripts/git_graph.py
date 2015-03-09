@@ -351,8 +351,10 @@ class GitGraph(object):
         result = []
         for commit in self.iterate_commits():
             merge_occured = 0
-            if self.commit_parents[commit] > 1:
+            if self.commit_parents[commit] == 2:    #two parents case
                 merge_occured = 1
+            elif self.commit_parents[commit] > 2:
+                merge_occured = 2
             result.append(merge_occured)
         return result
         
