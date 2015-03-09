@@ -66,6 +66,14 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
 			callback("Error: The Files Modified metric does not support client-side computation.");
 		}
 	},
+        merge_indicator: function (callback) {
+            if (data.precomputed === true) {
+                callback(null, data.merge_indicator);
+            } else {
+                // TODO do we want to implement a client-side version? Or are we skipping client-side from now on?
+                callback("Error: The Merge Indicator metric does not support client-side computation.");
+            }
+        },
         commit_author: function (callback) {
             if (data.precomputed === true) {
                 callback(null, data.commit_author);

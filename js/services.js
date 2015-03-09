@@ -189,6 +189,13 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
       icon: "dot-circle-o",
       description: "The number of files modified in a particular commit, includes new and deleted files",
       long_description: null
+    },
+    {
+      id: "merge_indicator",
+      label: "Merge Indicator",
+      icon: "cog", //TODO update icon to something that indicates a merge
+      description: "A binary indicator at a merge occured in a commit",
+      long_description: null
     }
   ];
   var selectedMetrics = [];

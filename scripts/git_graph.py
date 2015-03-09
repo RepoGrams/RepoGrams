@@ -53,6 +53,7 @@ class GitGraph(object):
         self.commit_author = self.graph.new_vertex_property("int")
         self.associated_branch = self.graph.new_vertex_property("int")
         self.commit_age = self.graph.new_vertex_property("int")
+        self.commit_parents = self.graph.new_vertex_property("int")
 
         # sentinel: required to have a rooted DAG
         self.sentinel = self.graph.add_vertex()
@@ -73,6 +74,7 @@ class GitGraph(object):
             self.branch_complexity[commit_vertex] = 0
             self.commit_author[commit_vertex] = 0
             self.commit_age[commit_vertex] = 0
+            self.commit_parents[commit_vertex] = len(parents)
             if not parents:
                 debug("initial commit detected: {}".format(commit))
                 self.graph.add_edge(self.sentinel, commit_vertex)
@@ -342,6 +344,19 @@ class GitGraph(object):
             result.append(files_modified_in_commit)
         return result
 
+    def merge_indicator(self):
+        """Determines if a commit invlolved a merge, and marks the corresponding commit
+        @:returns
+        """
+        result = []
+        for commit in self.iterate_commits():
+            merge_occured = 0
+            if self.commit_parents[commit] > 1:
+                merge_occured = 1
+            result.append(merge_occured)
+        return result
+        
+
     def iterate_commits(self, order=Order.CHRONO):
         if order == Order.TOPO:
             for commit_node in self.iterate_topo():
@@ -429,6 +444,7 @@ class GitGraph(object):
             result["commit_modularity"] = self.commit_modularity()
             result["pom_files"] = self.pom_files()
             result["files_modified"] = self.files_modified()
+            result["merge_indicator"] = self.merge_indicator()
         self.cache[self.git_helper.repo_url] = result
         return result
 

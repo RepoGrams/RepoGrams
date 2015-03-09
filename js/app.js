@@ -946,6 +946,15 @@ var MapperFactory = function () {
       "#67000d",
       "#000000"
     ],
+    "merge_indicator": [ "#fcbba1", // TODO update the color scheme
+      "#fc9272",
+      "#fb6a4a",
+      "#ef3b2c",
+      "#cb181d",
+      "#a50f15",
+      "#67000d",
+      "#000000"
+    ],
   };
   this.chunkNum = 8;
 
