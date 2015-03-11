@@ -937,24 +937,33 @@ var MapperFactory = function () {
       "#2b8cbe",
       "#08589e"
     ],
-    "files_modified": [ "#fcbba1", // TODO update the color scheme
-      "#fc9272",
-      "#fb6a4a",
-      "#ef3b2c",
-      "#cb181d",
-      "#a50f15",
-      "#67000d",
-      "#000000"
+    "files_modified": ["#f7f4f9",
+      "#e7e1ef",
+      "#d4b9da",
+      "#c994c7",
+      "#df65b0",
+      "#e7298a",
+      "#ce1256",
+      "#91003f"
     ],
-    "merge_indicator": [ "#fcbba1", // TODO update the color scheme
-      "#fc9272",
-      "#fb6a4a",
-      "#ef3b2c",
-      "#cb181d",
-      "#a50f15",
-      "#67000d",
-      "#000000"
+    "merge_indicator": ["#fff7f3",
+      "#fde0dd",
+      "#fcc5c0",
+      "#fa9fb5",
+      "#f768a1",
+      "#dd3497",
+      "#ae017e",
+      "#7a0177"
     ],
+    "TODO_METRIC_NAME": ["#ffffe5",
+      "#f7fcb9",
+      "#d9f0a3",
+      "#addd8e",
+      "#78c679",
+      "#41ab5d",
+      "#238443",
+      "#005a32"
+    ]
   };
   this.chunkNum = 8;
 
