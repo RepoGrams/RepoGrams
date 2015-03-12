@@ -345,19 +345,34 @@ class GitGraph(object):
         return result
 
     def merge_indicator(self):
-        """Determines if a commit invlolved a merge, and marks the corresponding commit
+        """Determines if a commit invlolved a merge, by enumerating on the parents involved in that commit
         @:returns
         """
         result = []
         for commit in self.iterate_commits():
-            merge_occured = 0
-            if self.commit_parents[commit] == 2:    #two parents case
-                merge_occured = 1
-            elif self.commit_parents[commit] > 2:
-                merge_occured = 2
-            result.append(merge_occured)
+            result.append(self.commit_parents[commit])
         return result
-        
+
+    def author_experience(self):
+        """Enumerates the commits of each author and displays the value during the current commit
+        The authors emails are used as a unique identifyer, and the list of authors is stored in an array [authors email, commits so far]
+        @:returns
+        """
+        result = []
+        author_commits = []
+        for commit in self.iterate_commits():
+            author_email = self.vertex2commit[commit].author.email
+            authorInList = False
+            for author in author_commits: #TODO Replace author list with hash on email
+                if author[0] == author_email:
+                    author[1] += 1
+                    authorInList = True
+                    result.append(author[1])
+                    break
+            if not authorInList:
+                author_commits.append([author_email,1])
+                result.append(1)
+        return result
 
     def iterate_commits(self, order=Order.CHRONO):
         if order == Order.TOPO:
@@ -447,6 +462,7 @@ class GitGraph(object):
             result["pom_files"] = self.pom_files()
             result["files_modified"] = self.files_modified()
             result["merge_indicator"] = self.merge_indicator()
+            result["author_experience"] = self.author_experience()
         self.cache[self.git_helper.repo_url] = result
         return result
 

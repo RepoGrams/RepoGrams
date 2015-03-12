@@ -194,7 +194,14 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
       id: "merge_indicator",
       label: "Merge Indicator",
       icon: "cog", //TODO update icon to something that indicates a merge
-      description: "A binary indicator at a merge occured in a commit",
+      description: "Displays the number of parents involved in a commit",
+      long_description: null
+    },
+    {
+      id: "author_experience",
+      label: "Author Experience",
+      icon: "user", //TODO update icon to something that indicates a merge
+      description: "The number of commits a contributor has previously made to the repository",
       long_description: null
     }
   ];
