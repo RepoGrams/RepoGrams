@@ -6,8 +6,9 @@ RUN apt-get install -y wget
 RUN echo 'deb http://downloads.skewed.de/apt/trusty trusty universe' >> /etc/apt/sources.list
 RUN echo 'deb-src http://downloads.skewed.de/apt/trusty trusty universe' >> /etc/apt/sources.list
 #RUN wget http://pgp.skewed.de:11371/pks/lookup?op=get&search=0x612DEFB798507F25 --output-document=pubkey
-COPY pubkey pubkey
+COPY conf/pubkey pubkey
 RUN apt-key add pubkey
+RUN rm pubkey
 RUN DEBIAN_FRONTEND=noninteractive apt-get update 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common
 RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:dennis/python
@@ -26,6 +27,4 @@ RUN if [ -f /var/www/html/examples.json ]; then sed -i -e '/@@@EXAMPLES_PLACEHOL
 RUN nginx -t
 RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/supervisor
 #Cope the config file
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-#Make the container run the apache webserver
-#CMD ["/bin/bash -c 'supervisord -c /etc/supervisor/conf.d/supervisord.conf'"]
+ADD conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
