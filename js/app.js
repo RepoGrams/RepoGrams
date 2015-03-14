@@ -1259,6 +1259,51 @@ var readableValueMapper = function(metricId, value) {
     case "commit_age":
       return value + " seconds"; // TODO changed to smart time
 
+    case "files_modified":
+      switch (value) {
+        case 0:
+          return "No files were modified";
+
+        case 1:
+          return "1 file was modified";
+
+        default:
+          return value + " files were modified";
+      }
+
+    case "merge_indicator":
+      switch (value) {
+        case 0:
+          return "Commit has no parents";
+
+        case 1:
+          return "Commit has 1 parent";
+
+        default:
+          return "Commit has " + value + " parents";
+      }
+
+    case "author_experience":
+      switch (value % 100) {
+        case 11:
+        case 12:
+        case 13:
+          return value + "th commit by author";
+      }
+      switch (value % 10) {
+        case 1:
+          return value + "st commit by author";
+
+        case 2:
+          return value + "nd commit by author";
+
+        case 3:
+          return value + "rd commit by author";
+
+        default:
+          return value + "th commit by author";
+      }
+
     default:
       return value;
   }
