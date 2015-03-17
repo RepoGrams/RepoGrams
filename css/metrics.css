@@ -229,9 +229,18 @@ form#repogramsAdder {
 }
 
 footer {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	padding: 10px;
-	color: #CCC;
+    position: fixed;
+    bottom: 0;
+    padding: 10px;
+    color: #CCC;
+    font-size: 11px;
+    width: 100%;
+}
+
+footer .about {
+    float: left;
+}
+
+footer .build-info {
+    float: right;
 }
