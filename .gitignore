@@ -6,6 +6,7 @@ config.inc.php
 *.py[cod]
 *.log
 .idea
+.builddate
 .buildinfo
 /nginx.conf
 /deploy.sh
