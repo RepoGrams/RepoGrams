@@ -9,6 +9,5 @@ fi
 
 echo "Running image at port $PORT."
 
-CONTAINER_NAME="repograms_`git branch | grep "*" | awk '{ print $2 }'`"
-
-docker run -p $PORT:80 --name="$CONTAINER_NAME" repograms supervisord &
+IMAGE_NAME="repograms_`git branch | grep "*" | awk '{ print $2 }'`"
+docker run -p $PORT:80 --name="$IMAGE_NAME" $IMAGE_NAME supervisord &
