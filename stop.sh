@@ -1,9 +1,9 @@
 #!/bin/sh
-CONTAINER_ID=`docker ps | grep repograms:latest | grep supervisord | head -n 1 | sed "s/\s.*//"`
-
-if [ ! -z "$CONTAINER_ID" ]; then
-	echo "Stopping container $CONTAINER_ID."
-	docker stop $CONTAINER_ID
+CONTAINER_NAME="repograms_`git branch | grep "*" | awk '{ print $2 }'`"
+CONTAINER_IS_RUNNING=$(docker ps | grep $CONTAINER_NAME)
+if [ $? -eq 0 ]; then
+	echo "Stopping container $CONTAINER_NAME."
+	docker stop $CONTAINER_NAME
 else
 	echo "No container found to stop."
 fi
