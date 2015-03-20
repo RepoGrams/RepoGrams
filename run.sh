@@ -8,4 +8,6 @@ else
 fi
 
 echo "Running image at port $PORT."
-docker run -p $PORT:80 -p 8090:8090 repograms supervisord &
+
+IMAGE_NAME="repograms_`git branch | grep "*" | awk '{ print $2 }'`"
+docker run -p $PORT:80 --name="$IMAGE_NAME" $IMAGE_NAME supervisord &
