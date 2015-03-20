@@ -16,5 +16,7 @@ COMMIT=`git log --format="%h" -n 1 | awk '{printf $1}'`
 DATE=`git log --format="%ci" -n 1 | awk '{printf $1}'`
 echo -n "$BRANCH-$COMMIT-$DATE" > .buildinfo
 
+IMAGE_NAME="repograms_`git branch | grep "*" | awk '{ print $2 }'`"
+
 echo 'Building the docker image.'
-docker build -t repograms .
+docker build -t $IMAGE_NAME .
