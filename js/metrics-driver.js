@@ -1,4 +1,4 @@
-angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 'commitMsgLength', 'commitLangCompl', 'mostEditFile', function (commitModularity, commitMsgLength, commitLangCompl, mostEditFile) {
+angular.module('repogramsModule').factory('metricsRunner', function () {
   return {
     runMetricsAsync: function (data, onComplete) {
       async.parallel({
@@ -52,4 +52,4 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
       });
     }
   };
-}]);
+});
