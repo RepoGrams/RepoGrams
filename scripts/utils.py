@@ -18,7 +18,9 @@ def debug_on(func):
         result = func(*args, **kwargs)
         debug = old
         return result
+
     return wrapper
+
 
 def debug(*args, **kwargs):
     pass
@@ -31,6 +33,7 @@ class Order:
 
 class PriorityQueue:
     """A priority queue. Returs elements with lower priority first"""
+
     def __init__(self):
         self._queue = []
         self._index = 0

@@ -1,9 +1,9 @@
 body {
-	margin: 2em 0;
+    margin: 2em 0;
 }
 
 img.logo {
-	margin-bottom: 1em;
+    margin-bottom: 1em;
 }
 
 h3.metric-title {
@@ -40,14 +40,14 @@ div.metrics-display div.alert-info a {
 }
 
 /* Rendered blocks */
-.customBlock{
-	background-color:#ffffff;
-	height: 20px;
-	display:inline-block;
-	white-space: nowrap;
-	outline: 1px solid rgba(0, 0, 0, 0.15);
-	outline-offset: -1px;
-	transition: width 1s;
+.customBlock {
+    background-color: #ffffff;
+    height: 20px;
+    display: inline-block;
+    white-space: nowrap;
+    outline: 1px solid rgba(0, 0, 0, 0.15);
+    outline-offset: -1px;
+    transition: width 1s;
 }
 
 .metrics-repo-container {
@@ -59,133 +59,135 @@ div.metrics-display div.alert-info a {
 }
 
 .renderMetric .customBlock.hover {
-	box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, 0.3), 0px 0px 2px 2px rgba(102, 175, 233, 0.6);
-	cursor: pointer;
-	outline-color: rgba(102, 175, 233, 0.6);
-	outline-offset: 0px;
-	position: relative;
-	z-index: 1050;
+    box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, 0.3), 0px 0px 2px 2px rgba(102, 175, 233, 0.6);
+    cursor: pointer;
+    outline-color: rgba(102, 175, 233, 0.6);
+    outline-offset: 0px;
+    position: relative;
+    z-index: 1050;
 }
 
 /* Rendered blocks in the legend */
 .list-inline .customBlock {
-	width: 20px;
+    width: 20px;
 }
 
 .list-inline .branchUsageRainbow {
-	display: inline-block;
+    display: inline-block;
     margin-left: 75px;
-	width: 60px;
+    width: 60px;
 }
 
 .list-inline .branchUsageRainbow .customBlock {
-	width: 16.66%;
+    width: 16.66%;
 }
 
 .list-inline .branchUsageRainbow .customBlock:nth-child(1) {
-	background-color: #ffff00;
+    background-color: #ffff00;
 }
 
 .list-inline .branchUsageRainbow .customBlock:nth-child(2) {
-	background-color: #1ce6ff;
+    background-color: #1ce6ff;
 }
 
 .list-inline .branchUsageRainbow .customBlock:nth-child(3) {
-	background-color: #ff34ff;
+    background-color: #ff34ff;
 }
 
 .list-inline .branchUsageRainbow .customBlock:nth-child(4) {
-	background-color: #ff4a46;
+    background-color: #ff4a46;
 }
 
 .list-inline .branchUsageRainbow .customBlock:nth-child(5) {
-	background-color: #008941;
+    background-color: #008941;
 }
 
 .list-inline .branchUsageRainbow .customBlock:nth-child(6) {
-	background-color: #006fa6;
+    background-color: #006fa6;
 }
 
 .list-inline .commitAuthorRainbow {
-	display: inline-block;
-	width: 60px;
+    display: inline-block;
+    width: 60px;
 }
 
 .list-inline .commitAuthorRainbow .customBlock {
-	width: 16.66%;
+    width: 16.66%;
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(1) {
-	background-color: #fcfd0c;
+    background-color: #fcfd0c;
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(2) {
-	background-color: #fca4fa;
+    background-color: #fca4fa;
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(3) {
-	background-color: #09dafc;
+    background-color: #09dafc;
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(4) {
-	background-color: #d86606;
+    background-color: #d86606;
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(5) {
-	background-color: #03883f;
+    background-color: #03883f;
 }
 
 .list-inline .commitAuthorRainbow .customBlock:nth-child(6) {
-	background-color: #153cfd;
+    background-color: #153cfd;
 }
 
 /* to align buttons with the input field TODO: don't use fixed height! */
-.formbtn {height:34px;}
+.formbtn {
+    height: 34px;
+}
 
 .renderMetric .tooltip-inner {
-	background-color: WhiteSmoke;
-	border: solid 1px black;
-	color: black;
-	max-width: none;
+    background-color: WhiteSmoke;
+    border: solid 1px black;
+    color: black;
+    max-width: none;
 }
 
 .renderMetric .tooltip-inner p {
-	margin: 0;
+    margin: 0;
 }
 
 .renderMetric .tooltip-inner p.commitMessage {
-	font-size: 14px;
+    font-size: 14px;
 }
 
 .modal-body.commitDetails a {
-	display: block;
+    display: block;
 }
 
 .container-padding-lr {
-	padding-left: 30px;
-	padding-right: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .configBlock button {
-	margin-left: 4px;
+    margin-left: 4px;
 }
 
 slider {
-	margin: 0 5px !important;
+    margin: 0 5px !important;
 }
 
 slider span.bubble {
-	top: 20px !important;
+    top: 20px !important;
 }
 
 .label-earliest-commits {
-	padding-left: 0em;
+    padding-left: 0em;
 }
 
 .repo-label {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .repo-label-label {
@@ -225,7 +227,7 @@ slider span.bubble {
 }
 
 form#repogramsAdder {
-	margin-top: 1em;
+    margin-top: 1em;
 }
 
 footer {

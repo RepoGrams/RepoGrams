@@ -22,7 +22,7 @@ repogramsControllers.controller('RepogramsConfig',
           '<div class="modal-header"><h3 class="modal-title">Select an example to load</h3></div>' +
           '<div class="modal-body">' +
           '<div class="form-group" ng-repeat="(i, example) in examples">' +
-          '<label for="example_{{i}}"><button id="example_{{i}}" class="btn btn-sm btn-primary" type="checkbox" ng-value="example" ng-click="accept(example)">Load</button> {{example.name}}</label>' +
+          '<label for="example_{{i}}"><button id="example_{{i}}" class="btn btn-sm btn-primary" type="checkbox" ng-click="accept(example)">Load</button> {{example.name}}</label>' +
           '</div>' +
           '</div>' +
           '<div class="modal-footer">' +
@@ -52,7 +52,7 @@ repogramsControllers.controller('RepogramsConfig',
               }
 
               var allBlensMods = $scope.blenSelectionService.getAllBlenMods();
-              for (var i = 0; i < allBlensMods.length; i++) {
+              for (i = 0; i < allBlensMods.length; i++) {
                 var blenMod = allBlensMods[i];
                 if (blenMod.id == example.blen) {
                   $scope.blenSelectionService.setBlenMod(blenMod);
@@ -109,7 +109,7 @@ repogramsControllers.controller('RepogramsConfig',
 
       $scope.blenMods = $scope.blenSelectionService.getAllBlenMods();
       $scope.selectedBlenMod = $scope.blenSelectionService.getSelectedBlenMod();
-      $scope.$on('blenModChange', function() {
+      $scope.$on('blenModChange', function () {
         $scope.selectedBlenMod = $scope.blenSelectionService.getSelectedBlenMod();
       });
 
@@ -193,7 +193,7 @@ repogramsControllers.controller('RepogramsImporter',
           }
         });
       });
-      result.error(function (data, status, headers, config) {
+      result.error(function (data, status) {
         $scope.processing = false;
         console.log(status);
         $scope.errors.push(data);
@@ -201,13 +201,13 @@ repogramsControllers.controller('RepogramsImporter',
     };
 
     $scope.reposToLoadAsExample = [];
-    $scope.loadNextExampleRepo = function() {
+    $scope.loadNextExampleRepo = function () {
       $scope.importURL = $scope.reposToLoadAsExample.shift();
       if ($scope.importURL) {
         $scope.importRepo($scope.loadNextExampleRepo);
       }
     };
-    $scope.$on('loadExampleRepos', function(event, repositories) {
+    $scope.$on('loadExampleRepos', function (event, repositories) {
       $scope.reposToLoadAsExample = repositories.slice();
       $scope.loadNextExampleRepo();
     });
@@ -215,22 +215,22 @@ repogramsControllers.controller('RepogramsImporter',
   }]);
 
 repogramsControllers.controller('RepogramsDisplayCtrl',
-  ['$scope','metricSelectionService', 'reposService', function ($scope, metricSelectionService, reposService){
+  ['$scope', 'metricSelectionService', 'reposService', function ($scope, metricSelectionService, reposService) {
     $scope.isMetricsFirst = metricSelectionService.isMetricsFirst();
     $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
     $scope.metrics = metricSelectionService.getAllMetrics();
     $scope.numSelectedRepos = reposService.getRepoArr().length;
     $scope.showIncomparableWarning = false;
 
-    $scope.show = function(metric) {
+    $scope.show = function (metric) {
       return $scope.selectedMetrics.indexOf(metric) != -1;
     };
 
-    $scope.insertionOrder = function(metric) {
+    $scope.insertionOrder = function (metric) {
       return $scope.selectedMetrics.indexOf(metric);
     };
 
-    $scope.helpTooltip = function(metric) {
+    $scope.helpTooltip = function (metric) {
       var tooltip = '<div class="metric-description">' + metric.description + '</div>';
       if (metric.long_description) {
         tooltip += '\n<div class="metric-long-description">' + metric.long_description + '</div>';
@@ -238,12 +238,12 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
       return tooltip;
     };
 
-    $scope.focusOnUrlImporter = function($event) {
+    $scope.focusOnUrlImporter = function () {
       jQuery('#importUrlId').focus().fadeTo('fast', 0.5).fadeTo('fast', 1);
     };
 
-    $scope.openSelectMetricsModal = function($event) {
-      window.setTimeout(function() {
+    $scope.openSelectMetricsModal = function () {
+      window.setTimeout(function () {
         document.getElementById('metricSelect').click();
       }, 0);
 
@@ -276,12 +276,12 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
     $scope.removeRepo = function (pos) {
       reposService.removeRepo(pos);
     };
-    $scope.moveUp = function(index){
-      console.log("Moving up "+index);
+    $scope.moveUp = function (index) {
+      console.log("Moving up " + index);
       reposService.moveRepoUp(index);
     };
-    $scope.moveDown = function(index){
-      console.log("Moving down "+index);
+    $scope.moveDown = function (index) {
+      console.log("Moving down " + index);
       reposService.moveRepoDown(index);
     };
   }]);

@@ -1189,7 +1189,7 @@ var MapperFactory = function () {
       this._mappingInfo = mappingInfo;
       return mappingInfo;
     };
-  }
+  };
 
   var BranchUsageMapper = function () {
     this.map = function (value) {
@@ -1230,7 +1230,7 @@ var MapperFactory = function () {
 var mapperFactory = new MapperFactory();
 
 
-var readableValueMapper = function(metricId, value) {
+var readableValueMapper = function (metricId, value) {
   switch (metricId) {
     case "commit_modularity":
       return Math.round(value * 100) + "% localized files in the commit";
@@ -1260,7 +1260,7 @@ var readableValueMapper = function(metricId, value) {
       return (value == 1) ? "1 concurrent branch" : value + " concurrent branches";
 
     case "pom_files":
-       return value + " POM " + ((value == 1) ? "file" : "files") + " changed";
+      return value + " POM " + ((value == 1) ? "file" : "files") + " changed";
 
     case "commit_author":
       return "Author number: " + value;
@@ -1317,7 +1317,6 @@ var readableValueMapper = function(metricId, value) {
       return value;
   }
 };
-
 
 
 function arrayMax(arr) {

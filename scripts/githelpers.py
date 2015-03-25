@@ -1,14 +1,12 @@
 # -!- encoding: utf-8
 
-import os
 import subprocess
 import tempfile
-from utils import debug
 
 import pygit2
 
-class DirManager(object):
 
+class DirManager(object):
     def __init__(self, basedir=None):
         if basedir is None:
             basedir = tempfile.mkdtemp()
@@ -29,7 +27,6 @@ class GitException(Exception):
 
 
 class GitHelper(object):
-
     def __init__(self, repo_url, dir_manager, whitelist=None):
         """
         :repo_url: URL of the repository
@@ -69,10 +66,9 @@ class GitHelper(object):
             if branch.endswith("master"):
                 master = head_commits[index]
                 break
-        else: # no branch named with master
+        else:  # no branch named with master
             master = head_commits[0]
         return (master, head_commits)
-
 
 
     def get_all_commits(self):
@@ -96,7 +92,7 @@ class GitHelper(object):
         # --root: else the first commit won't work
         # -r: the commit we want to display
         # --pretty: format string which prints all we need
-        #   %P: parents   |   %ct: commiter time stamp     | %B commitmsg
+        # %P: parents   |   %ct: commiter time stamp     | %B commitmsg
         parents = commit.parents
         diffs = []
         for parent in parents:

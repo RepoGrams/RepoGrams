@@ -1,5 +1,4 @@
 #!/usr/bin/env python2
-import os
 import sys
 
 import git_graph as git_graph

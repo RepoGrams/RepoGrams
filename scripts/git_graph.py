@@ -3,20 +3,19 @@
 
 from __future__ import print_function
 
-from utils import debug, PriorityQueue, Order
-import githelpers as gh
 import json
 import os.path
 import collections
 import itertools
+from distutils.version import LooseVersion
 
 import graph_tool as gt
 import graph_tool.topology
-
 import jellyfish
 import numpy
 
-from distutils.version import LooseVersion
+from utils import debug, PriorityQueue, Order
+
 
 class GitGraphCache(object):
     def __init__(self):
@@ -33,7 +32,6 @@ class GitGraphCache(object):
 
 
 class GitGraph(object):
-
     def __init__(self, git_helper, cache):
         self.cache = cache
         self.git_helper = git_helper
@@ -69,7 +67,7 @@ class GitGraph(object):
             self.commit_msg[commit_vertex] = commitmsg
             self.commit_timestamp[commit_vertex] = commit_timestamp
             self.commit_files[commit_vertex] = files
-            self.commit_churn[commit_vertex] = added+removed
+            self.commit_churn[commit_vertex] = added + removed
             self.branch_complexity[commit_vertex] = 0
             self.commit_author[commit_vertex] = 0
             self.commit_age[commit_vertex] = 0
@@ -124,7 +122,7 @@ class GitGraph(object):
         # An example for this is efea0f23f9e0f147c5ff5b5d35249417c32c3a53 from jQuery
         for child in children:
             if (commit_node == self.graph.vertex(self.dominator_tree[child]) and
-                self.associated_branch[child] != assoc_branch): # exclude child from same branch
+                        self.associated_branch[child] != assoc_branch):  # exclude child from same branch
                 branch_counter += 1
         # There are actually commits with multiple children which dominate none
         # of them, in this case branch_counter becomes negative because of the
@@ -133,7 +131,8 @@ class GitGraph(object):
         # An example of such a commit is 738036395d68824933949186603aeeb9c087d10e
         # of the repograms repository
         branch_counter = max(branch_counter, 0)
-        assert branch_counter >= 0, "A negative number of branches cannot exist: branch_counter: {}, #children: {}, commit: {}".format(branch_counter, len(children), commit_node)
+        assert branch_counter >= 0, "A negative number of branches cannot exist: branch_counter: {}, #children: {}, commit: {}".format(
+            branch_counter, len(children), commit_node)
         if __debug__:
             if branch_counter != 0:
                 debug("started:", self.commit_hashsum[commit_node])
@@ -167,10 +166,10 @@ class GitGraph(object):
                 if child == commit_node:
                     continue
                 parent_counter += sum(1 for destiny in destinies
-                                        if (child == destiny or
-                                            gt.topology.shortest_path(self.graph, child, destiny)[0]))
+                                      if (child == destiny or
+                                          gt.topology.shortest_path(self.graph, child, destiny)[0]))
             child_count = sum(1 for _ in parent.out_neighbours())
-            if child_count - parent_counter  == 1:
+            if child_count - parent_counter == 1:
                 # commit_node is the last commit of the branch
                 ended_counter += 1
         ended_counter -= 1  # one parent is from the "main" branch
@@ -179,7 +178,8 @@ class GitGraph(object):
         # of the bootstrap repository
         # Therefore we set the counter to 0 if it's negative
         ended_counter = max(ended_counter, 0)
-        assert ended_counter >= 0, "commit cannot end negative number of branches: branch_counter: {}, #parents: {}, commit: {}".format(ended_counter, len(parents), self.commit_hashsum[commit_node])
+        assert ended_counter >= 0, "commit cannot end negative number of branches: branch_counter: {}, #parents: {}, commit: {}".format(
+            ended_counter, len(parents), self.commit_hashsum[commit_node])
         if __debug__:
             if ended_counter != 0:
                 debug("ended:", self.commit_hashsum[commit_node], "number: ", ended_counter)
@@ -187,7 +187,7 @@ class GitGraph(object):
                 debug("not ended:", self.commit_hashsum[commit_node])
                 debug("parents are")
                 for parent in parents:
-                    debug("\t",self.commit_hashsum[parent])
+                    debug("\t", self.commit_hashsum[parent])
                     for child in parent.out_neighbours():
                         debug("\t\tchild: ", self.commit_hashsum[child])
                         debug("")
@@ -201,23 +201,26 @@ class GitGraph(object):
             parents = list(commit_node.in_neighbours())
             children = list(commit_node.out_neighbours())
             if parents[0] == self.sentinel:  # first commit of branch
-                assert(len(parents) == 1), "First commit of branch has no predecessor"
+                assert (len(parents) == 1), "First commit of branch has no predecessor"
                 branch_counter += 1
             branch_counter -= self._ended_branches_count(commit_node, parents)
-            assert branch_counter >= 1, "There should be at least one branch all the time: branch_counter: {}, commit {}: ".format(branch_counter, self.commit_hashsum[commit_node])
+            assert branch_counter >= 1, "There should be at least one branch all the time: branch_counter: {}, commit {}: ".format(
+                branch_counter, self.commit_hashsum[commit_node])
             self.branch_complexity[commit_node] = branch_counter
             # add the newly created branches AFTERWARDS
             # the branches diverge at this commit, but the number of branches
             # is only increased in the children
             branch_counter += self._created_branches_count(commit_node,
                                                            children)
-            assert branch_counter >= 1,"There should be at least one branch all the time: branch_counter: {}, commit {}: ".format(branch_counter, self.commit_hashsum[commit_node])
-        # visited all nodes
+            assert branch_counter >= 1, "There should be at least one branch all the time: branch_counter: {}, commit {}: ".format(
+                branch_counter, self.commit_hashsum[commit_node])
+            # visited all nodes
 
     def metric4(self):
         # utility function to get the equivalent of Python 3's tuple unpacking
         def splitl(head, *tail):
             return head, tail
+
         workqueue = [self.hash2vertex[self.master_sha]]
         workqueue += (self.hash2vertex[shasum] for shasum in self.branch_heads if shasum != self.master_sha)
         # add all sinks; this seems to be necessary in some special cases
@@ -295,7 +298,7 @@ class GitGraph(object):
                 file_modified_counter[f] += 1
                 if file_modified_counter[f] > metric_value:
                     metric_value = file_modified_counter[f]
-            result.append(max(0, metric_value-1))
+            result.append(max(0, metric_value - 1))
         return result
 
     def commit_message_length(self):
@@ -362,14 +365,14 @@ class GitGraph(object):
         for commit in self.iterate_commits():
             author_email = self.vertex2commit[commit].author.email
             authorInList = False
-            for author in author_commits: #TODO Replace author list with hash on email
+            for author in author_commits:  # TODO Replace author list with hash on email
                 if author[0] == author_email:
                     author[1] += 1
                     authorInList = True
                     result.append(author[1])
                     break
             if not authorInList:
-                author_commits.append([author_email,1])
+                author_commits.append([author_email, 1])
                 result.append(1)
         return result
 
@@ -406,7 +409,7 @@ class GitGraph(object):
         for initial_commit in self.sentinel.out_neighbours():
             unvisited_nodes.push(initial_commit, self.commit_timestamp[initial_commit])
             already_seen.add(initial_commit)
-        while(True):
+        while (True):
             # iterate over commits in order of commit_timestamps
             try:
                 commit_node = unvisited_nodes.pop()
@@ -468,6 +471,7 @@ class GitGraph(object):
     def export_as_json(self):
         result = self.export()
         return json.dumps(result, separators=(',', ':'))
+
 
 def print_error(message):
     print(json.dumps({"emessage": message}, separators=(',', ':')))

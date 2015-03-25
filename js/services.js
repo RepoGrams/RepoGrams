@@ -8,7 +8,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
   var maxVal = {};
   var maxChurn = 0;
 
-  var initializeMappers = function() {
+  var initializeMappers = function () {
     for (var i = 0; i < allMetrics.length; i++) {
       // initialize with dummy mapper
       var metric = allMetrics[i].id;
@@ -21,7 +21,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
   /**
    * Update the max value per metrix, if needed.
    */
-  var updateMetricMax = function(metric, metricMaxVal, forceUpdate) {
+  var updateMetricMax = function (metric, metricMaxVal, forceUpdate) {
     if (metric == "branch_usage" || metric == "commit_author") {
       mappers[metric] = mapperFactory.createMapper(null, metric);
       $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
@@ -92,19 +92,19 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
       }
     },
     moveRepoUp: function (place) {
-      if(place == 0)
-       return;
-      var tmp = RepoArr[place];
-      RepoArr[place] = RepoArr[place-1];
-      RepoArr[place-1] = tmp;
-      $rootScope.$broadcast("reposChange", RepoArr);
-    },
-    moveRepoDown: function(place){
-      if (place == RepoArr.length-1)
+      if (place == 0)
         return;
       var tmp = RepoArr[place];
-      RepoArr[place] = RepoArr[place+1];
-      RepoArr[place+1] = tmp;
+      RepoArr[place] = RepoArr[place - 1];
+      RepoArr[place - 1] = tmp;
+      $rootScope.$broadcast("reposChange", RepoArr);
+    },
+    moveRepoDown: function (place) {
+      if (place == RepoArr.length - 1)
+        return;
+      var tmp = RepoArr[place];
+      RepoArr[place] = RepoArr[place + 1];
+      RepoArr[place + 1] = tmp;
       $rootScope.$broadcast("reposChange", RepoArr);
     },
     mapToColor: function (metric, value) {
@@ -260,16 +260,12 @@ repogramsServices.service('blenService', function () {
     }
   };
   var calculateWidth = function (width) {
-    var widthString = "" + ((width.value / width.divisor) * width.zoom) + width.unit;
-    width.string = widthString;
+    width.string = "" + ((width.value / width.divisor) * width.zoom) + width.unit;
     return width;
   };
   return {
     getWidth: function (mode, churn, totalChurn, maxChurn, noOfCommits, zoom) {
       var width = getModFunction[mode](churn, totalChurn, maxChurn, noOfCommits, zoom);
-      return calculateWidth(width);
-    },
-    updateString: function (width) {
       return calculateWidth(width);
     }
   };
