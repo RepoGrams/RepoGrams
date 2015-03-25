@@ -34,10 +34,9 @@ class GitGraphCache(object):
 
 class GitGraph(object):
 
-    def __init__(self, git_helper, cache, precompute = False):
+    def __init__(self, git_helper, cache):
         self.cache = cache
         self.git_helper = git_helper
-        self.precompute = precompute
         self.graph = gt.Graph()
         # required to map a nodes hashsum back to the vertex
         self.hash2vertex = {}
@@ -447,22 +446,22 @@ class GitGraph(object):
             "associated_branches": associated_branches,
             "commit_author": commit_author,
             "bcomplexities": bcomplexities,
-            "commit_age": commit_age,
-            "precomputed": self.precompute
+            "commit_age": commit_age
         }
-        if self.precompute:
-            with open("js/metrics/filenames.json") as f:
-                data = json.load(f)
-            name_mapping = dict(itertools.izip(data["NAMES"], data["TYPES"]))
-            extension_mapping = dict(itertools.izip(data["ENDINGS"], data["TYPE"]))
-            result["commit_lang_compl"] = self.commit_lang_compl(name_mapping, extension_mapping)
-            result["most_edit_file"] = self.most_edit_file()
-            result["commit_message_length"] = self.commit_message_length()
-            result["commit_modularity"] = self.commit_modularity()
-            result["pom_files"] = self.pom_files()
-            result["files_modified"] = self.files_modified()
-            result["merge_indicator"] = self.merge_indicator()
-            result["author_experience"] = self.author_experience()
+
+        with open("data/languages.json") as f:
+            languages = json.load(f)
+            name_mapping = dict(itertools.izip(languages["NAMES"], languages["TYPES"]))
+            extension_mapping = dict(itertools.izip(languages["ENDINGS"], languages["TYPE"]))
+        result["commit_lang_compl"] = self.commit_lang_compl(name_mapping, extension_mapping)
+        result["most_edit_file"] = self.most_edit_file()
+        result["commit_message_length"] = self.commit_message_length()
+        result["commit_modularity"] = self.commit_modularity()
+        result["pom_files"] = self.pom_files()
+        result["files_modified"] = self.files_modified()
+        result["merge_indicator"] = self.merge_indicator()
+        result["author_experience"] = self.author_experience()
+
         self.cache[self.git_helper.repo_url] = result
         return result
 
