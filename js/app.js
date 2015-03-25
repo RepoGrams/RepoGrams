@@ -928,14 +928,14 @@ var MapperFactory = function () {
       "#a50f15",
       "#67000d"
     ],
-    "commit_age": ["#f7fcf0", // TODO change the color scheme
-      "#e0f3db",
-      "#ccebc5",
-      "#a8ddb5",
-      "#7bccc4",
-      "#4eb3d3",
-      "#2b8cbe",
-      "#08589e"
+    "commit_age": ["#fff7fb",
+      "#ece2f0",
+      "#d0d1e6",
+      "#a6bddb",
+      "#67a9cf",
+      "#3690c0",
+      "#02818a",
+      "#016450",
     ],
     "files_modified": ["#f7f4f9",
       "#e7e1ef",
@@ -963,7 +963,7 @@ var MapperFactory = function () {
       "#41ab5d",
       "#238443",
       "#005a32"
-    ],
+    ]
   };
   this.chunkNum = 8;
 
@@ -1210,11 +1210,14 @@ var MapperFactory = function () {
       case "commit_author":
         return new CommitAuthorMapper();
       case "commit_message_length":
+      case "files_modified":
         return new FibonacciRangeMapper(maxValue, metricName);
       case "commit_age":
         return new TimesRangeMapper(maxValue, metricName);
       case "most_edited_file":
       case "pom_files":
+      case "author_experience":
+      case "merge_indicator":
         return new EqualRangeMapper(maxValue, metricName, 0, true);
       case "commit_modularity":
         return new EqualRangeMapper(maxValue, metricName, -2);

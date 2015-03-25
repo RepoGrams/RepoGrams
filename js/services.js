@@ -186,21 +186,21 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
     {
       id: "files_modified",
       label: "Files Modified",
-      icon: "dot-circle-o",
-      description: "The number of files modified in a particular commit, includes new and deleted files",
+      icon: "file",
+      description: "The number of files modified in a particular commit, includes new and deleted files.",
       long_description: null
     },
     {
       id: "merge_indicator",
       label: "Merge Indicator",
-      icon: "cog", //TODO update icon to something that indicates a merge
+      icon: "code-fork",
       description: "Displays the number of parents involved in a commit",
-      long_description: null
+      long_description: "2 or more parents denote a merge commit."
     },
     {
       id: "author_experience",
       label: "Author Experience",
-      icon: "user", //TODO update icon to something that indicates a merge
+      icon: "user-times",
       description: "The number of commits a contributor has previously made to the repository",
       long_description: null
     }
