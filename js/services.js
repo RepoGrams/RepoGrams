@@ -182,6 +182,27 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
       icon: "clock-o",
       description: "Elapsed time between a commit and its parent commit.",
       long_description: "For merge commits we consider the elapsed time between a commit and its youngest parent commit."
+    },
+    {
+      id: "files_modified",
+      label: "Files Modified",
+      icon: "dot-circle-o",
+      description: "The number of files modified in a particular commit, includes new and deleted files",
+      long_description: null
+    },
+    {
+      id: "merge_indicator",
+      label: "Merge Indicator",
+      icon: "cog", //TODO update icon to something that indicates a merge
+      description: "Displays the number of parents involved in a commit",
+      long_description: null
+    },
+    {
+      id: "author_experience",
+      label: "Author Experience",
+      icon: "user", //TODO update icon to something that indicates a merge
+      description: "The number of commits a contributor has previously made to the repository",
+      long_description: null
     }
   ];
   var selectedMetrics = [];

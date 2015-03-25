@@ -937,6 +937,33 @@ var MapperFactory = function () {
       "#2b8cbe",
       "#08589e"
     ],
+    "files_modified": ["#f7f4f9",
+      "#e7e1ef",
+      "#d4b9da",
+      "#c994c7",
+      "#df65b0",
+      "#e7298a",
+      "#ce1256",
+      "#91003f"
+    ],
+    "merge_indicator": ["#fff7f3",
+      "#fde0dd",
+      "#fcc5c0",
+      "#fa9fb5",
+      "#f768a1",
+      "#dd3497",
+      "#ae017e",
+      "#7a0177"
+    ],
+    "author_experience": ["#ffffe5",
+      "#f7fcb9",
+      "#d9f0a3",
+      "#addd8e",
+      "#78c679",
+      "#41ab5d",
+      "#238443",
+      "#005a32"
+    ],
   };
   this.chunkNum = 8;
 
@@ -1231,6 +1258,51 @@ var readableValueMapper = function(metricId, value) {
 
     case "commit_age":
       return value + " seconds"; // TODO changed to smart time
+
+    case "files_modified":
+      switch (value) {
+        case 0:
+          return "No files were modified";
+
+        case 1:
+          return "1 file was modified";
+
+        default:
+          return value + " files were modified";
+      }
+
+    case "merge_indicator":
+      switch (value) {
+        case 0:
+          return "Commit has no parents";
+
+        case 1:
+          return "Commit has 1 parent";
+
+        default:
+          return "Commit has " + value + " parents";
+      }
+
+    case "author_experience":
+      switch (value % 100) {
+        case 11:
+        case 12:
+        case 13:
+          return value + "th commit by author";
+      }
+      switch (value % 10) {
+        case 1:
+          return value + "st commit by author";
+
+        case 2:
+          return value + "nd commit by author";
+
+        case 3:
+          return value + "rd commit by author";
+
+        default:
+          return value + "th commit by author";
+      }
 
     default:
       return value;

@@ -53,6 +53,7 @@ class GitGraph(object):
         self.commit_author = self.graph.new_vertex_property("int")
         self.associated_branch = self.graph.new_vertex_property("int")
         self.commit_age = self.graph.new_vertex_property("int")
+        self.commit_parents = self.graph.new_vertex_property("int")
 
         # sentinel: required to have a rooted DAG
         self.sentinel = self.graph.add_vertex()
@@ -73,6 +74,7 @@ class GitGraph(object):
             self.branch_complexity[commit_vertex] = 0
             self.commit_author[commit_vertex] = 0
             self.commit_age[commit_vertex] = 0
+            self.commit_parents[commit_vertex] = len(parents)
             if not parents:
                 debug("initial commit detected: {}".format(commit))
                 self.graph.add_edge(self.sentinel, commit_vertex)
@@ -332,6 +334,46 @@ class GitGraph(object):
             result.append(pom_files_changed)
         return result
 
+    def files_modified(self):
+        """Computes the number of files modifed in a particular commit
+        @:returns: a list containg an integer pertaining to the number of files modifid in a commit
+        """
+        result = []
+        for commit in self.iterate_commits():
+            files_modified_in_commit = sum(1 for f in self.commit_files[commit])
+            result.append(files_modified_in_commit)
+        return result
+
+    def merge_indicator(self):
+        """Determines if a commit invlolved a merge, by enumerating on the parents involved in that commit
+        @:returns
+        """
+        result = []
+        for commit in self.iterate_commits():
+            result.append(self.commit_parents[commit])
+        return result
+
+    def author_experience(self):
+        """Enumerates the commits of each author and displays the value during the current commit
+        The authors emails are used as a unique identifyer, and the list of authors is stored in an array [authors email, commits so far]
+        @:returns
+        """
+        result = []
+        author_commits = []
+        for commit in self.iterate_commits():
+            author_email = self.vertex2commit[commit].author.email
+            authorInList = False
+            for author in author_commits: #TODO Replace author list with hash on email
+                if author[0] == author_email:
+                    author[1] += 1
+                    authorInList = True
+                    result.append(author[1])
+                    break
+            if not authorInList:
+                author_commits.append([author_email,1])
+                result.append(1)
+        return result
+
     def iterate_commits(self, order=Order.CHRONO):
         if order == Order.TOPO:
             for commit_node in self.iterate_topo():
@@ -418,6 +460,9 @@ class GitGraph(object):
             result["commit_message_length"] = self.commit_message_length()
             result["commit_modularity"] = self.commit_modularity()
             result["pom_files"] = self.pom_files()
+            result["files_modified"] = self.files_modified()
+            result["merge_indicator"] = self.merge_indicator()
+            result["author_experience"] = self.author_experience()
         self.cache[self.git_helper.repo_url] = result
         return result
 

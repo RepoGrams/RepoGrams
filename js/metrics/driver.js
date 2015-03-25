@@ -59,6 +59,29 @@ angular.module('repogramsModule').factory('metricsRunner', ['commitModularity', 
                 callback("Error: The POM files metric does not support client-side computation.");
             }
         },
+        files_modified: function (callback){
+		if(data.precomputed === true) {
+			callback(null, data.files_modified);
+		} else {
+			callback("Error: The Files Modified metric does not support client-side computation.");
+		}
+	},
+        merge_indicator: function (callback) {
+            if (data.precomputed === true) {
+                callback(null, data.merge_indicator);
+            } else {
+                // TODO do we want to implement a client-side version? Or are we skipping client-side from now on?
+                callback("Error: The Merge Indicator metric does not support client-side computation.");
+            }
+        },
+        author_experience: function (callback) {
+            if (data.precomputed === true) {
+                callback(null, data.author_experience);
+            } else {
+                // TODO do we want to implement a client-side version? Or are we skipping client-side from now on?
+                callback("Error: The Author Experience metric does not support client-side computation.");
+            }
+        },
         commit_author: function (callback) {
             if (data.precomputed === true) {
                 callback(null, data.commit_author);
