@@ -1009,7 +1009,7 @@ var MapperFactory = function () {
       }
 
 
-      for (i; i < outer.chunkNum; i++) {
+      for (i; i < outer.chunkNum - 1; i++) {
         mappingInfo.push({
           lowerBound: Math.ceil10(boundary, exp),
           upperBound: Math.specialBoundFloor10(boundary + step, exp, maxValue),
@@ -1017,6 +1017,12 @@ var MapperFactory = function () {
         });
         boundary += step;
       }
+      mappingInfo.push({
+        lowerBound: Math.ceil10(boundary, exp),
+        upperBound: maxValue,
+        color: outer.metric2color[metricName][outer.chunkNum - 1]
+      });
+
       mappingInfo = mappingInfo.filter(function (mi) {
         return mi.lowerBound <= mi.upperBound;
       });
