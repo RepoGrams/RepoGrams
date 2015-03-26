@@ -46,7 +46,7 @@ class GitGraph(object):
         self.commit_timestamp = self.graph.new_vertex_property("string")
         self.commit_files = self.graph.new_vertex_property("vector<string>")
         self.commit_churn = self.graph.new_vertex_property("int")
-        self.branch_complexity = self.graph.new_vertex_property("int")
+        self.number_of_branches = self.graph.new_vertex_property("int")
         self.commit_author = self.graph.new_vertex_property("int")
         self.associated_branch = self.graph.new_vertex_property("int")
         self.commit_age = self.graph.new_vertex_property("int")
@@ -68,7 +68,7 @@ class GitGraph(object):
             self.commit_timestamp[commit_vertex] = commit_timestamp
             self.commit_files[commit_vertex] = files
             self.commit_churn[commit_vertex] = added + removed
-            self.branch_complexity[commit_vertex] = 0
+            self.number_of_branches[commit_vertex] = 0
             self.commit_author[commit_vertex] = 0
             self.commit_age[commit_vertex] = 0
             self.commit_parents[commit_vertex] = len(parents)
@@ -206,7 +206,7 @@ class GitGraph(object):
             branch_counter -= self._ended_branches_count(commit_node, parents)
             assert branch_counter >= 1, "There should be at least one branch all the time: branch_counter: {}, commit {}: ".format(
                 branch_counter, self.commit_hashsum[commit_node])
-            self.branch_complexity[commit_node] = branch_counter
+            self.number_of_branches[commit_node] = branch_counter
             # add the newly created branches AFTERWARDS
             # the branches diverge at this commit, but the number of branches
             # is only increased in the children
@@ -261,7 +261,7 @@ class GitGraph(object):
             self.commit_age[commit_vertex] = min(parent_distances) if parent_distances else 0
 
 
-    def commit_lang_compl(self, name_mapping, extension_mapping):
+    def languages_in_a_commit(self, name_mapping, extension_mapping):
         """Computes the commit language complexity
            @name_mapping: a  mapping from file names to file types
            @name_mapping: a  mapping from file extensions to file types
@@ -286,7 +286,7 @@ class GitGraph(object):
             result.append(len(file_type_counter))
         return result
 
-    def most_edit_file(self):
+    def most_edited_file(self):
         """ Computes number of  edits to the most edited file
         @returns number of edits to most edited file
         """
@@ -427,9 +427,9 @@ class GitGraph(object):
         churns = []
         commit_messages = []
         files = []
-        associated_branches = []
+        branches_used = []
         commit_author = []
-        bcomplexities = []
+        number_of_branches = []
         commit_age = []
         for commit in self.iterate_commits():
             assert self.associated_branch[commit] != 0, "{}".format(self.commit_msg[commit])
@@ -437,18 +437,18 @@ class GitGraph(object):
             churns.append(self.commit_churn[commit])
             commit_messages.append(self.commit_msg[commit])
             files.append(list(self.commit_files[commit]))
-            associated_branches.append(self.associated_branch[commit])
+            branches_used.append(self.associated_branch[commit])
             commit_author.append(self.commit_author[commit])
-            bcomplexities.append(self.branch_complexity[commit])
+            number_of_branches.append(self.number_of_branches[commit])
             commit_age.append(self.commit_age[commit])
         result = {
             "checksums": checksums,
             "churns": churns,
             "commit_messages": commit_messages,
             "files": files,
-            "associated_branches": associated_branches,
+            "branches_used": branches_used,
             "commit_author": commit_author,
-            "bcomplexities": bcomplexities,
+            "number_of_branches": number_of_branches,
             "commit_age": commit_age
         }
 
@@ -456,10 +456,10 @@ class GitGraph(object):
             languages = json.load(f)
             name_mapping = dict(itertools.izip(languages["NAMES"], languages["TYPES"]))
             extension_mapping = dict(itertools.izip(languages["ENDINGS"], languages["TYPE"]))
-        result["commit_lang_compl"] = self.commit_lang_compl(name_mapping, extension_mapping)
-        result["most_edit_file"] = self.most_edit_file()
+        result["languages_in_a_commit"] = self.languages_in_a_commit(name_mapping, extension_mapping)
+        result["most_edited_file"] = self.most_edited_file()
         result["commit_message_length"] = self.commit_message_length()
-        result["commit_modularity"] = self.commit_modularity()
+        result["commit_localization"] = self.commit_modularity()
         result["pom_files"] = self.pom_files()
         result["files_modified"] = self.files_modified()
         result["merge_indicator"] = self.merge_indicator()

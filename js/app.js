@@ -874,7 +874,7 @@ var MapperFactory = function () {
   this.main_branch_color = "#ba0900";
 
   this.metric2color = {
-    "branch_complexity": ["#f7fcfd",
+    "number_of_branches": ["#f7fcfd",
       "#e5f5f9",
       "#ccece6",
       "#99d8c9",
@@ -883,7 +883,7 @@ var MapperFactory = function () {
       "#238b45",
       "#005824"
     ],
-    "commit_lang_complexity": ["#f7fcfd",
+    "languages_in_a_commit": ["#f7fcfd",
       "#e0ecf4",
       "#bfd3e6",
       "#9ebcda",
@@ -901,7 +901,7 @@ var MapperFactory = function () {
       "#2b8cbe",
       "#08589e"
     ],
-    "commit_modularity": ["#990000",
+    "commit_localization": ["#990000",
       "#d7301f",
       "#ef6548",
       "#fc8d59",
@@ -1205,7 +1205,7 @@ var MapperFactory = function () {
 
   this.createMapper = function (maxValue, metricName) {
     switch (metricName) {
-      case "branch_usage":
+      case "branches_used":
         return new BranchUsageMapper();
       case "commit_author":
         return new CommitAuthorMapper();
@@ -1219,7 +1219,7 @@ var MapperFactory = function () {
       case "author_experience":
       case "merge_indicator":
         return new EqualRangeMapper(maxValue, metricName, 0, true);
-      case "commit_modularity":
+      case "commit_localization":
         return new EqualRangeMapper(maxValue, metricName, -2);
       default:
         return new EqualRangeMapper(maxValue, metricName, 0);
@@ -1232,16 +1232,16 @@ var mapperFactory = new MapperFactory();
 
 var readableValueMapper = function (metricId, value) {
   switch (metricId) {
-    case "commit_modularity":
+    case "commit_localization":
       return Math.round(value * 100) + "% localized files in the commit";
 
     case "commit_message_length":
       return (value == 1) ? "1 word" : value + " words";
 
-    case "commit_lang_complexity":
+    case "languages_in_a_commit":
       return (value == 1) ? "1 language" : value + " languages";
 
-    case "branch_usage":
+    case "branches_used":
       return "Branch number: " + value;
 
     case "most_edited_file":
@@ -1256,7 +1256,7 @@ var readableValueMapper = function (metricId, value) {
           return "Edited " + value + " times before";
       }
 
-    case "branch_complexity":
+    case "number_of_branches":
       return (value == 1) ? "1 concurrent branch" : value + " concurrent branches";
 
     case "pom_files":

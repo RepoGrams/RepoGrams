@@ -22,7 +22,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
    * Update the max value per metrix, if needed.
    */
   var updateMetricMax = function (metric, metricMaxVal, forceUpdate) {
-    if (metric == "branch_usage" || metric == "commit_author") {
+    if (metric == "branches_used" || metric == "commit_author") {
       mappers[metric] = mapperFactory.createMapper(null, metric);
       $rootScope.$broadcast("mapperChange", metric, mappers[metric]);
     } else if (metricMaxVal > maxVal[metric] || forceUpdate) {
@@ -56,8 +56,8 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
        */
       var totalChurn = 0;
 
-      for (var i = 0; i < repoJSON.metricData.churn.length; i++) {
-        totalChurn += repoJSON.metricData.churn[i];
+      for (var i = 0; i < repoJSON.metricData.churns.length; i++) {
+        totalChurn += repoJSON.metricData.churns[i];
       }
       totalChurnArr.push(totalChurn);
       maxChurn = arrayMax(totalChurnArr);
@@ -121,7 +121,7 @@ repogramsServices.service('reposService', ["$rootScope", "metricSelectionService
 repogramsServices.service('metricSelectionService', ['$rootScope', function ($rootScope) {
   var allMetrics = [
     {
-      id: "commit_modularity",
+      id: "commit_localization",
       label: "Commit Localization",
       icon: "sun-o",
       description: "Fraction of the number of unique project directories containing files modified by the commit.",
@@ -135,14 +135,14 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
       long_description: null
     },
     {
-      id: "commit_lang_complexity",
+      id: "languages_in_a_commit",
       label: "Languages in a Commit",
       icon: "certificate",
       description: "The number of unique programming languages used in a commit based on filenames.",
       long_description: null
     },
     {
-      id: "branch_usage",
+      id: "branches_used",
       label: "Branches Used",
       icon: "plus-circle",
       description: "Each branch is associated with a unique color. A commit is colored according to the branch it belongs to.",
@@ -156,7 +156,7 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
       long_description: null
     },
     {
-      id: "branch_complexity",
+      id: "number_of_branches",
       label: "Number of Branches",
       icon: "cog",
       description: "The number of branches that are concurrently active at a commit point.",

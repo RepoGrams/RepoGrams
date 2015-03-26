@@ -260,7 +260,7 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
     $scope.$on('selectedMetricsChange', function () {
       var selectedMetrics = metricSelectionService.getSelectedMetrics();
 
-      var idsOfIncomparableMetrics = ['branch_usage', 'commit_author'];
+      var idsOfIncomparableMetrics = ['branches_used', 'commit_author'];
       for (var i = 0; i < selectedMetrics.length; i++) {
         for (var j = 0; j < idsOfIncomparableMetrics.length; j++) {
           if (selectedMetrics[i].id == idsOfIncomparableMetrics[j]) {

@@ -23,7 +23,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
         $scope.currentZoom = zoomService.getSelectedZoom();
         $scope.totalChurn = $scope.reposService.getTotalChurnArr()[$scope.repoIndex];
         $scope.maxChurn = $scope.reposService.getMaxChurn();
-        $scope.noOfCommits = $scope.repo.metricData.churn.length;
+        $scope.noOfCommits = $scope.repo.metricData.churns.length;
 
         $scope.popModal = function (event) {
           var commitID = $(event.target).attr("data-commitID");
@@ -43,7 +43,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
             controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
               $scope.commitID = commitID;
               $scope.commitURL = commitURL;
-              $scope.commitMessage = $scope.repo.metricData.commit_msgs[index];
+              $scope.commitMessage = $scope.repo.metricData.commit_messages[index];
               $scope.dismiss = $modalInstance.dismiss;
             }]
           });
@@ -64,15 +64,15 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
           commitBlocks = repo2skeleton[$scope.repo.url];
         } else {
           for (var i = 0; i < $scope.repo.metricData[firstSelectedMetric.id].length; i++) {
-            var commitMsg = $scope.repo.metricData.commit_msgs[i];
+            var commitMsg = $scope.repo.metricData.commit_messages[i];
             var msg = _.escape(commitMsg.length > 40 ? commitMsg.substring(0, 39) + '…'
               : commitMsg);
             var commitID = $scope.repo.metricData.checksums[i];
             var commitURL = repoURL.replace(/\.git$|$/, "/commit/" + commitID);
             var tooltip = msg + '\u000A(Click for details)';
-            var churn = $scope.repo.metricData.churn[i];
+            var churns = $scope.repo.metricData.churns[i];
             var context = {
-              width: blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string,
+              width: blenService.getWidth(currentBlockLengthMode, churns, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string,
               tooltip: tooltip,
               commitID: commitID,
               commitURL: commitURL,
@@ -103,7 +103,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
             for (var i = 0; i < length; i++) {
               var metricValue = $scope.repo.metricData[metricID][i];
               var metricReadableValue = readableValueMapper(metricID, metricValue);
-              var commitMessage = $scope.repo.metricData['commit_msgs'][i];
+              var commitMessage = $scope.repo.metricData['commit_messages'][i];
               commitMessage = _.escape(commitMessage.length > 40 ? commitMessage.substring(0, 39) + '…' : commitMessage);
               var commitHash = $scope.repo.metricData['checksums'][i].substr(0, 8);
 
@@ -137,8 +137,8 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
             var length = $scope.repo.metricData[firstSelectedMetric.id].length;
             var newWidths = new Array(length);
             for (var i = 0; i < length; i++) {
-              var churn = $scope.repo.metricData.churn[i];
-              newWidths[i] = blenService.getWidth(currentBlockLengthMode, churn, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string;
+              var churns = $scope.repo.metricData.churns[i];
+              newWidths[i] = blenService.getWidth(currentBlockLengthMode, churns, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string;
             }
             // iterate over all commit blocks and
             chunkwiseLoop(0, length, /*chunksize=*/100, function (index) {
@@ -272,7 +272,7 @@ repogramsDirectives.directive('ngLegend', function () {
         $scope.styles[metricID] = [];
 
         switch (metricID) {
-          case "branch_usage":
+          case "branches_used":
             setBranchUsageLegend(metricID);
             break;
 

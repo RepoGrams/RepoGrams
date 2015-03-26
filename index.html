@@ -110,7 +110,7 @@
                           <i class="fa fa-question-circle" tooltip-html-unsafe="{{helpTooltip(metric)}}" tooltip-popup-delay="200"></i>
                         </h3>
                         <ng-legend current="metric" ng-show="numSelectedRepos > 0" class="legend"></ng-legend>
-                        <p class="col-md-12 text-muted text-right" ng-if="metric.id == 'branch_usage' || metric.id == 'commit_author'">
+                        <p class="col-md-12 text-muted text-right" ng-if="metric.id == 'branches_used' || metric.id == 'commit_author'">
                           Colors for unique branches and unique authors metric are incomparable between projects.
                         </p>
                       </div>
