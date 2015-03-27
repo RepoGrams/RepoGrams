@@ -1,8 +1,8 @@
 import os
 import cherrypy
+from scripts import git_graph, git_helpers
 
-import scripts.git_graph as git_graph
-import scripts.githelpers as gh
+
 
 INSTANCE_CONFIG_DEFAULT = None
 INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING = {'/': {
@@ -15,11 +15,9 @@ INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING = {'/': {
 INSTANCE_CONFIG = INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING
 
 
-
 class Repograms(object):
-
     def __init__(self):
-        self.dirmanager = gh.DirManager()
+        self.dir_manager = git_helpers.DirManager()
         self.cache = git_graph.GitGraphCache()
 
     @cherrypy.expose
@@ -27,17 +25,18 @@ class Repograms(object):
     @cherrypy.tools.json_out()
     def getGitData(self):
         data = cherrypy.request.json
-        repourl = data["repourl"]
+        repo_url = data["repourl"]
         try:
-            git_helper = gh.GitHelper(repourl, self.dirmanager)
-        except gh.GitException as e:
+            git_helper = git_helpers.GitHelper(repo_url, self.dir_manager)
+        except git_helpers.GitException as e:
             cherrypy.response.status = 300
             return {"emessage": e.message}
-        if git_helper.up2date and repourl in self.cache:
+        if not git_helper.up2date or repo_url not in self.cache:
+            g = git_graph.GitGraph(git_helper)
+            self.cache[repo_url] = g.export()
+        else:
             cherrypy.log("Cache hit")
-            return self.cache[repourl]
-        g = git_graph.GitGraph(git_helper, self.cache)
-        return g.export()
+        return self.cache[repo_url]
 
 
 cherrypy.config.update({'server.socket_port': 8090,
