@@ -3,7 +3,6 @@ import cherrypy
 from scripts import git_graph, git_helpers
 
 
-
 INSTANCE_CONFIG_DEFAULT = None
 INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING = {'/': {
     'tools.staticdir.on': True,
@@ -12,7 +11,7 @@ INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING = {'/': {
 }}
 
 # Choose one of the above for your instance config
-INSTANCE_CONFIG = INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING
+INSTANCE_CONFIG = INSTANCE_CONFIG_DEFAULT
 
 
 class Repograms(object):
