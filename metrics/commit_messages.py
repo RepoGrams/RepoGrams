@@ -1,7 +1,7 @@
-from scripts.metrics.base import metric
+from metrics.base import metric
 
 
-@metric(None, None)  # TODO colors and bucket type
+@metric
 def commit_messages(graph):
         result = []
         for commit in graph.iterate_commits():

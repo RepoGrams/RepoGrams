@@ -1,8 +1,9 @@
 import collections
-from scripts.metrics.base import metric
+
+from metrics.base import metric
 
 
-@metric(None, None)  # TODO colors and bucket type
+@metric
 def most_edited_file(graph):
         """Computes number of edits to the most edited file."""
         result = []

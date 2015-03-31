@@ -1,11 +1,9 @@
 import os
-import itertools
-import jellyfish
-import numpy
-from scripts.metrics.base import metric
+
+from metrics.base import metric
 
 
-@metric(None, None)  # TODO colors and bucket type
+@metric
 def pom_files(graph):
         """Computes the number of pom.xml files that were modified in a commit."""
 

@@ -1,11 +1,7 @@
-import os
-import itertools
-import jellyfish
-import numpy
-from scripts.metrics.base import metric
+from metrics.base import metric
 
 
-@metric(None, None)  # TODO colors and bucket type
+@metric
 def files_modified(graph):
         """Computes the number of files modified in a particular commit."""
         result = []

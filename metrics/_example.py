@@ -1,9 +1,12 @@
-from scripts.metrics.base import metric
+from metrics.base import metric
 
 
 @metric(None, None)  # TODO colors and bucket type
-def churns(graph):
+def _example(graph):
         result = []
+
         for commit in graph.iterate_commits():
-            result.append(graph.commit_churn[commit])
+            # TODO calculate something with this commit
+            result.append(0)
+
         return result

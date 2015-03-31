@@ -27,6 +27,9 @@
     <!-- include our own style sheets -->
     <link rel="stylesheet" type="text/css" href="/css/metrics.css">
     <!-- include the app controllers -->
+    <script type="text/javascript" src="/getMappers"></script>
+    <script type="text/javascript" src="/getMetrics"></script>
+    <script type="text/javascript" src="/js/tools.js"></script>
     <script type="text/javascript" src="/js/app.js"></script>
     <script type="text/javascript" src="/js/directives.js"></script>
     <script type="text/javascript" src="/js/controllers.js"></script>
@@ -64,8 +67,8 @@
               <div class="form-group col-md-4 col-sm-12 configBlock">
                 <button id="metricSelect" class="form-control pull-right" ng-click="switchMetric()">Switch…</button>
                 <label for="metricSelect">Metric (block color):</label>
-                <span ng-repeat="metric in selectedMetrics"><i class="fa fa-{{metric.icon}}"></i> <em>{{metric.label}}<span ng-if="!$last">, </span></em></span>
-                <span ng-if="selectedMetrics.length == 0" class="text-muted">None selected yet…</span>
+                <span ng-repeat="metricId in selectedMetricIds"><i class="fa fa-{{selectedMetricObjects[metricId].icon}}"></i> <em>{{selectedMetricObjects[metricId].label}}<span ng-if="!$last">, </span></em></span>
+                <span ng-if="selectedMetricIds.length == 0" class="text-muted">None selected yet…</span>
               </div>
 
               <div class="form-group col-md-4 col-sm-12 configBlock">
@@ -99,16 +102,16 @@
             <div class="panel-body">
               <div class="metrics-display" ng-controller="RepogramsDisplayCtrl">
                 <div ng-if="isMetricsFirst" class="multi-metrics-metrics-first">
-                  <div ng-repeat="metric in metrics | orderBy:insertionOrder track by metric.id">
-                    <div ng-show="show(metric)">
+                  <div ng-repeat="metricId in selectedMetricIds">
+                    <div ng-show="show(metricId)">
                       <div class="col-md-12">
                         <h3 class="metric-title">
-                          <i class="fa fa-{{metric.icon}}"></i>
-                          {{metric.label}}
-                          <i class="fa fa-question-circle" tooltip-html-unsafe="{{helpTooltip(metric)}}" tooltip-popup-delay="200"></i>
+                          <i class="fa fa-{{selectedMetricObjects[metricId].icon}}"></i>
+                          {{selectedMetricObjects[metricId].label}}
+                          <i class="fa fa-question-circle" tooltip-html-unsafe="{{helpTooltip(metricId)}}" tooltip-popup-delay="200"></i>
                         </h3>
-                        <ng-legend current="metric" ng-show="numSelectedRepos > 0" class="legend"></ng-legend>
-                        <p class="col-md-12 text-muted text-right" ng-if="metric.id == 'branches_used' || metric.id == 'commit_author'">
+                        <ng-legend current="metricId" ng-show="numSelectedRepos > 0" class="legend"></ng-legend>
+                        <p class="col-md-12 text-muted text-right" ng-if="metricId == 'branches_used' || metricId == 'commit_author'">
                           Colors for unique branches and unique authors metric are incomparable between projects.
                         </p>
                       </div>
@@ -137,7 +140,7 @@
                           <div class="repo col-md-10 row repo-collection">
                             <div class="row">
                               <div class="col-sm-12" ng-repeat="repo in repos" style="overflow: visible">
-                                <rg-render-metric visible="show(metric)" metric-id="metric.id" repo-index="$index"></rg-render-metric>
+                                <rg-render-metric ng-show="show(metricId)" metric-id="metricId" repo-index="$index"></rg-render-metric>
                               </div> <!-- col-lg-10 close -->
                             </div> <!-- row close -->
                           </div> <!-- end ng-repeat repos -->
@@ -156,18 +159,18 @@
                       <span class="repo-label-name">Legends</span>
                     </h3>
 
-                    <div class="repo col-md-12 row repo-collection legends" ng-if="selectedMetrics.length > 0">
+                    <div class="repo col-md-12 row repo-collection legends" ng-if="selectedMetricIds.length > 0">
                       <div class="col-md-12 row">
-                        <div class="repo-label" ng-repeat="metric in metrics | orderBy:insertionOrder track by metric.id">
-                          <div ng-show="show(metric)">
-                            <span class="repo-label-name col-md-2" title="{{metric.label}}"><i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</span>
-                            <ng-legend current="metric" ng-show="numSelectedRepos > 0" class="col-md-10"></ng-legend>
+                        <div class="repo-label" ng-repeat="metricId in selectedMetricIds">
+                          <div ng-show="show(metricId)">
+                            <span class="repo-label-name col-md-2" title="{{selectedMetricObjects[metricId].label}}"><i class="fa fa-{{selectedMetricObjects[metricId].icon}}"></i> {{selectedMetricObjects[metricId].label}}</span>
+                            <ng-legend current="metricId" ng-show="numSelectedRepos > 0" class="col-md-10"></ng-legend>
                           </div>
                         </div>
                       </div>
                       <p class="col-md-12 text-muted" ng-if="showIncomparableWarning">Colors for unique branches and unique authors metric are incomparable between projects.</p>
                     </div>
-                    <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0">
+                    <div class="col-md-12 alert alert-info" ng-if="selectedMetricIds.length == 0">
                       <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
                     </div>
                   </div>
@@ -188,36 +191,36 @@
                     </h3>
 
                     <div class="col-md-12 row metrics-repo-container">
-                      <div class="repo col-md-2" ng-if="selectedMetrics.length > 0">
+                      <div class="repo col-md-2" ng-if="selectedMetricIds.length > 0">
                         <div class="row">
-                          <div class="col-lg-12 repo-label" ng-repeat="metric in metrics | orderBy:insertionOrder track by metric.id">
-                            <div class="repo-label-label" ng-show="show(metric)">
-                              <span class="repo-label-name" title="{{metric.label}}"><i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</span>
+                          <div class="col-lg-12 repo-label" ng-repeat="metricId in selectedMetricIds">
+                            <div class="repo-label-label" ng-show="show(metricId)">
+                              <span class="repo-label-name" title="{{selectedMetricObjects[metricId].label}}"><i class="fa fa-{{selectedMetricObjects[metricId].icon}}"></i> {{selectedMetricObjects[metricId].label}}</span>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="repo col-md-10 row repo-collection" ng-if="selectedMetrics.length > 0">
+                      <div class="repo col-md-10 row repo-collection" ng-if="selectedMetricIds.length > 0">
                         <div class="row">
-                          <div class="col-sm-12" ng-repeat="metric in metrics | orderBy:insertionOrder track by metric.id" style="overflow: visible">
-                            <rg-render-metric ng-show="show(metric)" visible="show(metric)" metric-id="metric.id" repo-index="$parent.$index"></rg-render-metric>
+                          <div class="col-sm-12" ng-repeat="metricId in selectedMetricIds" style="overflow: visible">
+                            <rg-render-metric ng-show="show(metricId)" metric-id="metricId" repo-index="$parent.$index"></rg-render-metric>
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0">
+                      <div class="col-md-12 alert alert-info" ng-if="selectedMetricIds.length == 0">
                         <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length > 0 && numSelectedRepos == 0">
-                    <ng-pluralize count="selectedMetrics.length" when="{'1': '1 metric has', 'other': '{} metrics have'}"></ng-pluralize> been selected. <a ng-click="focusOnUrlImporter()">Add projects</a> to display.
+                  <div class="col-md-12 alert alert-info" ng-if="selectedMetricIds.length > 0 && numSelectedRepos == 0">
+                    <ng-pluralize count="selectedMetricIds.length" when="{'1': '1 metric has', 'other': '{} metrics have'}"></ng-pluralize> been selected. <a ng-click="focusOnUrlImporter()">Add projects</a> to display.
                   </div>
                 </div>
 
-                <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos == 0">
+                <div class="col-md-12 alert alert-info" ng-if="selectedMetricIds.length == 0 && numSelectedRepos == 0">
                   <a ng-click="focusOnUrlImporter()">Add projects</a> and <a ng-click="openSelectMetricsModal()">select metrics</a> to display.
                 </div>
-                <div class="col-md-12 alert alert-info" ng-if="selectedMetrics.length == 0 && numSelectedRepos > 0 && isMetricsFirst">
+                <div class="col-md-12 alert alert-info" ng-if="selectedMetricIds.length == 0 && numSelectedRepos > 0 && isMetricsFirst">
                   <ng-pluralize count="numSelectedRepos" when="{'1': '1 repository has', 'other': '{} repositories have'}"></ng-pluralize> been added. <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
                 </div>
               </div>

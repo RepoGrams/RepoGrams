@@ -2,10 +2,11 @@ import json
 import os
 import itertools
 import collections
-from scripts.metrics.base import metric
+
+from metrics.base import metric
 
 
-@metric(None, None)  # TODO colors and bucket type
+@metric
 def languages_in_a_commit(graph):
         """Computes the number of different file languages of the commits."""
         with open("data/languages.json") as f:

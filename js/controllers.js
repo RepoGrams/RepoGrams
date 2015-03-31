@@ -39,16 +39,8 @@ repogramsControllers.controller('RepogramsConfig',
               $scope.metricSelectionService.clear();
               $scope.setIsMetricsFirst(example.metricsFirst);
 
-              var allMetrics = $scope.metricSelectionService.getAllMetrics();
               for (var i = 0; i < example.metrics.length; i++) {
-                for (var j = 0; j < allMetrics.length; j++) {
-                  var exampleMetricId = example.metrics[i];
-                  var metric = allMetrics[j];
-                  if (metric.id == exampleMetricId) {
-                    $scope.metricSelectionService.swapMetric(metric);
-                    break;
-                  }
-                }
+                $scope.metricSelectionService.swapMetric(example.metrics[i]);
               }
 
               var allBlensMods = $scope.blenSelectionService.getAllBlenMods();
@@ -79,8 +71,14 @@ repogramsControllers.controller('RepogramsConfig',
         $scope.metricSelectionService.setIsMetricsFirst(value);
       });
 
-      $scope.metrics = $scope.metricSelectionService.getAllMetrics();
-      $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
+      $scope.allMetrics = Metrics;
+      $scope.metricRegistrationIds = MetricsOrder;
+      $scope.selectedMetricIds = metricSelectionService.getSelectedMetricIds();
+      $scope.selectedMetricObjects = metricSelectionService.getSelectedMetricObjects();
+      $scope.$on('selectedMetricsChange', function () {
+        $scope.selectedMetricIds = metricSelectionService.getSelectedMetricIds();
+        $scope.selectedMetricObjects = metricSelectionService.getSelectedMetricObjects();
+      });
 
       $scope.switchMetric = function () {
         $modal.open({
@@ -88,10 +86,10 @@ repogramsControllers.controller('RepogramsConfig',
           template: '<form>' +
           '<div class="modal-header"><h3 class="modal-title">Select new metric</h3></div>' +
           '<div class="modal-body">' +
-          '<div class="form-group" ng-repeat="(i, metric) in metrics">' +
-          '<label for="metric_{{i}}"><input id="metric_{{i}}" type="checkbox" name="metric" ng-model="metric.selected" ng-click="swap(metric)"> <i class="fa fa-{{metric.icon}}"></i> {{metric.label}}</label>' +
-          '<p ng-bind-html="metric.description"></p>' +
-          '<p class="text-muted" ng-if="metric.long_description" ng-bind-html="metric.long_description"></p>' +
+          '<div class="form-group" ng-repeat="metricId in metricRegistrationIds">' +
+          '<label for="metric_{{metricId}}"><input id="metric_{{metricId}}" type="checkbox" name="metric" ng-checked="isSelected(metricId)" ng-click="swap(metricId)"> <i class="fa fa-{{allMetrics[metricId].icon}}"></i> {{allMetrics[metricId].label}}</label>' +
+          '<p ng-bind-html="allMetrics[metricId].description"></p>' +
+          '<p class="text-muted" ng-if="allMetrics[metricId].long_description" ng-bind-html="allMetrics[metricId].long_description"></p>' +
           '</div>' +
           '</div>' +
           '<div class="modal-footer">' +
@@ -100,9 +98,12 @@ repogramsControllers.controller('RepogramsConfig',
           '</form>',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.dismiss = $modalInstance.dismiss;
-            $scope.swap = function (metric) {
-              $scope.metricSelectionService.swapMetric(metric);
+            $scope.swap = function (metricId) {
+              $scope.metricSelectionService.swapMetric(metricId);
             };
+            $scope.isSelected = function (metricId) {
+              return $scope.metricSelectionService.isMetricSelected(metricId);
+            }
           }]
         });
       };
@@ -217,23 +218,19 @@ repogramsControllers.controller('RepogramsImporter',
 repogramsControllers.controller('RepogramsDisplayCtrl',
   ['$scope', 'metricSelectionService', 'reposService', function ($scope, metricSelectionService, reposService) {
     $scope.isMetricsFirst = metricSelectionService.isMetricsFirst();
-    $scope.selectedMetrics = metricSelectionService.getSelectedMetrics();
-    $scope.metrics = metricSelectionService.getAllMetrics();
+    $scope.selectedMetricObjects = metricSelectionService.getSelectedMetricObjects();
+    $scope.selectedMetricIds = metricSelectionService.getSelectedMetricIds();
     $scope.numSelectedRepos = reposService.getRepoArr().length;
     $scope.showIncomparableWarning = false;
 
-    $scope.show = function (metric) {
-      return $scope.selectedMetrics.indexOf(metric) != -1;
+    $scope.show = function (metricId) {
+      return metricId in $scope.selectedMetricObjects;
     };
 
-    $scope.insertionOrder = function (metric) {
-      return $scope.selectedMetrics.indexOf(metric);
-    };
-
-    $scope.helpTooltip = function (metric) {
-      var tooltip = '<div class="metric-description">' + metric.description + '</div>';
-      if (metric.long_description) {
-        tooltip += '\n<div class="metric-long-description">' + metric.long_description + '</div>';
+    $scope.helpTooltip = function (metricId) {
+      var tooltip = '<div class="metric-description">' + Metrics[metricId].description + '</div>';
+      if (Metrics[metricId].long_description) {
+        tooltip += '\n<div class="metric-long-description">' + Metrics[metricId].long_description + '</div>';
       }
       return tooltip;
     };
@@ -258,18 +255,18 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
     });
 
     $scope.$on('selectedMetricsChange', function () {
-      var selectedMetrics = metricSelectionService.getSelectedMetrics();
+      $scope.selectedMetricObjects = metricSelectionService.getSelectedMetricObjects();
+      $scope.selectedMetricIds = metricSelectionService.getSelectedMetricIds();
+      $scope.showIncomparableWarning = false;
 
+      // TODO this should not be hard coded
       var idsOfIncomparableMetrics = ['branches_used', 'commit_author'];
-      for (var i = 0; i < selectedMetrics.length; i++) {
-        for (var j = 0; j < idsOfIncomparableMetrics.length; j++) {
-          if (selectedMetrics[i].id == idsOfIncomparableMetrics[j]) {
-            $scope.showIncomparableWarning = true;
-            return;
-          }
+      for (var i = 0; i < idsOfIncomparableMetrics; i++) {
+        if ($scope.selectedMetricIds.indexOf(idsOfIncomparableMetrics[i]) != -1) {
+          $scope.showIncomparableWarning = true;
+          break;
         }
       }
-      $scope.showIncomparableWarning = false;
     });
 
     $scope.repos = reposService.getRepoArr();

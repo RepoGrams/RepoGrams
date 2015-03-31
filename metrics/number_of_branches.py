@@ -1,9 +1,10 @@
 from graph_tool import graph_tool
-from scripts.metrics.base import metric
+
+from metrics.base import metric
 from scripts.utils import Order
 
 
-@metric(None, None)  # TODO colors and bucket type
+@metric
 def number_of_branches(graph):
     commit_to_number_of_branches = _number_of_branches(graph)
 

@@ -10,8 +10,8 @@ import graph_tool
 import graph_tool.topology
 
 from scripts import git_helpers
-from scripts.metrics import active_metrics
-from utils import debug, PriorityQueue, Order
+from metrics import active_metrics
+from utils import PriorityQueue, Order
 
 
 class GitGraphCache(object):
@@ -64,11 +64,9 @@ class GitGraph(object):
             self.commit_churn[commit_vertex] = added + removed
             self.commit_num_parents[commit_vertex] = len(parents)
             if not parents:
-                debug("initial commit detected: {}".format(commit))
                 self.graph.add_edge(self.sentinel, commit_vertex)
                 continue
             for parent in parents:
-                debug("adding edge from {} to {}".format(parent, commit))
                 self.graph.add_edge(self.hash2vertex[str(parent.oid)], commit_vertex)
         assert graph_tool.topology.is_DAG(self.graph)
 
@@ -133,7 +131,6 @@ class GitGraph(object):
             commits = reversed(graph_tool.topology.topological_sort(self.graph))
         for commit_index in commits:
             commit_node = self.graph.vertex(commit_index)
-            debug("Current element", self.commit_hashsum[commit_node])
             if commit_node == self.sentinel:
                 # we got the sentinel node, which is not a real commit node
                 continue

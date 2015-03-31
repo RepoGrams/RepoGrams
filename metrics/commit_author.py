@@ -1,7 +1,7 @@
-from scripts.metrics.base import metric
+from metrics.base import metric
 
 
-@metric(None, None)  # TODO colors and bucket type
+@metric
 def commit_author(graph):
     """Computes a unique numeric ID for each commit author, based on email address."""
     result = []

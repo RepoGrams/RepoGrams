@@ -4,7 +4,7 @@ angular.module('repogramsModule').factory('metricsRunner', function () {
       var tasks = {};
       for (var elm in data) {
         if (data.hasOwnProperty(elm)) {
-          tasks[elm] = (function(elm) {
+          tasks[elm] = (function (elm) {
             return function (callback) {
               callback(null, data[elm]);
             }

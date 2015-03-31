@@ -1,11 +1,7 @@
-import os
-import itertools
-import jellyfish
-import numpy
-from scripts.metrics.base import metric
+from metrics.base import metric
 
 
-@metric(None, None)  # TODO colors and bucket type
+@metric
 def merge_indicator(graph):
         """Determines if a commit involved a merge, by enumerating on the parents involved in that commit."""
         result = []

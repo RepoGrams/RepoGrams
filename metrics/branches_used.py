@@ -1,7 +1,7 @@
-from scripts.metrics.base import metric
+from metrics.base import metric
 
 
-@metric(None, None)  # TODO colors and bucket type
+@metric
 def branches_used(graph):
     """Take the associated branch."""
     result = []

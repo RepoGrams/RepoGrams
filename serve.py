@@ -1,5 +1,8 @@
+import glob
+import json
 import os
 import cherrypy
+from metrics import active_metrics
 from scripts import git_graph, git_helpers
 
 
@@ -14,15 +17,15 @@ INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING = {'/': {
 INSTANCE_CONFIG = INSTANCE_CONFIG_DEFAULT
 
 
-class Repograms(object):
+class RepoGrams(object):
     def __init__(self):
         self.dir_manager = git_helpers.DirManager()
         self.cache = git_graph.GitGraphCache()
 
-    @cherrypy.expose
+    @cherrypy.expose(alias="getGitData")
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
-    def getGitData(self):
+    def get_git_data(self):
         data = cherrypy.request.json
         repo_url = data["repourl"]
         try:
@@ -37,10 +40,45 @@ class Repograms(object):
             cherrypy.log("Cache hit")
         return self.cache[repo_url]
 
+    @cherrypy.expose(alias="getMetrics")
+    def get_metrics(self):
+        # TODO move to separate file
+        cherrypy.response.headers['Content-Type'] = 'application/x-javascript'
+
+        with open('metrics/base.js') as f:
+            metrics = f.read()
+
+        registered_metrics = []
+        for metric in active_metrics:
+            try:
+                with open('metrics/%s.js' % metric.id) as f:
+                    metrics += f.read()
+                    registered_metrics.append(metric.id)
+            except IOError:
+                pass
+
+        metrics += 'var MetricsOrder = %s' % json.dumps(registered_metrics)
+
+        return metrics
+
+    @cherrypy.expose(alias="getMappers")
+    def get_metric_mappers(self):
+        # TODO move to separate file
+        cherrypy.response.headers['Content-Type'] = 'application/x-javascript'
+
+        with open('js/mappers/base.js') as f:
+            mappers = f.read()
+
+        for mapper_file_name in glob.glob('js/mappers/*.js'):
+            if not mapper_file_name.endswith('/base.js') and not mapper_file_name.endswith('/_example.js'):
+                with open(mapper_file_name) as f:
+                    mappers += f.read()
+
+        return mappers
 
 cherrypy.config.update({'server.socket_port': 8090,
                         'server.socket_host': "0.0.0.0",
                         'engine.autoreload_on': False,
                         'log.access_file': './access.log',
                         'log.error_file': './error.log'})
-cherrypy.quickstart(Repograms(), '/', config=INSTANCE_CONFIG)
+cherrypy.quickstart(RepoGrams(), '/', config=INSTANCE_CONFIG)

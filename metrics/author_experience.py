@@ -1,7 +1,7 @@
-from scripts.metrics.base import metric
+from metrics.base import metric
 
 
-@metric(None, None)  # TODO colors and bucket type
+@metric
 def author_experience(self):
     """Enumerates the commits of each author and displays the value during the current commit."""
     result = []
