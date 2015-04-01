@@ -44,7 +44,6 @@ class GitGraph(object):
         self.commit_churn = self.graph.new_vertex_property("int")
 
         self.associated_branch = self.graph.new_vertex_property("int")
-        self.commit_num_parents = self.graph.new_vertex_property("int")
 
         # sentinel: required to have a rooted DAG
         self.sentinel = self.graph.add_vertex()
@@ -62,7 +61,6 @@ class GitGraph(object):
             self.commit_timestamp[commit_vertex] = commit_timestamp
             self.commit_files[commit_vertex] = files
             self.commit_churn[commit_vertex] = added + removed
-            self.commit_num_parents[commit_vertex] = len(parents)
             if not parents:
                 self.graph.add_edge(self.sentinel, commit_vertex)
                 continue

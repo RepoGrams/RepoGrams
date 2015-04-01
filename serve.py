@@ -42,7 +42,6 @@ class RepoGrams(object):
 
     @cherrypy.expose(alias="getMetrics")
     def get_metrics(self):
-        # TODO move to separate file
         cherrypy.response.headers['Content-Type'] = 'application/x-javascript'
 
         with open('metrics/base.js') as f:
@@ -63,7 +62,6 @@ class RepoGrams(object):
 
     @cherrypy.expose(alias="getMappers")
     def get_metric_mappers(self):
-        # TODO move to separate file
         cherrypy.response.headers['Content-Type'] = 'application/x-javascript'
 
         with open('js/mappers/base.js') as f:

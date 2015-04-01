@@ -15,6 +15,33 @@ Metrics['commit_age'] = {
   ],
   mapper: Mappers['times_range'],
   tooltip: function(value) {
-    return value + " seconds"; // TODO changed to smart time
+    if (value == 1) {
+      return "1 second";
+    }
+    if (value < 60) {
+      return Math.floor(value) + " seconds";
+    }
+    if (value < 120) {
+      return "1 minute";
+    }
+    if (value < 3600) {
+      return Math.floor(value / 60) + " minutes";
+    }
+    if (value < 7200) {
+      return "1 hour";
+    }
+    if (value < 86400) {
+      return Math.floor(value / 3600) + " hours";
+    }
+    if (value < 172800) {
+      return "1 day"
+    }
+    if (value < 604800) {
+      return Math.floor(value / 86400) + " days";
+    }
+    if (value < 1209600) {
+      return "1 week";
+    }
+    return Math.floor(value / 604800) + " weeks";
   }
 };

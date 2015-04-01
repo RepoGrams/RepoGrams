@@ -1,12 +1,12 @@
 from metrics.base import metric
 
 
-@metric(None, None)  # TODO colors and bucket type
+@metric
 def _example(graph):
-        result = []
+    result = []
 
-        for commit in graph.iterate_commits():
-            # TODO calculate something with this commit
-            result.append(0)
+    for commit in graph.iterate_commits():
+        # TODO calculate something with this commit
+        result.append(0)
 
-        return result
+    return result
