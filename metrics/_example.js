@@ -1,8 +1,8 @@
 Metrics['METRIC_ID'] = {
-  'label': "HUMAN READABLE NAME",
-  'icon': 'FONT-AWESOME-ICON_ID',
-  'description': "DESCRIPTION",
-  'long_description': "SUB DESCRIPTION OR NULL",
+  label: "HUMAN READABLE NAME",
+  icon: 'FONT-AWESOME-ICON_ID',
+  description: "DESCRIPTION",
+  long_description: "SUB DESCRIPTION OR NULL",
   colors: [
     "#000000",
     "#222222",
