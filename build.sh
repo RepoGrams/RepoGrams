@@ -20,4 +20,4 @@ IMAGE_NAME="repograms_`git branch | grep "*" | awk '{ print $2 }'`"
 echo 'Building the docker image.'
 docker build -t $IMAGE_NAME .
 
-rm nginx.conf .buildinfo .builddate *.log
+rm nginx.conf .buildinfo .builddate
