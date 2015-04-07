@@ -1,12 +1,11 @@
 #!/bin/sh
-echo "Running pre-caching of repositories. This may take a minute."
-
 if [ -z "$2" ]
 then
 	echo "Usage: `basename $0` [domain-name] [list-of-repository-urls-file]"
 	exit 1
 fi
 
+echo "Running pre-caching of repositories. This may take a minute."
 while read -r LINE
 do
 	REPO=`echo $LINE | sed '/^#/d' | sed '/^\s*$/d'`
