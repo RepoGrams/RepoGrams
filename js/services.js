@@ -9,7 +9,7 @@ repogramsServices.service('reposService', ["$rootScope", function ($rootScope) {
   // Initialize the maxVal dictionary to zero
   for (var metricId in Metrics) {
     if (Metrics.hasOwnProperty(metricId)) {
-      maxVal[metricId] = Number.MIN_VALUE;
+      maxVal[metricId] = -1;
     }
   }
 
