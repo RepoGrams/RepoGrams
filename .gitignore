@@ -1,13 +1,9 @@
-docs/*.aux
-docs/*.log
-docs/*.synctex.gz
-config.inc.php
 .ropeproject
 *.py[cod]
-*.log
-.idea
-.builddate
-.buildinfo
+/*.log
+/.idea
+/.builddate
+/.buildinfo
 /nginx.conf
 /deploy.sh
 /repos-cache-list.txt
