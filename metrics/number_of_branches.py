@@ -1,7 +1,7 @@
 from graph_tool import graph_tool
 
 from metrics.base import metric
-from scripts.utils import Order
+from app.utils import Order
 
 
 @metric

@@ -3,7 +3,7 @@ import json
 import os
 import cherrypy
 from metrics import active_metrics
-from scripts import git_graph, git_helpers
+from app import git_graph, git_helpers
 
 
 INSTANCE_CONFIG_DEFAULT = None

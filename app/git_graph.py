@@ -9,7 +9,7 @@ from distutils.version import LooseVersion
 import graph_tool
 import graph_tool.topology
 
-from scripts import git_helpers
+from app import git_helpers
 from metrics import active_metrics
 from utils import PriorityQueue, Order
 
