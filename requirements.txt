@@ -1,0 +1,5 @@
+CherryPy==3.6.0
+jellyfish==0.4.0
+numpy==1.9.2
+pygit2==0.20.3
+scipy==0.15.1

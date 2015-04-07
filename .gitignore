@@ -11,4 +11,4 @@ config.inc.php
 /nginx.conf
 /deploy.sh
 /repos-cache-list.txt
-/examples.json
+/examples.partial.js
