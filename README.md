@@ -10,15 +10,12 @@ repositories of multiple software projects and helps them in selecting appropria
 
 ## Deployment ##
 
-RepoGrams runs inside a [docker](https://www.docker.com/) image. Once clones, run `./build.sh [domain-name]` (defaults
-to `localhost`) in a shell to build the image locally. Use `./run.sh [port-number]` (defaults to `1234`) and `./stop.sh`
-to run and stop the application respectively.
+RepoGrams runs inside a [docker](https://www.docker.com/) image. After cloning the repository, run `./build.sh [domain-name]` (defaults to `localhost`) in a shell to locally build the image. Use `./run.sh [port-number]` (defaults to `1234`) and `./stop.sh` to start/stop the application.
 
-To add examples to your deployment, add a file called `examples.partial.js` to the root directory before building the
-docker image. See file `data/examples.partial.js` for an example of an examples file.
+To add examples (a pre-configured set of repositories and corresponding metrics) to your deployment, add a file called `examples.partial.js` to the root directory before building the docker image. See file `data/examples.partial.js` for an example of an examples file.
 
 You can cache a large number of git repositories on the server side by running `./precache.sh [domain-name]
-[list-of-repository-urls-file]` where the latter is a simple text file with one git repository URL per line. This
+[list-of-repository-urls-file]` where the latter is a text file with one git repository URL per line. This
 command will load all the repositories into the running docker image's memory to be served quicker when called in the
 web application.
 
@@ -28,7 +25,7 @@ web application.
 Developing inside a docker image is inconvenient. A more convenient way to develop is to deploy RepoGrams locally on
 your machine.
 
-Start by installing the following libraries on your machine:
+Start by installing the following packages on your machine:
 
 * python (2.7.x), python-dev, and python-pip
 * [python-graph-tool](http://graph-tool.skewed.de/)
@@ -62,11 +59,11 @@ changes you do not need to restart the server.
 
 To add a new metric you will have to:
 
-* Create the computation / server-side (Python) file inside `metrics`. Start by copying `_examples.py` and modifying it.
-* Create the presentation / client-side (JavaScript) file inside `metrics`. Start by copying `_examples.js` and
+* Create the computation / server-side (Python) file inside `metrics/`. Start by copying `_examples.py` and modifying it.
+* Create the presentation / client-side (JavaScript) file inside `metrics/`. Start by copying `_examples.js` and
   modifying it.
-* Modify the `metrics/__init__.py` file to register your module. Make sure you import the metric, not the module in
-  which the metric resides.
+* Modify the `metrics/__init__.py` file to register your module. Make sure that you import the metric, not the module
+  containing the metric.
 
 
 ## License ##
