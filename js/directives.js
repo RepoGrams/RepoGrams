@@ -2,7 +2,7 @@ var repogramsDirectives = angular.module('repogramsDirectives', []);
 
 repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$modal', 'reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService',
   function ($interpolate, $compile, $modal, reposService, blenService, metricSelectionService, blenSelectionService, zoomService) {
-    var repo2skeleton = {};
+    var commitBlocksSkeletons = {};
     return {
 
       restrict: 'E',
@@ -57,10 +57,12 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
         var currentBlockLengthMode = blenSelectionService.getSelectedBlenMod().id;
         var commitBlocks = "";
         var repoURL = $scope.repo.url;
-        if ($scope.repo.url in repo2skeleton) {
-          commitBlocks = repo2skeleton[$scope.repo.url];
+        var numOfCommits = $scope.repo.metricData[$scope.metricId].length;
+
+        if (repoURL in commitBlocksSkeletons && commitBlocksSkeletons[repoURL].numOfCommits == numOfCommits) {
+          commitBlocks = commitBlocksSkeletons[repoURL].skeleton;
         } else {
-          for (var i = 0; i < $scope.repo.metricData[$scope.metricId].length; i++) {
+          for (var i = 0; i < numOfCommits; i++) {
             var commitMsg = $scope.repo.metricData.commit_messages[i];
             var msg = _.escape(commitMsg.length > 40 ? commitMsg.substring(0, 39) + '…'
               : commitMsg);
@@ -77,7 +79,10 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
             };
             commitBlocks += templateBlockString(context);
           }
-          repo2skeleton[$scope.repo.url] = commitBlocks;
+          commitBlocksSkeletons[repoURL] = {
+            numOfCommits: numOfCommits,
+            skeleton: commitBlocks
+          };
         }
         /* Avoid blocking the UI for too long by using $evalAsync
          * Blocking is dominated by compile, but at least not everything blocks*/
