@@ -35,7 +35,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
             '<h3 class="modal-title"><code>{{commitId}}</code></h3>' +
             '</div>' +
             '<div class="modal-body commitDetails">' +
-            '<p><a ng-href="{{commitURL}}">{{commitMessage}}</a></p>' +
+            '<p><a ng-href="{{commitURL}}" target="_blank">{{commitMessage}}</a></p>' +
             '</div>' +
             '<div class="modal-footer">' +
             '<button class="btn btn-primary" ng-click="dismiss()">OK</button>' +
