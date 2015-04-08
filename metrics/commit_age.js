@@ -14,7 +14,7 @@ Metrics['commit_age'] = {
     "#016450"
   ],
   mapper: Mappers['times_range'],
-  tooltip: function(value) {
+  tooltip: function (value) {
     if (value == 1) {
       return "1 second";
     }

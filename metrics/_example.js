@@ -14,7 +14,7 @@ Metrics['METRIC_ID'] = {
     "#EEEEEE"
   ],
   mapper: Mappers['SOME_MAPPER_OR_FUNCTION_THAT_RETURNS_A_MAPPER'],
-  tooltip: function(value) {
+  tooltip: function (value) {
     return "SOME_TEXT_ABOUT_THE_VALUE_" + value;
   }
 };

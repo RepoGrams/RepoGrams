@@ -40,8 +40,6 @@ class CredentialsManager(object):
         return None
 
 
-
-
 class GitException(Exception):
     def __init__(self, message):
         self.message = message
@@ -77,7 +75,6 @@ class GitHelper(object):
                 if (hasattr(transfer_progress, 'received_objects') and transfer_progress.received_objects) or \
                         transfer_progress['received_objects']:
                     self.up2date = False
-
 
     def get_branch_heads(self):
         """:returns: a tuple ('master' branch, list of branch heads)"""

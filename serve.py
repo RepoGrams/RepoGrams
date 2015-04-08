@@ -1,7 +1,9 @@
 import glob
 import json
 import os
+
 import cherrypy
+
 from metrics import active_metrics
 from app import git_graph, git_helpers
 
@@ -14,7 +16,7 @@ INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING = {'/': {
 }}
 
 # Choose one of the above for your instance config
-INSTANCE_CONFIG = INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING
+INSTANCE_CONFIG = INSTANCE_CONFIG_DEFAULT
 
 
 class RepoGrams(object):
@@ -75,6 +77,7 @@ class RepoGrams(object):
                     mappers += f.read()
 
         return mappers
+
 
 cherrypy.config.update({'server.socket_port': 8090,
                         'server.socket_host': "0.0.0.0",

@@ -103,7 +103,7 @@ def _created_branches_count(graph, commit_node, children):
     # An example for this is efea0f23f9e0f147c5ff5b5d35249417c32c3a53 from jQuery
     for child in children:
         if commit_node == graph.graph.vertex(graph.dominator_tree[child]) and graph.associated_branch[
-                child] != assoc_branch:  # exclude child from same branch
+            child] != assoc_branch:  # exclude child from same branch
             branch_counter += 1
 
     # There are actually commits with multiple children which dominate none of them, in this case branch_counter becomes
