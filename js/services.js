@@ -38,6 +38,17 @@ repogramsServices.service('reposService', ["$rootScope", function ($rootScope) {
       return maxChurn;
     },
     addRepo: function (repoJSON) {
+      // Remove duplicates if there are any
+      var duplicateIndex = -1;
+      RepoArr.forEach(function (otherRepoJSON, index) {
+        if (otherRepoJSON.url == repoJSON.url) {
+          duplicateIndex = index;
+        }
+      });
+      if (duplicateIndex != -1) {
+        this.removeRepo(duplicateIndex);
+      }
+
       RepoArr.push(repoJSON);
       $rootScope.$broadcast("reposChange", RepoArr);
       for (var metricId in Metrics) {
