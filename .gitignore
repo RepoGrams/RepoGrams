@@ -5,6 +5,7 @@
 /.builddate
 /.buildinfo
 /nginx.conf
+/credentials
 /deploy.sh
 /repos-cache-list.txt
 /examples.partial.js

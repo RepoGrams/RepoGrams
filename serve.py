@@ -14,12 +14,13 @@ INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING = {'/': {
 }}
 
 # Choose one of the above for your instance config
-INSTANCE_CONFIG = INSTANCE_CONFIG_DEFAULT
+INSTANCE_CONFIG = INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING
 
 
 class RepoGrams(object):
     def __init__(self):
         self.dir_manager = git_helpers.DirManager()
+        self.credentials_manager = git_helpers.CredentialsManager('credentials')
         self.cache = git_graph.GitGraphCache()
 
     @cherrypy.expose(alias="getGitData")
@@ -29,11 +30,12 @@ class RepoGrams(object):
         data = cherrypy.request.json
         repo_url = data["repourl"]
         try:
-            git_helper = git_helpers.GitHelper(repo_url, self.dir_manager)
-        except git_helpers.GitException as e:
+            git_helper = git_helpers.GitHelper(repo_url, self.dir_manager, self.credentials_manager)
+        except Exception as e:
             cherrypy.response.status = 300
             return {"emessage": e.message}
-        if not git_helper.up2date or repo_url not in self.cache:
+
+        if repo_url not in self.cache or not git_helper.up2date:
             g = git_graph.GitGraph(git_helper)
             self.cache[repo_url] = g.export()
         else:

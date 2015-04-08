@@ -1,6 +1,9 @@
+import os
 import tempfile
+from urlparse import urlparse
 
 import pygit2
+from pygit2 import credentials
 
 
 class DirManager(object):
@@ -18,13 +21,34 @@ class DirManager(object):
         return dir_path
 
 
+class CredentialsManager(object):
+    def __init__(self, credentials_file):
+        self._credentials = {}
+
+        if os.path.isfile(credentials_file):
+            with open(credentials_file) as f:
+                for line in f.readlines():
+                    line = line.strip()
+                    if line and line[0] != '#':
+                        line = line.split(':', 2)
+                        self._credentials[line[0]] = credentials.UserPass(*line[1:])
+
+    def get_credentials(self, repo_url):
+        parsed_url = urlparse(repo_url)
+        if parsed_url.scheme == 'https' and parsed_url.netloc in self._credentials:
+            return self._credentials[parsed_url.netloc]
+        return None
+
+
+
+
 class GitException(Exception):
     def __init__(self, message):
         self.message = message
 
 
 class GitHelper(object):
-    def __init__(self, repo_url, dir_manager):
+    def __init__(self, repo_url, dir_manager, credentials_manager):
         """
         :repo_url: URL of the repository
         :repo_dir: directory where the repository is expected to reside
@@ -32,22 +56,28 @@ class GitHelper(object):
         self.up2date = False
         self.repo_url = repo_url
         dir_path = dir_manager.get_repo_dir(repo_url)
-        try:
-            try:
-                self.repo = pygit2.Repository(pygit2.discover_repository(dir_path))
-                self.up2date = True
-                for remote in self.repo.remotes:
-                    try:
-                        if remote.fetch().received_objects:
-                            self.up2date = False
-                    except AttributeError:
-                        # older versions of PyGit2 don't return an object but a dictionary which has no received_objects
-                        pass
 
-            except KeyError:  # no repo in this dir
-                self.repo = pygit2.clone_repository(repo_url, dir_path, bare=True)
-        except pygit2.GitError as e:
-            raise GitException("Cloning failed. {}".format(e.message))
+        my_credentials = credentials_manager.get_credentials(repo_url)
+
+        if not os.path.isfile(dir_path + '/HEAD'):
+            try:
+                self.repo = pygit2.clone_repository(repo_url, dir_path, bare=True, credentials=my_credentials)
+            except pygit2.GitError as e:
+                raise GitException("Cloning failed. {}".format(e.message))
+        else:
+            self.repo = pygit2.Repository(pygit2.discover_repository(dir_path))
+            self.up2date = True
+
+            def _remote_credentials(url, username_from_url, allowed_types):
+                return credentials_manager.get_credentials(url)
+
+            for remote in self.repo.remotes:
+                remote.credentials = _remote_credentials
+                transfer_progress = remote.fetch()
+                if (hasattr(transfer_progress, 'received_objects') and transfer_progress.received_objects) or \
+                        transfer_progress['received_objects']:
+                    self.up2date = False
+
 
     def get_branch_heads(self):
         """:returns: a tuple ('master' branch, list of branch heads)"""

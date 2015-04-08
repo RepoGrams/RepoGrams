@@ -10,14 +10,37 @@ repositories of multiple software projects and helps them in selecting appropria
 
 ## Deployment ##
 
-RepoGrams runs inside a [docker](https://www.docker.com/) image. After cloning the repository, run `./build.sh [domain-name]` (defaults to `localhost`) in a shell to locally build the image. Use `./run.sh [port-number]` (defaults to `1234`) and `./stop.sh` to start/stop the application.
+RepoGrams runs inside a [docker](https://www.docker.com/) image. After cloning the repository, run `./build.sh
+[domain-name]` (defaults to `localhost`) in a shell to locally build the image. Use `./run.sh [port-number]` (defaults
+to `1234`) and `./stop.sh` to start/stop the application.
 
-To add examples (a pre-configured set of repositories and corresponding metrics) to your deployment, add a file called `examples.partial.js` to the root directory before building the docker image. See file `data/examples.partial.js` for an example of an examples file.
+### Build options ###
+
+The following are optional additions to RepoGrams. 
+
+#### Example sets ####
+
+You can add examples (pre-configured sets of repositories and corresponding metrics) to your deployment. Add a file
+called `examples.partial.js` to the root directory *before* building the docker image.
+
+See the file `data/examples.partial.js` for an example of an examples set file.
+
+#### Credentials ####
+
+RepoGrams only supports cloning HTTP and HTTPS repositories, however many websites, such as GitHub, support basic HTTPS
+authentication. You can add support for specific websites by adding a `credentials` file to the root directory *before*
+building the docker image. The content of the file should be one credential per line, where each line takes the form:
+
+`example.com:janedoe:passwd`
+
+GitHub supports app-specific tokens that can be used in lieu of the password.
+
+#### Pre-cache repositories ####
 
 You can cache a large number of git repositories on the server side by running `./precache.sh [domain-name]
-[list-of-repository-urls-file]` where the latter is a text file with one git repository URL per line. This
-command will load all the repositories into the running docker image's memory to be served quicker when called in the
-web application.
+[list-of-repository-urls-file]` where the latter is a text file with one git repository URL per line. This command will
+load all the repositories into the running docker image's memory. As long as these repositories do not change, they will
+be served from cache when called in the web application.
 
 
 ## Development ##
