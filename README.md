@@ -10,9 +10,9 @@ repositories of multiple software projects and helps them in selecting appropria
 
 ## Deployment ##
 
-RepoGrams runs inside a [docker](https://www.docker.com/) image. After cloning the repository, run `./build.sh
-[domain-name]` (defaults to `localhost`) in a shell to locally build the image. Use `./run.sh [port-number]` (defaults
-to `1234`) and `./stop.sh` to start/stop the application.
+RepoGrams runs inside a [docker](https://www.docker.com/) image. After cloning the repository, run `./build.sh`) in a
+shell to locally build the image. Use `./run.sh [port-number]` (defaults to `1234`) and `./stop.sh` to start/stop the
+application.
 
 ### Build options ###
 
@@ -21,15 +21,16 @@ The following are optional additions to RepoGrams.
 #### Example sets ####
 
 You can add examples (pre-configured sets of repositories and corresponding metrics) to your deployment. Add a file
-called `examples.partial.js` to the root directory *before* building the docker image.
+called `example-sets.js` to the `build/` directory *before* building the docker image.
 
-See the file `data/examples.partial.js` for an example of an examples set file.
+See the file `examples/example-sets.js` for an example of an examples set file.
 
 #### Credentials ####
 
 RepoGrams only supports cloning HTTP and HTTPS repositories, however many websites, such as GitHub, support basic HTTPS
-authentication. You can add support for specific websites by adding a `credentials` file to the root directory *before*
-building the docker image. The content of the file should be one credential per line, where each line takes the form:
+authentication. You can add support for specific websites by adding a `credentials` file to the `build/` directory
+*before* building the docker image. The content of the file should be one credential per line, where each line takes the
+form:
 
 `example.com:janedoe:passwd`
 
@@ -38,9 +39,9 @@ GitHub supports app-specific tokens that can be used in lieu of the password.
 #### Pre-cache repositories ####
 
 You can cache a large number of git repositories on the server side by running `./precache.sh [domain-name]
-[list-of-repository-urls-file]` where the latter is a text file with one git repository URL per line. This command will
-load all the repositories into the running docker image's memory. As long as these repositories do not change, they will
-be served from cache when called in the web application.
+[file-with-list-of-repository-urls]` where the latter is a text file with one git repository URL per line. This command
+will load all the repositories into the running docker image's memory. As long as these repositories do not change, they
+will be served from cache when called in the web application.
 
 
 ## Development ##
@@ -61,32 +62,26 @@ Start by installing the following packages on your machine:
 
 Create and activate a [virtualenv](https://virtualenv.pypa.io/) based on Python 2.7.x. Once activated install the
 requirements.txt inside the virtualenv using pip:
-`pip install -r requirements.txt`
+`pip install -r conf/requirements.txt`
 
 Copy the python-graph-tool library from the distribution-wide lib directory to the virtualenv. Unfortunately graph-tool
 is not available on pip.
 `cp -r /usr/lib/python2.7/dist-packages/graph_tool /path/to/venv/lib/python2.7/site-packages/`
 (the paths on your system might vary)
 
-Modify `serve.py` to change the line:
-`INSTANCE_CONFIG = INSTANCE_CONFIG_DEFAULT`
-to
-`INSTANCE_CONFIG = INSTANCE_CONFIG_FOR_LOCAL_DEBUGGING`
-
-Run the application with `python serve.py`. Point your browser to http://localhost:8090/.
-
-If you make server-side changes you need to restart the server. If you make client-side (HTML, CSS, or JavaScript)
-changes you do not need to restart the server.
+Run the application with `python app/serve.py development` (the environment variable PYTHONPATH should be set to the
+current directory. e.g., `PYTHONPATH=. python app/serve.py development`.) Point your browser to http://localhost:8090/.
 
 ### Adding metrics ###
 
 To add a new metric you will have to:
 
-* Create the computation / server-side (Python) file inside `metrics/`. Start by copying `_examples.py` and modifying it.
-* Create the presentation / client-side (JavaScript) file inside `metrics/`. Start by copying `_examples.js` and
+* Create the computation / server-side (Python) file inside `app/metrics/`. Start by copying `_examples.py` and
   modifying it.
-* Modify the `metrics/__init__.py` file to register your module. Make sure that you import the metric, not the module
-  containing the metric.
+* Create the presentation / client-side (JavaScript) file inside `app/metrics/`. Start by copying `_examples.js` and
+  modifying it.
+* Modify the `app/metrics/__init__.py` file to register your module. Make sure that you import the metric, not the
+  module containing the metric.
 
 
 ## License ##

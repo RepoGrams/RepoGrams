@@ -1,11 +1,14 @@
 {
   "name": "Repograms",
-  "version": "0.0.1",
-  "homepage": "https://github.com/HeikoBecker/Repograms",
+  "version": "1.0.0",
+  "homepage": "https://github.com/RepoGrams/RepoGrams",
   "authors": [
-    "Fabian Kosmale <fakos@t-online.de>"
+    "Fabian Kosmale <fakos@t-online.de>",
+    "Valerie Poser <v.poser@gmx.de>",
+    "Heiko Becker <heikobecker92@gmail.com>",
+    "Daniel Rozenberg <rodaniel@cs.ubc.ca>"
   ],
-  "description": "Git visualization",
+  "description": "RepoGrams is a web-tool that allows users to analyze and compare the history of multiple software projects",
   "keywords": [
     "git"
   ],

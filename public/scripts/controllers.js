@@ -11,9 +11,7 @@ repogramsControllers.controller('RepogramsConfig',
       $scope.reposService = reposService;
 
       // Examples
-      $scope.examples = [];
-      /*@@@EXAMPLES_PLACEHOLDER@@@*/
-      $scope.hasExamples = Boolean($scope.examples.length);
+      $scope.examples = ExampleSets;
 
       $scope.loadExamples = function () {
         $modal.open({
@@ -176,7 +174,7 @@ repogramsControllers.controller('RepogramsImporter',
       }
       console.log("fetch " + url);
       var result = $http.post(
-        "/getGitData",
+        "/app/getGitData",
         {"repourl": url}
       );
       result.success(function (data) {

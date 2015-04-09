@@ -2,8 +2,8 @@
   <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
     <!-- include async -->
     <script type="text/javascript" src="/bower_components/async/lib/async.js"></script>
     <!-- include underscore -->
@@ -27,20 +27,21 @@
     <!-- use fontawesome -->
     <link rel="stylesheet" type="text/css" href="/bower_components/fontawesome/css/font-awesome.min.css">
     <!-- include our own style sheets -->
-    <link rel="stylesheet" type="text/css" href="/css/metrics.css">
+    <link rel="stylesheet" type="text/css" href="/styles/metrics.css">
     <!-- include the app controllers -->
-    <script type="text/javascript" src="/getMappers"></script>
-    <script type="text/javascript" src="/getMetrics"></script>
-    <script type="text/javascript" src="/js/tools.js"></script>
-    <script type="text/javascript" src="/js/app.js"></script>
-    <script type="text/javascript" src="/js/directives.js"></script>
-    <script type="text/javascript" src="/js/controllers.js"></script>
-    <script type="text/javascript" src="/js/services.js"></script>
-    <script type="text/javascript" src="/js/metrics-driver.js"></script>
+    <script type="text/javascript" src="/app/getMappers"></script>
+    <script type="text/javascript" src="/app/getMetrics"></script>
+    <script type="text/javascript" src="/scripts/example-sets.js"></script>
+    <script type="text/javascript" src="/scripts/tools.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/directives.js"></script>
+    <script type="text/javascript" src="/scripts/controllers.js"></script>
+    <script type="text/javascript" src="/scripts/services.js"></script>
+    <script type="text/javascript" src="/scripts/metrics-driver.js"></script>
     <!-- include slider -->
     <script type="text/javascript" src="/bower_components/angular-touch/angular-touch.min.js"></script>
     <script type="text/javascript" src="/bower_components/venturocket-angular-slider/build/angular-slider.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/slider.css">
+    <link rel="stylesheet" type="text/css" href="/styles/slider.css">
 
     <title>RepoGrams</title>
   </head>
@@ -49,7 +50,7 @@
       <div class="row">
         <!-- Logo -->
         <div class="col-sm-4 col-sm-push-4 col-lg-2 col-lg-push-10 center-block">
-          <img class="center-block img-responsive logo" src="img/title.png" title="RepoGrams">
+          <img class="center-block img-responsive logo" src="/images/title.png" title="RepoGrams">
         </div>
 
         <!-- First block for the selection box and zoom slider -->
@@ -57,7 +58,7 @@
           <div class="panel panel-default form-inline" ng-controller="RepogramsConfig">
             <div class="panel-heading">
               <span>Settings</span>
-              <span class="pull-right btn btn-link btn-xs" ng-click="loadExamples()" ng-if="hasExamples">Load examples</span>
+              <span class="pull-right btn btn-link btn-xs" ng-click="loadExamples()" ng-if="examples.length">Load examples</span>
             </div>
             <div class="panel-body">
               <div class="form-group col-md-2 col-sm-12 configBlock" ng-init="isMetricsFirst=true">
@@ -146,7 +147,7 @@
                               </div> <!-- col-lg-10 close -->
                             </div> <!-- row close -->
                           </div> <!-- end ng-repeat repos -->
-                          <div class="col-md-12 alert alert-info" ng-if="repos.length == 0">
+                          <div class="col-md-12 alert alert-danger" ng-if="repos.length == 0">
                             <a ng-click="focusOnUrlImporter()">Add projects</a> to display.
                           </div>
                         </div> <!-- close Render controller -->
@@ -172,7 +173,7 @@
                       </div>
                       <p class="col-md-12 text-muted" ng-if="showIncomparableWarning">Colors for unique branches and unique authors metric are incomparable between projects.</p>
                     </div>
-                    <div class="col-md-12 alert alert-info" ng-if="selectedMetricIds.length == 0">
+                    <div class="col-md-12 alert alert-danger" ng-if="selectedMetricIds.length == 0">
                       <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
                     </div>
                   </div>
@@ -209,12 +210,12 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-12 alert alert-info" ng-if="selectedMetricIds.length == 0">
+                      <div class="col-md-12 alert alert-danger" ng-if="selectedMetricIds.length == 0">
                         <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-12 alert alert-info" ng-if="selectedMetricIds.length > 0 && numSelectedRepos == 0">
+                  <div class="col-md-12 alert alert-danger" ng-if="selectedMetricIds.length > 0 && numSelectedRepos == 0">
                     <ng-pluralize count="selectedMetricIds.length" when="{'1': '1 metric has', 'other': '{} metrics have'}"></ng-pluralize> been selected. <a ng-click="focusOnUrlImporter()">Add projects</a> to display.
                   </div>
                 </div>
@@ -222,7 +223,7 @@
                 <div class="col-md-12 alert alert-info" ng-if="selectedMetricIds.length == 0 && numSelectedRepos == 0">
                   <a ng-click="focusOnUrlImporter()">Add projects</a> and <a ng-click="openSelectMetricsModal()">select metrics</a> to display.
                 </div>
-                <div class="col-md-12 alert alert-info" ng-if="selectedMetricIds.length == 0 && numSelectedRepos > 0 && isMetricsFirst">
+                <div class="col-md-12 alert alert-danger" ng-if="selectedMetricIds.length == 0 && numSelectedRepos > 0 && isMetricsFirst">
                   <ng-pluralize count="numSelectedRepos" when="{'1': '1 repository has', 'other': '{} repositories have'}"></ng-pluralize> been added. <a ng-click="openSelectMetricsModal()">Select metrics</a> to display.
                 </div>
               </div>

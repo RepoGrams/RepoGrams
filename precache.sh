@@ -12,7 +12,7 @@ do
 	if [ -n "$REPO" ]
 	then
 		echo "| Precaching $REPO"
-		RESULT=`curl -X POST http://$1/getGitData -d "{\"repourl\":\"$REPO\"}" -H "Content-Type: application/json" --silent --show-error`
+		RESULT=`curl -X POST http://$1/app/getGitData -d "{\"repourl\":\"$REPO\"}" -H "Content-Type: application/json" --silent --show-error`
 		echo "+-- $RESULT" | head -c 80
 		echo " "
 	fi
