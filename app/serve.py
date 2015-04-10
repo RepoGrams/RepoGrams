@@ -9,7 +9,7 @@ from app import git_graph, git_helpers
 
 
 APP_BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-REPOGRAMS_BASE_DIR = os.path.abspath(APP_BASE_DIR + '/../')
+REPOGRAMS_BASE_DIR = os.path.abspath(APP_BASE_DIR + '/..')
 
 PRODUCTION_SERVER_CONFIG = {
     'server.socket_port': 8090,
@@ -48,7 +48,7 @@ DEVELOPMENT_INSTANCE_CONFIG_APP = {
 class RepoGrams:
     def __init__(self):
         self.dir_manager = git_helpers.DirManager()
-        self.credentials_manager = git_helpers.CredentialsManager('credentials')
+        self.credentials_manager = git_helpers.CredentialsManager(REPOGRAMS_BASE_DIR + '/build/credentials')
         self.cache = git_graph.GitGraphCache()
 
     @cherrypy.expose(alias="getGitData")
