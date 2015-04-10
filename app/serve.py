@@ -60,7 +60,7 @@ class RepoGrams:
         try:
             git_helper = git_helpers.GitHelper(repo_url, self.dir_manager, self.credentials_manager)
         except Exception as e:
-            cherrypy.response.status = 300
+            cherrypy.response.status = 400
             return {"emessage": e.message}
 
         if repo_url not in self.cache or not git_helper.up2date:
