@@ -72,8 +72,7 @@ class GitHelper(object):
             for remote in self.repo.remotes:
                 remote.credentials = _remote_credentials
                 transfer_progress = remote.fetch()
-                if (hasattr(transfer_progress, 'received_objects') and transfer_progress.received_objects) or \
-                        transfer_progress['received_objects']:
+                if transfer_progress.received_objects:
                     self.up2date = False
 
     def get_branch_heads(self):
