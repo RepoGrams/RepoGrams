@@ -10,25 +10,29 @@ RUN echo 'deb http://downloads.skewed.de/apt/trusty trusty universe' >> /etc/apt
 
 # Add the apt repository for libgit2 and python-pygit2
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common \
-  && DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:dennis/python
+  && DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:launchpad/ppa
 
 # Update apt and install dependencies
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-  python \
-  python-graph-tool \
-  python-pip \
-  supervisor \
-  libgit2 \
-  python-pygit2 \
-  python-scipy \
-  nginx
+    python \
+    python-graph-tool \
+    python-pip \
+    supervisor \
+    libgit2-22 \
+    python-scipy \
+    nginx \
+    libgit2-dev \
+    libffi-dev
 
 # Install the required Python libraries using pip, minus the libraries that were already installed using apt-get
 COPY conf/requirements.txt /root/requirements.txt
-RUN sed -e '/numpy/d' -e '/pygit2/d' -e '/scipy/d' -i /root/requirements.txt \
+RUN sed -e '/numpy/d' -e '/scipy/d' -i /root/requirements.txt \
   && pip install -r /root/requirements.txt \
-  && rm /root/requirements.txt
+  && rm /root/requirements.txt \
+  && DEBIAN_FRONTEND=noninteractive apt-get purge -y python-pip \
+    libgit2-dev \
+    libffi-dev
 
 # Copy the server and client directories to be served
 RUN mkdir -p /var/www/build /var/log/app

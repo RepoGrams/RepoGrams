@@ -199,6 +199,10 @@ repogramsControllers.controller('RepogramsImporter',
           $scope.errors.push({
             'emessage': "Gateway timeout. The repository is likely too large for this server."
           });
+        } else {
+          $scope.errors.push({
+            'emessage': "Server unreachable, try again later or try a different URL."
+          });
         }
       });
     };
