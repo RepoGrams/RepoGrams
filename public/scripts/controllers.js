@@ -168,25 +168,24 @@ repogramsControllers.controller('RepogramsImporter',
       if (!url) {
         $scope.processing = false;
         $scope.errors.push({
-          "emessage": "Please enter a repository URL"
+          'emessage': "Please enter a repository URL"
         });
         return;
       }
-      console.log("fetch " + url);
+
       var result = $http.post(
-        "/app/getGitData",
+        '/app/getGitData',
         {"repourl": url}
       );
       result.success(function (data) {
         metricsRunner.runMetricsAsync(data, function (metricData) {
           $scope.processing = false;
-          console.log(metricData);
           reposService.addRepo({
-            "name": url.split("/").pop(),
+            "name": url.split('/').pop(),
             "url": $scope.importURL,
             "metricData": metricData
           });
-          $scope.importURL = "";
+          $scope.importURL = '';
           if (onSuccess) {
             window.setTimeout(onSuccess, 1000);
           }
@@ -277,11 +276,9 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
       reposService.removeRepo(pos);
     };
     $scope.moveUp = function (index) {
-      console.log("Moving up " + index);
       reposService.moveRepoUp(index);
     };
     $scope.moveDown = function (index) {
-      console.log("Moving down " + index);
       reposService.moveRepoDown(index);
     };
   }]);

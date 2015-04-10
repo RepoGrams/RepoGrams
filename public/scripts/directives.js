@@ -7,9 +7,9 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
 
       restrict: 'E',
       scope: {
-        metricId: "=metricId",
-        repoIndex: "=repoIndex",
-        show: "=ngShow"
+        metricId: '=metricId',
+        repoIndex: '=repoIndex',
+        show: '=ngShow'
       },
       template: '<div class="renderMetric"><div style="width:100%; overflow: visible; white-space: nowrap;">' +
       '<div class="individualMetric" ng-click="popModal($event)" style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
@@ -26,9 +26,9 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
         $scope.noOfCommits = $scope.repo.metricData.churns.length;
 
         $scope.popModal = function (event) {
-          var commitId = $(event.target).attr("data-commitId");
-          var commitURL = $(event.target).attr("data-commitURL");
-          var index = $(event.target).attr("data-index");
+          var commitId = $(event.target).attr('data-commitId');
+          var commitURL = $(event.target).attr('data-commitURL');
+          var index = $(event.target).attr('data-index');
           $modal.open({
             scope: $scope,
             template: '<div class="modal-header">' +
@@ -55,7 +55,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
 
         // insert individual commit blocks with the correct size into container
         var currentBlockLengthMode = blenSelectionService.getSelectedBlenMod().id;
-        var commitBlocks = "";
+        var commitBlocks = '';
         var repoURL = $scope.repo.url;
         var numOfCommits = $scope.repo.metricData[$scope.metricId].length;
 
@@ -67,7 +67,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
             var msg = _.escape(commitMsg.length > 40 ? commitMsg.substring(0, 39) + '…'
               : commitMsg);
             var commitId = $scope.repo.metricData.checksums[i];
-            var commitURL = repoURL.replace(/\.git$|$/, "/commit/" + commitId);
+            var commitURL = repoURL.replace(/\.git$|$/, '/commit/' + commitId);
             var tooltip = msg + '\u000A(Click for details)';
             var churns = $scope.repo.metricData.churns[i];
             var context = {
@@ -87,7 +87,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
         /* Avoid blocking the UI for too long by using $evalAsync
          * Blocking is dominated by compile, but at least not everything blocks*/
         var postponed = function ($scope) {
-          var innerMost = element.find(".individualMetric");
+          var innerMost = element.find('.individualMetric');
           innerMost.html(commitBlocks);
           $scope.individualBlocks = jQuery.makeArray(innerMost.children());
 
@@ -179,7 +179,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
             updateWidth(blenSelectionService.getSelectedBlenMod().id);
           }, 200));
 
-          $scope.$watch("blenSelectionService.getSelectedBlenMod()", function (newVal) {
+          $scope.$watch('blenSelectionService.getSelectedBlenMod()', function (newVal) {
             updateWidth(newVal.id);
           });
 
@@ -198,7 +198,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
 repogramsDirectives.directive('ngLegend', function () {
   return {
     restrict: 'E',
-    scope: {metricId: "=current"},
+    scope: {metricId: '=current'},
     template: '<ul class="list-inline">' +
     '<li><strong>Legend</strong>: </li>' +
     '<li ng-repeat="style in styles[metricId]"><span class="customBlock" style="background-color: {{style.color}};" ng-if="style.color"></span> <span ng-bind-html="style.legendText"></span></li>' +
@@ -255,11 +255,11 @@ repogramsDirectives.directive('ngLegend', function () {
 
         // TODO this should not be hard coded
         switch (metricId) {
-          case "branches_used":
+          case 'branches_used':
             setBranchUsageLegend(metricId);
             break;
 
-          case "commit_author":
+          case 'commit_author':
             setCommitAuthorLegend(metricId);
             break;
 
@@ -275,7 +275,7 @@ repogramsDirectives.directive('ngLegend', function () {
         }
       }
 
-      $scope.$on("mapperChange", function (evnt, metricId, mapper) {
+      $scope.$on('mapperChange', function (evnt, metricId, mapper) {
         $scope.updateLegend(metricId, mapper);
       }, true);
     }]

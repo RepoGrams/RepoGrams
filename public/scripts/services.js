@@ -1,6 +1,6 @@
 var repogramsServices = angular.module('repogramsServices', []);
 
-repogramsServices.service('reposService', ["$rootScope", function ($rootScope) {
+repogramsServices.service('reposService', ['$rootScope', function ($rootScope) {
   var RepoArr = [];
   var totalChurnArr = [];
   var maxVal = {};
@@ -22,7 +22,7 @@ repogramsServices.service('reposService', ["$rootScope", function ($rootScope) {
 
       var mapper = Metrics[metricId].mapper;
       if (mapper.updateMappingInfo(newMaxVal)) {
-        $rootScope.$broadcast("mapperChange", metricId, mapper);
+        $rootScope.$broadcast('mapperChange', metricId, mapper);
       }
     }
   };
@@ -50,7 +50,7 @@ repogramsServices.service('reposService', ["$rootScope", function ($rootScope) {
       }
 
       RepoArr.push(repoJSON);
-      $rootScope.$broadcast("reposChange", RepoArr);
+      $rootScope.$broadcast('reposChange', RepoArr);
       for (var metricId in Metrics) {
         if (Metrics.hasOwnProperty(metricId)) {
           var metricMaxVal = arrayMax(repoJSON.metricData[metricId]);
@@ -69,19 +69,17 @@ repogramsServices.service('reposService', ["$rootScope", function ($rootScope) {
       }
       totalChurnArr.push(totalChurn);
       maxChurn = arrayMax(totalChurnArr);
-      $rootScope.$broadcast("maxChurnChange", maxChurn);
+      $rootScope.$broadcast('maxChurnChange', maxChurn);
     },
     removeRepo: function (place) {
-      console.assert(place >= 0, "");
-      console.assert(place < RepoArr.length, "");
       RepoArr.splice(place, 1);
-      $rootScope.$broadcast("reposChange", RepoArr);
+      $rootScope.$broadcast('reposChange', RepoArr);
 
       var totalChurn = totalChurnArr[place];
       totalChurnArr.splice(place, 1);
       if (totalChurn >= maxChurn) {
         maxChurn = arrayMax(totalChurnArr);
-        $rootScope.$broadcast("maxChurnChange", maxChurn);
+        $rootScope.$broadcast('maxChurnChange', maxChurn);
       }
 
       for (var metricId in Metrics) {
@@ -102,7 +100,7 @@ repogramsServices.service('reposService', ["$rootScope", function ($rootScope) {
       var tmp = RepoArr[place];
       RepoArr[place] = RepoArr[place - 1];
       RepoArr[place - 1] = tmp;
-      $rootScope.$broadcast("reposChange", RepoArr);
+      $rootScope.$broadcast('reposChange', RepoArr);
     },
     moveRepoDown: function (place) {
       if (place == RepoArr.length - 1)
@@ -110,7 +108,7 @@ repogramsServices.service('reposService', ["$rootScope", function ($rootScope) {
       var tmp = RepoArr[place];
       RepoArr[place] = RepoArr[place + 1];
       RepoArr[place + 1] = tmp;
-      $rootScope.$broadcast("reposChange", RepoArr);
+      $rootScope.$broadcast('reposChange', RepoArr);
     }
   };
 }]);
@@ -165,18 +163,18 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
 
 repogramsServices.service('blenService', function () {
   var getModFunction = {
-    "1_constant": function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
-      return {value: (5), divisor: 1, zoom: zoom.num, unit: "px"}
+    '1_constant': function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
+      return {value: (5), divisor: 1, zoom: zoom.num, unit: 'px'}
     },
-    "2_churn": function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
-      return {value: (churn * 100), divisor: maxChurn, zoom: zoom.num, unit: "%"}
+    '2_churn': function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
+      return {value: (churn * 100), divisor: maxChurn, zoom: zoom.num, unit: '%'}
     },
-    "3_fill": function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
-      return {value: (churn * 100), divisor: totalChurn, zoom: zoom.num, unit: "%"}
+    '3_fill': function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
+      return {value: (churn * 100), divisor: totalChurn, zoom: zoom.num, unit: '%'}
     }
   };
   var calculateWidth = function (width) {
-    width.string = "" + ((width.value / width.divisor) * width.zoom) + width.unit;
+    width.string = '' + ((width.value / width.divisor) * width.zoom) + width.unit;
     return width;
   };
   return {
@@ -187,24 +185,24 @@ repogramsServices.service('blenService', function () {
   };
 });
 
-repogramsServices.service('blenSelectionService', ["$rootScope", function ($rootScope) {
+repogramsServices.service('blenSelectionService', ['$rootScope', function ($rootScope) {
   var allBlenMods = [
     {
-      id: "1_constant",
+      id: '1_constant',
       label: "Fixed",
-      icon: "th",
+      icon: 'th',
       description: "All blocks have constant width."
     },
     {
-      id: "2_churn",
+      id: '2_churn',
       label: "Lines changed (comparable btw. projects)",
-      icon: "align-left",
+      icon: 'align-left',
       description: "Block width represents number of lines changed in a commit. Project commit histories are scaled <em>uniformly</em> using the same factor (comparable between projects)."
     },
     {
-      id: "3_fill",
+      id: '3_fill',
       label: "Lines changed (incomparable btw. projects)",
-      icon: "align-justify",
+      icon: 'align-justify',
       description: "Block width represents number of lines changed in a commit. Project commit histories are scaled <em>independently</em> (incomparable between projects)."
     }
   ];
@@ -229,7 +227,7 @@ repogramsServices.service('blenSelectionService', ["$rootScope", function ($root
   };
 }]);
 
-repogramsServices.service('zoomService', ["$rootScope", function ($rootScope) {
+repogramsServices.service('zoomService', ['$rootScope', function ($rootScope) {
   var selectedZoom = {num: 1};
 
   return {
@@ -237,7 +235,7 @@ repogramsServices.service('zoomService', ["$rootScope", function ($rootScope) {
       return selectedZoom;
     },
     setZoom: function (zoom) {
-      $rootScope.$broadcast("zoomChange", zoom);
+      $rootScope.$broadcast('zoomChange', zoom);
       selectedZoom = zoom;
     }
   };
