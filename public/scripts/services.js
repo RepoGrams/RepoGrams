@@ -3,28 +3,28 @@ var repogramsServices = angular.module('repogramsServices', []);
 repogramsServices.service('reposService', ['$rootScope', function ($rootScope) {
   var RepoArr = [];
   var totalChurnArr = [];
-  var maxVal = {};
   var maxChurn = 0;
-
-  // Initialize the maxVal dictionary to zero
-  for (var metricId in Metrics) {
-    if (Metrics.hasOwnProperty(metricId)) {
-      maxVal[metricId] = -1;
-    }
-  }
 
   /**
    * Update the max value per metric, if needed.
    */
-  var updateMetricMax = function (metricId, newMaxVal, forceUpdate) {
-    if (newMaxVal > maxVal[metricId] || forceUpdate) {
-      maxVal[metricId] = newMaxVal;
-
-      var mapper = Metrics[metricId].mapper;
-      if (mapper.updateMappingInfo(newMaxVal)) {
-        $rootScope.$broadcast('mapperChange', metricId, mapper);
+  var updateMetricsMax = function () {
+    for (var metricId in Metrics) {
+      if (Metrics.hasOwnProperty(metricId)) {
+        var mapper = Metrics[metricId].mapper;
+        if (mapper.updateMappingInfo(getAllValues(metricId))) {
+          $rootScope.$broadcast('mapperChange', metricId, mapper);
+        }
       }
     }
+  };
+
+  var getAllValues = function (metricId) {
+    var allValues = [];
+    for (var i = 0; i < RepoArr.length; i++) {
+      allValues = allValues.concat(RepoArr[i].metricData[metricId]);
+    }
+    return allValues;
   };
 
   return {
@@ -51,12 +51,7 @@ repogramsServices.service('reposService', ['$rootScope', function ($rootScope) {
 
       RepoArr.push(repoJSON);
       $rootScope.$broadcast('reposChange', RepoArr);
-      for (var metricId in Metrics) {
-        if (Metrics.hasOwnProperty(metricId)) {
-          var metricMaxVal = arrayMax(repoJSON.metricData[metricId]);
-          updateMetricMax(metricId, metricMaxVal, false);
-        }
-      }
+      updateMetricsMax();
 
       /**
        * totalChurn is necessary to calculate the proportional size of blocks
@@ -82,17 +77,7 @@ repogramsServices.service('reposService', ['$rootScope', function ($rootScope) {
         $rootScope.$broadcast('maxChurnChange', maxChurn);
       }
 
-      for (var metricId in Metrics) {
-        if (Metrics.hasOwnProperty(metricId)) {
-          var metricMaxVals = [0];
-          for (var repoIndex = 0; repoIndex < RepoArr.length; repoIndex++) {
-            var repoJSON = RepoArr[repoIndex];
-            metricMaxVals.push(arrayMax(repoJSON.metricData[metricId]));
-          }
-          var metricMaxVal = arrayMax(metricMaxVals);
-          updateMetricMax(metricId, metricMaxVal, true);
-        }
-      }
+      updateMetricsMax();
     },
     moveRepoUp: function (place) {
       if (place == 0)

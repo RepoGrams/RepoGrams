@@ -49,7 +49,7 @@ Mappers['fibonacci_range'] = {
     }
     return colors[colors.length - 1];
   },
-  updateMappingInfo: function (newMaxValue) {
+  updateMappingInfo: function (allValues) {
     return false;
   }
 };

@@ -733,8 +733,8 @@ Metrics['commit_author'] = {
     "#036d66",
     "#e0f4eb"
   ],
-  mapper: Mappers['discrete_bucket'],
+  mapper: Mappers['commit_author'],
   tooltip: function (value) {
-    return "Author number: " + value;
+    return "Authored by " + value.name + " <" + value.email + ">";
   }
 };

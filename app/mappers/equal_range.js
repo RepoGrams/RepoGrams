@@ -1,5 +1,6 @@
 Mappers['equal_range'] = function (minValue, exponent, separateFirstBucket) {
   return {
+    _currentMaxValue: -1,
     mappingInfo: [],
     map: function (value, colors) {
       for (var i = 0; i < this.mappingInfo.length; i++) {
@@ -9,7 +10,14 @@ Mappers['equal_range'] = function (minValue, exponent, separateFirstBucket) {
       }
       return colors[colors.length - 1];
     },
-    updateMappingInfo: function (newMaxValue) {
+    updateMappingInfo: function (allValues) {
+      var newMaxValue = arrayMax(allValues);
+      if (this._currentMaxValue >= newMaxValue) {
+        return false;
+      } else {
+        this._currentMaxValue = newMaxValue;
+      }
+
       // TODO do something with minValue
       this.mappingInfo = [];
       var chunkNum = 8;
