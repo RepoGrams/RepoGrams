@@ -52,19 +52,17 @@ class GitGraph(object):
 
         # construct the graph
         for commit in self.git_helper.get_all_commits():
-            parents, commit_timestamp, commit_message, added, removed, files = git_helpers.get_commit_data(commit)
             commit_vertex = self.graph.add_vertex()
             self.vertex2commit[commit_vertex] = commit
             self.hash2vertex[str(commit.oid)] = commit_vertex
             self.commit_hashsum[commit_vertex] = str(commit.oid)
-            self.commit_message[commit_vertex] = commit_message
-            self.commit_timestamp[commit_vertex] = commit_timestamp
-            self.commit_files[commit_vertex] = files
-            self.commit_churn[commit_vertex] = added + removed
-            if not parents:
+            self.commit_message[commit_vertex] = commit.message
+            self.commit_timestamp[commit_vertex] = commit.commit_time
+            self.commit_churn[commit_vertex], self.commit_files[commit_vertex] = git_helpers.get_patch_data(commit)
+            if not commit.parents:
                 self.graph.add_edge(self.sentinel, commit_vertex)
                 continue
-            for parent in parents:
+            for parent in commit.parents:
                 self.graph.add_edge(self.hash2vertex[str(parent.oid)], commit_vertex)
         assert graph_tool.topology.is_DAG(self.graph)
 

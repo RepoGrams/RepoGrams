@@ -102,33 +102,14 @@ class GitHelper(object):
             yield commit  # later: don't use str
 
 
-def get_commit_data(commit):
-    # iterate over commits
-    # --always: handle empty commits
-    # -s: don't show p, we do it later
-    # --root: else the first commit won't work
-    # -r: the commit we want to display
-    # --pretty: format string which prints all we need
-    # %P: parents   |   %ct: committer time stamp     | %B commit_message
+def get_patch_data(commit):
     parents = commit.parents
-    diffs = []
-    for parent in parents:
-        diffs.append(commit.tree.diff_to_tree(parent.tree, flags=pygit2.GIT_DIFF_REVERSE))
-    if diffs:
-        diff = diffs[0]
-        for d in diffs[1:]:
-            diff.merge(d)
-        assert diff is not None, parents
+    if parents:
+        diff = commit.tree.diff_to_tree(parents[0].tree, flags=pygit2.GIT_DIFF_REVERSE)
+        diff.find_similar()
     else:
         diff = commit.tree.diff_to_tree(flags=pygit2.GIT_DIFF_REVERSE)
-        assert diff is not None, parents
-    patches = [patch for patch in diff]
-    # could be done with reduce...
-    added = sum(patch.additions for patch in patches)
-    removed = sum(patch.deletions for patch in patches)
-    files = set()
-    for patch in patches:
-        files.add(patch.new_file_path)
-    message = commit.message
-    timestamp = commit.commit_time
-    return parents, timestamp, message, added, removed, files
+
+    churn = sum(patch.additions + patch.deletions for patch in diff)
+    files = set(patch.new_file_path for patch in diff)
+    return churn, files
