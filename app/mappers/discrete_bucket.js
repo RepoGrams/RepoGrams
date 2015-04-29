@@ -3,6 +3,6 @@ Mappers['discrete_bucket'] = {
     return colors[value % colors.length];
   },
   updateMappingInfo: function (allValues) {
-    return true;
+    return false;
   }
 };

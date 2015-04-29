@@ -4,6 +4,6 @@ Mappers['commit_author'] = {
     return colors[author.id % colors.length];
   },
   updateMappingInfo: function (allValues) {
-    return true; // TODO false?
+    return false;
   }
 };
