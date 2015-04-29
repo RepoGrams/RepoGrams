@@ -1,8 +1,8 @@
 Metrics['commit_age'] = {
-  'label': "Commit Age",
-  'icon': 'clock-o',
-  'description': "Elapsed time between a commit and its parent commit.",
-  'long_description': "For merge commits we consider the elapsed time between a commit and its youngest parent commit.",
+  label: "Commit Age",
+  icon: 'clock-o',
+  description: "Elapsed time between a commit and its parent commit.",
+  long_description: "For merge commits we consider the elapsed time between a commit and its youngest parent commit.",
   colors: [
     "#fff7fb",
     "#ece2f0",
