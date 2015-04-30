@@ -3,7 +3,8 @@ ExampleSets = [
     'name': "Preparation Tasks — Task 1",
     'metrics': ['pom_files'],
     'metricsFirst': true,
-    'blen': '1_constant',
+    'blockLengthMode': 'fixed',
+    'normalizationMode': 'none',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/sqlitebrowser',
@@ -16,7 +17,8 @@ ExampleSets = [
     'name': "Preparation Tasks — Task 2",
     'metrics': ['commit_localization'],
     'metricsFirst': true,
-    'blen': '1_constant',
+    'blockLengthMode': 'fixed',
+    'normalizationMode': 'none',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/sqlitebrowser',
@@ -29,7 +31,8 @@ ExampleSets = [
     'name': "Preparation Tasks — Task 3",
     'metrics': ['number_of_branches'],
     'metricsFirst': true,
-    'blen': '3_fill',
+    'blockLengthMode': 'linear',
+    'normalizationMode': 'individually',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/sqlitebrowser',
@@ -42,7 +45,8 @@ ExampleSets = [
     'name': "Main Tasks — Task 1",
     'metrics': ['most_edited_file'],
     'metricsFirst': true,
-    'blen': '1_constant',
+    'blockLengthMode': 'fixed',
+    'normalizationMode': 'none',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/passenger-docker'
@@ -51,7 +55,8 @@ ExampleSets = [
     'name': "Main Tasks — Task 2",
     'metrics': ['pom_files'],
     'metricsFirst': true,
-    'blen': '1_constant',
+    'blockLengthMode': 'fixed',
+    'normalizationMode': 'none',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/css-layout',
@@ -68,7 +73,8 @@ ExampleSets = [
     'name': "Main Tasks — Task 3",
     'metrics': ['branches_used'],
     'metricsFirst': true,
-    'blen': '1_constant',
+    'blockLengthMode': 'fixed',
+    'normalizationMode': 'none',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/wren',
@@ -81,7 +87,8 @@ ExampleSets = [
     'name': "Main Tasks — Task 4",
     'metrics': ['commit_author', 'branches_used'],
     'metricsFirst': false,
-    'blen': '3_fill',
+    'blockLengthMode': 'linear',
+    'normalizationMode': 'individually',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/touchstonejs',
@@ -93,7 +100,8 @@ ExampleSets = [
     'name': "Main Tasks — Task 5",
     'metrics': ['commit_author'],
     'metricsFirst': false,
-    'blen': '2_churn',
+    'blockLengthMode': 'linear',
+    'normalizationMode': 'all',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/stackit',

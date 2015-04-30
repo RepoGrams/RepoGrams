@@ -75,14 +75,15 @@
               </div>
 
               <div class="form-group col-md-4 col-sm-12 configBlock">
-                <button id="blockLengthSelect" class="form-control pull-right" ng-click="switchBlen()">Switch…</button>
-                <label for="blockLengthSelect">Block length:</label> <i class="fa fa-{{selectedBlenMod.icon}}"></i> <em>{{selectedBlenMod.label}}</em>
+                <button id="blockLengthSelect" class="form-control pull-right" ng-click="switchBlockLengthMode()">Switch…</button>
+                <label for="blockLengthSelect">Block length mode:</label> <i class="fa fa-{{selectedBlockLengthMode.icon}}"></i> <em>{{selectedBlockLengthMode.label}}</em><br>
+                <label for="blockLengthSelect">Normalization mode:</label> <i class="fa fa-{{selectedNormalizationMode.icon}}"></i> <em>{{selectedNormalizationMode.label}}</em>
               </div>
 
               <!-- Zoom Slider -->
               <div class="form-group col-md-2 col-sm-12 configBlock">
-                <label for="zoomSlider">Zoom:</label> <em>{{translateZoom(currentZoom.num)}}</em>
-                <slider id="zoomSlider" ng-model="currentZoom.num" ng-change="changeZoom()" floor="1" ceiling="100" step="1" stickiness="3" translate-fn="translateZoom">
+                <label for="zoomSlider">Zoom:</label> <em>{{translateZoom(selectedZoom)}}</em>
+                <slider id="zoomSlider" ng-model="selectedZoom" ng-change="changeZoom()" floor="1" ceiling="100" step="1" stickiness="3" translate-fn="translateZoom">
                 </slider>
                 <!-- https://github.com/Venturocket/angular-slider with CCS provided by voInt https://github.com/Venturocket/angular-slider/issues/51 -->
               </div>
@@ -113,7 +114,7 @@
                           {{selectedMetricObjects[metricId].label}}
                           <i class="fa fa-question-circle" tooltip-html-unsafe="{{helpTooltip(metricId)}}" tooltip-popup-delay="200"></i>
                         </h3>
-                        <ng-legend current="metricId" ng-show="numSelectedRepos > 0" class="legend"></ng-legend>
+                        <ng-legend metric-id="metricId" ng-show="numSelectedRepos > 0" class="legend"></ng-legend>
                         <p class="col-md-12 text-muted text-right" ng-if="metricId == 'branches_used' || metricId == 'commit_author'">
                           Colors for unique branches and unique authors metric are incomparable between projects.
                         </p>
@@ -167,7 +168,7 @@
                         <div class="repo-label" ng-repeat="metricId in selectedMetricIds">
                           <div ng-show="show(metricId)">
                             <span class="repo-label-name col-md-2" title="{{selectedMetricObjects[metricId].label}}"><i class="fa fa-{{selectedMetricObjects[metricId].icon}}"></i> {{selectedMetricObjects[metricId].label}}</span>
-                            <ng-legend current="metricId" ng-show="numSelectedRepos > 0" class="col-md-10"></ng-legend>
+                            <ng-legend metric-id="metricId" ng-show="numSelectedRepos > 0" class="col-md-10"></ng-legend>
                           </div>
                         </div>
                       </div>

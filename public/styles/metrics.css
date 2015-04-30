@@ -40,10 +40,11 @@ div.metrics-display div.alert-info a {
 }
 
 /* Rendered blocks */
-.customBlock {
+.commit-block {
     background-color: #ffffff;
-    height: 20px;
     display: inline-block;
+    height: 20px;
+    width: 5px;
     white-space: nowrap;
     outline: 1px solid rgba(0, 0, 0, 0.15);
     outline-offset: -1px;
@@ -54,21 +55,21 @@ div.metrics-display div.alert-info a {
     margin-bottom: 2em;
 }
 
-.renderMetric {
+.render-metric {
     margin-bottom: 3px;
 }
 
-.renderMetric .customBlock.hover {
-    box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, 0.3), 0px 0px 2px 2px rgba(102, 175, 233, 0.6);
+.render-metric .commit-block.hover {
+    box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, 0.3), 0 0 2px 2px rgba(102, 175, 233, 0.6);
     cursor: pointer;
     outline-color: rgba(102, 175, 233, 0.6);
-    outline-offset: 0px;
+    outline-offset: 0;
     position: relative;
     z-index: 1050;
 }
 
 /* Rendered blocks in the legend */
-.list-inline .customBlock {
+.list-inline .commit-block {
     width: 20px;
 }
 
@@ -78,31 +79,31 @@ div.metrics-display div.alert-info a {
     width: 60px;
 }
 
-.list-inline .branchUsageRainbow .customBlock {
+.list-inline .branchUsageRainbow .commit-block {
     width: 16.66%;
 }
 
-.list-inline .branchUsageRainbow .customBlock:nth-child(1) {
+.list-inline .branchUsageRainbow .commit-block:nth-child(1) {
     background-color: #ffff00;
 }
 
-.list-inline .branchUsageRainbow .customBlock:nth-child(2) {
+.list-inline .branchUsageRainbow .commit-block:nth-child(2) {
     background-color: #1ce6ff;
 }
 
-.list-inline .branchUsageRainbow .customBlock:nth-child(3) {
+.list-inline .branchUsageRainbow .commit-block:nth-child(3) {
     background-color: #ff34ff;
 }
 
-.list-inline .branchUsageRainbow .customBlock:nth-child(4) {
+.list-inline .branchUsageRainbow .commit-block:nth-child(4) {
     background-color: #ff4a46;
 }
 
-.list-inline .branchUsageRainbow .customBlock:nth-child(5) {
+.list-inline .branchUsageRainbow .commit-block:nth-child(5) {
     background-color: #008941;
 }
 
-.list-inline .branchUsageRainbow .customBlock:nth-child(6) {
+.list-inline .branchUsageRainbow .commit-block:nth-child(6) {
     background-color: #006fa6;
 }
 
@@ -111,46 +112,46 @@ div.metrics-display div.alert-info a {
     width: 60px;
 }
 
-.list-inline .commitAuthorRainbow .customBlock {
+.list-inline .commitAuthorRainbow .commit-block {
     width: 16.66%;
 }
 
-.list-inline .commitAuthorRainbow .customBlock:nth-child(1) {
+.list-inline .commitAuthorRainbow .commit-block:nth-child(1) {
     background-color: #fcfd0c;
 }
 
-.list-inline .commitAuthorRainbow .customBlock:nth-child(2) {
+.list-inline .commitAuthorRainbow .commit-block:nth-child(2) {
     background-color: #fca4fa;
 }
 
-.list-inline .commitAuthorRainbow .customBlock:nth-child(3) {
+.list-inline .commitAuthorRainbow .commit-block:nth-child(3) {
     background-color: #09dafc;
 }
 
-.list-inline .commitAuthorRainbow .customBlock:nth-child(4) {
+.list-inline .commitAuthorRainbow .commit-block:nth-child(4) {
     background-color: #d86606;
 }
 
-.list-inline .commitAuthorRainbow .customBlock:nth-child(5) {
+.list-inline .commitAuthorRainbow .commit-block:nth-child(5) {
     background-color: #03883f;
 }
 
-.list-inline .commitAuthorRainbow .customBlock:nth-child(6) {
+.list-inline .commitAuthorRainbow .commit-block:nth-child(6) {
     background-color: #153cfd;
 }
 
-.renderMetric .tooltip-inner {
+.render-metric .tooltip-inner {
     background-color: WhiteSmoke;
     border: solid 1px black;
     color: black;
     max-width: none;
 }
 
-.renderMetric .tooltip-inner p {
+.render-metric .tooltip-inner p {
     margin: 0;
 }
 
-.renderMetric .tooltip-inner p.commitMessage {
+.render-metric .tooltip-inner p.commitMessage {
     font-size: 14px;
 }
 
@@ -175,8 +176,28 @@ slider span.bubble {
     top: 20px !important;
 }
 
+.block-length-selector .table td {
+    padding: 0;
+    width: 25%;
+}
+
+.block-length-selector .table td:hover {
+    background-color: #f5f5f5;
+}
+
+.block-length-selector .table label {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.block-length-selector .table label input[type="radio"] {
+    margin-top: 10px;
+}
+
 .label-earliest-commits {
-    padding-left: 0em;
+    padding-left: 0;
 }
 
 .repo-label {

@@ -1,99 +1,70 @@
 var repogramsServices = angular.module('repogramsServices', []);
 
-repogramsServices.service('reposService', ['$rootScope', function ($rootScope) {
-  var RepoArr = [];
-  var totalChurnArr = [];
-  var maxChurn = 0;
-
-  /**
-   * Update the max value per metric, if needed.
-   */
-  var updateMetricsMax = function () {
-    for (var metricId in Metrics) {
-      if (Metrics.hasOwnProperty(metricId)) {
-        var mapper = Metrics[metricId].mapper;
-        if (mapper.updateMappingInfo(getAllValues(metricId))) {
-          $rootScope.$broadcast('mapperChange', metricId, mapper);
-        }
-      }
-    }
-  };
-
-  var getAllValues = function (metricId) {
-    var allValues = [];
-    for (var i = 0; i < RepoArr.length; i++) {
-      allValues = allValues.concat(RepoArr[i].metricData[metricId]);
-    }
-    return allValues;
-  };
+repogramsServices.service('reposService', ['$rootScope', 'metricSelectionService', 'blockLengthSelectionService', function ($rootScope, metricSelectionService, blockLengthSelectionService) {
+  var allRepositories = [];
 
   return {
-    getRepoArr: function () {
-      return RepoArr;
+    getAllRepositories: function () {
+      return allRepositories;
     },
-    getTotalChurnArr: function () {
-      return totalChurnArr;
+    getRepository: function (repoIndex) {
+      return allRepositories[repoIndex];
     },
-    getMaxChurn: function () {
-      return maxChurn;
-    },
-    addRepo: function (repoJSON) {
+    addRepo: function (repository) {
+      // Create an empty set to store the hidden commits
+      repository.hiddenCommits = new Set();
+
       // Remove duplicates if there are any
       var duplicateIndex = -1;
-      RepoArr.forEach(function (otherRepoJSON, index) {
-        if (otherRepoJSON.url == repoJSON.url) {
+      allRepositories.forEach(function (otherRepository, index) {
+        if (otherRepository.url == repository.url) {
           duplicateIndex = index;
+
+          // Copy the set of hidden commits from the duplicate repository to this one
+          repository.hiddenCommits = otherRepository.hiddenCommits;
         }
       });
       if (duplicateIndex != -1) {
         this.removeRepo(duplicateIndex);
       }
 
-      RepoArr.push(repoJSON);
-      $rootScope.$broadcast('reposChange', RepoArr);
-      updateMetricsMax();
+      allRepositories.push(repository);
+      $rootScope.$broadcast('reposChange', allRepositories);
 
-      /**
-       * totalChurn is necessary to calculate the proportional size of blocks
-       * all churns are summed up and stored per repo
-       */
-      var totalChurn = 0;
-
-      for (var i = 0; i < repoJSON.metricData.churns.length; i++) {
-        totalChurn += repoJSON.metricData.churns[i];
-      }
-      totalChurnArr.push(totalChurn);
-      maxChurn = arrayMax(totalChurnArr);
-      $rootScope.$broadcast('maxChurnChange', maxChurn);
+      metricSelectionService.updateAllMetricMappers(allRepositories);
+      blockLengthSelectionService.generateBaseLengthsForNewRepository(allRepositories, repository);
     },
-    removeRepo: function (place) {
-      RepoArr.splice(place, 1);
-      $rootScope.$broadcast('reposChange', RepoArr);
+    removeRepo: function (repoIndex) {
+      allRepositories.splice(repoIndex, 1);
+      $rootScope.$broadcast('reposChange', allRepositories);
 
-      var totalChurn = totalChurnArr[place];
-      totalChurnArr.splice(place, 1);
-      if (totalChurn >= maxChurn) {
-        maxChurn = arrayMax(totalChurnArr);
-        $rootScope.$broadcast('maxChurnChange', maxChurn);
-      }
-
-      updateMetricsMax();
+      metricSelectionService.updateAllMetricMappers(allRepositories);
+      blockLengthSelectionService.updateAllBlockLengths(allRepositories);
     },
-    moveRepoUp: function (place) {
-      if (place == 0)
+    moveRepoUp: function (repoIndex) {
+      if (repoIndex == 0)
         return;
-      var tmp = RepoArr[place];
-      RepoArr[place] = RepoArr[place - 1];
-      RepoArr[place - 1] = tmp;
-      $rootScope.$broadcast('reposChange', RepoArr);
+      var tmp = allRepositories[repoIndex];
+      allRepositories[repoIndex] = allRepositories[repoIndex - 1];
+      allRepositories[repoIndex - 1] = tmp;
+      $rootScope.$broadcast('reposChange', allRepositories);
     },
-    moveRepoDown: function (place) {
-      if (place == RepoArr.length - 1)
+    moveRepoDown: function (repoIndex) {
+      if (repoIndex == allRepositories.length - 1)
         return;
-      var tmp = RepoArr[place];
-      RepoArr[place] = RepoArr[place + 1];
-      RepoArr[place + 1] = tmp;
-      $rootScope.$broadcast('reposChange', RepoArr);
+      var tmp = allRepositories[repoIndex];
+      allRepositories[repoIndex] = allRepositories[repoIndex + 1];
+      allRepositories[repoIndex + 1] = tmp;
+      $rootScope.$broadcast('reposChange', allRepositories);
+    },
+    toggleCommitVisibility: function (repoIndex, commitId) {
+      var repository = allRepositories[repoIndex];
+      if (repository.hiddenCommits.has(commitId)) {
+        repository.hiddenCommits.delete(commitId);
+      } else {
+        repository.hiddenCommits.add(commitId);
+      }
+      $rootScope.$broadcast('hiddenCommitsChange', repository);
     }
   };
 }]);
@@ -101,6 +72,14 @@ repogramsServices.service('reposService', ['$rootScope', function ($rootScope) {
 repogramsServices.service('metricSelectionService', ['$rootScope', function ($rootScope) {
   var selectedMetricIds = [];
   var isMetricsFirst = true;
+
+  var getAllValues = function (metricId, allRepositories) {
+    var allValues = [];
+    for (var i = 0; i < allRepositories.length; i++) {
+      allValues = allValues.concat(allRepositories[i].metricData[metricId]);
+    }
+    return allValues;
+  };
 
   return {
     getSelectedMetricIds: function () {
@@ -138,90 +117,176 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
     setIsMetricsFirst: function (value) {
       isMetricsFirst = value;
       $rootScope.$broadcast('multiMetricModeChange');
+    },
+    updateAllMetricMappers: function (allRepositories) {
+      for (var metricId in Metrics) {
+        if (Metrics.hasOwnProperty(metricId)) {
+          var mapper = Metrics[metricId].mapper;
+          if (mapper.updateMappingInfo(getAllValues(metricId, allRepositories))) {
+            $rootScope.$broadcast('mapperChange', metricId, mapper);
+          }
+        }
+      }
     }
   };
 }]);
 
-/**
- * calculates block length for given mode and churn
- */
-
-repogramsServices.service('blenService', function () {
-  var getModFunction = {
-    '1_constant': function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
-      return {value: (5), divisor: 1, zoom: zoom.num, unit: 'px'}
-    },
-    '2_churn': function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
-      return {value: (churn * 100), divisor: maxChurn, zoom: zoom.num, unit: '%'}
-    },
-    '3_fill': function (churn, totalChurn, maxChurn, noOfCommits, zoom) {
-      return {value: (churn * 100), divisor: totalChurn, zoom: zoom.num, unit: '%'}
-    }
-  };
-  var calculateWidth = function (width) {
-    width.string = '' + ((width.value / width.divisor) * width.zoom) + width.unit;
-    return width;
-  };
-  return {
-    getWidth: function (mode, churn, totalChurn, maxChurn, noOfCommits, zoom) {
-      var width = getModFunction[mode](churn, totalChurn, maxChurn, noOfCommits, zoom);
-      return calculateWidth(width);
-    }
-  };
-});
-
-repogramsServices.service('blenSelectionService', ['$rootScope', function ($rootScope) {
-  var allBlenMods = [
-    {
-      id: '1_constant',
+repogramsServices.service('blockLengthSelectionService', ['$rootScope', 'zoomService', function ($rootScope, zoomService) {
+  var blockLengthModesOrder = ['fixed', 'linear', 'logarithmic'];
+  var allBlockLengthModes = {
+    'fixed': {
       label: "Fixed",
       icon: 'th',
-      description: "All blocks have constant width."
+      description: "All blocks have constant width.",
+      calculateBase: function (churn) {
+        return 5;
+      }
     },
-    {
-      id: '2_churn',
-      label: "Lines changed (comparable btw. projects)",
+    'linear': {
+      label: "Linear",
       icon: 'align-left',
-      description: "Block width represents number of lines changed in a commit. Project commit histories are scaled <em>uniformly</em> using the same factor (comparable between projects)."
+      description: "TODO description", // TODO
+      calculateBase: function (churn) {
+        return churn;
+      }
     },
-    {
-      id: '3_fill',
-      label: "Lines changed (incomparable btw. projects)",
-      icon: 'align-justify',
-      description: "Block width represents number of lines changed in a commit. Project commit histories are scaled <em>independently</em> (incomparable between projects)."
+    'logarithmic': {
+      label: "Logarithmic",
+      icon: 'align-left', // TODO icon
+      description: "TODO description", // TODO
+      calculateBase: function (churn) {
+        return Math.ceil(Math.log2(churn + 1));
+      }
     }
-  ];
-  this.selectedBlenMod = allBlenMods[2];
-  this.selectedBlenMod.selected = true;
-  var outer = this;
+  };
+
+  var normalizationModesOrder = ['none', 'all', 'individually'];
+  var allNormalizationModes = {
+    'none': {
+      label: "Not normalized",
+      icon: 'align-left', // TODO icon
+      description: "TODO description", // TODO
+      calculateWidth: function (baseWidth, totalBaseWidth, maxTotalBaseWidth, zoom) {
+        return (zoom * baseWidth) + 'px';
+      }
+    },
+    'all': {
+      label: "All normalized",
+      icon: 'align-left', // TODO icon
+      description: "TODO description", // TODO
+      calculateWidth: function (baseWidth, totalBaseWidth, maxTotalBaseWidth, zoom) {
+        return maxTotalBaseWidth > 0 ? (100 * zoom * baseWidth / maxTotalBaseWidth) + '%' : 0;
+      }
+    },
+    'individually': {
+      label: "Individually normalized",
+      icon: 'align-left', // TODO icon
+      description: "TODO description", // TODO
+      calculateWidth: function (baseWidth, totalBaseWidth, maxTotalBaseWidth, zoom) {
+        return totalBaseWidth > 0 ? (100 * zoom * baseWidth / totalBaseWidth) + '%' : 0;
+      }
+    }
+  };
+
+  var selectedBlockLengthModeId = 'linear';
+  var selectedNormalizationModeId = 'individually';
+
+  var updateAllBlockLengths = function (allRepositories) {
+
+    // Find the maximum total base width and retrieve the zoom value
+    var maxTotalBaseWidth = 0;
+    allRepositories.forEach(function (repository) {
+      maxTotalBaseWidth = Math.max(maxTotalBaseWidth, repository.totalBaseWidths[selectedBlockLengthModeId]);
+    });
+    var zoom = zoomService.getSelectedZoom();
+
+    // For each repository find the real width values based on the selected normalization mode
+    allRepositories.forEach(function (repository) {
+      var widths = [];
+      var selectedNormalizationMode = allNormalizationModes[selectedNormalizationModeId];
+      var totalBaseWidth = repository.totalBaseWidths[selectedBlockLengthModeId];
+
+      for (var i = 0; i < repository.metricData.churns.length; i++) {
+        var baseWidth = repository.baseWidths[selectedBlockLengthModeId][i];
+        widths.push(selectedNormalizationMode.calculateWidth(baseWidth, totalBaseWidth, maxTotalBaseWidth, zoom));
+      }
+
+      repository.widths = widths;
+    });
+
+    $rootScope.$broadcast('blockLengthsChange');
+  };
 
   return {
-    getSelectedBlenMod: function () {
-      return outer.selectedBlenMod;
+    getSelectedBlockLengthModeId: function () {
+      return selectedBlockLengthModeId;
     },
-    setBlenMod: function (blen) {
-      for (var i = 0; i < allBlenMods.length; i++) {
-        allBlenMods[i].selected = allBlenMods[i] == blen;
+    getSelectedNormalizationModeId: function () {
+      return selectedNormalizationModeId;
+    },
+    getAllBlockLengthModes: function () {
+      return allBlockLengthModes;
+    },
+    getBlockLengthModesOrder: function () {
+      return blockLengthModesOrder;
+    },
+    getAllNormalizationModes: function () {
+      return allNormalizationModes;
+    },
+    getNormalizationModesOrder: function () {
+      return normalizationModesOrder;
+    },
+    setBlockLengthModes: function (newBlockLengthModeId, newNormalizationModeId) {
+      selectedBlockLengthModeId = newBlockLengthModeId;
+      selectedNormalizationModeId = newNormalizationModeId;
+      $rootScope.$broadcast('blockLengthModeChange', selectedBlockLengthModeId, selectedNormalizationModeId);
+    },
+    generateBaseLengthsForNewRepository: function (allRepositories, changedRepository) {
+      var baseWidths = {};
+      var totalBaseWidths = {};
+
+      for (var blockLengthModeId in allBlockLengthModes) {
+        if (allBlockLengthModes.hasOwnProperty(blockLengthModeId)) {
+          var blockLengthMode = allBlockLengthModes[blockLengthModeId];
+          baseWidths[blockLengthModeId] = [];
+          totalBaseWidths[blockLengthModeId] = 0;
+
+          for (var i = 0; i < changedRepository.metricData.churns.length; i++) {
+            var width = 0;
+            var churn = changedRepository.metricData.churns[i];
+            var commitId = changedRepository.metricData.checksums[i];
+
+            if (!changedRepository.hiddenCommits.has(commitId)) {
+              width = blockLengthMode.calculateBase(churn);
+            }
+
+            baseWidths[blockLengthModeId].push(width);
+            totalBaseWidths[blockLengthModeId] += width;
+          }
+        }
       }
-      outer.selectedBlenMod = blen;
-      $rootScope.$broadcast('blenModChange');
+
+      changedRepository.baseWidths = baseWidths;
+      changedRepository.totalBaseWidths = totalBaseWidths;
+
+      updateAllBlockLengths(allRepositories);
     },
-    getAllBlenMods: function () {
-      return allBlenMods;
-    }
+    updateAllBlockLengths: updateAllBlockLengths
   };
 }]);
 
 repogramsServices.service('zoomService', ['$rootScope', function ($rootScope) {
-  var selectedZoom = {num: 1};
+  var selectedZoom = 1;
 
   return {
     getSelectedZoom: function () {
       return selectedZoom;
     },
-    setZoom: function (zoom) {
-      $rootScope.$broadcast('zoomChange', zoom);
-      selectedZoom = zoom;
+    setZoom: function (newZoom) {
+      _.debounce(function () {
+        selectedZoom = newZoom;
+        $rootScope.$broadcast('zoomChange');
+      }, 200)();
     }
   };
 }]);

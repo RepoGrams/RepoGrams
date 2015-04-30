@@ -1,34 +1,32 @@
 var repogramsDirectives = angular.module('repogramsDirectives', []);
 
-repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$modal', 'reposService', 'blenService', 'metricSelectionService', 'blenSelectionService', 'zoomService',
-  function ($interpolate, $compile, $modal, reposService, blenService, metricSelectionService, blenSelectionService, zoomService) {
+repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$modal', 'reposService', 'metricSelectionService', 'blockLengthSelectionService', 'zoomService',
+  function ($interpolate, $compile, $modal, reposService, metricSelectionService, blockLengthSelectionService, zoomService) {
     var commitBlocksSkeletons = {};
-    return {
 
+    return {
       restrict: 'E',
       scope: {
         metricId: '=metricId',
         repoIndex: '=repoIndex',
         show: '=ngShow'
       },
-      template: '<div class="renderMetric"><div style="width:100%; overflow: visible; white-space: nowrap;">' +
+      template: '<div class="render-metric"><div style="width:100%; overflow: visible; white-space: nowrap;">' +
       '<div class="individualMetric" ng-click="popModal($event)" style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
       '</div></div></div>',
       link: function ($scope, element) {
         // set up directive
         $scope.reposService = reposService;
         $scope.metricSelectionService = metricSelectionService;
-        $scope.blenSelectionService = blenSelectionService;
-        $scope.repo = reposService.getRepoArr()[$scope.repoIndex];
-        $scope.currentZoom = zoomService.getSelectedZoom();
-        $scope.totalChurn = $scope.reposService.getTotalChurnArr()[$scope.repoIndex];
-        $scope.maxChurn = $scope.reposService.getMaxChurn();
+        $scope.blockLengthSelectionService = blockLengthSelectionService;
+        $scope.repo = reposService.getRepository($scope.repoIndex);
+        $scope.selectedZoom = zoomService.getSelectedZoom();
         $scope.noOfCommits = $scope.repo.metricData.churns.length;
 
         $scope.popModal = function (event) {
-          var commitId = $(event.target).attr('data-commitId');
-          var commitURL = $(event.target).attr('data-commitURL');
-          var index = $(event.target).attr('data-index');
+          var commitId = $(event.target).attr('data-commit-id');
+          var commitURL = $(event.target).attr('data-commit-url');
+          var commitIndex = parseInt($(event.target).attr('data-commit-index'));
           $modal.open({
             scope: $scope,
             template: '<div class="modal-header">' +
@@ -38,23 +36,27 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
             '<p><a ng-href="{{commitURL}}" target="_blank">{{commitMessage}}</a></p>' +
             '</div>' +
             '<div class="modal-footer">' +
+            '<button class="btn btn-default" ng-click="toggleVisibility()"><i class="fa fa-eye-slash"></i> Hide</button> ' +
             '<button class="btn btn-primary" ng-click="dismiss()">OK</button>' +
             '</div>',
             controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
               $scope.commitId = commitId;
               $scope.commitURL = commitURL;
-              $scope.commitMessage = $scope.repo.metricData.commit_messages[index];
+              $scope.commitMessage = $scope.repo.metricData.commit_messages[commitIndex];
               $scope.dismiss = $modalInstance.dismiss;
+              $scope.toggleVisibility = function () {
+                reposService.toggleCommitVisibility($scope.$parent.repoIndex, $scope.commitId);
+                $scope.dismiss();
+              };
             }]
           });
         };
 
         // template string for individual blocks
-        var templateBlock = '<div class="customBlock" data-commitId="{{commitId}}" data-commitURL="{{commitURL}}" data-index="{{id}}" style="background-color: red; width: {{width}};"></div>';
+        var templateBlock = '<div class="commit-block" data-commit-id="{{commitId}}" data-commit-url="{{commitURL}}" data-commit-index="{{id}}" style="background-color: red; width: {{width}};"></div>';
         var templateBlockString = $interpolate(templateBlock);
 
         // insert individual commit blocks with the correct size into container
-        var currentBlockLengthMode = blenSelectionService.getSelectedBlenMod().id;
         var commitBlocks = '';
         var repoURL = $scope.repo.url;
         var numOfCommits = $scope.repo.metricData[$scope.metricId].length;
@@ -69,9 +71,8 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
             var commitId = $scope.repo.metricData.checksums[i];
             var commitURL = repoURL.replace(/\.git$|$/, '/commit/' + commitId);
             var tooltip = msg + '\u000A(Click for details)';
-            var churns = $scope.repo.metricData.churns[i];
             var context = {
-              width: blenService.getWidth(currentBlockLengthMode, churns, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string,
+              width: $scope.repo.widths[i],
               tooltip: tooltip,
               commitId: commitId,
               commitURL: commitURL,
@@ -128,21 +129,17 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
             }
           }
 
-          function updateWidth(currentBlockLengthMode) {
+          function updateWidth() {
             if (!$scope.show) {
               return;
             }
 
-            // pre-compute width outside of updating DOM
             var length = $scope.repo.metricData[$scope.metricId].length;
-            var newWidths = new Array(length);
-            for (var i = 0; i < length; i++) {
-              var churns = $scope.repo.metricData.churns[i];
-              newWidths[i] = blenService.getWidth(currentBlockLengthMode, churns, $scope.totalChurn, $scope.maxChurn, $scope.noOfCommits, $scope.currentZoom).string;
-            }
-            // iterate over all commit blocks and
+            var widths = $scope.repo.widths;
+
+            // perform a chunkwise DOM update
             chunkwiseLoop(0, length, /*chunksize=*/100, function (index) {
-              $scope.individualBlocks[index].style.width = newWidths[index];
+              $scope.individualBlocks[index].style.width = widths[index];
             });
           }
 
@@ -163,31 +160,18 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
             $('.multi-metrics-metrics-first .repo-collection').scrollLeft($(this).scrollLeft());
           });
 
-          $('.renderMetric .customBlock').hover(function () {
-            var commitId = $(this).attr('data-commitid');
-            $('.renderMetric .customBlock[data-commitid="' + commitId + '"]').addClass('hover');
+          $('.render-metric .commit-block').hover(function () {
+            var commitId = $(this).attr('data-commit-id');
+            $('.render-metric .commit-block[data-commit-id="' + commitId + '"]').addClass('hover');
           }, function () {
-            $('.renderMetric .customBlock.hover').removeClass('hover');
+            $('.render-metric .commit-block.hover').removeClass('hover');
           });
 
-          $scope.$on('maxChurnChange', function (evnt, newMaxChurn) {
-            $scope.maxChurn = newMaxChurn;
-            updateWidth(blenSelectionService.getSelectedBlenMod().id);
-          });
-
-          $scope.$on('zoomChange', _.debounce(function () {
-            updateWidth(blenSelectionService.getSelectedBlenMod().id);
-          }, 200));
-
-          $scope.$watch('blenSelectionService.getSelectedBlenMod()', function (newVal) {
-            updateWidth(newVal.id);
-          });
+          $scope.$on('blockLengthsChange', updateWidth);
 
           $scope.$watch($scope.show, function () {
             setTimeout(updateCommitBlockVisualization, 0);
-            setTimeout(function () {
-              updateWidth(blenSelectionService.getSelectedBlenMod().id);
-            }, 0);
+            setTimeout(updateWidth, 0);
           });
         };
         $scope.$evalAsync(postponed);
@@ -198,10 +182,10 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
 repogramsDirectives.directive('ngLegend', function () {
   return {
     restrict: 'E',
-    scope: {metricId: '=current'},
+    scope: {metricId: '=metricId'},
     template: '<ul class="list-inline">' +
     '<li><strong>Legend</strong>: </li>' +
-    '<li ng-repeat="style in styles[metricId]"><span class="customBlock" style="background-color: {{style.color}};" ng-if="style.color"></span> <span ng-bind-html="style.legendText"></span></li>' +
+    '<li ng-repeat="style in styles[metricId]"><span class="commit-block" style="background-color: {{style.color}};" ng-if="style.color"></span> <span ng-bind-html="style.legendText"></span></li>' +
     '</ul>',
     controller: ['$rootScope', '$scope', 'reposService', 'metricSelectionService', function ($rootScope, $scope, reposService, metricSelectionService) {
       $scope.reposService = reposService;
@@ -218,12 +202,12 @@ repogramsDirectives.directive('ngLegend', function () {
 
         $scope.styles[metricId][1] = {
           legendText: '<span class="branchUsageRainbow">' +
-          '<span class="customBlock"></span>' +
-          '<span class="customBlock"></span>' +
-          '<span class="customBlock"></span>' +
-          '<span class="customBlock"></span>' +
-          '<span class="customBlock"></span>' +
-          '<span class="customBlock"></span>' +
+          '<span class="commit-block"></span>' +
+          '<span class="commit-block"></span>' +
+          '<span class="commit-block"></span>' +
+          '<span class="commit-block"></span>' +
+          '<span class="commit-block"></span>' +
+          '<span class="commit-block"></span>' +
           '</span> … other branches'
         };
       }
@@ -231,12 +215,12 @@ repogramsDirectives.directive('ngLegend', function () {
       function setCommitAuthorLegend(metricId) {
         $scope.styles[metricId][0] = {
           legendText: '<span class="commitAuthorRainbow">' +
-          '<span class="customBlock"></span>' +
-          '<span class="customBlock"></span>' +
-          '<span class="customBlock"></span>' +
-          '<span class="customBlock"></span>' +
-          '<span class="customBlock"></span>' +
-          '<span class="customBlock"></span>' +
+          '<span class="commit-block"></span>' +
+          '<span class="commit-block"></span>' +
+          '<span class="commit-block"></span>' +
+          '<span class="commit-block"></span>' +
+          '<span class="commit-block"></span>' +
+          '<span class="commit-block"></span>' +
           '</span> … unique authors'
         };
       }

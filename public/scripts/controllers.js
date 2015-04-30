@@ -1,12 +1,12 @@
 var repogramsControllers = angular.module('repogramsControllers', ['ngSanitize']);
 
 repogramsControllers.controller('RepogramsConfig',
-  ['$rootScope', '$scope', '$modal', 'metricSelectionService', 'blenSelectionService', 'zoomService', 'reposService',
-    function ($rootScope, $scope, $modal, metricSelectionService, blenSelectionService, zoomService, reposService) {
+  ['$rootScope', '$scope', '$modal', 'metricSelectionService', 'blockLengthSelectionService', 'zoomService', 'reposService',
+    function ($rootScope, $scope, $modal, metricSelectionService, blockLengthSelectionService, zoomService, reposService) {
 
       // Services and controllers
       $scope.metricSelectionService = metricSelectionService;
-      $scope.blenSelectionService = blenSelectionService;
+      $scope.blockLengthSelectionService = blockLengthSelectionService;
       $scope.zoomService = zoomService;
       $scope.reposService = reposService;
 
@@ -30,7 +30,7 @@ repogramsControllers.controller('RepogramsConfig',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.dismiss = $modalInstance.dismiss;
             $scope.accept = function (example) {
-              while (reposService.getRepoArr().length) {
+              while (reposService.getAllRepositories().length) {
                 $scope.reposService.removeRepo(0);
               }
 
@@ -41,16 +41,9 @@ repogramsControllers.controller('RepogramsConfig',
                 $scope.metricSelectionService.swapMetric(example.metrics[i]);
               }
 
-              var allBlensMods = $scope.blenSelectionService.getAllBlenMods();
-              for (i = 0; i < allBlensMods.length; i++) {
-                var blenMod = allBlensMods[i];
-                if (blenMod.id == example.blen) {
-                  $scope.blenSelectionService.setBlenMod(blenMod);
-                  break;
-                }
-              }
+              $scope.blockLengthSelectionService.setBlockLengthModes(example.blockLengthMode, example.normalizationMode);
 
-              $scope.currentZoom.num = example.zoom;
+              $scope.selectedZoom = example.zoom;
               $scope.changeZoom();
 
               $rootScope.$broadcast('loadExampleRepos', example.repositories);
@@ -106,21 +99,60 @@ repogramsControllers.controller('RepogramsConfig',
         });
       };
 
-      $scope.blenMods = $scope.blenSelectionService.getAllBlenMods();
-      $scope.selectedBlenMod = $scope.blenSelectionService.getSelectedBlenMod();
-      $scope.$on('blenModChange', function () {
-        $scope.selectedBlenMod = $scope.blenSelectionService.getSelectedBlenMod();
+      $scope.allBlockLengthModes = $scope.blockLengthSelectionService.getAllBlockLengthModes();
+      $scope.blockLengthModesOrder = $scope.blockLengthSelectionService.getBlockLengthModesOrder();
+      $scope.allNormalizationModes = $scope.blockLengthSelectionService.getAllNormalizationModes();
+      $scope.normalizationModesOrder = $scope.blockLengthSelectionService.getNormalizationModesOrder();
+      $scope.selectedBlockLengthModeId = $scope.blockLengthSelectionService.getSelectedBlockLengthModeId();
+      $scope.selectedNormalizationModeId = $scope.blockLengthSelectionService.getSelectedNormalizationModeId();
+      $scope.selectedBlockLengthMode = $scope.allBlockLengthModes[$scope.selectedBlockLengthModeId];
+      $scope.selectedNormalizationMode = $scope.allNormalizationModes[$scope.selectedNormalizationModeId];
+
+      $scope.$on('blockLengthModeChange', function (event, selectedBlockLengthModeId, selectedNormalizationModeId) {
+        $scope.selectedBlockLengthModeId = selectedBlockLengthModeId;
+        $scope.selectedNormalizationModeId = selectedNormalizationModeId;
+        $scope.selectedBlockLengthMode = $scope.allBlockLengthModes[$scope.selectedBlockLengthModeId];
+        $scope.selectedNormalizationMode = $scope.allNormalizationModes[$scope.selectedNormalizationModeId];
+
+        $scope.blockLengthSelectionService.updateAllBlockLengths($scope.reposService.getAllRepositories());
       });
 
-      $scope.switchBlen = function () {
+      $scope.$on('hiddenCommitsChange', function (event, repository) {
+        var allRepositories = $scope.reposService.getAllRepositories();
+        $scope.blockLengthSelectionService.generateBaseLengthsForNewRepository(allRepositories, repository);
+      });
+
+      $scope.switchBlockLengthMode = function () {
         $modal.open({
           scope: $scope,
           template: '<form>' +
           '<div class="modal-header"><h3 class="modal-title">Select new block length</h3></div>' +
-          '<div class="modal-body">' +
-          '<div class="form-group" ng-repeat="(i, blen) in blenMods">' +
-          '<label for="blen_{{i}}"><input id="blen_{{i}}" type="radio" name="blen" ng-checked="blen.selected" ng-click="swap(blen)"> <i class="fa fa-{{blen.icon}}"></i> {{blen.label}}</label>' +
-          '<p ng-bind-html="blen.description"></p>' +
+          '<div class="modal-body block-length-selector">' +
+          '<div class="form-group">' +
+          '<table class="table">' +
+          '<thead>' +
+          '<tr>' +
+          '<th></th>' +
+          '<th ng-repeat="normalizationModeId in normalizationModesOrder"><i class="fa fa-{{allNormalizationModes[normalizationModeId].icon}}"></i> {{allNormalizationModes[normalizationModeId].label}}</th>' +
+          '</tr>' +
+          '</thead>' +
+          '<tbody>' +
+          '<tr ng-repeat="blockLengthModeId in blockLengthModesOrder">' +
+          '<th><i class="fa fa-{{allBlockLengthModes[blockLengthModeId].icon}}"></i> {{allBlockLengthModes[blockLengthModeId].label}}</th>' +
+          '<td ng-repeat="normalizationModeId in normalizationModesOrder">' +
+          '<label ng-mouseenter="activate(allBlockLengthModes[blockLengthModeId], allNormalizationModes[normalizationModeId])" ng-mouseleave="deactivate()">' +
+          '<input type="radio" name="blockLengthMode" ng-checked="blockLengthModeId == selectedBlockLengthModeId && normalizationModeId == selectedNormalizationModeId" ng-click="swap(blockLengthModeId, normalizationModeId)">' +
+          '</label>' +
+          '</td>' +
+          '</tr>' +
+          '</tbody>' +
+          '</table>' +
+          '</div>' +
+          '<div class="form-group alert" ng-class="{\'alert-warning\': isHovering, \'alert-info\': !isHovering}">' +
+          '<p ng-if="isHovering">This mode:</p>' +
+          '<p ng-if="!isHovering">Currently active mode:</p>' +
+          '<p><i class="fa fa-{{activeBlockLengthMode.icon}}"></i> <strong>{{activeBlockLengthMode.label}}</strong>: {{activeBlockLengthMode.description}}</p>' +
+          '<p><i class="fa fa-{{activeNormalizationMode.icon}}"></i> <strong>{{activeNormalizationMode.label}}</strong>: {{activeNormalizationMode.description}}</p>' +
           '</div>' +
           '</div>' +
           '<div class="modal-footer">' +
@@ -129,23 +161,38 @@ repogramsControllers.controller('RepogramsConfig',
           '</form>',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.dismiss = $modalInstance.dismiss;
-            $scope.swap = function (blen) {
-              $scope.blenSelectionService.setBlenMod(blen);
+            $scope.activeBlockLengthMode = $scope.selectedBlockLengthMode;
+            $scope.activeNormalizationMode = $scope.selectedNormalizationMode;
+            $scope.isHovering = false;
+
+            $scope.swap = function (blockLengthModeId, normalizationModeId) {
+              $scope.blockLengthSelectionService.setBlockLengthModes(blockLengthModeId, normalizationModeId);
               $modalInstance.close();
+            };
+            $scope.activate = function (newActiveBlockLengthMode, newActiveNormalizationMode) {
+              $scope.activeBlockLengthMode = newActiveBlockLengthMode;
+              $scope.activeNormalizationMode = newActiveNormalizationMode;
+              $scope.isHovering = true;
+            };
+            $scope.deactivate = function () {
+              $scope.activeBlockLengthMode = $scope.selectedBlockLengthMode;
+              $scope.activeNormalizationMode = $scope.selectedNormalizationMode;
+              $scope.isHovering = false;
             };
           }]
         });
       };
 
-      $scope.currentZoom = $scope.zoomService.getSelectedZoom();
+      $scope.selectedZoom = $scope.zoomService.getSelectedZoom();
       $scope.changeZoom = function () {
-        $scope.zoomService.setZoom($scope.currentZoom);
+        $scope.zoomService.setZoom($scope.selectedZoom);
       };
-
       $scope.translateZoom = function (value) {
         return "×" + value;
       };
-
+      $scope.$on('zoomChange', function () {
+        $scope.blockLengthSelectionService.updateAllBlockLengths($scope.reposService.getAllRepositories());
+      });
     }
   ]);
 
@@ -226,7 +273,7 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
     $scope.isMetricsFirst = metricSelectionService.isMetricsFirst();
     $scope.selectedMetricObjects = metricSelectionService.getSelectedMetricObjects();
     $scope.selectedMetricIds = metricSelectionService.getSelectedMetricIds();
-    $scope.numSelectedRepos = reposService.getRepoArr().length;
+    $scope.numSelectedRepos = reposService.getAllRepositories().length;
     $scope.showIncomparableWarning = false;
 
     $scope.show = function (metricId) {
@@ -252,8 +299,8 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
 
     };
 
-    $scope.$on('reposChange', function (evnt, newRepoArr) {
-      $scope.numSelectedRepos = newRepoArr.length;
+    $scope.$on('reposChange', function (event, allRepositories) {
+      $scope.numSelectedRepos = allRepositories.length;
     });
 
     $scope.$on('multiMetricModeChange', function () {
@@ -275,7 +322,7 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
       }
     });
 
-    $scope.repos = reposService.getRepoArr();
+    $scope.repos = reposService.getAllRepositories();
     $scope.removeRepo = function (pos) {
       reposService.removeRepo(pos);
     };
