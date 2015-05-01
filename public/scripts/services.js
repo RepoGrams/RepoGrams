@@ -183,16 +183,8 @@ repogramsServices.service('blockLengthSelectionService', ['$rootScope', 'zoomSer
     }
   };
 
-  var normalizationModesOrder = ['none', 'all', 'individually'];
+  var normalizationModesOrder = ['all', 'individually'];
   var allNormalizationModes = {
-    'none': {
-      label: "Not normalized",
-      icon: 'align-left', // TODO icon
-      description: "TODO description", // TODO
-      calculateWidth: function (baseWidth, totalBaseWidth, maxTotalBaseWidth, zoom) {
-        return (zoom * baseWidth) + 'px';
-      }
-    },
     'all': {
       label: "All normalized",
       icon: 'align-left', // TODO icon

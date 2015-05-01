@@ -4,8 +4,8 @@ ExampleStates = [
     'metrics': ['pom_files'],
     'metricsFirst': true,
     'blockLengthMode': 'fixed',
-    'normalizationMode': 'none',
-    'zoom': 1,
+    'normalizationMode': 'all',
+    'zoom': 5,
     'repositories': [
       'https://github.com/RepoGrams/sqlitebrowser',
       'https://github.com/RepoGrams/vim.js',
@@ -18,8 +18,8 @@ ExampleStates = [
     'metrics': ['commit_localization'],
     'metricsFirst': true,
     'blockLengthMode': 'fixed',
-    'normalizationMode': 'none',
-    'zoom': 1,
+    'normalizationMode': 'all',
+    'zoom': 5,
     'repositories': [
       'https://github.com/RepoGrams/sqlitebrowser',
       'https://github.com/RepoGrams/vim.js',
@@ -46,7 +46,7 @@ ExampleStates = [
     'metrics': ['most_edited_file'],
     'metricsFirst': true,
     'blockLengthMode': 'fixed',
-    'normalizationMode': 'none',
+    'normalizationMode': 'all',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/passenger-docker'
@@ -56,8 +56,8 @@ ExampleStates = [
     'metrics': ['pom_files'],
     'metricsFirst': true,
     'blockLengthMode': 'fixed',
-    'normalizationMode': 'none',
-    'zoom': 1,
+    'normalizationMode': 'all',
+    'zoom': 4,
     'repositories': [
       'https://github.com/RepoGrams/css-layout',
       'https://github.com/RepoGrams/Genius-Android',
@@ -74,8 +74,8 @@ ExampleStates = [
     'metrics': ['branches_used'],
     'metricsFirst': true,
     'blockLengthMode': 'fixed',
-    'normalizationMode': 'none',
-    'zoom': 1,
+    'normalizationMode': 'all',
+    'zoom': 3,
     'repositories': [
       'https://github.com/RepoGrams/wren',
       'https://github.com/RepoGrams/PHPMailer',
