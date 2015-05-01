@@ -94,8 +94,7 @@ repogramsControllers.controller('RepogramsConfig',
               $scope.setIsMetricsFirst(state.metricsFirst);
               $scope.metricSelectionService.swapMultipleMetrics(state.metrics);
               $scope.blockLengthSelectionService.setBlockLengthModes(state.blockLengthMode, state.normalizationMode);
-              $scope.selectedZoom = state.zoom;
-              $scope.changeZoom();
+              $scope.changeZoom(state.zoom);
 
               // Broadcast that we finished loading the settings so that the repositories will start loading
               $rootScope.$broadcast('stateSettingsLoad', state.repositories, state.hiddenCommits);
@@ -235,13 +234,14 @@ repogramsControllers.controller('RepogramsConfig',
       };
 
       $scope.selectedZoom = $scope.zoomService.getSelectedZoom();
-      $scope.changeZoom = function () {
-        $scope.zoomService.setZoom($scope.selectedZoom);
+      $scope.changeZoom = function (newZoom) {
+        $scope.zoomService.setZoom(newZoom);
       };
       $scope.translateZoom = function (value) {
         return "×" + value;
       };
       $scope.$on('zoomChange', function () {
+        $scope.selectedZoom = $scope.zoomService.getSelectedZoom();
         $scope.blockLengthSelectionService.updateAllBlockLengths($scope.reposService.getAllRepositories());
       });
     }
