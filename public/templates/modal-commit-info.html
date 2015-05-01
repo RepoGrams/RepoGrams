@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h3 class="modal-title"><code>{{commitId}}</code></h3>
+</div>
+
+<div class="modal-body commitDetails">
+  <p><a ng-href="{{commitURL}}" target="_blank">{{commitMessage}}</a></p>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="toggleVisibility()"><i class="fa fa-eye-slash"></i> Hide</button>
+  <button class="btn btn-primary" ng-click="dismiss()">OK</button>
+</div>

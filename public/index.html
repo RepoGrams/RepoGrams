@@ -27,7 +27,7 @@
     <!-- use fontawesome -->
     <link rel="stylesheet" type="text/css" href="/bower_components/fontawesome/css/font-awesome.min.css">
     <!-- include our own style sheets -->
-    <link rel="stylesheet" type="text/css" href="/styles/metrics.css">
+    <link rel="stylesheet" type="text/css" href="/styles/repograms.css">
     <!-- include the app controllers -->
     <script type="text/javascript" src="/app/getMappers"></script>
     <script type="text/javascript" src="/app/getMetrics"></script>
@@ -114,7 +114,7 @@
                           {{selectedMetricObjects[metricId].label}}
                           <i class="fa fa-question-circle" tooltip-html-unsafe="{{helpTooltip(metricId)}}" tooltip-popup-delay="200"></i>
                         </h3>
-                        <ng-legend metric-id="metricId" ng-show="numSelectedRepos > 0" class="legend"></ng-legend>
+                        <rg-legend metric-id="metricId" ng-show="numSelectedRepos > 0" class="legend"></rg-legend>
                         <p class="col-md-12 text-muted text-right" ng-if="metricId == 'branches_used' || metricId == 'commit_author'">
                           Colors for unique branches and unique authors metric are incomparable between projects.
                         </p>
@@ -143,7 +143,7 @@
                           </div> <!-- end ng-repeat repos -->
                           <div class="repo col-md-10 row repo-collection">
                             <div class="row">
-                              <div class="col-sm-12" ng-repeat="repo in repos" style="overflow: visible">
+                              <div class="col-sm-12 render-metric-container" ng-repeat="repo in repos">
                                 <rg-render-metric ng-show="show(metricId)" metric-id="metricId" repo-index="$index"></rg-render-metric>
                               </div> <!-- col-lg-10 close -->
                             </div> <!-- row close -->
@@ -168,7 +168,7 @@
                         <div class="repo-label" ng-repeat="metricId in selectedMetricIds">
                           <div ng-show="show(metricId)">
                             <span class="repo-label-name col-md-2" title="{{selectedMetricObjects[metricId].label}}"><i class="fa fa-{{selectedMetricObjects[metricId].icon}}"></i> {{selectedMetricObjects[metricId].label}}</span>
-                            <ng-legend metric-id="metricId" ng-show="numSelectedRepos > 0" class="col-md-10"></ng-legend>
+                            <rg-legend metric-id="metricId" ng-show="numSelectedRepos > 0" class="col-md-10"></rg-legend>
                           </div>
                         </div>
                       </div>
@@ -206,7 +206,7 @@
                       </div>
                       <div class="repo col-md-10 row repo-collection" ng-if="selectedMetricIds.length > 0">
                         <div class="row">
-                          <div class="col-sm-12" ng-repeat="metricId in selectedMetricIds" style="overflow: visible">
+                          <div class="col-sm-12 render-metric-container" ng-repeat="metricId in selectedMetricIds">
                             <rg-render-metric ng-show="show(metricId)" metric-id="metricId" repo-index="$parent.$index"></rg-render-metric>
                           </div>
                         </div>

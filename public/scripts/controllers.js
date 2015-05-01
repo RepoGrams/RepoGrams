@@ -16,32 +16,7 @@ repogramsControllers.controller('RepogramsConfig',
       $scope.switchState = function () {
         $modal.open({
           scope: $scope,
-          template: '<form>' +
-          '<div class="modal-header"><h3 class="modal-title">Load/save state</h3></div>' +
-          '<div class="modal-body">' +
-          '<div class="form-group">' +
-          '<h4><i class="fa fa-cloud-download"></i> Save current state</h4>' +
-          '<a class="btn btn-primary" ng-href="data:application/json;charset=utf-8,{{currentStateAsJson}}" download="repograms.json"><i class="fa fa-cloud-download"></i> Download current state</a>' +
-          '<p class="help-block">Click to download a file containing the current state of RepoGrams. You can load this file later.</p>' +
-          '</div>' +
-          '<div class="form-group">' +
-          '<h4><i class="fa fa-cloud-upload"></i> Load a saved state</h4>' +
-          '<input type="file" id="state_file" name="state_file" onchange="angular.element(this).scope().loadStateFile(this.files)">' +
-          '<p class="help-block">Choose a state file to load from.</p>' +
-          '<p class="text-danger" ng-if="applyStateError">{{applyStateError}}</p>' +
-          '</div>' +
-          '<div class="form-group" ng-if="exampleStates.length">' +
-          '<h4><i class="fa fa-flask"></i> Load an example state</h4>' +
-          '<p class="help-block">You can load any of the following example states provided by RepoGrams</p>' +
-          '</div>' +
-          '<div class="form-group" ng-repeat="(i, example) in exampleStates">' +
-          '<label for="example_{{i}}"><button id="example_{{i}}" class="btn btn-sm btn-primary" type="checkbox" ng-click="applyState(example)">Load</button> {{example.name}}</label>' +
-          '</div>' +
-          '</div>' +
-          '<div class="modal-footer">' +
-          '<button class="btn btn-default" ng-click="dismiss()">Cancel</button>' +
-          '</div>' +
-          '</form>',
+          templateUrl: '/templates/modal-state.html',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.dismiss = $modalInstance.dismiss;
             $scope.applyStateError = false;
@@ -195,19 +170,7 @@ repogramsControllers.controller('RepogramsConfig',
       $scope.switchMetric = function () {
         $modal.open({
           scope: $scope,
-          template: '<form>' +
-          '<div class="modal-header"><h3 class="modal-title">Select new metric</h3></div>' +
-          '<div class="modal-body">' +
-          '<div class="form-group" ng-repeat="metricId in metricRegistrationIds">' +
-          '<label for="metric_{{metricId}}"><input id="metric_{{metricId}}" type="checkbox" name="metric" ng-checked="isSelected(metricId)" ng-click="swap(metricId)"> <i class="fa fa-{{allMetrics[metricId].icon}}"></i> {{allMetrics[metricId].label}}</label>' +
-          '<p ng-bind-html="allMetrics[metricId].description"></p>' +
-          '<p class="text-muted" ng-if="allMetrics[metricId].long_description" ng-bind-html="allMetrics[metricId].long_description"></p>' +
-          '</div>' +
-          '</div>' +
-          '<div class="modal-footer">' +
-          '<button class="btn btn-default" ng-click="dismiss()">Apply</button>' +
-          '</div>' +
-          '</form>',
+          templateUrl: '/templates/modal-metrics.html',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.dismiss = $modalInstance.dismiss;
             $scope.swap = function (metricId) {
@@ -246,40 +209,7 @@ repogramsControllers.controller('RepogramsConfig',
       $scope.switchBlockLengthMode = function () {
         $modal.open({
           scope: $scope,
-          template: '<form>' +
-          '<div class="modal-header"><h3 class="modal-title">Select new block length</h3></div>' +
-          '<div class="modal-body block-length-selector">' +
-          '<div class="form-group">' +
-          '<table class="table">' +
-          '<thead>' +
-          '<tr>' +
-          '<th></th>' +
-          '<th ng-repeat="normalizationModeId in normalizationModesOrder"><i class="fa fa-{{allNormalizationModes[normalizationModeId].icon}}"></i> {{allNormalizationModes[normalizationModeId].label}}</th>' +
-          '</tr>' +
-          '</thead>' +
-          '<tbody>' +
-          '<tr ng-repeat="blockLengthModeId in blockLengthModesOrder">' +
-          '<th><i class="fa fa-{{allBlockLengthModes[blockLengthModeId].icon}}"></i> {{allBlockLengthModes[blockLengthModeId].label}}</th>' +
-          '<td ng-repeat="normalizationModeId in normalizationModesOrder">' +
-          '<label ng-mouseenter="activate(allBlockLengthModes[blockLengthModeId], allNormalizationModes[normalizationModeId])" ng-mouseleave="deactivate()">' +
-          '<input type="radio" name="blockLengthMode" ng-checked="blockLengthModeId == selectedBlockLengthModeId && normalizationModeId == selectedNormalizationModeId" ng-click="swap(blockLengthModeId, normalizationModeId)">' +
-          '</label>' +
-          '</td>' +
-          '</tr>' +
-          '</tbody>' +
-          '</table>' +
-          '</div>' +
-          '<div class="form-group alert" ng-class="{\'alert-warning\': isHovering, \'alert-info\': !isHovering}">' +
-          '<p ng-if="isHovering">This mode:</p>' +
-          '<p ng-if="!isHovering">Currently active mode:</p>' +
-          '<p><i class="fa fa-{{activeBlockLengthMode.icon}}"></i> <strong>{{activeBlockLengthMode.label}}</strong>: {{activeBlockLengthMode.description}}</p>' +
-          '<p><i class="fa fa-{{activeNormalizationMode.icon}}"></i> <strong>{{activeNormalizationMode.label}}</strong>: {{activeNormalizationMode.description}}</p>' +
-          '</div>' +
-          '</div>' +
-          '<div class="modal-footer">' +
-          '<button class="btn btn-default" ng-click="dismiss()">Cancel</button>' +
-          '</div>' +
-          '</form>',
+          templateUrl: '/templates/modal-block-length.html',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.dismiss = $modalInstance.dismiss;
             $scope.activeBlockLengthMode = $scope.selectedBlockLengthMode;

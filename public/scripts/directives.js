@@ -11,9 +11,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
         repoIndex: '=repoIndex',
         show: '=ngShow'
       },
-      template: '<div class="render-metric"><div style="width:100%; overflow: visible; white-space: nowrap;">' +
-      '<div class="individualMetric" ng-click="popModal($event)" style="width:100%; padding: 1px; overflow: visible; white-space: nowrap;">' +
-      '</div></div></div>',
+      templateUrl: '/templates/rg-render-metric.html',
       link: function ($scope, element) {
         // set up directive
         $scope.reposService = reposService;
@@ -29,16 +27,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
           var commitIndex = parseInt($(event.target).attr('data-commit-index'));
           $modal.open({
             scope: $scope,
-            template: '<div class="modal-header">' +
-            '<h3 class="modal-title"><code>{{commitId}}</code></h3>' +
-            '</div>' +
-            '<div class="modal-body commitDetails">' +
-            '<p><a ng-href="{{commitURL}}" target="_blank">{{commitMessage}}</a></p>' +
-            '</div>' +
-            '<div class="modal-footer">' +
-            '<button class="btn btn-default" ng-click="toggleVisibility()"><i class="fa fa-eye-slash"></i> Hide</button> ' +
-            '<button class="btn btn-primary" ng-click="dismiss()">OK</button>' +
-            '</div>',
+            templateUrl: '/templates/modal-commit-info.html',
             controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
               $scope.commitId = commitId;
               $scope.commitURL = commitURL;
@@ -52,7 +41,8 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
           });
         };
 
-        // template string for individual blocks
+        // template string for individual blocks - this is done deliberately outside of AngularJS for performance issues
+        // Our apologies for mixing JS and HTML in the same file.
         var templateBlock = '<div class="commit-block" data-commit-id="{{commitId}}" data-commit-url="{{commitURL}}" data-commit-index="{{id}}" style="background-color: red; width: {{width}};"></div>';
         var templateBlockString = $interpolate(templateBlock);
 
@@ -88,7 +78,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
         /* Avoid blocking the UI for too long by using $evalAsync
          * Blocking is dominated by compile, but at least not everything blocks*/
         var postponed = function ($scope) {
-          var innerMost = element.find('.individualMetric');
+          var innerMost = element.find('.individual-metric');
           innerMost.html(commitBlocks);
           $scope.individualBlocks = jQuery.makeArray(innerMost.children());
 
@@ -179,14 +169,11 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
     };
   }]);
 
-repogramsDirectives.directive('ngLegend', function () {
+repogramsDirectives.directive('rgLegend', function () {
   return {
     restrict: 'E',
     scope: {metricId: '=metricId'},
-    template: '<ul class="list-inline">' +
-    '<li><strong>Legend</strong>: </li>' +
-    '<li ng-repeat="style in styles[metricId]"><span class="commit-block" style="background-color: {{style.color}};" ng-if="style.color"></span> <span ng-bind-html="style.legendText"></span></li>' +
-    '</ul>',
+    templateUrl: '/templates/rg-legend.html',
     controller: ['$rootScope', '$scope', 'reposService', 'metricSelectionService', function ($rootScope, $scope, reposService, metricSelectionService) {
       $scope.reposService = reposService;
       $scope.metricSelectionService = metricSelectionService;

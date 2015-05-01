@@ -140,6 +140,23 @@ div.metrics-display div.alert-info a {
     background-color: #153cfd;
 }
 
+.render-metric-container {
+    overflow: visible;
+}
+
+.render-metric > div {
+    width:100%;
+    overflow: visible;
+    white-space: nowrap;
+}
+
+.render-metric .individual-metric {
+    width:100%;
+    padding: 1px;
+    overflow: visible;
+    white-space: nowrap;
+}
+
 .render-metric .tooltip-inner {
     background-color: WhiteSmoke;
     border: solid 1px black;

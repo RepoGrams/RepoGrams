@@ -1,0 +1,19 @@
+<form>
+  <div class="modal-header">
+    <h3 class="modal-title">Select new metric</h3>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group" ng-repeat="metricId in metricRegistrationIds">
+      <label for="metric_{{metricId}}">
+        <input id="metric_{{metricId}}" type="checkbox" name="metric" ng-checked="isSelected(metricId)" ng-click="swap(metricId)"> <i class="fa fa-{{allMetrics[metricId].icon}}"></i> {{allMetrics[metricId].label}}
+      </label>
+      <p ng-bind-html="allMetrics[metricId].description"></p>
+      <p class="text-muted" ng-if="allMetrics[metricId].long_description" ng-bind-html="allMetrics[metricId].long_description"></p>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-default" ng-click="dismiss()">Apply</button>
+  </div>
+</form>

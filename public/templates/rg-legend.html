@@ -1,0 +1,7 @@
+<ul class="list-inline">
+  <li><strong>Legend</strong>: </li>
+  <li ng-repeat="style in styles[metricId]">
+    <span class="commit-block" style="background-color: {{style.color}};" ng-if="style.color"></span>
+    <span ng-bind-html="style.legendText"></span>
+  </li>
+</ul>
