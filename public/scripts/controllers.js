@@ -134,16 +134,8 @@ repogramsControllers.controller('RepogramsConfig',
               blockLengthMode: blockLengthSelectionService.getSelectedBlockLengthModeId(),
               normalizationMode: blockLengthSelectionService.getSelectedNormalizationModeId(),
               zoom: zoomService.getSelectedZoom(),
-              repositories: reposService.getAllRepositories().map(function (repository) {
-                return repository.url;
-              }),
-              hiddenCommits: reposService.getAllRepositories().map(function (repository) {
-                var commitIds = [];
-                repository.hiddenCommits.forEach(function (commitId) {
-                  commitIds.push(commitId);
-                });
-                return commitIds;
-              })
+              repositories: reposService.getAllRepositoryUrls(),
+              hiddenCommits: reposService.getAllHiddenCommits()
             }));
           }]
         });
@@ -200,9 +192,41 @@ repogramsControllers.controller('RepogramsConfig',
         $scope.blockLengthSelectionService.updateAllBlockLengths($scope.reposService.getAllRepositories());
       });
 
+
+      $scope.anyHiddenCommits = $scope.reposService.anyHiddenCommits();
+
+      $scope.unhideCommits = function () {
+        $modal.open({
+          scope: $scope,
+          templateUrl: '/templates/modal-unhide-commits.html',
+          controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+            $scope.dismiss = $modalInstance.dismiss;
+            $scope.allRepositories = $scope.reposService.getAllRepositories();
+            $scope.hiddenCommits = $scope.reposService.getAllHiddenCommits();
+
+            $scope.toggle = function (repoIndex, commitId) {
+              $scope.reposService.toggleCommitVisibility(repoIndex, commitId);
+
+              if (!$scope.reposService.anyHiddenCommits()) {
+                $modalInstance.dismiss();
+              }
+            };
+
+            $scope.$on('hiddenCommitsChange', function (event, repository) {
+              $scope.hiddenCommits = $scope.reposService.getAllHiddenCommits();
+            });
+
+            $scope.$on('reposChange', function (event, allRepositories) {
+              $scope.allRepositories = allRepositories;
+            });
+          }]
+        })
+      };
+
       $scope.$on('hiddenCommitsChange', function (event, repository) {
         var allRepositories = $scope.reposService.getAllRepositories();
         $scope.blockLengthSelectionService.generateBaseLengthsForNewRepository(allRepositories, repository);
+        $scope.anyHiddenCommits = $scope.reposService.anyHiddenCommits();
       });
 
       $scope.switchBlockLengthMode = function () {

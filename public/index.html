@@ -59,6 +59,7 @@
             <div class="panel-heading">
               <span>Settings</span>
               <span class="pull-right btn btn-link btn-xs" ng-click="switchState()"><i class="fa fa-save"></i> Load/save state</span>
+              <span class="pull-right btn btn-link btn-xs" ng-click="unhideCommits()" ng-if="anyHiddenCommits"><i class="fa fa-eye-slash"></i> Unhide commits</span>
             </div>
             <div class="panel-body">
               <div class="form-group col-md-2 col-sm-12 configBlock" ng-init="isMetricsFirst=true">

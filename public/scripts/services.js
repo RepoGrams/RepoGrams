@@ -24,6 +24,11 @@ repogramsServices.service('reposService', ['$rootScope', 'metricSelectionService
     getRepository: function (repoIndex) {
       return allRepositories[repoIndex];
     },
+    getAllRepositoryUrls: function () {
+      return allRepositories.map(function (repository) {
+        return repository.url;
+      });
+    },
     addRepository: function (repository) {
       // Create an empty set to store the hidden commits
       repository.hiddenCommits = new Set();
@@ -77,6 +82,20 @@ repogramsServices.service('reposService', ['$rootScope', 'metricSelectionService
       allRepositories[repoIndex] = allRepositories[repoIndex + 1];
       allRepositories[repoIndex + 1] = tmp;
       $rootScope.$broadcast('reposChange', allRepositories);
+    },
+    getAllHiddenCommits: function () {
+      return allRepositories.map(function (repository) {
+        var commitIds = [];
+        repository.hiddenCommits.forEach(function (commitId) {
+          commitIds.push(commitId);
+        });
+        return commitIds;
+      });
+    },
+    anyHiddenCommits: function () {
+      return allRepositories.some(function (repository) {
+        return repository.hiddenCommits.size;
+      });
     },
     toggleCommitVisibility: function (repoIndex, commitId) {
       toggleMultipleCommitVisibilities(repoIndex, [commitId]);
