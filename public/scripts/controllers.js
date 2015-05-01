@@ -20,13 +20,19 @@ repogramsControllers.controller('RepogramsConfig',
           '<div class="modal-header"><h3 class="modal-title">Load/save state</h3></div>' +
           '<div class="modal-body">' +
           '<div class="form-group">' +
+          '<h4><i class="fa fa-cloud-download"></i> Save current state</h4>' +
           '<a class="btn btn-primary" ng-href="data:application/json;charset=utf-8,{{currentStateAsJson}}" download="repograms.json"><i class="fa fa-cloud-download"></i> Download current state</a>' +
           '<p class="help-block">Click to download a file containing the current state of RepoGrams. You can load this file later.</p>' +
           '</div>' +
           '<div class="form-group">' +
+          '<h4><i class="fa fa-cloud-upload"></i> Load a saved state</h4>' +
           '<input type="file" id="state_file" name="state_file" onchange="angular.element(this).scope().loadStateFile(this.files)">' +
           '<p class="help-block">Choose a state file to load from.</p>' +
           '<p class="text-danger" ng-if="applyStateError">{{applyStateError}}</p>' +
+          '</div>' +
+          '<div class="form-group" ng-if="exampleStates.length">' +
+          '<h4><i class="fa fa-flask"></i> Load an example state</h4>' +
+          '<p class="help-block">You can load any of the following example states provided by RepoGrams</p>' +
           '</div>' +
           '<div class="form-group" ng-repeat="(i, example) in exampleStates">' +
           '<label for="example_{{i}}"><button id="example_{{i}}" class="btn btn-sm btn-primary" type="checkbox" ng-click="applyState(example)">Load</button> {{example.name}}</label>' +
