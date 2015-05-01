@@ -58,7 +58,7 @@
           <div class="panel panel-default form-inline" ng-controller="RepogramsConfig">
             <div class="panel-heading">
               <span>Settings</span>
-              <span class="pull-right btn btn-link btn-xs" ng-click="loadExamples()" ng-if="examples.length">Load examples</span>
+              <span class="pull-right btn btn-link btn-xs" ng-click="switchState()"><i class="fa fa-save"></i> Load/save state</span>
             </div>
             <div class="panel-body">
               <div class="form-group col-md-2 col-sm-12 configBlock" ng-init="isMetricsFirst=true">
@@ -126,7 +126,7 @@
                               <div class="col-lg-12 repo-label" ng-repeat="repo in repos">
                                 <div class="repo-label-label">
                                   <div class="repo-label-actions">
-                                    <button type="button" class="btn btn-xs btn-danger" ng-click="removeRepo($index)">
+                                    <button type="button" class="btn btn-xs btn-danger" ng-click="removeRepository($index)">
                                       <span class="glyphicon glyphicon-remove"></span>
                                     </button>
                                     <button type="button" class="btn btn-xs" ng-class="{'disabled': $first, 'btn-primary': !$first}" ng-click="moveUp($index)">
@@ -181,7 +181,7 @@
                   <div ng-repeat="repo in repos">
                     <h3 class="col-md-12 repo-label">
                       <div class="repo-label-actions">
-                        <button type="button" class="btn btn-xs btn-danger" ng-click="removeRepo($index)">
+                        <button type="button" class="btn btn-xs btn-danger" ng-click="removeRepository($index)">
                           <span class="glyphicon glyphicon-remove"></span>
                         </button>
                         <button type="button" class="btn btn-xs" ng-class="{'disabled': $first, 'btn-primary': !$first}" ng-click="moveUp($index)">
@@ -233,7 +233,7 @@
               <div ng-controller="RepogramsImporter">
                 <div class="row">
                   <div class="col-md-12">
-                    <form id="repogramsAdder" ng-submit="importRepo()">
+                    <form id="repogramsAdder" ng-submit="importRepository()">
                       <div class="input-group">
                         <input id="importUrlId" type="text" class="form-control" placeholder="GIT clone URL, e.g. https://github.com/githubtraining/hellogitworld.git" autofocus ng-model="importURL" ng-readonly="processing" ng-change="changeInput()" />
                         <div class="input-group-btn">

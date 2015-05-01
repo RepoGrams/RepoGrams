@@ -20,10 +20,10 @@ The following are optional additions to RepoGrams.
 
 #### Example sets ####
 
-You can add examples (pre-configured sets of repositories and corresponding metrics) to your deployment. Add a file
-called `example-sets.js` to the `build/` directory *before* building the docker image.
+You can add example states (pre-configured sets of repositories and corresponding metrics) to your deployment. Add a
+file called `example-states.js` to the `build/` directory *before* building the docker image.
 
-See the file `examples/example-sets.js` for an example of an examples set file.
+See the file `examples/example-states.js` for an example of an examples set file.
 
 #### Credentials ####
 

@@ -1,4 +1,4 @@
-ExampleSets = [
+ExampleStates = [
   {
     'name': "Preparation Tasks — Task 1",
     'metrics': ['pom_files'],

@@ -11,16 +11,25 @@ repogramsControllers.controller('RepogramsConfig',
       $scope.reposService = reposService;
 
       // Examples
-      $scope.examples = ExampleSets;
+      $scope.exampleStates = ExampleStates;
 
-      $scope.loadExamples = function () {
+      $scope.switchState = function () {
         $modal.open({
           scope: $scope,
           template: '<form>' +
-          '<div class="modal-header"><h3 class="modal-title">Select an example to load</h3></div>' +
+          '<div class="modal-header"><h3 class="modal-title">Load/save state</h3></div>' +
           '<div class="modal-body">' +
-          '<div class="form-group" ng-repeat="(i, example) in examples">' +
-          '<label for="example_{{i}}"><button id="example_{{i}}" class="btn btn-sm btn-primary" type="checkbox" ng-click="accept(example)">Load</button> {{example.name}}</label>' +
+          '<div class="form-group">' +
+          '<a class="btn btn-primary" ng-href="data:application/json;charset=utf-8,{{currentStateAsJson}}" download="repograms.json"><i class="fa fa-cloud-download"></i> Download current state</a>' +
+          '<p class="help-block">Click to download a file containing the current state of RepoGrams. You can load this file later.</p>' +
+          '</div>' +
+          '<div class="form-group">' +
+          '<input type="file" id="state_file" name="state_file" onchange="angular.element(this).scope().loadStateFile(this.files)">' +
+          '<p class="help-block">Choose a state file to load from.</p>' +
+          '<p class="text-danger" ng-if="applyStateError">{{applyStateError}}</p>' +
+          '</div>' +
+          '<div class="form-group" ng-repeat="(i, example) in exampleStates">' +
+          '<label for="example_{{i}}"><button id="example_{{i}}" class="btn btn-sm btn-primary" type="checkbox" ng-click="applyState(example)">Load</button> {{example.name}}</label>' +
           '</div>' +
           '</div>' +
           '<div class="modal-footer">' +
@@ -29,27 +38,133 @@ repogramsControllers.controller('RepogramsConfig',
           '</form>',
           controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
             $scope.dismiss = $modalInstance.dismiss;
-            $scope.accept = function (example) {
-              while (reposService.getAllRepositories().length) {
-                $scope.reposService.removeRepo(0);
+            $scope.applyStateError = false;
+
+            $scope.applyState = function (state) {
+              {
+                // Sanitize the input state. Apply a default value when a field is missing or is invalid.
+                if (!state || !(state instanceof Object)) {
+                  console.warn('state is not an object');
+                  $scope.applyStateError = "Error loading state: passed state is not an JSON object.";
+                }
+                if (!state.hasOwnProperty('metricsFirst') || typeof state.metricsFirst != 'boolean') {
+                  console.warn('state is missing a field: metricsFirst (default: true)');
+                  state.metricsFirst = true;
+                }
+                if (!state.hasOwnProperty('metrics') || !(state.metrics instanceof Array)) {
+                  console.warn('state is missing a field: metrics (default: [])');
+                  state.metrics = [];
+                }
+                if (!state.metrics.every(function (metricId) {
+                    return metricId in Metrics;
+                  })) {
+                  console.warn('state has unknown metric IDs in metrics, which will be ignored: ' + state.metrics.filter(function (metricId) {
+                    return !(metricId in Metrics);
+                  }).join(', '));
+                  state.metrics = state.metrics.filter(function (metricId) {
+                    return metricId in Metrics;
+                  });
+                }
+                if (!state.hasOwnProperty('blockLengthMode') || typeof state.blockLengthMode != 'string') {
+                  console.warn('state is missing a field: blockLengthMode (default: "fixed")');
+                  state.blockLengthMode = 'fixed';
+                }
+                if (!(state.blockLengthMode in blockLengthSelectionService.getAllBlockLengthModes())) {
+                  console.warn('state has unknown blockLengthMode: ' + state.blockLengthMode + ' (default: "fixed")');
+                  state.blockLengthMode = 'fixed';
+                }
+                if (!state.hasOwnProperty('normalizationMode') || typeof state.normalizationMode != 'string') {
+                  console.warn('state is missing a field: normalizationMode (default: "individually")');
+                  state.normalizationMode = 'individually';
+                }
+                if (!(state.normalizationMode in blockLengthSelectionService.getAllNormalizationModes())) {
+                  console.warn('state has unknown normalizationMode: ' + state.normalizationMode + ' (default: "individually")');
+                  state.normalizationMode = 'individually';
+                }
+                if (!state.hasOwnProperty('zoom') || typeof state.zoom != 'number') {
+                  console.warn('state is missing a field: zoom (default: 1)');
+                  state.zoom = 1;
+                }
+                if (state.zoom % 1 != 0 || state.zoom < 1 || state.zoom > 100) {
+                  console.warn('state has invalid zoom value: ' + state.zoom + ' (default: 1)');
+                  state.zoom = 1;
+                }
+                if (!state.hasOwnProperty('repositories') || !(state.repositories instanceof Array)) {
+                  console.warn('state is missing a field: repositories (default: [])');
+                  state.repositories = [];
+                }
+                if (!state.hasOwnProperty('hiddenCommits') || !(state.hiddenCommits instanceof Array)) {
+                  state.hiddenCommits = [];
+                }
+                while (state.hiddenCommits.length < state.repositories.length) {
+                  state.hiddenCommits.push([]);
+                }
+                if (state.hiddenCommits.length > state.repositories.length) {
+                  console.warn('state has a different number of hiddenCommits and repositories. Extras will be ignored');
+                  state.hiddenCommits.length = state.repositories.length;
+                }
               }
 
+              // Clear all repositories
+              $scope.reposService.clear();
+
+              // Change settings to match the new state
               $scope.metricSelectionService.clear();
-              $scope.setIsMetricsFirst(example.metricsFirst);
-
-              for (var i = 0; i < example.metrics.length; i++) {
-                $scope.metricSelectionService.swapMetric(example.metrics[i]);
-              }
-
-              $scope.blockLengthSelectionService.setBlockLengthModes(example.blockLengthMode, example.normalizationMode);
-
-              $scope.selectedZoom = example.zoom;
+              $scope.setIsMetricsFirst(state.metricsFirst);
+              $scope.metricSelectionService.swapMultipleMetrics(state.metrics);
+              $scope.blockLengthSelectionService.setBlockLengthModes(state.blockLengthMode, state.normalizationMode);
+              $scope.selectedZoom = state.zoom;
               $scope.changeZoom();
 
-              $rootScope.$broadcast('loadExampleRepos', example.repositories);
-
+              // Broadcast that we finished loading the settings so that the repositories will start loading
+              $rootScope.$broadcast('stateSettingsLoad', state.repositories, state.hiddenCommits);
               $modalInstance.close();
             };
+
+            $scope.loadStateFile = function (files) {
+              $scope.applyStateError = false;
+
+              if (files.length == 1) {
+                var stateFile = files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                  var stateFileText = e.target.result;
+                  try {
+                    var state = JSON.parse(stateFileText);
+                    $scope.applyState(state);
+                  } catch (e) {
+                    $scope.applyStateError = "Could not parse this state file: " + e.message;
+                  }
+                };
+                reader.onerror = function (e) {
+                  $scope.applyStateError = e.target.error.message;
+                };
+                reader.onloadend = function (e) {
+                  $scope.$apply();
+                };
+                reader.readAsText(stateFile);
+              }
+
+              $scope.$apply();
+            };
+
+            $scope.currentStateAsJson = encodeURIComponent(JSON.stringify({
+              metrics: metricSelectionService.getSelectedMetricIds(),
+              metricsFirst: metricSelectionService.isMetricsFirst(),
+              blockLengthMode: blockLengthSelectionService.getSelectedBlockLengthModeId(),
+              normalizationMode: blockLengthSelectionService.getSelectedNormalizationModeId(),
+              zoom: zoomService.getSelectedZoom(),
+              repositories: reposService.getAllRepositories().map(function (repository) {
+                return repository.url;
+              }),
+              hiddenCommits: reposService.getAllRepositories().map(function (repository) {
+                var commitIds = [];
+                repository.hiddenCommits.forEach(function (commitId) {
+                  commitIds.push(commitId);
+                });
+                return commitIds;
+              })
+            }));
           }]
         });
       };
@@ -208,7 +323,7 @@ repogramsControllers.controller('RepogramsImporter',
     $scope.changeInput = function () {
       $scope.errors.length = 0;
     };
-    $scope.importRepo = function (onSuccess) {
+    $scope.importRepository = function (onSuccess) {
       $scope.processing = true;
       $scope.errors.length = 0;
       var url = $scope.importURL;
@@ -227,7 +342,7 @@ repogramsControllers.controller('RepogramsImporter',
       result.success(function (data) {
         metricsRunner.runMetricsAsync(data, function (metricData) {
           $scope.processing = false;
-          reposService.addRepo({
+          reposService.addRepository({
             "name": url.split('/').pop(),
             "url": $scope.importURL,
             "metricData": metricData
@@ -254,16 +369,28 @@ repogramsControllers.controller('RepogramsImporter',
       });
     };
 
-    $scope.reposToLoadAsExample = [];
-    $scope.loadNextExampleRepo = function () {
-      $scope.importURL = $scope.reposToLoadAsExample.shift();
-      if ($scope.importURL) {
-        $scope.importRepo($scope.loadNextExampleRepo);
-      }
-    };
-    $scope.$on('loadExampleRepos', function (event, repositories) {
-      $scope.reposToLoadAsExample = repositories.slice();
-      $scope.loadNextExampleRepo();
+
+    $scope.$on('stateSettingsLoad', function (event, repositories, hiddenCommits) {
+      var repositoriesToLoad = repositories.slice();
+      var hiddenCommitsToLoad = hiddenCommits.slice();
+
+      var loadRepositories = function () {
+        $scope.importURL = repositoriesToLoad.shift();
+        if ($scope.importURL) {
+          $scope.importRepository(function () {
+            loadHiddenCommits();
+            loadRepositories();
+          });
+        }
+      };
+
+      var loadHiddenCommits = function () {
+        var commitIds = hiddenCommitsToLoad.shift();
+        var repoIndex = reposService.getAllRepositories().length - 1;
+        reposService.toggleMultipleCommitVisibilities(repoIndex, commitIds);
+      };
+
+      loadRepositories();
     });
 
   }]);
@@ -323,13 +450,13 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
     });
 
     $scope.repos = reposService.getAllRepositories();
-    $scope.removeRepo = function (pos) {
-      reposService.removeRepo(pos);
+    $scope.removeRepository = function (pos) {
+      reposService.removeRepository(pos);
     };
     $scope.moveUp = function (index) {
-      reposService.moveRepoUp(index);
+      reposService.moveRepositoryUp(index);
     };
     $scope.moveDown = function (index) {
-      reposService.moveRepoDown(index);
+      reposService.moveRepositoryDown(index);
     };
   }]);

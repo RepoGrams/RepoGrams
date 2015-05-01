@@ -52,6 +52,6 @@ RUN mkdir -p /var/log/supervisor
 COPY build /root/build
 RUN sed -i "s/@@@BUILDINFO@@@/`cat /root/build/buildinfo.autobuild`/" /var/www/public/index.html \
   && sed -i "s/@@@BUILDDATE@@@/`cat /root/build/builddate.autobuild`/" /var/www/public/fse2015/index.html \
-  && if [ -f /root/build/example-sets.js ]; then mv /root/build/example-sets.js /var/www/public/scripts/example-sets.js; fi \
+  && if [ -f /root/build/example-states.js ]; then mv /root/build/example-states.js /var/www/public/scripts/example-states.js; fi \
   && if [ -f /root/build/credentials ]; then mv /root/build/credentials /var/www/build/credentials; fi \
   && rm -r /root/build

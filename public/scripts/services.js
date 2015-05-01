@@ -3,6 +3,20 @@ var repogramsServices = angular.module('repogramsServices', []);
 repogramsServices.service('reposService', ['$rootScope', 'metricSelectionService', 'blockLengthSelectionService', function ($rootScope, metricSelectionService, blockLengthSelectionService) {
   var allRepositories = [];
 
+  var toggleMultipleCommitVisibilities = function (repoIndex, commitIds) {
+    if (commitIds.length) {
+      var repository = allRepositories[repoIndex];
+      commitIds.forEach(function (commitId) {
+        if (repository.hiddenCommits.has(commitId)) {
+          repository.hiddenCommits.delete(commitId);
+        } else {
+          repository.hiddenCommits.add(commitId);
+        }
+      });
+      $rootScope.$broadcast('hiddenCommitsChange', repository);
+    }
+  };
+
   return {
     getAllRepositories: function () {
       return allRepositories;
@@ -10,7 +24,7 @@ repogramsServices.service('reposService', ['$rootScope', 'metricSelectionService
     getRepository: function (repoIndex) {
       return allRepositories[repoIndex];
     },
-    addRepo: function (repository) {
+    addRepository: function (repository) {
       // Create an empty set to store the hidden commits
       repository.hiddenCommits = new Set();
 
@@ -25,7 +39,7 @@ repogramsServices.service('reposService', ['$rootScope', 'metricSelectionService
         }
       });
       if (duplicateIndex != -1) {
-        this.removeRepo(duplicateIndex);
+        this.removeRepository(duplicateIndex);
       }
 
       allRepositories.push(repository);
@@ -34,14 +48,21 @@ repogramsServices.service('reposService', ['$rootScope', 'metricSelectionService
       metricSelectionService.updateAllMetricMappers(allRepositories);
       blockLengthSelectionService.generateBaseLengthsForNewRepository(allRepositories, repository);
     },
-    removeRepo: function (repoIndex) {
+    removeRepository: function (repoIndex) {
       allRepositories.splice(repoIndex, 1);
       $rootScope.$broadcast('reposChange', allRepositories);
 
       metricSelectionService.updateAllMetricMappers(allRepositories);
       blockLengthSelectionService.updateAllBlockLengths(allRepositories);
     },
-    moveRepoUp: function (repoIndex) {
+    clear: function () {
+      allRepositories.splice(0, allRepositories.length);
+      $rootScope.$broadcast('reposChange', allRepositories);
+
+      metricSelectionService.updateAllMetricMappers(allRepositories);
+      blockLengthSelectionService.updateAllBlockLengths(allRepositories);
+    },
+    moveRepositoryUp: function (repoIndex) {
       if (repoIndex == 0)
         return;
       var tmp = allRepositories[repoIndex];
@@ -49,7 +70,7 @@ repogramsServices.service('reposService', ['$rootScope', 'metricSelectionService
       allRepositories[repoIndex - 1] = tmp;
       $rootScope.$broadcast('reposChange', allRepositories);
     },
-    moveRepoDown: function (repoIndex) {
+    moveRepositoryDown: function (repoIndex) {
       if (repoIndex == allRepositories.length - 1)
         return;
       var tmp = allRepositories[repoIndex];
@@ -58,14 +79,9 @@ repogramsServices.service('reposService', ['$rootScope', 'metricSelectionService
       $rootScope.$broadcast('reposChange', allRepositories);
     },
     toggleCommitVisibility: function (repoIndex, commitId) {
-      var repository = allRepositories[repoIndex];
-      if (repository.hiddenCommits.has(commitId)) {
-        repository.hiddenCommits.delete(commitId);
-      } else {
-        repository.hiddenCommits.add(commitId);
-      }
-      $rootScope.$broadcast('hiddenCommitsChange', repository);
-    }
+      toggleMultipleCommitVisibilities(repoIndex, [commitId]);
+    },
+    toggleMultipleCommitVisibilities: toggleMultipleCommitVisibilities
   };
 }]);
 
@@ -81,6 +97,18 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
     return allValues;
   };
 
+  var swapMultipleMetrics = function (metricIds) {
+    metricIds.forEach(function (metricId) {
+      var position = selectedMetricIds.indexOf(metricId);
+      if (position == -1) {
+        selectedMetricIds.push(metricId);
+      } else {
+        selectedMetricIds.splice(position, 1);
+      }
+    });
+    $rootScope.$broadcast('selectedMetricsChange');
+  };
+
   return {
     getSelectedMetricIds: function () {
       return selectedMetricIds;
@@ -93,14 +121,9 @@ repogramsServices.service('metricSelectionService', ['$rootScope', function ($ro
       return selectedMetricObjects;
     },
     swapMetric: function (metricId) {
-      var position = selectedMetricIds.indexOf(metricId);
-      if (position == -1) {
-        selectedMetricIds.push(metricId);
-      } else {
-        selectedMetricIds.splice(position, 1);
-      }
-      $rootScope.$broadcast('selectedMetricsChange');
+      swapMultipleMetrics([metricId]);
     },
+    swapMultipleMetrics: swapMultipleMetrics,
     isMetricSelected: function (metricId) {
       return selectedMetricIds.indexOf(metricId) != -1;
     },

@@ -8,4 +8,6 @@ var repogramsModule = angular.module('repogramsModule', [
   'ngAnimate',
   'ngSanitize',
   'angular-loading-bar',
-  'vr.directives.slider']);
+  'vr.directives.slider']).config(['$compileProvider', function ($compileProvider) {
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|data):/)
+}]);
