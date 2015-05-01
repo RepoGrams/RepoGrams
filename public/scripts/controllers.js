@@ -213,21 +213,21 @@ repogramsControllers.controller('RepogramsConfig',
             $scope.dismiss = $modalInstance.dismiss;
             $scope.activeBlockLengthMode = $scope.selectedBlockLengthMode;
             $scope.activeNormalizationMode = $scope.selectedNormalizationMode;
-            $scope.isHovering = false;
+            $scope.isNewMode = false;
 
             $scope.swap = function (blockLengthModeId, normalizationModeId) {
               $scope.blockLengthSelectionService.setBlockLengthModes(blockLengthModeId, normalizationModeId);
               $modalInstance.close();
             };
-            $scope.activate = function (newActiveBlockLengthMode, newActiveNormalizationMode) {
-              $scope.activeBlockLengthMode = newActiveBlockLengthMode;
-              $scope.activeNormalizationMode = newActiveNormalizationMode;
-              $scope.isHovering = true;
+            $scope.mouseEnter = function (blockLengthModeId, normalizationModeId) {
+              $scope.activeBlockLengthMode = $scope.allBlockLengthModes[blockLengthModeId];
+              $scope.activeNormalizationMode = $scope.allNormalizationModes[normalizationModeId];
+              $scope.isNewMode = blockLengthModeId != $scope.selectedBlockLengthModeId || normalizationModeId != $scope.selectedNormalizationModeId;
             };
-            $scope.deactivate = function () {
+            $scope.mouseLeave = function () {
               $scope.activeBlockLengthMode = $scope.selectedBlockLengthMode;
               $scope.activeNormalizationMode = $scope.selectedNormalizationMode;
-              $scope.isHovering = false;
+              $scope.isNewMode = false;
             };
           }]
         });

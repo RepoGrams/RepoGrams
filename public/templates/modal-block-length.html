@@ -9,18 +9,18 @@
         <thead>
         <tr>
           <th></th>
-          <th ng-repeat="normalizationModeId in normalizationModesOrder">
-            <i class="fa fa-{{allNormalizationModes[normalizationModeId].icon}}"></i> {{allNormalizationModes[normalizationModeId].label}}
+          <th class="text-center" ng-repeat="blockLengthModeId in blockLengthModesOrder">
+            <i class="fa fa-{{allBlockLengthModes[blockLengthModeId].icon}}"></i> {{allBlockLengthModes[blockLengthModeId].label}}
           </th>
         </tr>
         </thead>
-        <tbody>
-        <tr ng-repeat="blockLengthModeId in blockLengthModesOrder">
-          <th>
-            <i class="fa fa-{{allBlockLengthModes[blockLengthModeId].icon}}"></i> {{allBlockLengthModes[blockLengthModeId].label}}
+        <tbody ng-mouseleave="mouseLeave()">
+        <tr ng-repeat="normalizationModeId in normalizationModesOrder">
+          <th ng-mouseenter="mouseLeave()">
+            <i class="fa fa-{{allNormalizationModes[normalizationModeId].icon}}"></i> {{allNormalizationModes[normalizationModeId].label}}
           </th>
-          <td ng-repeat="normalizationModeId in normalizationModesOrder">
-            <label ng-mouseenter="activate(allBlockLengthModes[blockLengthModeId], allNormalizationModes[normalizationModeId])" ng-mouseleave="deactivate()">
+          <td ng-repeat="blockLengthModeId in blockLengthModesOrder" ng-class="{'current': blockLengthModeId == selectedBlockLengthModeId && normalizationModeId == selectedNormalizationModeId}">
+            <label ng-mouseenter="mouseEnter(blockLengthModeId, normalizationModeId)">
               <input type="radio" name="blockLengthMode" ng-checked="blockLengthModeId == selectedBlockLengthModeId && normalizationModeId == selectedNormalizationModeId" ng-click="swap(blockLengthModeId, normalizationModeId)">
             </label>
           </td>
@@ -29,9 +29,9 @@
       </table>
     </div>
 
-    <div class="form-group alert" ng-class="{'alert-warning': isHovering, 'alert-info': !isHovering}">
-      <p ng-if="isHovering">This mode:</p>
-      <p ng-if="!isHovering">Currently active mode:</p>
+    <div class="form-group alert" ng-class="{'alert-info': !isNewMode, 'alert-success': isNewMode}">
+      <h4 ng-if="isNewMode">This mode:</h4>
+      <h4 ng-if="!isNewMode">Currently active mode:</h4>
       <p><i class="fa fa-{{activeBlockLengthMode.icon}}"></i> <strong>{{activeBlockLengthMode.label}}</strong>: {{activeBlockLengthMode.description}}</p>
       <p><i class="fa fa-{{activeNormalizationMode.icon}}"></i> <strong>{{activeNormalizationMode.label}}</strong>: {{activeNormalizationMode.description}}</p>
     </div>

@@ -199,7 +199,15 @@ slider span.bubble {
 }
 
 .block-length-selector .table td:hover {
-    background-color: #f5f5f5;
+    background-color: #c8e5bc;
+}
+
+.block-length-selector .table td.current {
+    background-color: #b9def0;
+}
+
+.block-length-selector .table td.current:hover {
+    background-color: #d9edf7;
 }
 
 .block-length-selector .table label {
