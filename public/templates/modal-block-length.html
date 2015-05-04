@@ -19,8 +19,8 @@
           <th ng-mouseenter="mouseLeave()">
             <i class="{{allNormalizationModes[normalizationModeId].icon}}"></i> {{allNormalizationModes[normalizationModeId].label}}
           </th>
-          <td ng-repeat="blockLengthModeId in blockLengthModesOrder" ng-class="{'current': blockLengthModeId == selectedBlockLengthModeId && normalizationModeId == selectedNormalizationModeId}">
-            <label ng-mouseenter="mouseEnter(blockLengthModeId, normalizationModeId)">
+          <td ng-repeat="blockLengthModeId in blockLengthModesOrder" ng-class="{'current': blockLengthModeId == selectedBlockLengthModeId && normalizationModeId == selectedNormalizationModeId}" ng-mouseenter="mouseEnter(blockLengthModeId, normalizationModeId)">
+            <label>
               <input type="radio" name="blockLengthMode" ng-checked="blockLengthModeId == selectedBlockLengthModeId && normalizationModeId == selectedNormalizationModeId" ng-click="swap(blockLengthModeId, normalizationModeId)">
             </label>
           </td>
