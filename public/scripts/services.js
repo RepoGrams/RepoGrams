@@ -178,7 +178,7 @@ repogramsServices.service('blockLengthSelectionService', ['$rootScope', 'zoomSer
   var allBlockLengthModes = {
     'fixed': {
       label: "Fixed",
-      icon: 'th',
+      icon: 'icon-block-length-fixed',
       description: "All blocks have constant width.",
       calculateBase: function (churn) {
         return 5;
@@ -186,36 +186,36 @@ repogramsServices.service('blockLengthSelectionService', ['$rootScope', 'zoomSer
     },
     'linear': {
       label: "Linear",
-      icon: 'align-left',
-      description: "TODO description", // TODO
+      icon: 'icon-block-length-linear',
+      description: "Block width is scaled linearly according to the number of lines of code changed per commit.",
       calculateBase: function (churn) {
         return churn;
       }
     },
     'logarithmic': {
       label: "Logarithmic",
-      icon: 'align-left', // TODO icon
-      description: "TODO description", // TODO
+      icon: 'icon-block-length-logarithmic',
+      description: "Block width is scaled logarithmically according to the number of lines of code changed per commit.",
       calculateBase: function (churn) {
         return Math.ceil(Math.log2(churn + 1));
       }
     }
   };
 
-  var normalizationModesOrder = ['all', 'individually'];
+  var normalizationModesOrder = ['global', 'project'];
   var allNormalizationModes = {
-    'all': {
-      label: "All normalized",
-      icon: 'align-left', // TODO icon
-      description: "TODO description", // TODO
+    'global': {
+      label: "Globally normalized",
+      icon: 'fa fa-align-left',
+      description: "Commit block width is normalized across projects and is therefore comparable between projects.",
       calculateWidth: function (baseWidth, totalBaseWidth, maxTotalBaseWidth, zoom) {
         return maxTotalBaseWidth > 0 ? (100 * zoom * baseWidth / maxTotalBaseWidth) + '%' : 0;
       }
     },
-    'individually': {
-      label: "Individually normalized",
-      icon: 'align-left', // TODO icon
-      description: "TODO description", // TODO
+    'project': {
+      label: "Project normalized",
+      icon: 'fa fa-align-justify',
+      description: "Commit block widths are incomparable between projects but are comparable within the same project. Widths are selected so that each project fills the screen.",
       calculateWidth: function (baseWidth, totalBaseWidth, maxTotalBaseWidth, zoom) {
         return totalBaseWidth > 0 ? (100 * zoom * baseWidth / totalBaseWidth) + '%' : 0;
       }
@@ -223,7 +223,7 @@ repogramsServices.service('blockLengthSelectionService', ['$rootScope', 'zoomSer
   };
 
   var selectedBlockLengthModeId = 'linear';
-  var selectedNormalizationModeId = 'individually';
+  var selectedNormalizationModeId = 'project';
 
   var updateAllBlockLengths = function (allRepositories) {
 

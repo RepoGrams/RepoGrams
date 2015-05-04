@@ -24,8 +24,9 @@
     <!-- use bootstrap -->
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap-css-only/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap-css-only/css/bootstrap-theme.min.css">
-    <!-- use fontawesome -->
+    <!-- use fontawesome and icomoon -->
     <link rel="stylesheet" type="text/css" href="/bower_components/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/styles/icomoon.css">
     <!-- include our own style sheets -->
     <link rel="stylesheet" type="text/css" href="/styles/repograms.css">
     <!-- include the app controllers -->
@@ -71,14 +72,14 @@
               <div class="form-group col-md-4 col-sm-12 configBlock">
                 <button id="metricSelect" class="form-control pull-right" ng-click="switchMetric()">Switch…</button>
                 <label for="metricSelect">Metric (block color):</label>
-                <span ng-repeat="metricId in selectedMetricIds"><i class="fa fa-{{selectedMetricObjects[metricId].icon}}"></i> <em>{{selectedMetricObjects[metricId].label}}<span ng-if="!$last">, </span></em></span>
+                <span ng-repeat="metricId in selectedMetricIds"><i class="{{selectedMetricObjects[metricId].icon}}"></i> <em>{{selectedMetricObjects[metricId].label}}<span ng-if="!$last">, </span></em></span>
                 <span ng-if="selectedMetricIds.length == 0" class="text-muted">None selected yet…</span>
               </div>
 
               <div class="form-group col-md-4 col-sm-12 configBlock">
                 <button id="blockLengthSelect" class="form-control pull-right" ng-click="switchBlockLengthMode()">Switch…</button>
-                <label for="blockLengthSelect">Block length mode:</label> <i class="fa fa-{{selectedBlockLengthMode.icon}}"></i> <em>{{selectedBlockLengthMode.label}}</em><br>
-                <label for="blockLengthSelect">Normalization mode:</label> <i class="fa fa-{{selectedNormalizationMode.icon}}"></i> <em>{{selectedNormalizationMode.label}}</em>
+                <label for="blockLengthSelect">Block length mode:</label> <i class="{{selectedBlockLengthMode.icon}}"></i> <em>{{selectedBlockLengthMode.label}}</em><br>
+                <label for="blockLengthSelect">Normalization mode:</label> <i class="{{selectedNormalizationMode.icon}}"></i> <em>{{selectedNormalizationMode.label}}</em>
               </div>
 
               <!-- Zoom Slider -->
@@ -111,7 +112,7 @@
                     <div ng-show="show(metricId)">
                       <div class="col-md-12">
                         <h3 class="metric-title">
-                          <i class="fa fa-{{selectedMetricObjects[metricId].icon}}"></i>
+                          <i class="{{selectedMetricObjects[metricId].icon}}"></i>
                           {{selectedMetricObjects[metricId].label}}
                           <i class="fa fa-question-circle" tooltip-html-unsafe="{{helpTooltip(metricId)}}" tooltip-popup-delay="200"></i>
                         </h3>

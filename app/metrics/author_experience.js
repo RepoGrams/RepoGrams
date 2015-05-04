@@ -1,17 +1,17 @@
 Metrics['author_experience'] = {
   label: "Author Experience",
-  icon: "user-times",
+  icon: 'fa fa-user-times',
   description: "The number of commits a contributor has previously made to the repository",
   long_description: null,
   colors: [
-    "#ffffe5",
-    "#f7fcb9",
-    "#d9f0a3",
-    "#addd8e",
-    "#78c679",
-    "#41ab5d",
-    "#238443",
-    "#005a32"
+    '#ffffe5',
+    '#f7fcb9',
+    '#d9f0a3',
+    '#addd8e',
+    '#78c679',
+    '#41ab5d',
+    '#238443',
+    '#005a32'
   ],
   mapper: Mappers['equal_range'](1, 0, true),
   tooltip: function (value) {

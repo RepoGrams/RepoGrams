@@ -6,7 +6,7 @@
   <div class="modal-body">
     <div class="form-group" ng-repeat="metricId in metricRegistrationIds">
       <label for="metric_{{metricId}}">
-        <input id="metric_{{metricId}}" type="checkbox" name="metric" ng-checked="isSelected(metricId)" ng-click="swap(metricId)"> <i class="fa fa-{{allMetrics[metricId].icon}}"></i> {{allMetrics[metricId].label}}
+        <input id="metric_{{metricId}}" type="checkbox" name="metric" ng-checked="isSelected(metricId)" ng-click="swap(metricId)"> <i class="{{allMetrics[metricId].icon}}"></i> {{allMetrics[metricId].label}}
       </label>
       <p ng-bind-html="allMetrics[metricId].description"></p>
       <p class="text-muted" ng-if="allMetrics[metricId].long_description" ng-bind-html="allMetrics[metricId].long_description"></p>

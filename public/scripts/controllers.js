@@ -55,12 +55,12 @@ repogramsControllers.controller('RepogramsConfig',
                   state.blockLengthMode = 'fixed';
                 }
                 if (!state.hasOwnProperty('normalizationMode') || typeof state.normalizationMode != 'string') {
-                  console.warn('state is missing a field: normalizationMode (default: "individually")');
-                  state.normalizationMode = 'individually';
+                  console.warn('state is missing a field: normalizationMode (default: "project")');
+                  state.normalizationMode = 'project';
                 }
                 if (!(state.normalizationMode in blockLengthSelectionService.getAllNormalizationModes())) {
-                  console.warn('state has unknown normalizationMode: ' + state.normalizationMode + ' (default: "individually")');
-                  state.normalizationMode = 'individually';
+                  console.warn('state has unknown normalizationMode: ' + state.normalizationMode + ' (default: "project")');
+                  state.normalizationMode = 'project';
                 }
                 if (!state.hasOwnProperty('zoom') || typeof state.zoom != 'number') {
                   console.warn('state is missing a field: zoom (default: 1)');

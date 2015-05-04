@@ -4,7 +4,7 @@ ExampleStates = [
     'metrics': ['pom_files'],
     'metricsFirst': true,
     'blockLengthMode': 'fixed',
-    'normalizationMode': 'all',
+    'normalizationMode': 'global',
     'zoom': 5,
     'repositories': [
       'https://github.com/RepoGrams/sqlitebrowser',
@@ -18,7 +18,7 @@ ExampleStates = [
     'metrics': ['commit_localization'],
     'metricsFirst': true,
     'blockLengthMode': 'fixed',
-    'normalizationMode': 'all',
+    'normalizationMode': 'global',
     'zoom': 5,
     'repositories': [
       'https://github.com/RepoGrams/sqlitebrowser',
@@ -32,7 +32,7 @@ ExampleStates = [
     'metrics': ['number_of_branches'],
     'metricsFirst': true,
     'blockLengthMode': 'linear',
-    'normalizationMode': 'individually',
+    'normalizationMode': 'project',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/sqlitebrowser',
@@ -46,7 +46,7 @@ ExampleStates = [
     'metrics': ['most_edited_file'],
     'metricsFirst': true,
     'blockLengthMode': 'fixed',
-    'normalizationMode': 'all',
+    'normalizationMode': 'global',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/passenger-docker'
@@ -56,7 +56,7 @@ ExampleStates = [
     'metrics': ['pom_files'],
     'metricsFirst': true,
     'blockLengthMode': 'fixed',
-    'normalizationMode': 'all',
+    'normalizationMode': 'global',
     'zoom': 4,
     'repositories': [
       'https://github.com/RepoGrams/css-layout',
@@ -74,7 +74,7 @@ ExampleStates = [
     'metrics': ['branches_used'],
     'metricsFirst': true,
     'blockLengthMode': 'fixed',
-    'normalizationMode': 'all',
+    'normalizationMode': 'global',
     'zoom': 3,
     'repositories': [
       'https://github.com/RepoGrams/wren',
@@ -88,7 +88,7 @@ ExampleStates = [
     'metrics': ['commit_author', 'branches_used'],
     'metricsFirst': false,
     'blockLengthMode': 'linear',
-    'normalizationMode': 'individually',
+    'normalizationMode': 'project',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/touchstonejs',
@@ -101,7 +101,7 @@ ExampleStates = [
     'metrics': ['commit_author'],
     'metricsFirst': false,
     'blockLengthMode': 'linear',
-    'normalizationMode': 'all',
+    'normalizationMode': 'global',
     'zoom': 1,
     'repositories': [
       'https://github.com/RepoGrams/stackit',
