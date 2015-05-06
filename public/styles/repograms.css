@@ -145,13 +145,13 @@ div.metrics-display div.alert-info a {
 }
 
 .render-metric > div {
-    width:100%;
+    width: 100%;
     overflow: visible;
     white-space: nowrap;
 }
 
 .render-metric .individual-metric {
-    width:100%;
+    width: 100%;
     padding: 1px;
     overflow: visible;
     white-space: nowrap;
@@ -227,19 +227,18 @@ slider span.bubble {
 
 .repo-label {
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-.repo-label-label {
+.repo-label .repo-label-label {
     display: flex;
-    margin-bottom: 3px;
-    margin-top: 2px;
+    margin: 2px -15px 3px 0;
     font-weight: bold;
+    overflow: hidden;
 }
 
 .repo-label .repo-label-actions {
     display: inline-block;
+    flex: 0 0 60px;
     opacity: 0.1;
     margin-right: 8px;
 }
@@ -253,9 +252,22 @@ slider span.bubble {
 }
 
 .repo-label .repo-label-name {
-    flex: auto;
+    flex: 1 1 auto;
     margin-top: -1px;
     border-bottom: 1px dotted #c0c0c0;
+}
+
+.repo-label .repo-label-cover {
+    background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
 }
 
 .legends .repo-label .repo-label-name {
