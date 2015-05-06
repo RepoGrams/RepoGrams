@@ -36,6 +36,11 @@ form:
 
 GitHub supports app-specific tokens that can be used in lieu of the password.
 
+#### Extra footer ####
+
+You can add extra HTML to the footer of the page by adding it to `build/extra-footer.html`. This can enable adding
+scripts such as web analytics.
+
 #### Pre-cache repositories ####
 
 You can cache a large number of git repositories on the server side by running `./precache.sh [domain-name]
