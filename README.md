@@ -54,16 +54,18 @@ will be served from cache when called in the web application.
 Developing inside a docker image is inconvenient. A more convenient way to develop is to deploy RepoGrams locally on
 your machine.
 
-Start by installing the following packages on your machine:
+Start by installing the following packages on your machine. We list the minimum version that works on our development
+environments. Older versions might still work. If they worked for you please let us know so we can update this list.
 
 * python (2.7.x), python-dev, and python-pip
-* [python-graph-tool](http://graph-tool.skewed.de/)
-* [libgit2](https://libgit2.github.com/)
-* [libblas-dev](http://www.netlib.org/blas/)
-* [liblapack-dev](http://www.netlib.org/lapack/)
-* [gfortran](http://gcc.gnu.org/fortran/)
+* [python-graph-tool](http://graph-tool.skewed.de/) >= 2.2.42
+* [libgit2-dev](https://libgit2.github.com/) >= 0.22.1
+* [libblas-dev](http://www.netlib.org/blas/) >= 1.2.20110419
+* [liblapack-dev](http://www.netlib.org/lapack/) >= 3.5.0
+* [libffi-dev](http://sourceware.org/libffi/) >= 3.1
+* [gfortran](http://gcc.gnu.org/fortran/) >= 4.9.1
 
-(Please create an issue or pull request if we forgot to list a dependency)
+Please create an issue or pull request if we forgot to list a dependency.
 
 Create and activate a [virtualenv](https://virtualenv.pypa.io/) based on Python 2.7.x. Once activated install the
 requirements.txt inside the virtualenv using pip:
