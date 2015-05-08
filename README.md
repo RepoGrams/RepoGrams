@@ -65,11 +65,19 @@ environments. Older versions might still work. If they worked for you please let
 * [libffi-dev](http://sourceware.org/libffi/) >= 3.1
 * [gfortran](http://gcc.gnu.org/fortran/) >= 4.9.1
 
-Please create an issue or pull request if we forgot to list a dependency.
+In various Linux distributions you may be able to install most (if not all) of these packages using the distro package
+manager, e.g., `sudo apt-get install <package-name>` in Debian/Ubuntu. However, if you do so pay careful attention to
+the versions of the libraries installed, as your Linux distribution's package manager might only contain older
+versions, in which case you will have to manually install a newer version. Please create an issue or pull request if
+you believe we forgot to list a dependency.
 
 Create and activate a [virtualenv](https://virtualenv.pypa.io/) based on Python 2.7.x. Once activated install the
 requirements.txt inside the virtualenv using pip:
 `pip install -r conf/requirements.txt`
+
+Some users reported difficulty installing using the above command line, but managed to install the packages by running
+`pip install <line-from-requirements.txt>`, where `<line-from-requirements.txt>` is each line of requirements.txt one
+by one.
 
 Copy the python-graph-tool library from the distribution-wide lib directory to the virtualenv. Unfortunately graph-tool
 is not available on pip.
