@@ -258,6 +258,14 @@ repogramsControllers.controller('RepogramsConfig',
       };
 
       $scope.selectedZoom = $scope.zoomService.getSelectedZoom();
+      $scope.incrementZoom = function () {
+	if($scope.selectedZoom != 100)
+	  $scope.changeZoom($scope.selectedZoom + 1);
+      };
+      $scope.decrementZoom = function() {
+	if($scope.selectedZoom != 1)
+	  $scope.changeZoom($scope.selectedZoom - 1);
+      };
       $scope.changeZoom = function (newZoom) {
         $scope.zoomService.setZoom(newZoom);
       };

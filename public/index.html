@@ -96,7 +96,8 @@
 
               <!-- Zoom Slider -->
               <div class="form-group col-md-2 col-sm-12 configBlock">
-                <label for="zoomSlider">Zoom:</label> <em>{{translateZoom(selectedZoom)}}</em>
+                <label for="zoomSlider">Zoom:</label> <button ng-click="decrementZoom()"><strong>-</strong></button> <em>{{translateZoom(selectedZoom)}}</em> 
+	        <button ng-click="incrementZoom()"><strong>+</strong></button>
                 <slider id="zoomSlider" ng-model="selectedZoom" ng-change="changeZoom(selectedZoom)" floor="1" ceiling="100" step="1" stickiness="3" translate-fn="translateZoom">
                 </slider>
                 <!-- https://github.com/Venturocket/angular-slider with CCS provided by voInt https://github.com/Venturocket/angular-slider/issues/51 -->
