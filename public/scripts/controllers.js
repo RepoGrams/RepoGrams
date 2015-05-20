@@ -259,12 +259,16 @@ repogramsControllers.controller('RepogramsConfig',
 
       $scope.selectedZoom = $scope.zoomService.getSelectedZoom();
       $scope.incrementZoom = function () {
-	if($scope.selectedZoom != 100)
-	  $scope.changeZoom($scope.selectedZoom + 1);
+        if($scope.selectedZoom != 100) {
+          $scope.selectedZoom += 1;
+          $scope.changeZoom($scope.selectedZoom);
+        }
       };
       $scope.decrementZoom = function() {
-	if($scope.selectedZoom != 1)
-	  $scope.changeZoom($scope.selectedZoom - 1);
+        if($scope.selectedZoom != 1) {
+          $scope.selectedZoom -= 1;
+          $scope.changeZoom($scope.selectedZoom);
+        }
       };
       $scope.changeZoom = function (newZoom) {
         $scope.zoomService.setZoom(newZoom);
@@ -433,19 +437,19 @@ repogramsControllers.controller('RepogramsDisplayCtrl',
 repogramsControllers.controller('UnsupportedBrowserCtrl', ['$scope', function($scope) {
     var checkBrowser = function() {
 
-	var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-    	// Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
-	var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
-	var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-    	// At least Safari 3+: "[object HTMLElementConstructor]"
-	var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
-	var isIE = /*@cc_on!@*/false || !!document.documentMode; // At least IE6
+        var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+        // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+        var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+        var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+        // At least Safari 3+: "[object HTMLElementConstructor]"
+        var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
+        var isIE = /*@cc_on!@*/false || !!document.documentMode; // At least IE6
 
         if (!isFirefox && !isChrome) {
-	   return true;
-	}
+           return true;
+        }
 
-	return false;
+        return false;
     };
 
     $scope.data = { visible: checkBrowser() };
@@ -455,8 +459,3 @@ repogramsControllers.controller('UnsupportedBrowserCtrl', ['$scope', function($s
     };
 
   }]);
-
-
-
-
-    
