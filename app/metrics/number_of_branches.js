@@ -13,7 +13,7 @@ Metrics['number_of_branches'] = {
     '#238b45',
     '#005824'
   ],
-  mapper: Mappers['equal_range'](1, 0, false),
+  mapper: Mappers['equal_range'](1, 0, false, "lowerDescript", "upperDescript"),
   tooltip: function (value) {
     return (value == 1) ? "1 concurrent branch" : value + " concurrent branches";
   }

@@ -13,7 +13,7 @@ Metrics['commit_localization'] = {
     '#fee8c8',
     '#fff7ec'
   ],
-  mapper: Mappers['equal_range'](0, -2, false),
+  mapper: Mappers['equal_range'](0, -2, false, "lowerDescript", "upperDescript"),
   tooltip: function (value) {
     return Math.round(value * 100) + "% localized files in the commit";
   }

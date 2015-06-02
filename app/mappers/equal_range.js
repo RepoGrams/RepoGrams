@@ -1,4 +1,4 @@
-Mappers['equal_range'] = function (minValue, exponent, separateFirstBucket) {
+Mappers['equal_range'] = function (minValue, exponent, separateFirstBucket, lowerDescript, upperDescript) {
   return {
     _currentMaxValue: -1,
     mappingInfo: [],
@@ -64,14 +64,36 @@ Mappers['equal_range'] = function (minValue, exponent, separateFirstBucket) {
         return true;
       });
 
-      this.mappingInfo.map(function (mi) {
+      function addDescript(mi, type) {
         if (mi.lowerBound == mi.upperBound) {
-          mi.legendText = mi.lowerBound.toFixed(-exponent);
+          if(type == "lower") {
+            mi.legendText = mi.lowerBound.toFixed(-exponent) + "(" + lowerDescript + ")";
+          } else if (type == "upper") {
+            mi.legendText = mi.lowerBound.toFixed(-exponent) + "(" + upperDescript + ")";
+          } else {
+            mi.legendText = mi.lowerBound.toFixed(-exponent);
+          }
         }
         else {
-          mi.legendText = mi.lowerBound.toFixed(-exponent) + '–' + mi.upperBound.toFixed(-exponent);
+          if(type == "lower") {
+            mi.legendText = mi.lowerBound.toFixed(-exponent) + '–' + mi.upperBound.toFixed(-exponent) + "(" + lowerDescript + ")";
+          } else if (type == "upper") {
+            mi.legendText = mi.lowerBound.toFixed(-exponent) + '–' + mi.upperBound.toFixed(-exponent) + "(" + upperDescript + ")";
+          } else {
+            mi.legendText = mi.lowerBound.toFixed(-exponent) + '–' + mi.upperBound.toFixed(-exponent);
+          }
         }
-      });
+      }
+
+      for(i = 0; i < this.mappingInfo.length; i++) {
+        if(i == 0) {
+          addDescript(this.mappingInfo[i], "lower");
+        } else if(i == this.mappingInfo.length - 1) {
+          addDescript(this.mappingInfo[i], "upper");
+        } else {
+          addDescript(this.mappingInfo[i], "normal");
+        }
+      }
 
       return true;
     }

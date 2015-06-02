@@ -13,7 +13,7 @@ Metrics['merge_indicator'] = {
     '#ae017e',
     '#7a0177'
   ],
-  mapper: Mappers['equal_range'](0, 0, true),
+  mapper: Mappers['equal_range'](0, 0, true, "lowerDescript", "upperDescript"),
   tooltip: function (value) {
     switch (value) {
       case 0:

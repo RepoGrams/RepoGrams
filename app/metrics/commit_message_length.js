@@ -13,7 +13,7 @@ Metrics['commit_message_length'] = {
     '#2b8cbe',
     '#08589e'
   ],
-  mapper: Mappers['fibonacci_range'],
+  mapper: Mappers['fibonacci_range']("lowerDescript", "upperDescript"),
   tooltip: function (value) {
     return (value == 1) ? "1 word" : value + " words";
   }
