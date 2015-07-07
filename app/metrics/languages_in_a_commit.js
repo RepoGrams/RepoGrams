@@ -13,7 +13,7 @@ Metrics['languages_in_a_commit'] = {
     '#88419d',
     '#6e016b'
   ],
-  mapper: Mappers['equal_range'](0, 0, true, "lowerDescript", "upperDescript"),
+  mapper: Mappers['equal_range'](0, 0, true),
   tooltip: function (value) {
     return (value == 1) ? "1 language" : value + " languages";
   }

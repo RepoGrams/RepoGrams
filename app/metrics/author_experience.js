@@ -13,7 +13,7 @@ Metrics['author_experience'] = {
     '#238443',
     '#005a32'
   ],
-  mapper: Mappers['equal_range'](1, 0, true, "lowerDescript", "upperDescript"),
+  mapper: Mappers['equal_range'](1, 0, true),
   tooltip: function (value) {
     switch (value % 100) {
       case 11:

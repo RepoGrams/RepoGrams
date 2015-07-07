@@ -13,7 +13,7 @@ Metrics['pom_files'] = {
     '#a50f15',
     '#67000d'
   ],
-  mapper: Mappers['equal_range'](0, 0, true, "lowerDescript", "upperDescript"),
+  mapper: Mappers['equal_range'](0, 0, true),
   tooltip: function (value) {
     return value + " POM " + ((value == 1) ? "file" : "files") + " changed";
   }

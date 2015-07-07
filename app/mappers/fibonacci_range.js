@@ -1,10 +1,10 @@
-Mappers['fibonacci_range'] = function (lowerDescript, upperDescript) {
+Mappers['fibonacci_range'] = function (lowerDescription, upperDescription) {
   return {
     mappingInfo: [
       {
         lowerBound: 0,
         upperBound: 1,
-        legendText: "0–1" + "(" + lowerDescript + ")"
+        legendText: "0–1" + (lowerDescription ? " (" + lowerDescription + ")" : "")
       },
       {
         lowerBound: 2,
@@ -39,7 +39,7 @@ Mappers['fibonacci_range'] = function (lowerDescript, upperDescript) {
       {
         lowerBound: 35,
         upperBound: Number.MAX_VALUE,
-        legendText: "35+" + "(" + upperDescript + ")"
+        legendText: "35+" + (upperDescription ? " (" + upperDescription + ")" : "")
       }
     ],
     map: function (value, colors) {

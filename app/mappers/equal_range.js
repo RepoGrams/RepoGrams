@@ -1,4 +1,4 @@
-Mappers['equal_range'] = function (minValue, exponent, separateFirstBucket, lowerDescript, upperDescript) {
+Mappers['equal_range'] = function (minValue, exponent, separateFirstBucket, lowerDescription, upperDescription) {
   return {
     _currentMaxValue: -1,
     mappingInfo: [],
@@ -64,35 +64,20 @@ Mappers['equal_range'] = function (minValue, exponent, separateFirstBucket, lowe
         return true;
       });
 
-      function addDescript(mi, type) {
+      this.mappingInfo.map(function (mi) {
         if (mi.lowerBound == mi.upperBound) {
-          if(type == "lower") {
-            mi.legendText = mi.lowerBound.toFixed(-exponent) + "(" + lowerDescript + ")";
-          } else if (type == "upper") {
-            mi.legendText = mi.lowerBound.toFixed(-exponent) + "(" + upperDescript + ")";
-          } else {
-            mi.legendText = mi.lowerBound.toFixed(-exponent);
-          }
+          mi.legendText = mi.lowerBound.toFixed(-exponent);
         }
         else {
-          if(type == "lower") {
-            mi.legendText = mi.lowerBound.toFixed(-exponent) + '–' + mi.upperBound.toFixed(-exponent) + "(" + lowerDescript + ")";
-          } else if (type == "upper") {
-            mi.legendText = mi.lowerBound.toFixed(-exponent) + '–' + mi.upperBound.toFixed(-exponent) + "(" + upperDescript + ")";
-          } else {
-            mi.legendText = mi.lowerBound.toFixed(-exponent) + '–' + mi.upperBound.toFixed(-exponent);
-          }
+          mi.legendText = mi.lowerBound.toFixed(-exponent) + '–' + mi.upperBound.toFixed(-exponent);
         }
-      }
+      });
 
-      for(i = 0; i < this.mappingInfo.length; i++) {
-        if(i == 0) {
-          addDescript(this.mappingInfo[i], "lower");
-        } else if(i == this.mappingInfo.length - 1) {
-          addDescript(this.mappingInfo[i], "upper");
-        } else {
-          addDescript(this.mappingInfo[i], "normal");
-        }
+      if (lowerDescription && this.mappingInfo.length > 0) {
+        this.mappingInfo[0].legendText += " (" + lowerDescription + ")";
+      }
+      if (upperDescription && this.mappingInfo.length > 1) {
+        this.mappingInfo[this.mappingInfo.length - 1].legendText += " (" + upperDescription + ")";
       }
 
       return true;

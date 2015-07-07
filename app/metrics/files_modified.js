@@ -13,7 +13,7 @@ Metrics['files_modified'] = {
     '#ce1256',
     '#91003f'
   ],
-  mapper: Mappers['fibonacci_range']("lowerDescript", "upperDescript"),
+  mapper: Mappers['fibonacci_range'](),
   tooltip: function (value) {
     switch (value) {
       case 0:

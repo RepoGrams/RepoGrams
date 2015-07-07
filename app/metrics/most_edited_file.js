@@ -13,7 +13,7 @@ Metrics['most_edited_file'] = {
     '#0570b0',
     '#034e7b'
   ],
-  mapper: Mappers['equal_range'](0, 0, true, "lowerDescript", "upperDescript"),
+  mapper: Mappers['equal_range'](0, 0, true),
   tooltip: function (value) {
     switch (value) {
       case 0:
