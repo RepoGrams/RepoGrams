@@ -1,4 +1,4 @@
-Mappers['equal_range'] = function (minValue, exponent, separateFirstBucket) {
+Mappers['equal_range'] = function (minValue, exponent, separateFirstBucket, lowerDescription, upperDescription) {
   return {
     _currentMaxValue: -1,
     mappingInfo: [],
@@ -72,6 +72,13 @@ Mappers['equal_range'] = function (minValue, exponent, separateFirstBucket) {
           mi.legendText = mi.lowerBound.toFixed(-exponent) + '–' + mi.upperBound.toFixed(-exponent);
         }
       });
+
+      if (lowerDescription && this.mappingInfo.length > 0) {
+        this.mappingInfo[0].legendText += " (" + lowerDescription + ")";
+      }
+      if (upperDescription && this.mappingInfo.length > 1) {
+        this.mappingInfo[this.mappingInfo.length - 1].legendText += " (" + upperDescription + ")";
+      }
 
       return true;
     }

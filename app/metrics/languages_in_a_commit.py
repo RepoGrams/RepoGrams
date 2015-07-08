@@ -1,5 +1,4 @@
 import os
-import collections
 
 from metrics.base import metric
 
