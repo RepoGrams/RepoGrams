@@ -1,11 +1,16 @@
 # RepoGrams #
 
-RepoGrams is a web-tool that allows users to analyze and compare the history of multiple software projects. It computes
-and visualizes a variety of metrics over time, such as the number of programming languages used in a project over time
-or how often developers change code across different modules (directories).
+**RepoGrams will help you understand a project's history.** It uses a simple visual metaphor to represent a project's history across multiple metrics of interest. It supports metrics like:
+ * who made commits, how often, and how much code did their commits change
+ * the number of programming languages used in a project over time
+ * how often developers changed code across different modules (directories)
+ * the use of branches in the repository
+ * and many others!
 
-RepoGrams supports researchers in the software engineering community by comparing and contrasting source code
-repositories of multiple software projects and helps them in selecting appropriate evaluation targets for their studies.
+RepoGrams can help:
+ * **managers** to analyze a team's performance and pin-point workflow issues
+ * **developers** to understand the workflow and the history of an unfamiliar software project
+ * **researchers** in the software engineering community to juxtapose software repositories of multiple projects to select an appropriate set of evaluation targets for a study
 
 
 ## Deployment ##
