@@ -12,8 +12,9 @@ RepoGrams can help:
  * **developers** to understand the workflow and the history of an unfamiliar software project
  * **researchers** in the software engineering community to juxtapose software repositories of multiple projects to select an appropriate set of evaluation targets for a study
 
+**Try our online deployment: http://repograms.net/**
 
-## Deployment ##
+## Deploying ##
 
 RepoGrams runs inside a [docker](https://www.docker.com/) image. After cloning the repository, run `./build.sh`) in a
 shell to locally build the image. Use `./run.sh [port-number]` (defaults to `1234`) and `./stop.sh` to start/stop the
