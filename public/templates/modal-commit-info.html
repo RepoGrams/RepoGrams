@@ -6,6 +6,11 @@
   <p><a ng-href="{{commitURL}}" target="_blank">{{commitMessage}}</a></p>
 </div>
 
+<div class="modal-body commitDetails">
+  <h3>Selected Metric Values:</h3>
+  <p ng-repeat="item in selectedMetricValues">{{ item }}</p><br>
+</div>
+
 <div class="modal-footer">
   <button class="btn btn-default" ng-click="toggleVisibility()"><i class="fa fa-eye-slash"></i> Hide</button>
   <button class="btn btn-primary" ng-click="dismiss()">OK</button>
