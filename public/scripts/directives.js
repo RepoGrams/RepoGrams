@@ -26,11 +26,14 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
           var commitId = $(event.target).attr('data-commit-id');
           var commitURL = $(event.target).attr('data-commit-url');
           var commitIndex = parseInt($(event.target).attr('data-commit-index'));
-          var selectedMetricVals = [];
+          var selectedMetricObjects = $scope.metricSelectionService.getSelectedMetricObjects();
+          var finalResult = [];
           for (i = 0; i < $scope.selectedMetricIDs.length; i++) {
-                 var metric = $scope.selectedMetricIDs[i];
-                 var value = $scope.repo.metricData[$scope.selectedMetricIDs[i]][commitIndex];
-                 selectedMetricVals[i] = metric + ': ' + value;
+            var metric = $scope.selectedMetricIDs[i];
+            var metricName = selectedMetricObjects[metric].label;
+            var value = $scope.repo.metricData[metric][commitIndex];
+            var tuple = { 'metricName':metricName, 'value':value };
+            finalResult[i] = tuple;
           }
           $modal.open({
             scope: $scope,
@@ -39,7 +42,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
               $scope.commitId = commitId;
               $scope.commitURL = commitURL;
               $scope.commitMessage = $scope.repo.metricData.commit_messages[commitIndex];
-              $scope.selectedMetricValues = selectedMetricVals;
+              $scope.selectedMetricValues = finalResult;
               $scope.dismiss = $modalInstance.dismiss;
               $scope.toggleVisibility = function () {
                 reposService.toggleCommitVisibility($scope.$parent.repoIndex, $scope.commitId);

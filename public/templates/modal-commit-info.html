@@ -8,7 +8,12 @@
 
 <div class="modal-body commitDetails">
   <h3>Selected Metric Values:</h3>
-  <p ng-repeat="item in selectedMetricValues">{{ item }}</p><br>
+  <table>
+    <tr ng-repeat="item in selectedMetricValues">
+      <td>{{ item.metricName }}:</td>
+      <td>{{ item.value }}</td>
+    </tr>
+  </table>
 </div>
 
 <div class="modal-footer">
