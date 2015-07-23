@@ -4,15 +4,21 @@
 
 <div class="modal-body commitDetails">
   <p><a ng-href="{{commitURL}}" target="_blank">{{commitMessage}}</a></p>
-</div>
 
-<div class="modal-body commitDetails">
-  <h3>Selected Metric Values:</h3>
-  <table>
-    <tr ng-repeat="item in selectedMetricValues">
-      <td>{{ item.metricName }}:</td>
-      <td>{{ item.value }}</td>
-    </tr>
+  <h3>Selected metric values</h3>
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Commit's value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in selectedMetricValues">
+        <th>{{ item.label }}</th>
+        <td>{{ item.value }}</td>
+      </tr>
+    </tbody>
   </table>
 </div>
 

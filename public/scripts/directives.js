@@ -20,21 +20,23 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
         $scope.repo = reposService.getRepository($scope.repoIndex);
         $scope.selectedZoom = zoomService.getSelectedZoom();
         $scope.noOfCommits = $scope.repo.metricData.churns.length;
-        $scope.selectedMetricIDs = metricSelectionService.getSelectedMetricIds();
 
         $scope.popModal = function (event) {
           var commitId = $(event.target).attr('data-commit-id');
           var commitURL = $(event.target).attr('data-commit-url');
           var commitIndex = parseInt($(event.target).attr('data-commit-index'));
+
+          var selectedMetricIDs = metricSelectionService.getSelectedMetricIds();
           var selectedMetricObjects = $scope.metricSelectionService.getSelectedMetricObjects();
-          var finalResult = [];
-          for (i = 0; i < $scope.selectedMetricIDs.length; i++) {
-            var metric = $scope.selectedMetricIDs[i];
-            var metricName = selectedMetricObjects[metric].label;
-            var value = $scope.repo.metricData[metric][commitIndex];
-            var tuple = { 'metricName':metricName, 'value':value };
-            finalResult[i] = tuple;
-          }
+          var selectedMetricValues = [];
+          selectedMetricIDs.forEach(function (metricId) {
+            var metric = selectedMetricObjects[metricId];
+            selectedMetricValues.push({
+              'label': metric.label,
+              'value': metric.tooltip($scope.repo.metricData[metricId][commitIndex])
+            });
+          });
+
           $modal.open({
             scope: $scope,
             templateUrl: '/templates/modal-commit-info.html',
@@ -42,7 +44,7 @@ repogramsDirectives.directive('rgRenderMetric', ['$interpolate', '$compile', '$m
               $scope.commitId = commitId;
               $scope.commitURL = commitURL;
               $scope.commitMessage = $scope.repo.metricData.commit_messages[commitIndex];
-              $scope.selectedMetricValues = finalResult;
+              $scope.selectedMetricValues = selectedMetricValues;
               $scope.dismiss = $modalInstance.dismiss;
               $scope.toggleVisibility = function () {
                 reposService.toggleCommitVisibility($scope.$parent.repoIndex, $scope.commitId);
