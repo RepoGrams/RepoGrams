@@ -70,6 +70,9 @@
           <div class="panel panel-default form-inline" ng-controller="RepogramsConfig">
             <div class="panel-heading">
               <span>Settings</span>
+              <span class="pull-right btn btn-link btn-xs" ng-controller="RepoGramsHelpCtrl"> <!-- start RepoGramsHelp ctrl -->
+                <a ng-click="openHelpModal()">help</a>
+              </span> <!-- End of RepoGramsHelp ctrl -->
               <span class="pull-right btn btn-link btn-xs" ng-click="switchState()"><i class="fa fa-save"></i> Load/save state</span>
               <span class="pull-right btn btn-link btn-xs" ng-click="unhideCommits()" ng-if="anyHiddenCommits"><i class="fa fa-eye-slash"></i> Unhide commits</span>
             </div>
