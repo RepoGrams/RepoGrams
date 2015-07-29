@@ -461,11 +461,6 @@ repogramsControllers.controller('UnsupportedBrowserCtrl', ['$scope', function($s
   }]);
 
 repogramsControllers.controller('RepoGramsHelpCtrl', ['$scope', '$modal', function($scope, $modal) {
-    //TODO
-    $scope.isCollapsed1 = true;
-    $scope.isCollapsed2 = true;
-    $scope.isCollapsed3 = true;
-    $scope.isCollapsed4 = true;
     $scope.openHelpModal = function () {
         $modal.open({
           scope: $scope,

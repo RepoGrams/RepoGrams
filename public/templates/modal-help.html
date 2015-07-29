@@ -20,68 +20,54 @@ RepoGrams can help:<br>
     </ol>
 
     <h2><center>How to Use RepoGrams</center></h2>
-    <div class="panel-group">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-          <a href="#" ng-click="isCollapsed1 = !isCollapsed1">Grouping the results</a>
-          </h3>
-        </div>
-        <div collapse="isCollapsed1">
-          <div class="panel-body">
-          <p>There are two options to choose from when grouping your results. "Group by metric" will group your results by the metrics you selected. For example when you have multiple repositories loaded, it will display the results of each repository under each different metric. "Group by repository" will group the results by repository instead.hi</p>
-          <img src="/images/grpbymetric.png" width="500" height="390"></img>
-          </div>
-        </div>
-      </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-          <a href="#" ng-click="isCollapsed2 = !isCollapsed2">Selecting a Metric</a>
-          </h3>
-        </div>
-        <div collapse="isCollapsed2">
-          <div class="panel-body">
-          <p>You can click on the "Switch" button beside "Metric" to enable a pop-up menu with a list of all the available metrics. Each metric will display its corresonding information for each commit in the repository that you have selected. If you did not load a repository yet, RepoGrams will ask you to do so before it displays any diagram.</p>
+    <accordion close-others="true">
+      <accordion-group is-open="status.isFirstOpen">
+        <accordion-heading>
+          <div>
+            Grouping the Results<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
           </div>
-        </div>
-      </div>
+        </accordion-heading> 
+        <p>There are two options to choose from when grouping your results. "Group by metric" will group your results by the metrics you selected. For example when you have multiple repositories loaded, it will display the results of each repository under each different metric. "Group by repository" will group the results by repository instead.hi</p>
+        <img src="/images/grpbymetric.png" width="500" height="390"></img>
+      </accordion-group>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-          <a href="#" ng-click="isCollapsed3 = !isCollapsed3">Selecting a Block Length Mode</a>
-          </h3>
-        </div>
-        <div collapse="isCollapsed3">
-          <div class="panel-body">
-          <p>There are 3 choices for scaling displayed block widths. The fixed block width will set each commit block width to be the same for each repository. The linear and logarithmic options will scale the width of each commit block linearly and logarithmically respectively according to the number of lines changed in each commit. Below is a comparison of the three options.</p><br>
-          <p><strong>Fixed block length:</strong></p>
-          <img src="/images/fixedblocklength.png" width="500" height="310"></img><br>
-          <p><strong>Linear block length:</strong></p>
-          <img src="/images/linearblocklength.png" width="500" height="300"></img><br>
-          <p><strong>Logarithmic block length:</strong></p>
-          <img src="/images/logarithmicblocklength.png" width="500" height="310"></img><br>
-
-          <p>There are also 2 choices for comparing results between repositories. The "Globally Normalized" block length option will initally set all commit block widths to be the same before the scaling so that results are comparable between repositories. The "Project Normalized" option will optimize the commit block widths for each individual repository so that each result fills the screen.</p>
+      <accordion-group is-open="status.isSecondOpen">
+        <accordion-heading>
+          <div>
+            Selecting a Metric<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isSecondOpen, 'glyphicon-chevron-right': !status.isSecondOpen}"></i>
           </div>
-        </div>
-      </div>
+        </accordion-heading>
+        <p>You can click on the "Switch" button beside "Metric" to enable a pop-up menu with a list of all the available metrics. Each metric will display its corresonding information for each commit in the repository that you have selected. If you did not load a repository yet, RepoGrams will ask you to do so before it displays any diagram.</p>
+      </accordion-group>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-          <a href="#" ng-click="isCollapsed4 = !isCollapsed4">Helpful Tips</a>
-          </h3>
-        </div>
-        <div collapse="isCollapsed4">
-          <div class="panel-body">
-          <p>Once the diagram is displayed, you can click on an individual commit to see a pop-up box with the commit ID and it's message as well as the values of each selected metric for that commit. If you click on the commit message, it will take you to the github commit page for that commit.</p>
+      <accordion-group is-open="status.isThirdOpen">
+        <accordion-heading>
+          <div>
+            Selecting a Block Length Mode<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isThirdOpen, 'glyphicon-chevron-right': !status.isThirdOpen}"></i>
           </div>
-        </div>
-      </div>
-    </div>
+        </accordion-heading>
+        <p>There are 3 choices for scaling displayed block widths. The fixed block width will set each commit block width to be the same for each repository. The linear and logarithmic options will scale the width of each commit block linearly and logarithmically respectively according to the number of lines changed in each commit. Below is a comparison of the three options.</p><br>
+        <p><strong>Fixed block length:</strong></p>
+        <img src="/images/fixedblocklength.png" width="500" height="310"></img><br>
+        <p><strong>Linear block length:</strong></p>
+        <img src="/images/linearblocklength.png" width="500" height="300"></img><br>
+        <p><strong>Logarithmic block length:</strong></p>
+        <img src="/images/logarithmicblocklength.png" width="500" height="310"></img><br>
+
+        <p>There are also 2 choices for comparing results between repositories. The "Globally Normalized" block length option will initally set all commit block widths to be the same before the scaling so that results are comparable between repositories. The "Project Normalized" option will optimize the commit block widths for each individual repository so that each result fills the screen.</p>
+      </accordion-group>
+
+      <accordion-group is-open="status.isFourthOpen">
+        <accordion-heading>
+          <div>
+            Helpful Tips<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFourthOpen, 'glyphicon-chevron-right': !status.isFourthOpen}"></i>
+          </div>
+        </accordion-heading>
+        <p>Once the diagram is displayed, you can click on an individual commit to see a pop-up box with the commit ID and it's message as well as the values of each selected metric for that commit. If you click on the commit message, it will take you to the github commit page for that commit.</p>
+      </accordion-group>
+    </accordion>
+
   </div>
 </div>
 
