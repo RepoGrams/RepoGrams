@@ -3,20 +3,21 @@
   <div class = "modal-body">
     <p><strong>RepoGrams will help you understand a project's history.</strong> It uses a simple visual metaphor to represent a project's history across multiple metrics of interest. It supports metrics like:
 
-    <ol>
+    
       <li>who made commits, how often, and how much code did their commits change</li>
+      <img src="/images/CommitAuthor.png" width="550" height="90"></img>
       <li>the number of programming languages used in a project over time</li>
+      <img src="/images/LangsInACommit.png" width="550" height="90"></img>
       <li>how often developers changed code across different modules (directories)</li>
-      <li>the use of branches in the repository</li>
-      <li>and many others!</li>
-    </ol>
+      <img src="/images/CommitLocal.png" width="550" height="90"></img>
+    
 
 RepoGrams can help:<br>
 
     <ol>
-      <li><strong>managers</strong> to analyze a team's performance and pin-point workflow issues</li>
-      <li><strong>developers</strong> to understand the workflow and the history of an unfamiliar software project</li>
-      <li><strong>researchers</strong> in the software engineering community to juxtapose software repositories of multiple projects to select an appropriate set of evaluation targets for a study</li>
+      <li type="disc"><strong>managers</strong> to analyze a team's performance and pin-point workflow issues</li>
+      <li type="disc"><strong>developers</strong> to understand the workflow and the history of an unfamiliar software project</li>
+      <li type="disc"><strong>researchers</strong> in the software engineering community to juxtapose software repositories of multiple projects to select an appropriate set of evaluation targets for a study</li>
     </ol>
 
     <h2><center>How to Use RepoGrams</center></h2>
@@ -25,20 +26,31 @@ RepoGrams can help:<br>
       <accordion-group is-open="status.isFirstOpen">
         <accordion-heading>
           <div>
-            Grouping the Results<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
+            Adding a Repository and Selecting a Metric<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isSecondOpen}"></i>
           </div>
-        </accordion-heading> 
-        <p>There are two options to choose from when grouping your results. "Group by metric" will group your results by the metrics you selected. For example when you have multiple repositories loaded, it will display the results of each repository under each different metric. "Group by repository" will group the results by repository instead.hi</p>
-        <img src="/images/grpbymetric.png" width="500" height="390"></img>
+        </accordion-heading>
+        <p>To begin using RepoGrams, you can first enter a git URL of the repository that you want to look at in the space below:</p>
+        <img src="/images/addrepo.png" width="500" height="50"></img>
+        <p>Next, you can click on the "Switch" button beside "Metric" to enable a pop-up menu with a list of all the available metrics. Each metric will calculate the result for each commit independently for the repositories that you have selected. The displayed results are color coded per commit block and each color corresponds to a value in the legend. If you did not load a repository yet, RepoGrams will ask you to do so before it displays any diagram. Below is an example result of choosing the "Languages in a Commit" metric.</p>
+        <img src="/images/exselectmetric.png" width="500" height="130"></img>
       </accordion-group>
 
       <accordion-group is-open="status.isSecondOpen">
         <accordion-heading>
           <div>
-            Selecting a Metric<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isSecondOpen, 'glyphicon-chevron-right': !status.isSecondOpen}"></i>
+            Grouping the Results<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isSecondOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
           </div>
-        </accordion-heading>
-        <p>You can click on the "Switch" button beside "Metric" to enable a pop-up menu with a list of all the available metrics. Each metric will display its corresonding information for each commit in the repository that you have selected. If you did not load a repository yet, RepoGrams will ask you to do so before it displays any diagram.</p>
+        </accordion-heading> 
+        <p>There are two options to choose from when grouping your results:
+        <li>"Group by metric" will group your results by the metrics you selected. For example when you have multiple repositories loaded, it will display the results of each repository under each different metric.</li>
+        <li>"Group by repository" will group the results by repository instead.</li></p>
+        <table width="470">
+          <thead>
+            <th><center>Group by Repository</center></th>
+            <th><center>Group by Metric</center></th>
+          </thead>
+        </table>
+        <img src="/images/joinedmodes.jpeg" width="500" height="210"></img>
       </accordion-group>
 
       <accordion-group is-open="status.isThirdOpen">
@@ -48,12 +60,12 @@ RepoGrams can help:<br>
           </div>
         </accordion-heading>
         <p>There are 3 choices for scaling displayed block widths. The fixed block width will set each commit block width to be the same for each repository. The linear and logarithmic options will scale the width of each commit block linearly and logarithmically respectively according to the number of lines changed in each commit. Below is a comparison of the three options.</p><br>
-        <p><strong>Fixed block length:</strong></p>
-        <img src="/images/fixedblocklength.png" width="500" height="310"></img><br>
-        <p><strong>Linear block length:</strong></p>
-        <img src="/images/linearblocklength.png" width="500" height="300"></img><br>
-        <p><strong>Logarithmic block length:</strong></p>
-        <img src="/images/logarithmicblocklength.png" width="500" height="310"></img><br>
+        <p><font color="red"><strong>Fixed block length:</strong></font></p>
+        <img src="/images/fixedblocklength.png" width="500" height="100"></img><br>
+        <p><font color="red"><strong>Linear block length:</strong></font></p>
+        <img src="/images/linearblocklength.png" width="500" height="100"></img><br>
+        <p><font color="red"><strong>Logarithmic block length:</strong></font></p>
+        <img src="/images/logarithmicblocklength.png" width="500" height="100"></img><br>
 
         <p>There are also 2 choices for comparing results between repositories. The "Globally Normalized" block length option will initally set all commit block widths to be the same before the scaling so that results are comparable between repositories. The "Project Normalized" option will optimize the commit block widths for each individual repository so that each result fills the screen.</p>
       </accordion-group>
@@ -61,10 +73,10 @@ RepoGrams can help:<br>
       <accordion-group is-open="status.isFourthOpen">
         <accordion-heading>
           <div>
-            Helpful Tips<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFourthOpen, 'glyphicon-chevron-right': !status.isFourthOpen}"></i>
+            Supported Interactions<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFourthOpen, 'glyphicon-chevron-right': !status.isFourthOpen}"></i>
           </div>
         </accordion-heading>
-        <p>Once the diagram is displayed, you can click on an individual commit to see a pop-up box with the commit ID and it's message as well as the values of each selected metric for that commit. If you click on the commit message, it will take you to the github commit page for that commit.</p>
+        <li><strong>Commit Pop-up: </strong>Once the diagram is displayed, you can click on an individual commit to see a pop-up box with the commit ID and it's message as well as the values of each selected metric for that commit. If you click on the commit message, it will take you to the github commit page for that commit.</li>
       </accordion-group>
     </accordion>
 
