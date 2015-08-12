@@ -1,18 +1,19 @@
 <div class="modal-header" ng-controller="RepoGramsHelpCtrl">
-  <h2 class="modal-title"><center>RepoGrams Help</center></h2>
+  <h2 class="modal-title"><center>RepoGrams Overview</center></h2>
   <div class = "modal-body">
     <p><strong>RepoGrams will help you understand a project's history.</strong> It uses a simple visual metaphor to represent a project's history across multiple metrics of interest. It supports metrics like:
 
+      <img src="/images/pattern-anatomy.png" width="500"></img>
       <li>Who made commits, how often, and how much code did their commits change</li>
       <li>The number of programming languages used in a project over time</li>
-      <li>How often developers changed code across different modules (directories)</li>
+      <li>How often developers changed code across different modules (directories)</li><br>
 
 RepoGrams can help:<br>
 
     <ol>
       <li type="disc"><strong>Managers</strong> to analyze a team's performance and pin-point workflow issues</li>
-      <li type="disc"><strong>Developers</strong> to understand the workflow and the history of an unfamiliar software project</li>
-      <li type="disc"><strong>Researchers</strong> in the software engineering community to juxtapose software repositories of multiple projects to select an appropriate set of evaluation targets for a study</li>
+      <li type="disc"><strong>Developers</strong> to understand the workflow and the history of an unfamiliar project</li>
+      <li type="disc"><strong>Researchers</strong> in the software engineering community to juxtapose multiple project repositories to select an appropriate set of evaluation targets</li>
     </ol>
 
     <h2><center>How to Use RepoGrams</center></h2>
@@ -24,12 +25,13 @@ RepoGrams can help:<br>
             Add a repository and select a metric<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isSecondOpen}"></i>
           </div>
         </accordion-heading>
-        <p>To begin using RepoGrams, you can first enter a git URL of the repository that you want to look at in the space below:</p>
-        <img src="/images/addrepo.png" width="500"></img>
-        <p>Next, you can click on the "Switch" button beside "Metric" to enable a pop-up menu with a list of all the available metrics. </p>
-        <img src="/images/metricSwitch.png" width="500"></img>
-        <p>Each metric will calculate the result for each commit independently for the repositories that you have selected. The displayed results are color coded per commit block and each color corresponds to a value in the legend.</p> 
-        <img src="/images/metricSelectPopup.png" width="500"></img>
+        <p>To use RepoGrams, begin by entering a git URL of the repository that you want to study:</p>
+        <img src="/images/addrepo.png" width="450"></img><br>
+        <br><p>Next, click on the "Switch" button to see a list of available metrics.</p>
+        <img src="/images/metricSwitch.png" width="450"></img><br>
+        <br><p>Select one or more metrics of your choice from the list:</p> 
+        <img src="/images/metricSelectPopup.png" width="500"></img><br>
+        <br><p>Each metric you select will compute a value for each commit in the repository you selected. The displayed results are color coded per commit block and each color corresponds to a value in the legend for the metric.</p>
       </accordion-group>
 
       <accordion-group is-open="status.isSecondOpen">
@@ -39,15 +41,18 @@ RepoGrams can help:<br>
           </div>
         </accordion-heading> 
         <p>There are two options to choose from when grouping your results:
-        <li>"Group by metric" will group your results by the metrics you selected. For example when you have multiple repositories loaded, it will display the results of each repository under each different metric.</li>
-        <li>"Group by repository" will group the results by repository instead.</li></p>
-        <table width="470">
-          <thead>
+        <li><strong>Group by metric</strong> will group your results by the metrics you selected. For example when you have multiple repositories loaded, it will display the results of each repository under each different metric.</li><br>
+        <li><strong>Group by repository</strong> will group the results by repository instead.</li></p>
+        <table width="500">
+          <tr>
             <th><center>Group by Repository</center></th>
             <th><center>Group by Metric</center></th>
-          </thead>
+          </tr>
+          <tr>
+            <td><center><img src="/images/GrpByRepo.png" width="240"></img></center></td>
+            <td><center><img src="/images/GrpByMetric.png" width="240"></img></center></td>
+          </tr>
         </table>
-        <img src="/images/joinedModes.jpg" width="500"></img>
       </accordion-group>
 
       <accordion-group is-open="status.isThirdOpen">
@@ -56,14 +61,15 @@ RepoGrams can help:<br>
             Choose a block length<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isThirdOpen, 'glyphicon-chevron-right': !status.isThirdOpen}"></i>
           </div>
         </accordion-heading>
-        <font size="3"><p>There are 3 choices for scaling displayed block widths:</p></font>
-        <li><strong>Fixed block width: </strong>will set each commit block width to be the same for each repository.</li>
-        <li><strong>Linear block width: </strong>will scale the width of each commit block linearly with respect to the number of lines changed in the commit.</li>
-        <li><strong>Logarithmic block width: </strong>will scale the width of each commit block logarithmically with respect to the number of lines changed in the commit.</li><br>
+        <font size="3"><p>There are 3 options for scaling displayed block lengths:</p></font>
+        <li><strong>Fixed block length: </strong>sets each commit block length to be the same for each repository.</li><br>
+        <li><strong>Linear block length: </strong>scales the length of each commit block linearly with respect to the number of lines changed in the commit.</li><br>
+        <li><strong>Logarithmic block length: </strong>scales the length of each commit block logarithmically with respect to the number of lines changed in the commit.</li><br>
 
-        <font size="3"><p>There are also 2 choices for comparing results between repositories:</p></font>
-        <li><strong>Globally Normalized: </strong>This option will initally set all commit block widths to be the same before the scaling so that results are comparable between repositories.</li>
-        <li><strong>Project Normalized: </strong>This option will optimize the commit block widths for each individual repository so that each result fills the screen.</li>
+        <font size="3"><p>There are also 2 options for comparing results between repositories:</p></font>
+        <li><strong>Globally Normalized: </strong>This option will initally set all commit block widths to be the same before the scaling so that results are comparable between repositories.</li><br>
+        <li><strong>Project Normalized: </strong>This option will optimize the commit block widths for each individual repository so that each result fills the screen.</li><br>
+        <img src="/images/SelectBlockLengthPopup.png" width="500"></img>
       </accordion-group>
 
       <accordion-group is-open="status.isFourthOpen">
@@ -73,8 +79,11 @@ RepoGrams can help:<br>
           </div>
         </accordion-heading>
         <li><strong>Commit Pop-up: </strong>Once the diagram is displayed, you can click on an individual commit to see a pop-up box with the commit ID and it's message as well as the values of each selected metric for that commit.</li>
-        <li><strong>Zoom: </strong>If you have difficulty seeing some commits because they are too narrow try using the zoom slider at the top right of the page to enlarge the commit blocks!</li>
-        <li><strong>Saving Your Session: </strong>If you want to save your work and come back to it another time, you can save your session by clicking "Load/save state" and downloading your session.</li>
+        <img src="/images/tooltip.png" width="500"></img><br>
+        <br><li><strong>Zoom: </strong>If you have difficulty seeing some commits because they are too narrow try using the zoom slider at the top right of the page to enlarge the commit blocks!</li>
+        <img src="/images/zoom.png" width="300"></img><br>
+        <br><li><strong>Saving Your Session: </strong>If you want to save your work and come back to it another time, you can save your session by clicking "Load/save state" and downloading your session.</li><br>
+        <img src="/images/save.png" width="500"></img>
       </accordion-group>
     </accordion>
 
