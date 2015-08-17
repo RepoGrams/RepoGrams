@@ -1,9 +1,11 @@
 <div class="modal-header" ng-controller="RepoGramsHelpCtrl">
   <h2 class="modal-title"><center>RepoGrams Overview</center></h2>
   <div class = "modal-body">
-    <p><strong>RepoGrams will help you understand a project's history.</strong> It uses a simple visual metaphor to represent a project's history across multiple metrics of interest. It supports metrics like:
+    <p><strong>RepoGrams will help you understand a project's history.</strong> It uses a simple visual metaphor to represent a project's history across multiple metrics of interest:
 
-      <img src="/images/pattern-anatomy.png" width="500"></img>
+      <img src="/images/pattern-anatomy.png" width="250"></img><br>
+
+      It supports metrics like:
       <li>Who made commits, how often, and how much code did their commits change</li>
       <li>The number of programming languages used in a project over time</li>
       <li>How often developers changed code across different modules (directories)</li><br>
@@ -25,7 +27,7 @@ RepoGrams can help:<br>
             Add a repository and select a metric<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isSecondOpen}"></i>
           </div>
         </accordion-heading>
-        <p>To use RepoGrams, begin by entering a git URL of the repository that you want to study:</p>
+        <p>To use RepoGrams, Begin by entering a git URL of the repository that you want to study:</p>
         <img src="/images/addrepo.png" width="450"></img><br>
         <br><p>Next, click on the "Switch" button to see a list of available metrics.</p>
         <img src="/images/metricSwitch.png" width="450"></img><br>
@@ -41,12 +43,23 @@ RepoGrams can help:<br>
           </div>
         </accordion-heading> 
         <p>There are two options to choose from when grouping your results:
-        <li><strong>Group by metric</strong> will group your results by the metrics you selected. For example when you have multiple repositories loaded, it will display the results of each repository under each different metric.</li><br>
-        <li><strong>Group by repository</strong> will group the results by repository instead.</li></p>
+        </p>
         <table width="500">
           <tr>
             <th><center>Group by Repository</center></th>
             <th><center>Group by Metric</center></th>
+          </tr>
+          <tr>
+            <td>
+              <font size="2">
+                <center>Group by repository will group your results by the repositories you imported.</center>
+              </font><br>
+            </td>
+            <td>
+              <font size="2">
+                <center>Group by metric will group the results under each metric instead.</center>
+              </font><br>
+            </td>
           </tr>
           <tr>
             <td><center><img src="/images/GrpByRepo.png" width="240"></img></center></td>
@@ -79,11 +92,11 @@ RepoGrams can help:<br>
           </div>
         </accordion-heading>
         <li><strong>Commit Pop-up: </strong>Once the diagram is displayed, you can click on an individual commit to see a pop-up box with the commit ID and it's message as well as the values of each selected metric for that commit.</li>
-        <img src="/images/tooltip.png" width="500"></img><br>
+        <img src="/images/tooltip.png" width="250"></img><br>
         <br><li><strong>Zoom: </strong>If you have difficulty seeing some commits because they are too narrow try using the zoom slider at the top right of the page to enlarge the commit blocks!</li>
-        <img src="/images/zoom.png" width="300"></img><br>
+        <img src="/images/zoom.png" width="250"></img><br>
         <br><li><strong>Saving Your Session: </strong>If you want to save your work and come back to it another time, you can save your session by clicking "Load/save state" and downloading your session.</li><br>
-        <img src="/images/save.png" width="500"></img>
+        <img src="/images/save.png" width="250"></img>
       </accordion-group>
     </accordion>
 
