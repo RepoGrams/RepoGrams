@@ -295,6 +295,7 @@ repogramsControllers.controller('RepogramsImporter',
     $scope.changeInput = function () {
       $scope.errors.length = 0;
     };
+
     $scope.importRepository = function (onSuccess) {
       $scope.processing = true;
       $scope.errors.length = 0;
@@ -364,6 +365,37 @@ repogramsControllers.controller('RepogramsImporter',
 
       loadRepositories();
     });
+
+    $scope.importRandomRepo = function () {
+      var maxID = 41179859;   
+
+      function dumpResponse() {
+        console.log(this.responseText);
+      }
+
+      function parseResponse() {
+        var responseObj = JSON.parse(this.responseText);
+        var object = responseObj[0];
+        var giturl = object.html_url;
+        $scope.importURL = giturl + '.git';
+        $scope.importRepository();
+      }
+
+      function randomIntFromInterval(min,max) {
+        return Math.floor(Math.random()*(max-min+1)+min);
+      }
+
+      var ID = randomIntFromInterval(0, maxID);
+
+      var request = new XMLHttpRequest();
+
+      //request.onload = dumpResponse;
+      request.onload = parseResponse;
+
+      request.open('get', 'https://api.github.com/repositories?since=' + ID, true);
+      request.send();
+      
+    };
 
   }]);
 
