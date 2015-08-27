@@ -51,7 +51,7 @@ RUN mkdir -p /var/log/supervisor
 # Fill in placeholders in the served files
 COPY build /root/build
 RUN sed -i "s/@@@BUILDINFO@@@/`cat /root/build/buildinfo.autobuild`/" /var/www/public/index.html \
-  && sed -i "s/@@@BUILDDATE@@@/`cat /root/build/builddate.autobuild`/" /var/www/public/fse2015/index.html \
+  && sed -i "s/@@@BUILDDATE@@@/`cat /root/build/builddate.autobuild`/" /var/www/public/icse2016/index.html \
   && if [ -f /root/build/extra-footer.html ]; then awk '{ if ($0 ~ /@@@EXTRAFOOTER@@@/) { while (getline < "/root/build/extra-footer.html") { print $0; } } else {print;} }' /var/www/public/index.html > /var/www/public/index.html.tmp && mv /var/www/public/index.html.tmp /var/www/public/index.html; fi \
   && if [ -f /root/build/example-states.js ]; then mv /root/build/example-states.js /var/www/public/scripts/example-states.js; fi \
   && if [ -f /root/build/credentials ]; then mv /root/build/credentials /var/www/build/credentials; fi \
