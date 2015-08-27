@@ -369,16 +369,50 @@ repogramsControllers.controller('RepogramsImporter',
     $scope.importRandomRepo = function () {
       var maxID = 41179859;   
 
-      function dumpResponse() {
+      function printResponse() {
         console.log(this.responseText);
+      }
+
+      function sizeCheck(repoName, url) {
+
+        var secondaryRequest = new XMLHttpRequest();
+
+        function checkSize(size) {
+          if (size <= 10000) {
+            $scope.importURL = url + '.git';
+            $scope.importRepository();
+          } else {
+            $scope.importRandomRepo();
+          }
+        }
+        
+
+        secondaryRequest.onreadystatechange = function() {
+          if (secondaryRequest.readyState == 4 && secondaryRequest.status == 200) {
+            var responseObject = JSON.parse(this.responseText);
+            var item = responseObject.items[0];
+            if (item) {
+              var size = item.size;
+              checkSize(size);
+            } else {
+              $scope.importRandomRepo();
+            }
+          }
+        }
+
+        secondaryRequest.open('get', 'https://api.github.com/search/repositories?q=repo:' + repoName + '+fork:true', true);
+        secondaryRequest.send();
       }
 
       function parseResponse() {
         var responseObj = JSON.parse(this.responseText);
         var object = responseObj[0];
+        var repoName = object.full_name;
         var giturl = object.html_url;
-        $scope.importURL = giturl + '.git';
-        $scope.importRepository();
+        console.log(object.id);
+
+        sizeCheck(repoName, giturl);
+
       }
 
       function randomIntFromInterval(min,max) {
@@ -389,7 +423,7 @@ repogramsControllers.controller('RepogramsImporter',
 
       var request = new XMLHttpRequest();
 
-      //request.onload = dumpResponse;
+      //request.onload = printResponse;
       request.onload = parseResponse;
 
       request.open('get', 'https://api.github.com/repositories?since=' + ID, true);
