@@ -367,30 +367,23 @@ repogramsControllers.controller('RepogramsImporter',
     });
 
     $scope.importRandomRepo = function () {
-      var maxID = 41179859;   
-
-      function printResponse() {
-        console.log(this.responseText);
-      }
+      var MAX_GITHUB_REPO_ID = 41179859;
+      var MAX_IMPORT_SIZE = 10000;
 
       function sizeCheck(repoName, url) {
 
-        var secondaryRequest = new XMLHttpRequest();
-
         function checkSize(size) {
-          if (size <= 10000) {
+          if (size <= MAX_IMPORT_SIZE) {
             $scope.importURL = url + '.git';
             $scope.importRepository();
           } else {
             $scope.importRandomRepo();
           }
         }
-        
 
-        secondaryRequest.onreadystatechange = function() {
-          if (secondaryRequest.readyState == 4 && secondaryRequest.status == 200) {
-            var responseObject = JSON.parse(this.responseText);
-            var item = responseObject.items[0];
+        $.getJSON('https://api.github.com/search/repositories?q=repo:' + repoName + '+fork:true', {}, 
+          function (result) {
+            var item = result.items[0];
             if (item) {
               var size = item.size;
               checkSize(size);
@@ -398,37 +391,31 @@ repogramsControllers.controller('RepogramsImporter',
               $scope.importRandomRepo();
             }
           }
-        }
-
-        secondaryRequest.open('get', 'https://api.github.com/search/repositories?q=repo:' + repoName + '+fork:true', true);
-        secondaryRequest.send();
-      }
-
-      function parseResponse() {
-        var responseObj = JSON.parse(this.responseText);
-        var object = responseObj[0];
-        var repoName = object.full_name;
-        var giturl = object.html_url;
-        console.log(object.id);
-
-        sizeCheck(repoName, giturl);
-
+        );
       }
 
       function randomIntFromInterval(min,max) {
         return Math.floor(Math.random()*(max-min+1)+min);
       }
 
-      var ID = randomIntFromInterval(0, maxID);
+      var ID = randomIntFromInterval(0, MAX_GITHUB_REPO_ID);
 
-      var request = new XMLHttpRequest();
+      $.getJSON('https://api.github.com/repositories?since=' + ID, {}, 
+        function parseResponse(data) {
+          var object = data[0];
+          if (object) {
+            var repoName = object.full_name;
+            var giturl = object.html_url;
+            console.log(object.id);
 
-      //request.onload = printResponse;
-      request.onload = parseResponse;
-
-      request.open('get', 'https://api.github.com/repositories?since=' + ID, true);
-      request.send();
-      
+            sizeCheck(repoName, giturl);
+          } else {
+            $scope.errors.push({
+              'emessage': "You have reached the rate limit for github API requests. Please try again at a later time."
+            });
+          }
+        }
+      );
     };
 
   }]);
