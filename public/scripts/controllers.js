@@ -404,27 +404,24 @@ repogramsControllers.controller('RepogramsImporter',
 
       var ID = randomIntFromInterval(0, MAX_GITHUB_REPO_ID);
 
-      function sendRequest() {
-        $.getJSON('https://api.github.com/repositories?since=' + ID, {}, 
-          function (data) {
-            var object = data[0];
-            if (object) {
-              var repoName = object.full_name;
-              var giturl = object.html_url;
-              console.log(object.id);
+      
+      $.getJSON('https://api.github.com/repositories?since=' + ID, {}, 
+        function (data) {
+          var object = data[0];
+          if (object) {
+            var repoName = object.full_name;
+            var giturl = object.html_url;
+            console.log(object.id);
 
-              sizeCheck(repoName, giturl);
-            }
+            sizeCheck(repoName, giturl);
           }
-        ).fail(function(data) {
-            $scope.errors.push({
-              'emessage': "You have reached the rate limit for github API requests. Please try again at a later time."
-            });
-          }
-        );
-      }
-     
-      sendRequest();
+        }
+      ).fail(function(data) {
+          $scope.errors.push({
+            'emessage': "You have reached the rate limit for github API requests. Please try again at a later time."
+          });
+        }
+      );
     };
 
   }]);
