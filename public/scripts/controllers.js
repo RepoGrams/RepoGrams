@@ -367,8 +367,8 @@ repogramsControllers.controller('RepogramsImporter',
     });
 
     $scope.importRandomRepo = function () {
-      var MAX_GITHUB_REPO_ID = 41179859;
-      var MAX_IMPORT_SIZE = 10000;
+      var MAX_GITHUB_REPO_ID = 41179859; //This is currently the max id of public repos on github
+      var MAX_IMPORT_SIZE = 10000; //This is in KB
 
       function sizeCheck(repoName, url) {
 
@@ -391,7 +391,11 @@ repogramsControllers.controller('RepogramsImporter',
               $scope.importRandomRepo();
             }
           }
-        );
+        ).fail(function (result) {
+            $scope.errors.push({
+              'emessage': "The Repository may have been deleted. Please try again"
+            })
+        });
       }
 
       function randomIntFromInterval(min,max) {
@@ -400,22 +404,27 @@ repogramsControllers.controller('RepogramsImporter',
 
       var ID = randomIntFromInterval(0, MAX_GITHUB_REPO_ID);
 
-      $.getJSON('https://api.github.com/repositories?since=' + ID, {}, 
-        function parseResponse(data) {
-          var object = data[0];
-          if (object) {
-            var repoName = object.full_name;
-            var giturl = object.html_url;
-            console.log(object.id);
+      function sendRequest() {
+        $.getJSON('https://api.github.com/repositories?since=' + ID, {}, 
+          function (data) {
+            var object = data[0];
+            if (object) {
+              var repoName = object.full_name;
+              var giturl = object.html_url;
+              console.log(object.id);
 
-            sizeCheck(repoName, giturl);
-          } else {
+              sizeCheck(repoName, giturl);
+            }
+          }
+        ).fail(function(data) {
             $scope.errors.push({
               'emessage': "You have reached the rate limit for github API requests. Please try again at a later time."
             });
           }
-        }
-      );
+        );
+      }
+     
+      sendRequest();
     };
 
   }]);
