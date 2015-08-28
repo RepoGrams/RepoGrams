@@ -391,10 +391,8 @@ repogramsControllers.controller('RepogramsImporter',
               $scope.importRandomRepo();
             }
           }
-        ).fail(function (result) {
-            $scope.errors.push({
-              'emessage': "The Repository may have been deleted. Please try again"
-            })
+        ).fail(function (result, testStatus, error) {
+            console.error("getJSON failed, status: " + textStatus + ", error: "+error);
         });
       }
 
@@ -411,7 +409,7 @@ repogramsControllers.controller('RepogramsImporter',
           if (object) {
             var repoName = object.full_name;
             var giturl = object.html_url;
-            console.log(object.id);
+            //console.log(object.id);
 
             sizeCheck(repoName, giturl);
           }
