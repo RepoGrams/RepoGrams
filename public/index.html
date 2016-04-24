@@ -251,7 +251,7 @@
                 <!-- Import Field -->
               <div ng-controller="RepogramsImporter">
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-11" >
                     <form id="repogramsAdder" ng-submit="importRepository()">
                       <div class="input-group">
                         <input id="importUrlId" type="text" class="form-control" placeholder="GIT clone URL, e.g. https://github.com/githubtraining/hellogitworld.git" autofocus ng-model="importURL" ng-readonly="processing" ng-change="changeInput()" />
@@ -263,6 +263,9 @@
                       </div> <!-- Input Group Close -->
                     </form>
                   </div> <!-- close col-md-12 -->
+                  <div class="input-group input-group-btn random">
+                    <button class="btn btn-primary" ng-click="importRandomRepo()">Add Random</button>
+                  </div>
                 </div> <!-- close row -->
                 <div class="row">
                   <div class="col-md-12">

@@ -279,6 +279,12 @@ slider span.bubble {
     overflow: auto;
 }
 
+.random {
+    padding-top: 14px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 form#repogramsAdder {
     margin-top: 1em;
 }

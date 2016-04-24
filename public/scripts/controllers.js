@@ -295,6 +295,7 @@ repogramsControllers.controller('RepogramsImporter',
     $scope.changeInput = function () {
       $scope.errors.length = 0;
     };
+
     $scope.importRepository = function (onSuccess) {
       $scope.processing = true;
       $scope.errors.length = 0;
@@ -364,6 +365,62 @@ repogramsControllers.controller('RepogramsImporter',
 
       loadRepositories();
     });
+
+    $scope.importRandomRepo = function () {
+      var MAX_GITHUB_REPO_ID = 41179859; //This is currently the max id of public repos on github
+      var MAX_IMPORT_SIZE = 10000; //This is in KB
+
+      function sizeCheck(repoName, url) {
+
+        function checkSize(size) {
+          if (size <= MAX_IMPORT_SIZE) {
+            $scope.importURL = url + '.git';
+            $scope.importRepository();
+          } else {
+            $scope.importRandomRepo();
+          }
+        }
+
+        $.getJSON('https://api.github.com/search/repositories?q=repo:' + repoName + '+fork:true', {}, 
+          function (result) {
+            var item = result.items[0];
+            if (item) {
+              var size = item.size;
+              checkSize(size);
+            } else {
+              $scope.importRandomRepo();
+            }
+          }
+        ).fail(function (result, testStatus, error) {
+            console.error("getJSON failed, status: " + textStatus + ", error: "+error);
+        });
+      }
+
+      function randomIntFromInterval(min,max) {
+        return Math.floor(Math.random()*(max-min+1)+min);
+      }
+
+      var ID = randomIntFromInterval(0, MAX_GITHUB_REPO_ID);
+
+      
+      $.getJSON('https://api.github.com/repositories?since=' + ID, {}, 
+        function (data) {
+          var object = data[0];
+          if (object) {
+            var repoName = object.full_name;
+            var giturl = object.html_url;
+            //console.log(object.id);
+
+            sizeCheck(repoName, giturl);
+          }
+        }
+      ).fail(function(data) {
+          $scope.errors.push({
+            'emessage': "You have reached the rate limit for github API requests. Please try again at a later time."
+          });
+        }
+      );
+    };
 
   }]);
 
