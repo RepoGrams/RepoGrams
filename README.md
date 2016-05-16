@@ -104,6 +104,21 @@ To add a new metric you will have to:
 * Modify the `app/metrics/__init__.py` file to register your module. Make sure that you import the metric, not the
   module containing the metric.
 
+## Contact, research paper, citing ##
+
+If you would like to get in touch, please contact [Ivan Beschastnikh](http://www.cs.ubc.ca/~bestchai/) at bestchai@cs.ubc.ca
+
+We published a [research paper](http://www.cs.ubc.ca/~bestchai/papers/repograms-msr16.pdf) describing the design and evaluation of RepoGrams. If you are using RepoGrams for research and want a citation that you can use in the paper, here is the bibtex:
+```
+@inproceedings{Rozenberg2016,
+   author = {Daniel Rozenberg and Ivan Beschastnikh and Fabian Kosmale and Valerie Poser and Heiko Becker and Marc Palyart and Gail Murphy},
+   title = {{Comparing Repositories Visually with RepoGrams}},
+   booktitle = {MSR 2016, Proceedings of the 2016 International Conference on Mining Software Repositories},
+   address = {Austin, TX, USA},
+   month = {May~14--15,},
+   year = {2016}
+}
+```
 
 ## License ##
 
