@@ -12,7 +12,6 @@ RepoGrams can help:
  * **developers** to understand the workflow and the history of an unfamiliar software project
  * **researchers** in the software engineering community to juxtapose software repositories of multiple projects to select an appropriate set of evaluation targets for a study
 
-**Try our online deployment: http://repograms.net/**
 
 ## Deploying ##
 
