@@ -12,6 +12,20 @@ RepoGrams can help:
  * **developers** to understand the workflow and the history of an unfamiliar software project
  * **researchers** in the software engineering community to juxtapose software repositories of multiple projects to select an appropriate set of evaluation targets for a study
 
+For more details about RepoGrams, see our paper:
+
+[*Comparing Repositories Visually with RepoGrams*](https://www.cs.ubc.ca/~bestchai/papers/repograms-msr16.pdf). Daniel Rozenberg, Ivan Beschastnikh, Fabian Kosmale, Valerie Poser, Heiko Becker, Marc Palyart, Gail Murphy. MSR 2016.
+```
+@inproceedings{Rozenberg2016,
+  author = {Rozenberg, Daniel and Beschastnikh, Ivan and Kosmale, Fabian and Poser,
+            Valerie and Becker, Heiko and Palyart, Marc and Murphy, Gail C.},
+  title = {{Comparing Repositories Visually with Repograms}},
+  year = {2016},
+  url = {https://doi.org/10.1145/2901739.2901768},
+  booktitle = {Proceedings of the 13th International Conference on Mining Software Repositories (MSR)},
+  pages = {109–120},
+}
+```
 
 ## Deploying ##
 
