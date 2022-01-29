@@ -1,38 +1,32 @@
-FROM ubuntu:14.04
-MAINTAINER RepoGrams Team <github.com/RepoGrams/RepoGrams>
+FROM ubuntu:20.04
+LABEL org.opencontainers.image.authors="RepoGrams Team <github.com/RepoGrams/RepoGrams>"
 
-# Add the apt repository for python-graph-tool
-COPY conf/pubkey /root/pubkey
-RUN echo 'deb http://downloads.skewed.de/apt/trusty trusty universe' >> /etc/apt/sources.list \
-  && apt-key add /root/pubkey \
-  && rm /root/pubkey
+# Install base utilities so we can use apt-key later
+RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+  gnupg2 \
+  ca-certificates
 
-
-# Add the apt repository for libgit2 and python-pygit2
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common \
-  && DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:launchpad/ppa
+# Add the apt repository for python3-graph-tool
+RUN echo 'deb [arch=amd64] https://downloads.skewed.de/apt focal main' >> /etc/apt/sources.list
+RUN apt-key adv --no-tty --keyserver keys.openpgp.org --recv-key 612DEFB798507F25
 
 # Update apt and install dependencies
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    python \
-    python-graph-tool \
-    python-pip \
-    supervisor \
-    libgit2-22 \
-    python-scipy \
-    nginx \
-    libgit2-dev \
-    libffi-dev
+  python3 \
+  python3-graph-tool \
+  python3-pip \
+  supervisor \
+  python3-scipy \
+  nginx
 
-# Install the required Python libraries using pip, minus the libraries that were already installed using apt-get
+# Install the required Python libraries using pip, minus the libraries that were already installed using apt
 COPY conf/requirements.txt /root/requirements.txt
 RUN sed -e '/numpy/d' -e '/scipy/d' -i /root/requirements.txt \
-  && pip install -r /root/requirements.txt \
+  && pip3 install -r /root/requirements.txt \
   && rm /root/requirements.txt \
-  && DEBIAN_FRONTEND=noninteractive apt-get purge -y python-pip \
-    libgit2-dev \
-    libffi-dev
+  && DEBIAN_FRONTEND=noninteractive apt-get purge -y python3-pip
 
 # Copy the server and client directories to be served
 RUN mkdir -p /var/www/build /var/log/app
@@ -54,5 +48,4 @@ RUN sed -i "s/@@@BUILDINFO@@@/`cat /root/build/buildinfo.autobuild`/" /var/www/p
   && sed -i "s/@@@BUILDDATE@@@/`cat /root/build/builddate.autobuild`/" /var/www/public/icse2016/index.html \
   && if [ -f /root/build/extra-footer.html ]; then awk '{ if ($0 ~ /@@@EXTRAFOOTER@@@/) { while (getline < "/root/build/extra-footer.html") { print $0; } } else {print;} }' /var/www/public/index.html > /var/www/public/index.html.tmp && mv /var/www/public/index.html.tmp /var/www/public/index.html; fi \
   && if [ -f /root/build/example-states.js ]; then mv /root/build/example-states.js /var/www/public/scripts/example-states.js; fi \
-  && if [ -f /root/build/credentials ]; then mv /root/build/credentials /var/www/build/credentials; fi \
   && rm -r /root/build

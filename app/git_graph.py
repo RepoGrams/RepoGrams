@@ -1,7 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -!- encoding: utf-8
-
-from __future__ import print_function
 
 import json
 from distutils.version import LooseVersion
@@ -81,7 +79,7 @@ class GitGraph(object):
 
     def associate_branches(self):
         master_sha, branch_heads = self.git_helper.get_branch_heads()
-        master_sha, branch_heads = str(master_sha), map(str, branch_heads)
+        master_sha, branch_heads = str(master_sha), [str(branch_head) for branch_head in branch_heads]
 
         # utility function to get the equivalent of Python 3's tuple unpacking
         unpack = lambda head, *tail: (head, tail)
@@ -143,7 +141,7 @@ class GitGraph(object):
             try:
                 commit_node = unvisited_nodes.pop()
             except IndexError:
-                raise StopIteration
+                return
             yield commit_node
             children = commit_node.out_neighbours()
             new_nodes = [child for child in children if child not in already_seen]
