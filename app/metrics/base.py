@@ -6,6 +6,6 @@ def metric(f):
     def wrapper(*args, **kwargs):
         return f(*args, **kwargs)
 
-    wrapper.id = f.func_name
+    wrapper.id = f.__name__
 
     return wrapper

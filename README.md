@@ -46,14 +46,7 @@ See the file `examples/example-states.js` for an example of an examples set file
 
 #### Credentials ####
 
-RepoGrams only supports cloning HTTP and HTTPS repositories, however many websites, such as GitHub, support basic HTTPS
-authentication. You can add support for specific websites by adding a `credentials` file to the `build/` directory
-*before* building the docker image. The content of the file should be one credential per line, where each line takes the
-form:
-
-`example.com:janedoe:passwd`
-
-GitHub supports app-specific tokens that can be used in lieu of the password.
+RepoGrams only supports cloning public HTTP and HTTPS repositories, and does not currently support credentials.
 
 #### Extra footer ####
 
@@ -76,7 +69,7 @@ your machine.
 Start by installing the following packages on your machine. We list the minimum version that works on our development
 environments. Older versions might still work. If they worked for you please let us know so we can update this list.
 
-* python (2.7.x), python-dev, and python-pip
+* python (3.7.x), python-dev, and python-pip
 * [python-graph-tool](http://graph-tool.skewed.de/) >= 2.2.42
 * [libgit2-dev](https://libgit2.github.com/) >= 0.22.1
 * [libblas-dev](http://www.netlib.org/blas/) >= 1.2.20110419
@@ -90,7 +83,7 @@ the versions of the libraries installed, as your Linux distribution's package ma
 versions, in which case you will have to manually install a newer version. Please create an issue or pull request if
 you believe we forgot to list a dependency.
 
-Create and activate a [virtualenv](https://virtualenv.pypa.io/) based on Python 2.7.x. Once activated install the
+Create and activate a [virtualenv](https://virtualenv.pypa.io/) based on Python 3.7.x. Once activated install the
 requirements.txt inside the virtualenv using pip:
 `pip install -r conf/requirements.txt`
 
@@ -100,7 +93,7 @@ by one.
 
 Copy the python-graph-tool library from the distribution-wide lib directory to the virtualenv. Unfortunately graph-tool
 is not available on pip.
-`cp -r /usr/lib/python2.7/dist-packages/graph_tool /path/to/venv/lib/python2.7/site-packages/`
+`cp -r /usr/lib/python3.7/dist-packages/graph_tool /path/to/venv/lib/python3.7/site-packages/`
 (the paths on your system might vary)
 
 Run the application with `python app/serve.py development` (the environment variable PYTHONPATH should be set to the

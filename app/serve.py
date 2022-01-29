@@ -48,7 +48,6 @@ DEVELOPMENT_INSTANCE_CONFIG_APP = {
 class RepoGrams:
     def __init__(self):
         self.dir_manager = git_helpers.DirManager()
-        self.credentials_manager = git_helpers.CredentialsManager(REPOGRAMS_BASE_DIR + '/build/credentials')
         self.cache = git_graph.GitGraphCache()
 
     @cherrypy.expose(alias="getGitData")
@@ -58,7 +57,7 @@ class RepoGrams:
         data = cherrypy.request.json
         repo_url = data["repourl"]
         try:
-            git_helper = git_helpers.GitHelper(repo_url, self.dir_manager, self.credentials_manager)
+            git_helper = git_helpers.GitHelper(repo_url, self.dir_manager)
         except Exception as e:
             cherrypy.response.status = 400
             return {"emessage": e.message}
@@ -88,7 +87,7 @@ class RepoGrams:
 
         metrics += 'var MetricsOrder = %s' % json.dumps(registered_metrics)
 
-        return metrics
+        return metrics.encode()
 
     @cherrypy.expose(alias="getMappers")
     def get_metric_mappers(self):
@@ -102,7 +101,7 @@ class RepoGrams:
                 with open(mapper_file_name) as f:
                     mappers += f.read()
 
-        return mappers
+        return mappers.encode()
 
 
 if __name__ == '__main__':

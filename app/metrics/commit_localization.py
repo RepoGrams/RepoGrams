@@ -11,7 +11,7 @@ def commit_localization(graph):
     """Computes the relative number of directories modified by a commit."""
     result = []
     for commit in graph.iterate_commits():
-        paths = map(os.path.dirname, graph.commit_files[commit])
+        paths = [os.path.dirname(file) for file in graph.commit_files[commit]]
         if len(paths) <= 1:
             result.append(len(paths))
             continue
