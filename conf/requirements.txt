@@ -3,4 +3,4 @@ jellyfish==0.4.0
 numpy==1.9.2
 pycparser==2.10
 pygit2==1.7.2
-scipy==0.15.1
+scipy==1.10.0
